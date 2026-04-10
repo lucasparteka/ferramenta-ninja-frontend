@@ -1,0 +1,32 @@
+import { Button } from '@/components/ui/button'
+
+type TextOutputProps = {
+  value: string
+  onChange: (value: string) => void
+  onCopy: () => void
+  copied: boolean
+}
+
+export function TextOutput({ value, onChange, onCopy, copied }: TextOutputProps) {
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <label htmlFor="text-output" className="text-sm font-medium text-foreground">
+          Resultado
+        </label>
+        <Button variant="outline" size="sm" onClick={onCopy} disabled={!value}>
+          {copied ? 'Copiado!' : 'Copiar'}
+        </Button>
+      </div>
+      <textarea
+        id="text-output"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="O resultado aparecerá aqui..."
+        rows={8}
+        className="w-full resize-y rounded-lg border border-border bg-input p-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+      />
+      {copied && <p className="text-sm text-success">Texto copiado!</p>}
+    </div>
+  )
+}

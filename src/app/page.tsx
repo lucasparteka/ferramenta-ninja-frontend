@@ -147,6 +147,11 @@ const categories: ToolCategory[] = [
         description: 'Decodifique QR Codes a partir de imagens sem precisar de câmera',
       },
       {
+        name: 'Converter Imagem em Texto (OCR)',
+        href: '/ferramentas/converter-imagem-em-texto',
+        description: 'Extraia texto de imagens, prints e documentos usando OCR no navegador',
+      },
+      {
         name: 'Gerador de Código de Barras 1D',
         href: '/ferramentas/gerador-de-codigo-de-barras',
         description: 'Gere códigos de barras EAN-13, CODE 128, UPC e outros em SVG',
@@ -155,6 +160,28 @@ const categories: ToolCategory[] = [
         name: 'Gerador de Código de Barras em Lote',
         href: '/ferramentas/gerador-de-codigo-de-barras-em-lote',
         description: 'Gere vários códigos de barras de uma vez a partir de uma lista de valores',
+      },
+    ],
+  },
+  {
+    id: 'pdf',
+    name: 'PDF',
+    description: 'Ferramentas para manipular arquivos PDF no navegador',
+    tools: [
+      {
+        name: 'Juntar PDF',
+        href: '/ferramentas/juntar-pdf',
+        description: 'Una múltiplos arquivos PDF em um único documento',
+      },
+      {
+        name: 'Dividir PDF',
+        href: '/ferramentas/dividir-pdf',
+        description: 'Extraia páginas específicas ou divida um PDF em partes',
+      },
+      {
+        name: 'Comprimir PDF',
+        href: '/ferramentas/comprimir-pdf',
+        description: 'Reduza o tamanho de arquivos PDF e veja a diferença antes de baixar',
       },
     ],
   },

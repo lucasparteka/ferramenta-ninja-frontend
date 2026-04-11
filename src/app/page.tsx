@@ -164,6 +164,18 @@ const categories: ToolCategory[] = [
     ],
   },
   {
+    id: 'curriculo',
+    name: 'Currículo',
+    description: 'Crie e exporte currículos profissionais em PDF',
+    tools: [
+      {
+        name: 'Criador de Currículo',
+        href: '/ferramentas/criador-de-curriculo',
+        description: 'Monte seu currículo com templates modernos e baixe em PDF gratuitamente',
+      },
+    ],
+  },
+  {
     id: 'pdf',
     name: 'PDF',
     description: 'Ferramentas para manipular arquivos PDF no navegador',

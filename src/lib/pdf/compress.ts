@@ -30,7 +30,7 @@ export function formatBytes(bytes: number): string {
 }
 
 export function downloadPDF(bytes: Uint8Array, filename: string): void {
-  const blob = new Blob([bytes], { type: 'application/pdf' })
+  const blob = new Blob([bytes as unknown as BlobPart], { type: 'application/pdf' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url

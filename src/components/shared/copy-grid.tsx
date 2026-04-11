@@ -17,6 +17,7 @@ export function CopyGrid({ categories, itemClass }: CopyGridProps) {
 
   const hasMore = visibleCount < categories.length
 
+  // 🔵 IntersectionObserver (lazy load normal)
   useEffect(() => {
     const sentinel = sentinelRef.current
     if (!sentinel || !hasMore) return
@@ -33,6 +34,26 @@ export function CopyGrid({ categories, itemClass }: CopyGridProps) {
     observer.observe(sentinel)
     return () => observer.disconnect()
   }, [hasMore, categories.length])
+
+  // 🟡 Fallback: garante carregamento se conteúdo não preencher a tela
+  useEffect(() => {
+    if (!hasMore) return
+
+    const checkAndLoad = () => {
+      const pageHeight = document.documentElement.scrollHeight
+      const viewportHeight = window.innerHeight
+
+      // Se ainda não tem scroll suficiente, carrega mais
+      if (pageHeight <= viewportHeight + 100) {
+        setVisibleCount((n) => Math.min(n + BATCH, categories.length))
+      }
+    }
+
+    // roda no próximo frame (após render)
+    const id = requestAnimationFrame(checkAndLoad)
+
+    return () => cancelAnimationFrame(id)
+  }, [visibleCount, hasMore, categories.length])
 
   function handleCopy(item: string, key: string) {
     navigator.clipboard.writeText(item)
@@ -76,6 +97,7 @@ export function CopyGrid({ categories, itemClass }: CopyGridProps) {
           </div>
         </div>
       ))}
+
       {hasMore && <div ref={sentinelRef} className="h-2" />}
     </div>
   )

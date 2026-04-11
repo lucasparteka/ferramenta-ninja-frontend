@@ -61,6 +61,35 @@ export async function splitAllPages(file: File): Promise<Uint8Array[]> {
   return results
 }
 
+export async function extractPagesByIndex(
+  file: File,
+  pageIndices: number[]
+): Promise<Uint8Array> {
+  if (pageIndices.length === 0) {
+    throw new Error('Nenhuma página selecionada.')
+  }
+
+  const { PDFDocument } = await import('pdf-lib')
+
+  const buffer = await file.arrayBuffer()
+  const source = await PDFDocument.load(buffer)
+  const totalPages = source.getPageCount()
+
+  const validIndices = [...new Set(pageIndices)]
+    .filter((i) => i >= 0 && i < totalPages)
+    .sort((a, b) => a - b)
+
+  if (validIndices.length === 0) {
+    throw new Error('Nenhuma página válida selecionada.')
+  }
+
+  const result = await PDFDocument.create()
+  const pages = await result.copyPages(source, validIndices)
+  pages.forEach((page) => result.addPage(page))
+
+  return result.save()
+}
+
 export function downloadPDF(bytes: Uint8Array, filename: string): void {
   const blob = new Blob([bytes], { type: 'application/pdf' })
   const url = URL.createObjectURL(blob)

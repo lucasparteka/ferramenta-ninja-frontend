@@ -8,16 +8,11 @@ export function Header() {
           <span className="text-xl font-bold text-primary">ferramenta</span>
           <span className="text-xl font-bold text-accent">.ninja</span>
         </Link>
-        <nav aria-label="Navegacao principal">
+        <nav aria-label="Navegação principal">
           <ul className="flex items-center gap-6 text-sm font-medium text-muted-foreground">
             <li>
               <Link href="/" className="transition-colors hover:text-foreground">
-                Inicio
-              </Link>
-            </li>
-            <li>
-              <Link href="/ferramentas" className="transition-colors hover:text-foreground">
-                Ferramentas
+                Início
               </Link>
             </li>
           </ul>

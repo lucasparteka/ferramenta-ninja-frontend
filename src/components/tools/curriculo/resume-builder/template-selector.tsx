@@ -72,12 +72,12 @@ export function TemplateSelector({
         ))}
       </div>
       <div className="flex gap-3">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 w-full flex-1">
           <label className="text-xs font-medium text-muted-foreground">Fonte</label>
           <NativeSelect
             value={fontVar}
             onChange={(e) => onFontVarChange(e.target.value as ResumeFontVar)}
-            className="w-[180px]"
+            className="w-full"
             aria-label="Fonte do currículo"
           >
             {RESUME_FONT_OPTIONS.map((opt) => (
@@ -85,12 +85,12 @@ export function TemplateSelector({
             ))}
           </NativeSelect>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 w-full flex-1">
           <label className="text-xs font-medium text-muted-foreground">Tamanho da fonte</label>
           <NativeSelect
             value={fontSize}
             onChange={(e) => onFontSizeChange(e.target.value as ResumeFontSize)}
-            className="w-[180px]"
+            className="w-full"
             aria-label="Tamanho da fonte"
           >
             {RESUME_FONT_SIZE_OPTIONS.map((opt) => (

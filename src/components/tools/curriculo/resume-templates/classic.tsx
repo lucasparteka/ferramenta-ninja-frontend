@@ -78,7 +78,7 @@ export function ClassicTemplate({ data, color, fontVar, fontZoom }: { data: Resu
           <img
             src={data.photoUrl}
             alt={data.name}
-            className="w-[72px] h-[72px] rounded-full object-cover border-2 border-[#dde4ec] shrink-0"
+            className="size-18 rounded-full object-cover border-2 border-[#dde4ec] shrink-0"
           />
         )}
       </div>

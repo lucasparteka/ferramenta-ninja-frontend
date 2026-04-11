@@ -9,10 +9,9 @@ import {
   Save,
   Maximize2,
   RotateCcw,
-  UserCircle2,
-  X,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import ImageUploader from "@/components/shared/image-uploader"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -180,18 +179,15 @@ export function ResumeBuilder() {
     setHasSavedData(true)
   }, [])
 
-  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (!file) return
+  function handleImageUploaderChange(file: File | "") {
     if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl)
-    setPhotoFile(file)
-    setPhotoPreviewUrl(URL.createObjectURL(file))
-  }
-
-  function handleRemovePhoto() {
-    if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl)
-    setPhotoFile(null)
-    setPhotoPreviewUrl(null)
+    if (file === "") {
+      setPhotoFile(null)
+      setPhotoPreviewUrl(null)
+    } else {
+      setPhotoFile(file)
+      setPhotoPreviewUrl(URL.createObjectURL(file))
+    }
   }
 
   function handleSubmit(data: ResumeFormValues) {
@@ -226,47 +222,11 @@ export function ResumeBuilder() {
   }
 
   const photoSection = (
-    <div className="flex items-center gap-4">
-      <div className="relative">
-        {photoPreviewUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={photoPreviewUrl}
-            alt="Foto de perfil"
-            className="w-16 h-16 rounded-full object-cover border-2 border-border"
-          />
-        ) : (
-          <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center border-2 border-dashed border-border">
-            <UserCircle2 size={28} className="text-muted-foreground" />
-          </div>
-        )}
-        {photoPreviewUrl && (
-          <button
-            type="button"
-            onClick={handleRemovePhoto}
-            className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center"
-            aria-label="Remover foto"
-          >
-            <X size={11} />
-          </button>
-        )}
-      </div>
-      <div>
-        <label className="text-sm font-medium block mb-1">Foto de perfil</label>
-        <label className="cursor-pointer">
-          <span className="text-xs text-primary underline underline-offset-2">
-            {photoPreviewUrl ? "Trocar foto" : "Adicionar foto"}
-          </span>
-          <input
-            type="file"
-            accept="image/png,image/jpeg"
-            className="hidden"
-            onChange={handlePhotoChange}
-          />
-        </label>
-        <p className="text-xs text-muted-foreground mt-0.5">PNG ou JPEG, máx. 3 MB</p>
-      </div>
-    </div>
+    <ImageUploader
+      label="Foto de perfil"
+      onChange={handleImageUploaderChange}
+      maxFileSizeBytes={3 * 1024 * 1024}
+    />
   )
 
   const formContent = (
@@ -467,7 +427,7 @@ export function ResumeBuilder() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit, scrollToFirstError)}>
         <div className="hidden lg:flex gap-8 items-start">
-          <div className="w-[480px] xl:w-[640px] shrink-0">
+          <div className="w-120 xl:w-160 shrink-0">
             {formContent}
           </div>
 
@@ -533,7 +493,6 @@ export function ResumeBuilder() {
         onFontSizeChange={setFontSize}
         showTemplateControls
         hasPendingChanges={hasPendingChanges}
-        onSave={hasPendingChanges ? () => form.handleSubmit(handleSubmit)() : undefined}
         formData={watchedValues as ResumeFormValues}
         photoFile={photoFile}
       />

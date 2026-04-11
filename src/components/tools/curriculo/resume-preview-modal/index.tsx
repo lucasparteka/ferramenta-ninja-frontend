@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { X, Save } from "lucide-react"
+import { X } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -33,7 +33,6 @@ import {
 import type { ResumeTemplateData } from "@/components/tools/curriculo/resume-templates/types"
 import { ResumePdfButton } from "@/components/tools/curriculo/resume-pdf-button"
 import type { ResumeFormValues } from "@/components/tools/curriculo/resume-builder/types"
-import { Button } from "@/components/ui/button"
 import { NativeSelect } from "@/components/ui/select-native"
 import { cn } from "@/lib/utils"
 
@@ -51,7 +50,6 @@ type ResumePreviewModalProps = {
   onFontSizeChange?: (size: ResumeFontSize) => void
   showTemplateControls?: boolean
   hasPendingChanges?: boolean
-  onSave?: () => void
   formData?: ResumeFormValues
   photoFile?: File | null
 }
@@ -70,7 +68,6 @@ export function ResumePreviewModal({
   onFontSizeChange,
   showTemplateControls = false,
   hasPendingChanges = false,
-  onSave,
   formData,
   photoFile,
 }: ResumePreviewModalProps) {
@@ -89,7 +86,7 @@ export function ResumePreviewModal({
   if (isWideEnough) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-none w-screen h-screen p-0 flex flex-col bg-[#e8eaed] rounded-none [&>button]:hidden">
+        <DialogContent className="max-w-none sm:max-w-none w-screen h-screen p-0 flex flex-col bg-[#e8eaed] rounded-none [&>button]:hidden">
           <DialogTitle className="sr-only">Pré-visualização do currículo</DialogTitle>
           <div className="shrink-0 bg-white border-b flex items-center justify-between px-6 py-3 shadow-sm">
             {data && formData ? (
@@ -116,7 +113,7 @@ export function ResumePreviewModal({
           </div>
 
           <div className="flex-1 overflow-y-auto">
-            <div className="max-w-[794px] mx-auto py-10">
+            <div className="max-w-198.5 mx-auto py-10">
               {data ? (
                 <div
                   className="bg-white shadow-xl ring-1 ring-black/8"
@@ -144,13 +141,23 @@ export function ResumePreviewModal({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] flex flex-col p-0">
+      <SheetContent side="bottom" showCloseButton={false} className="data-[side=bottom]:h-[90vh] flex flex-col p-0 rounded-t-2xl">
         <SheetHeader className="sr-only">
           <SheetTitle>Pré-visualização do currículo</SheetTitle>
         </SheetHeader>
-
+        <div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
+          <span className="text-sm font-semibold">Pré-visualização</span>
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            className="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+            aria-label="Fechar"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
         {showTemplateControls && (
-          <div className="px-4 pb-3 border-b shrink-0 space-y-3.5 pt-4">
+          <div className="px-4 pb-3 border-b shrink-0 space-y-3.5">
             <div className="flex gap-1.5 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
               {TEMPLATE_IDS.map((id) => (
                 <button
@@ -183,14 +190,13 @@ export function ResumePreviewModal({
                 />
               ))}
             </div>
-
             <div className="flex gap-3">
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 flex-1">
                 <label className="text-xs font-medium text-muted-foreground">Fonte</label>
                 <NativeSelect
                   value={fontVar}
                   onChange={(e) => onFontVarChange?.(e.target.value as ResumeFontVar)}
-                  className="w-[180px]"
+                  className="lg:w-45 w-full"
                   aria-label="Fonte do currículo"
                 >
                   {RESUME_FONT_OPTIONS.map((opt) => (
@@ -198,12 +204,12 @@ export function ResumePreviewModal({
                   ))}
                 </NativeSelect>
               </div>
-
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 flex-1">
                 <label className="text-xs font-medium text-muted-foreground">Tamanho da fonte</label>
                 <NativeSelect
                   value={fontSize}
                   onChange={(e) => onFontSizeChange?.(e.target.value as ResumeFontSize)}
+                  className="lg:w-45 w-full"
                   aria-label="Tamanho da fonte"
                 >
                   {RESUME_FONT_SIZE_OPTIONS.map((opt) => (
@@ -214,7 +220,6 @@ export function ResumePreviewModal({
             </div>
           </div>
         )}
-
         <div className="overflow-y-auto flex-1 bg-[#f0f2f5] p-4">
           {data ? (
             <ScaledResume
@@ -231,25 +236,6 @@ export function ResumePreviewModal({
             </div>
           )}
         </div>
-
-        {hasPendingChanges && onSave && (
-          <div className="px-4 py-3 border-t shrink-0">
-            <p className="flex items-center gap-1.5 text-sm text-amber-600 italic mb-2">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
-              Alterações não salvas
-            </p>
-            <Button
-              className="w-full"
-              onClick={() => {
-                onSave()
-                onOpenChange(false)
-              }}
-            >
-              <Save className="h-4 w-4 mr-2" />
-              Salvar alterações
-            </Button>
-          </div>
-        )}
       </SheetContent>
     </Sheet>
   )

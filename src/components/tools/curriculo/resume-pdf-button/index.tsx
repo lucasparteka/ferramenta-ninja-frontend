@@ -103,7 +103,7 @@ export function ResumePdfButton({
   }
 
   return (
-    <div className="flex flex-col items-start gap-2">
+    <div className="relative inline-flex">
       <Button
         type="button"
         variant={variant}
@@ -121,7 +121,7 @@ export function ResumePdfButton({
       </Button>
 
       {confirming && (
-        <div className="flex gap-3 rounded-md border bg-background p-3 shadow-md w-80">
+        <div className="absolute top-full left-0 mt-1 z-50 flex gap-3 rounded-md border bg-background p-3 shadow-lg w-80">
           <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
           <div className="space-y-2">
             <p className="text-sm font-semibold leading-none">Alterações pendentes</p>

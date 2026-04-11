@@ -1,3 +1,5 @@
+import { Separator } from "../ui/separator";
+
 type PageLayoutProps = {
   title: string;
   description: string;
@@ -14,9 +16,8 @@ export function PageLayout({ title, description, children, extraContent }: PageL
         </h1>
         <p className="text-lg text-muted-foreground">{description}</p>
       </div>
-
-      <div className="rounded-xl border border-border bg-card p-6 shadow-sm">{children}</div>
-
+      <Separator className="mb-5 lg:mb-7"/>
+      {children}
       {extraContent && (
         <div className="mt-12 space-y-8 text-muted-foreground">{extraContent}</div>
       )}

@@ -169,7 +169,7 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
   const isCurrent = useWatch({ control, name: `experiences.${index}.isCurrent` })
 
   return (
-    <div className="border-t px-4 pb-4 pt-4 space-y-4">
+    <div className="border-t md:px-4 px-2 pb-4 pt-4 space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <label className="text-sm font-medium">Cargo *</label>
@@ -258,7 +258,7 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
         <label className="text-sm font-medium">Descrição</label>
         <Textarea
           placeholder="Descreva suas responsabilidades, projetos e conquistas..."
-          rows={6}
+          rows={3}
           {...register(`experiences.${index}.description`)}
         />
       </div>
@@ -290,7 +290,7 @@ function ExperienceCard({
   const handleRemove = useCallback(() => onRemove(index), [onRemove, index])
 
   return (
-    <div ref={ref} className="flex items-center gap-2">
+    <div ref={ref} className="flex items-center md:gap-2">
       <span
         ref={handleRef}
         className="cursor-grab active:cursor-grabbing shrink-0 touch-none text-muted-foreground/50 hover:text-muted-foreground transition-colors"

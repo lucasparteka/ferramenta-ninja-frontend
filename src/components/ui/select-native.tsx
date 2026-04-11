@@ -1,22 +1,33 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+"use client";
 
-function NativeSelect({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"select">) {
-  return (
+import { forwardRef, type SelectHTMLAttributes } from "react";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+/**
+ * Styled native <select> element — same visual style as the post-job-form selects.
+ * Lighter and more performant than the Radix-based Select component.
+ */
+export const NativeSelect = forwardRef<
+  HTMLSelectElement,
+  SelectHTMLAttributes<HTMLSelectElement>
+>(({ className, children, ...props }, ref) => (
+  <div className="relative">
     <select
+      ref={ref}
       className={cn(
-        "flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-        className
+        "appearance-none border h-9 block rounded-sm px-2 pr-8 py-1.5 w-full text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-white cursor-pointer",
+        className,
       )}
       {...props}
     >
       {children}
     </select>
-  )
-}
 
-export { NativeSelect }
+    <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
+      <ChevronDown size={16} />
+    </div>
+  </div>
+));
+
+NativeSelect.displayName = "NativeSelect";

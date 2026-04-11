@@ -52,7 +52,7 @@ export const resumeFormSchema = z.object({
     .max(15, "Telefone inválido"),
   location: z.string().default(""),
   title: z.string().optional().default(""),
-  summary: z.string().default(""),
+  summary: z.string().optional().default(""),
   experiences: z.array(experienceSchema).default([]),
   education: z.array(educationSchema).default([]),
   skills: z

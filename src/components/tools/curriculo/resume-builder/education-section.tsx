@@ -111,7 +111,7 @@ const EducationCardForm = memo(function EducationCardForm({
   const isCurrent = useWatch({ control, name: `education.${index}.isCurrent` })
 
   return (
-    <div className="border-t px-4 pb-4 pt-4 space-y-4">
+    <div className="border-t md:px-4 px-2 pb-4 pt-4 space-y-4">
       <div className="space-y-2">
         <label className="text-sm font-medium">Instituição *</label>
         <Input
@@ -223,7 +223,7 @@ const EducationCardForm = memo(function EducationCardForm({
         <label className="text-sm font-medium">Descrição</label>
         <Textarea
           placeholder="Atividades relevantes, TCC, projetos de destaque..."
-          rows={5}
+          rows={3}
           {...register(`education.${index}.description`)}
         />
       </div>
@@ -255,7 +255,7 @@ function EducationCard({
   const handleRemove = useCallback(() => onRemove(index), [onRemove, index])
 
   return (
-    <div ref={ref} className="flex items-center gap-2">
+    <div ref={ref} className="flex items-center md:gap-2">
       <span
         ref={handleRef}
         className="cursor-grab active:cursor-grabbing shrink-0 touch-none text-muted-foreground/50 hover:text-muted-foreground transition-colors"

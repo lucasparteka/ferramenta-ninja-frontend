@@ -73,7 +73,7 @@ const categories: ToolCategory[] = [
       },
       {
         name: 'Formatar Texto Para WhatsApp',
-        href: '/ferramentas/formatador-whatsapp',
+        href: '/ferramentas/formatador-de-texto-whatsapp',
         description: 'Formate textos para envio no WhatsApp, com suporte a negrito, itálico, tachado e código',
       },
     ],

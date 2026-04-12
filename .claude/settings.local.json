@@ -9,7 +9,8 @@
       "Bash(pnpm tsc:*)",
       "Bash(pnpm next:*)",
       "Bash(xargs grep:*)",
-      "Bash(node -e \"const l = require\\('/c/Users/lucas/Documents/pessoal/Ferramenta Ninja/frontend/node_modules/lucide-react/dist/cjs/lucide-react.js'\\); console.log\\(typeof l.Info\\)\")"
+      "Bash(node -e \"const l = require\\('/c/Users/lucas/Documents/pessoal/Ferramenta Ninja/frontend/node_modules/lucide-react/dist/cjs/lucide-react.js'\\); console.log\\(typeof l.Info\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('version:', d.get\\('version'\\)\\); print\\('exports keys:', list\\(d.get\\('exports', {}\\).keys\\(\\)\\)[:10]\\)\")"
     ]
   }
 }

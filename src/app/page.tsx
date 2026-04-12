@@ -71,6 +71,11 @@ const categories: ToolCategory[] = [
         href: '/ferramentas/converter-csv-para-sql',
         description: 'Gere comandos SQL INSERT a partir de arquivos CSV, com suporte a MySQL, PostgreSQL, SQLite, Oracle e SQL Server',
       },
+      {
+        name: 'Formatar Texto Para WhatsApp',
+        href: '/ferramentas/formatador-whatsapp',
+        description: 'Formate textos para envio no WhatsApp, com suporte a negrito, itálico, tachado e código',
+      },
     ],
   },
   {

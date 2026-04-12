@@ -7,7 +7,9 @@
       "Bash(node node_modules/puppeteer/install.mjs)",
       "Bash(pnpm dlx:*)",
       "Bash(pnpm tsc:*)",
-      "Bash(pnpm next:*)"
+      "Bash(pnpm next:*)",
+      "Bash(xargs grep:*)",
+      "Bash(node -e \"const l = require\\('/c/Users/lucas/Documents/pessoal/Ferramenta Ninja/frontend/node_modules/lucide-react/dist/cjs/lucide-react.js'\\); console.log\\(typeof l.Info\\)\")"
     ]
   }
 }

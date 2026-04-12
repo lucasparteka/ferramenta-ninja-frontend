@@ -85,6 +85,16 @@ const categories: ToolCategory[] = [
         href: '/ferramentas/calculadora-de-porcentagem',
         description: '5 calculadoras de porcentagem: valor, variação, desconto e aumento',
       },
+      {
+        name: 'Calculadora de Adicional Noturno',
+        href: '/ferramentas/calculadora-adicional-noturno',
+        description: 'Calcule o adicional noturno para empregados urbanos e rurais, com RSR/DSR',
+      },
+      {
+        name: 'Calculadora de Salário Líquido',
+        href: '/ferramentas/calculadora-salario-liquido',
+        description: 'Calcule o salário líquido com desconto de INSS, IRRF e dependentes',
+      },
     ],
   },
   {

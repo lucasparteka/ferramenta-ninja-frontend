@@ -56,6 +56,21 @@ const categories: ToolCategory[] = [
         href: '/ferramentas/codigo-morse',
         description: 'Converta texto para código Morse e código Morse para texto',
       },
+      {
+        name: 'Visualizador de CSV',
+        href: '/ferramentas/visualizador-de-csv',
+        description: 'Visualize arquivos CSV como tabela formatada, com paginação e ordenação por coluna',
+      },
+      {
+        name: 'Converter CSV para PDF',
+        href: '/ferramentas/converter-csv-para-pdf',
+        description: 'Converta arquivos CSV em PDF com tabela formatada, orientação automática e suporte a muitas colunas',
+      },
+      {
+        name: 'Converter CSV para SQL',
+        href: '/ferramentas/converter-csv-para-sql',
+        description: 'Gere comandos SQL INSERT a partir de arquivos CSV, com suporte a MySQL, PostgreSQL, SQLite, Oracle e SQL Server',
+      },
     ],
   },
   {

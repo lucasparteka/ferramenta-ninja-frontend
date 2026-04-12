@@ -19,7 +19,11 @@ type Entry = {
 
 const TTL_MS = 2 * 60 * 1000
 
-const store = new Map<string, Entry>()
+const globalStore = globalThis as typeof globalThis & { __resumeTempStore?: Map<string, Entry> }
+if (!globalStore.__resumeTempStore) {
+  globalStore.__resumeTempStore = new Map<string, Entry>()
+}
+const store = globalStore.__resumeTempStore
 
 export function setTempData(token: string, data: RenderPayload): void {
   store.set(token, { data, expiresAt: Date.now() + TTL_MS })

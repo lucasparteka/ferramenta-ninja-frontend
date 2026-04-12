@@ -7,6 +7,7 @@ import type { TemplateId, ResumeFontVar, ResumeFontSize } from "@/components/too
 import { RESUME_FONT_SIZE_OPTIONS, RESUME_FONT_DEFAULT } from "@/components/tools/curriculo/resume-templates/config"
 import type { ResumeTemplateData } from "@/components/tools/curriculo/resume-templates/types"
 import type { ResumeFormValues } from "@/components/tools/curriculo/resume-builder/types"
+import { cn } from "@/lib/utils"
 
 type ResumePdfButtonProps = {
   templateId: TemplateId
@@ -103,12 +104,12 @@ export function ResumePdfButton({
   }
 
   return (
-    <div className="relative inline-flex">
+    <div className="relative inline-flex max-md:w-full">
       <Button
         type="button"
         variant={variant}
         size={size}
-        className={className}
+        className={cn("max-md:w-full", className)}
         onClick={handleClick}
         disabled={loading}
       >
@@ -126,7 +127,7 @@ export function ResumePdfButton({
           <div className="space-y-2">
             <p className="text-sm font-semibold leading-none">Alterações pendentes</p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Você tem alterações não salvas. O PDF será gerado com os dados atuais do formulário.
+              Você tem alterações não salvas. O PDF será gerado com os últimos dados salvos.
             </p>
             <div className="flex gap-2 pt-1">
               <Button size="sm" variant="outline" className="flex-1" onClick={() => setConfirming(false)}>

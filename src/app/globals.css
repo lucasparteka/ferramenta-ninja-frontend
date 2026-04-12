@@ -110,3 +110,12 @@
     border-radius: 999px;
   }
 }
+
+@media print {
+  .pdf-pt { padding-top: 0 !important; }
+  .pdf-pb { padding-bottom: 0 !important; }
+}
+
+@page:first {
+  margin-top: 0mm;
+}

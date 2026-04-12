@@ -2,7 +2,6 @@ import { notFound } from "next/navigation"
 import { getTempData } from "@/lib/curriculo/temp-store"
 import { ResumeRenderer } from "@/components/tools/curriculo/resume-templates/renderer"
 import { RESUME_FONT_SIZE_OPTIONS } from "@/components/tools/curriculo/resume-templates/config"
-import { resumeFontVars, lora, dmSans, plusJakarta, barlow, playfair, roboto } from "@/lib/fonts/resume-fonts"
 import type { ResumeTemplateData } from "@/components/tools/curriculo/resume-templates/types"
 import type { ResumeFormValues } from "@/components/tools/curriculo/resume-builder/types"
 
@@ -58,25 +57,12 @@ export default async function CurriculoRenderPage({
   const templateData = toTemplateData(formData, photoDataUrl ?? null)
 
   return (
-    <html lang="pt-BR">
-      <head>
-        <meta charSet="utf-8" />
-        <style>{`
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-          body { background: white; }
-        `}</style>
-      </head>
-      <body
-        className={`${lora.variable} ${dmSans.variable} ${plusJakarta.variable} ${barlow.variable} ${playfair.variable} ${roboto.variable}`}
-      >
-        <ResumeRenderer
-          templateId={layout.templateId}
-          data={templateData}
-          color={layout.color}
-          fontVar={layout.fontVar}
-          fontZoom={fontZoom}
-        />
-      </body>
-    </html>
+    <ResumeRenderer
+      templateId={layout.templateId}
+      data={templateData}
+      color={layout.color}
+      fontVar={layout.fontVar}
+      fontZoom={fontZoom}
+    />
   )
 }

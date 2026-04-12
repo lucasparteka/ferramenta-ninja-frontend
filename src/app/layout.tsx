@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
+import { headers } from 'next/headers';
 import { Toaster } from 'sonner';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -33,11 +34,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const isPdfRender = headersList.get('x-is-pdf-render') === '1';
+
+  if (isPdfRender) {
+    return (
+      <html lang="pt-BR" className={`${inter.variable} ${spaceGrotesk.variable} bg-white`}>
+        <body className="bg-white">{children}</body>
+      </html>
+    );
+  }
+
   return (
     <html lang="pt-BR" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="flex min-h-screen flex-col bg-background text-foreground antialiased">

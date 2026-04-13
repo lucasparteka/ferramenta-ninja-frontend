@@ -182,6 +182,11 @@ const categories: ToolCategory[] = [
         description: 'Desenhe livremente, crie formas e exporte imagens PNG direto no navegador',
       },
       {
+        name: 'Criador de Cartão Fidelidade',
+        href: '/ferramentas/cartao-fidelidade',
+        description: 'Crie cartões fidelidade para imprimir com templates prontos para barbearia, cafeteria e mais',
+      },
+      {
         name: 'Gerador de QR Code',
         href: '/ferramentas/gerador-de-qr-code',
         description: 'Gere QR Codes a partir de qualquer texto ou URL e baixe em PNG',

@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 
 const tools = [
   'calculadora-adicional-noturno',
+  'cartao-fidelidade',
   'calculadora-de-porcentagem',
   'calculadora-salario-liquido',
   'codigo-binario',

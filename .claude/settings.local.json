@@ -15,7 +15,24 @@
       "Bash(node -e \"const u = require\\('uuid'\\); console.log\\(Object.keys\\(u\\)\\)\")",
       "Bash(node -e \"const { v3, v5 } = require\\('uuid'\\); console.log\\('v3.DNS:', v3.DNS\\); console.log\\('v5.DNS:', v5.DNS\\); console.log\\('v3 test:', v3\\('hello', v3.DNS\\)\\); console.log\\('v5 test:', v5\\('hello', v5.DNS\\)\\)\")",
       "Bash(xargs -I {} bash -c 'echo \"=== {} ===\" && head -10 {}/page.tsx | grep -A 5 \"metadata\"')",
-      "Bash(ls -d \"/c/Users/lucas/Documents/pessoal/Ferramenta Ninja/frontend/src/app/ferramentas\"/*/)"
+      "Bash(ls -d \"/c/Users/lucas/Documents/pessoal/Ferramenta Ninja/frontend/src/app/ferramentas\"/*/)",
+      "Bash(pnpm run *)",
+      "Bash(npx *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git add *)",
+      "Bash(ls *)",
+      "Bash(pnpm exec:*)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(pnpm dev:*)",
+      "Bash(curl -s \"http://localhost:3000/ferramentas/cartao-fidelidade\")",
+      "Bash(curl -s \"http://localhost:3000/ferramentas/desenhar-online\")",
+      "Bash(curl -s \"http://localhost:3000/_next/static/chunks/src_components_tools_loyalty-card_loyalty-card-editor_tsx_0m8qzm1._.js\")"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git push *)",
+      "Bash(git reset --hard *)"
     ]
   }
 }

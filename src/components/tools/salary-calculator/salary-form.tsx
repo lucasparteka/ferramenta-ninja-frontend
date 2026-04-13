@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { Resolver, useForm } from 'react-hook-form'
 import {
   Form,
   FormControl,
@@ -39,7 +39,7 @@ export function SalaryCalculatorForm(props: SalaryCalculatorFormProps) {
   const { onCalculate } = props
 
   const form = useForm<SalaryFormValues>({
-    resolver: zodResolver(salaryFormSchema),
+    resolver: zodResolver(salaryFormSchema) as Resolver<SalaryFormValues>,
     defaultValues: {
       grossSalary: '',
       dependents: 0,

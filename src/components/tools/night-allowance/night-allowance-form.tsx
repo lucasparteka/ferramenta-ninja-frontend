@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { type Resolver, useForm } from 'react-hook-form'
 import {
   Form,
   FormControl,
@@ -56,7 +56,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
   const { onCalculate } = props
 
   const form = useForm<NightAllowanceFormValues>({
-    resolver: zodResolver(nightAllowanceFormSchema),
+    resolver: zodResolver(nightAllowanceFormSchema) as Resolver<NightAllowanceFormValues>,
     defaultValues: {
       grossSalary: '',
       contractualHours: 0,

@@ -98,6 +98,16 @@ const categories: ToolCategory[] = [
         href: '/ferramentas/gerador-de-cnpj',
         description: 'Gere CNPJs válidos para testes e valide CNPJs existentes',
       },
+      {
+        name: 'Gerador de Cartão de Crédito',
+        href: '/ferramentas/gerador-de-cartao-de-credito',
+        description: 'Gere números de cartão de crédito válidos para testes com Visa, Mastercard, Amex, Elo e Hipercard',
+      },
+      {
+        name: 'Validador de Cartão de Crédito',
+        href: '/ferramentas/validador-de-cartao-de-credito',
+        description: 'Valide números de cartão de crédito pelo algoritmo de Luhn e identifique a bandeira automaticamente',
+      },
     ],
   },
   {

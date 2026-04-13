@@ -174,8 +174,13 @@ const categories: ToolCategory[] = [
   {
     id: 'imagens',
     name: 'Imagens',
-    description: 'Ferramentas para gerar e converter imagens',
+    description: 'Ferramentas para gerar, converter e criar imagens',
     tools: [
+      {
+        name: 'Desenhar Online',
+        href: '/ferramentas/desenhar-online',
+        description: 'Desenhe livremente, crie formas e exporte imagens PNG direto no navegador',
+      },
       {
         name: 'Gerador de QR Code',
         href: '/ferramentas/gerador-de-qr-code',

@@ -28,6 +28,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "diff-match-patch": "^1.0.5",
+    "fabric": "^7.2.0",
     "jsbarcode": "^3.12.3",
     "jsqr": "^1.4.0",
     "lucide-react": "^1.8.0",

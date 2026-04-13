@@ -95,20 +95,6 @@
     font-family: "Space Grotesk", sans-serif;
     letter-spacing: -0.02em;
   }
-
-  /* scrollbar leve e clean */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: rgb(var(--background));
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgba(var(--primary), 0.5);
-    border-radius: 999px;
-  }
 }
 
 @media print {

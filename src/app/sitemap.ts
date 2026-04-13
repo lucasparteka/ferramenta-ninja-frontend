@@ -7,6 +7,7 @@ const tools = [
   'codigo-binario',
   'codigo-morse',
   'comparar-textos',
+  'desenhar-online',
   'comprimir-pdf',
   'contador-de-caracteres',
   'conversor-de-texto',

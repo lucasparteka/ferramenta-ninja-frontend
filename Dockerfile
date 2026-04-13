@@ -28,8 +28,6 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=build /app/public ./public
-
 RUN mkdir .next && chown nextjs:nodejs .next
 
 COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./

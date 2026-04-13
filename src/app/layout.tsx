@@ -31,6 +31,14 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: 'https://ferramenta.ninja',
     siteName: 'Ferramenta Ninja',
+    images: [{ url: '/api/og', width: 1200, height: 630, alt: 'Ferramenta Ninja' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ferramenta Ninja — Ferramentas Online Gratuitas',
+    description:
+      'Ferramentas online gratuitas para desenvolvedores e profissionais. Conversores, formatadores, geradores e muito mais.',
+    images: ['/api/og'],
   },
 };
 

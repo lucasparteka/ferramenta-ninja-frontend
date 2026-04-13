@@ -8,9 +8,9 @@ import { RemoveDuplicatesOptions } from './options'
 import { RemoveDuplicatesOutput } from './output'
 
 type DeduplicateOptions = {
-  keepOrder: boolean
   ignoreCase: boolean
-  removeEmpty: boolean
+  trimWhitespace: boolean
+  sortOrder: 'none' | 'asc' | 'desc'
 }
 
 type ProcessResult = {
@@ -21,9 +21,9 @@ type ProcessResult = {
 }
 
 const DEFAULT_OPTIONS: DeduplicateOptions = {
-  keepOrder: true,
   ignoreCase: false,
-  removeEmpty: true,
+  trimWhitespace: true,
+  sortOrder: 'none',
 }
 
 export function RemoveDuplicates() {
@@ -39,9 +39,10 @@ export function RemoveDuplicates() {
 
   function handleProcess() {
     const output = removeDuplicateLines(input, options)
-    const totalLines = input
-      .split('\n')
-      .filter((line) => !(options.removeEmpty && line.trim() === '')).length
+    const totalLines = input.split('\n').filter((line) => {
+      if (options.trimWhitespace) return line.trim() !== ''
+      return true
+    }).length
     const uniqueLines = output === '' ? 0 : output.split('\n').length
 
     setResult({
@@ -61,11 +62,20 @@ export function RemoveDuplicates() {
   }
 
   return (
-    <div className="space-y-6">
-      <RemoveDuplicatesInput value={input} onChange={handleInput} />
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <RemoveDuplicatesInput value={input} onChange={handleInput} />
+        <RemoveDuplicatesOutput
+          value={result?.output ?? ''}
+          onCopy={handleCopy}
+          copied={copied}
+        />
+      </div>
+
       <RemoveDuplicatesOptions options={options} onChange={setOptions} />
+
       <Button onClick={handleProcess} disabled={!input.trim()}>
-        Remover duplicados
+        Remover duplicatas
       </Button>
 
       {result && (
@@ -85,12 +95,6 @@ export function RemoveDuplicates() {
           ))}
         </div>
       )}
-
-      <RemoveDuplicatesOutput
-        value={result?.output ?? ''}
-        onCopy={handleCopy}
-        copied={copied}
-      />
     </div>
   )
 }

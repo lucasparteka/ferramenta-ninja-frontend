@@ -1,14 +1,14 @@
 type DeduplicateOptions = {
-  keepOrder: boolean
   ignoreCase: boolean
-  removeEmpty: boolean
+  trimWhitespace: boolean
+  sortOrder: 'none' | 'asc' | 'desc'
 }
 
 export function removeDuplicateLines(text: string, options: DeduplicateOptions): string {
   let lines = text.split('\n')
 
-  if (options.removeEmpty) {
-    lines = lines.filter((line) => line.trim() !== '')
+  if (options.trimWhitespace) {
+    lines = lines.map((line) => line.trim()).filter((line) => line !== '')
   }
 
   const seen = new Set<string>()
@@ -19,8 +19,10 @@ export function removeDuplicateLines(text: string, options: DeduplicateOptions):
     return true
   })
 
-  if (!options.keepOrder) {
+  if (options.sortOrder === 'asc') {
     unique.sort((a, b) => a.localeCompare(b, 'pt-BR'))
+  } else if (options.sortOrder === 'desc') {
+    unique.sort((a, b) => b.localeCompare(a, 'pt-BR'))
   }
 
   return unique.join('\n')

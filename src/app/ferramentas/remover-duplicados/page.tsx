@@ -75,19 +75,25 @@ function SeoContent() {
         </h2>
         <div className="space-y-3">
           <p>
-            <strong className="text-foreground">Manter ordem original:</strong> quando ativada,
-            a ferramenta preserva a sequência em que as linhas aparecem no texto, mantendo sempre
-            a primeira ocorrência. Com a opção desativada, as linhas são ordenadas
-            alfabeticamente.
-          </p>
-          <p>
             <strong className="text-foreground">Ignorar maiúsculas e minúsculas:</strong> com esta
             opção ativa, "Maçã", "maçã" e "MAÇÃ" são tratadas como a mesma entrada e apenas uma
             delas é mantida. Útil para listas onde a capitalização é inconsistente.
           </p>
           <p>
-            <strong className="text-foreground">Remover linhas vazias:</strong> elimina linhas em
-            branco ou contendo apenas espaços do resultado final, produzindo uma lista mais limpa.
+            <strong className="text-foreground">Remover espaços:</strong> remove espaços no início
+            e no fim de cada linha antes de comparar. Assim, " exemplo " e "exemplo" são
+            considerados duplicatas e apenas um é mantido. Também elimina linhas em branco do
+            resultado.
+          </p>
+          <p>
+            <strong className="text-foreground">Ordenar resultados de A-Z:</strong> após remover
+            as duplicatas, ordena a lista em ordem alfabética crescente. Útil para organizar listas
+            de nomes, palavras-chave ou identificadores.
+          </p>
+          <p>
+            <strong className="text-foreground">Ordenar resultados de Z-A:</strong> semelhante à
+            opção anterior, mas em ordem decrescente. As duas opções de ordenação são mutuamente
+            exclusivas — ativar uma desativa a outra automaticamente.
           </p>
         </div>
       </section>
@@ -117,8 +123,9 @@ function SeoContent() {
               A ferramenta mantém a ordem original?
             </h3>
             <p>
-              Sim, por padrão a opção "Manter ordem original" está ativada. Se preferir ordenar
-              o resultado alfabeticamente, basta desmarcar essa opção.
+              Sim, por padrão as linhas são mantidas na ordem em que aparecem no texto original.
+              Para ordenar o resultado alfabeticamente, ative a opção "Ordenar resultados de A-Z"
+              ou "Ordenar resultados de Z-A".
             </p>
           </div>
           <div>

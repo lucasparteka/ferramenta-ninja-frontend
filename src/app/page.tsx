@@ -76,6 +76,11 @@ const categories: ToolCategory[] = [
         href: '/ferramentas/formatador-de-texto-whatsapp',
         description: 'Formate textos para envio no WhatsApp, com suporte a negrito, itálico, tachado e código',
       },
+      {
+        name: 'Comparador de Textos',
+        href: '/ferramentas/comparar-textos',
+        description: 'Compare dois textos e visualize as diferenças com destaque por cores',
+      },
     ],
   },
   {
@@ -148,6 +153,11 @@ const categories: ToolCategory[] = [
         name: 'Criptografia de Texto',
         href: '/ferramentas/criptografia-de-texto',
         description: 'Cifre e decifre textos com AES-256-GCM, Base64 ou ROT13',
+      },
+      {
+        name: 'Gerador de UUID',
+        href: '/ferramentas/gerador-de-uuid',
+        description: 'Gere UUIDs únicos nas versões v1, v3, v4 e v5 e valide UUIDs existentes',
       },
     ],
   },

@@ -1,7 +1,6 @@
 'use client'
 
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
-import { Canvas, Circle, Rect, Textbox } from 'fabric'
 import type { BackData, CanvasHandle, Template } from './types'
 
 const CANVAS_WIDTH = 360
@@ -12,10 +11,7 @@ type BackCanvasProps = {
   template: Template
 }
 
-type StampGrid = {
-  cols: number
-  rows: number
-}
+type StampGrid = { cols: number; rows: number }
 
 function computeGrid(count: number): StampGrid {
   if (count === 5) return { cols: 5, rows: 1 }
@@ -25,192 +21,98 @@ function computeGrid(count: number): StampGrid {
 }
 
 export const BackCanvas = forwardRef<CanvasHandle, BackCanvasProps>(function BackCanvas(
-  { backData, template },
+  { backData },
   ref
 ) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const scaleWrapperRef = useRef<HTMLDivElement>(null)
-  const elementRef = useRef<HTMLCanvasElement>(null)
-  const canvasRef = useRef<Canvas | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useImperativeHandle(ref, () => ({
     getDataURL() {
-      if (!canvasRef.current) return ''
-      return canvasRef.current.toDataURL({ format: 'png', multiplier: 3 })
+      return canvasRef.current?.toDataURL('image/png') ?? ''
     },
   }))
 
   useEffect(() => {
-    if (!elementRef.current || !containerRef.current || !scaleWrapperRef.current) return
-
-    const canvas = new Canvas(elementRef.current, {
-      backgroundColor: backData.backgroundColor,
-      width: CANVAS_WIDTH,
-      height: CANVAS_HEIGHT,
-      selection: false,
-    })
-
-    canvasRef.current = canvas
-
-    const container = containerRef.current
-    const scaleWrapper = scaleWrapperRef.current
-
-    const observer = new ResizeObserver(() => {
-      const scale = container.clientWidth / CANVAS_WIDTH
-      scaleWrapper.style.transform = `scale(${scale})`
-    })
-
-    observer.observe(container)
-
-    return () => {
-      observer.disconnect()
-      canvasRef.current = null
-      canvas.dispose()
-    }
-  }, [])
-
-  useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
-    canvas.clear()
-    canvas.backgroundColor = backData.backgroundColor
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    const accentBar = new Rect({
-      left: 0,
-      top: 0,
-      width: CANVAS_WIDTH,
-      height: 8,
-      fill: backData.primaryColor,
-      selectable: false,
-      evented: false,
-    })
-    canvas.add(accentBar)
+    ctx.fillStyle = backData.backgroundColor
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    const bottomBar = new Rect({
-      left: 0,
-      top: CANVAS_HEIGHT - 8,
-      width: CANVAS_WIDTH,
-      height: 8,
-      fill: backData.primaryColor,
-      selectable: false,
-      evented: false,
-    })
-    canvas.add(bottomBar)
+    ctx.fillStyle = backData.primaryColor
+    ctx.fillRect(0, 0, CANVAS_WIDTH, 8)
+    ctx.fillRect(0, CANVAS_HEIGHT - 8, CANVAS_WIDTH, 8)
 
-    const textColor = getContrastColor(backData.backgroundColor)
-
-    const titleText = new Textbox('CARTÃO FIDELIDADE', {
-      left: 0,
-      top: 18,
-      width: CANVAS_WIDTH,
-      fontSize: 11,
-      fontFamily: 'Inter, sans-serif',
-      fontWeight: 'bold',
-      fill: backData.primaryColor,
-      textAlign: 'center',
-      charSpacing: 300,
-      selectable: false,
-      evented: false,
-    })
-    canvas.add(titleText)
+    ctx.fillStyle = backData.primaryColor
+    ctx.font = 'bold 11px Inter, sans-serif'
+    ctx.letterSpacing = '3px'
+    ctx.textAlign = 'center'
+    ctx.fillText('CARTÃO FIDELIDADE', CANVAS_WIDTH / 2, 32)
+    ctx.letterSpacing = '0px'
+    ctx.textAlign = 'left'
 
     const { cols, rows } = computeGrid(backData.stampCount)
     const stampSize = 28
     const stampGapX = 14
     const stampGapY = 14
-
     const totalWidth = cols * stampSize + (cols - 1) * stampGapX
     const totalHeight = rows * stampSize + (rows - 1) * stampGapY
-
     const startX = (CANVAS_WIDTH - totalWidth) / 2
     const startY = 40 + (CANVAS_HEIGHT - 40 - 30 - totalHeight) / 2
+
+    ctx.strokeStyle = backData.primaryColor
+    ctx.lineWidth = 2
 
     let rendered = 0
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         if (rendered >= backData.stampCount) break
-
         const x = startX + col * (stampSize + stampGapX)
         const y = startY + row * (stampSize + stampGapY)
 
+        ctx.beginPath()
         if (backData.stampStyle === 'circle') {
-          const stamp = new Circle({
-            left: x,
-            top: y,
-            radius: stampSize / 2,
-            fill: 'transparent',
-            stroke: backData.primaryColor,
-            strokeWidth: 2,
-            selectable: false,
-            evented: false,
-          })
-          canvas.add(stamp)
+          ctx.arc(x + stampSize / 2, y + stampSize / 2, stampSize / 2, 0, Math.PI * 2)
         } else {
-          const stamp = new Rect({
-            left: x,
-            top: y,
-            width: stampSize,
-            height: stampSize,
-            fill: 'transparent',
-            stroke: backData.primaryColor,
-            strokeWidth: 2,
-            rx: 4,
-            ry: 4,
-            selectable: false,
-            evented: false,
-          })
-          canvas.add(stamp)
+          const r = 4
+          ctx.moveTo(x + r, y)
+          ctx.lineTo(x + stampSize - r, y)
+          ctx.arcTo(x + stampSize, y, x + stampSize, y + r, r)
+          ctx.lineTo(x + stampSize, y + stampSize - r)
+          ctx.arcTo(x + stampSize, y + stampSize, x + stampSize - r, y + stampSize, r)
+          ctx.lineTo(x + r, y + stampSize)
+          ctx.arcTo(x, y + stampSize, x, y + stampSize - r, r)
+          ctx.lineTo(x, y + r)
+          ctx.arcTo(x, y, x + r, y, r)
         }
-
+        ctx.stroke()
         rendered++
       }
     }
 
-    const countLabel = new Textbox(`${backData.stampCount} carimbos`, {
-      left: 0,
-      top: CANVAS_HEIGHT - 28,
-      width: CANVAS_WIDTH,
-      fontSize: 9,
-      fontFamily: 'Inter, sans-serif',
-      fill: textColor,
-      textAlign: 'center',
-      opacity: 0.4,
-      selectable: false,
-      evented: false,
-    })
-    canvas.add(countLabel)
-
-    canvas.renderAll()
-  }, [backData, template])
+    const textColor = getContrastColor(backData.backgroundColor)
+    ctx.fillStyle = textColor
+    ctx.globalAlpha = 0.4
+    ctx.font = '9px Inter, sans-serif'
+    ctx.textAlign = 'center'
+    ctx.fillText(`${backData.stampCount} carimbos`, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 14)
+    ctx.globalAlpha = 1
+    ctx.textAlign = 'left'
+  }, [backData])
 
   return (
-    <div
-      ref={containerRef}
-      className="rounded-lg border border-border shadow-sm"
-      style={{
-        position: 'relative',
-        width: '100%',
-        aspectRatio: `${CANVAS_WIDTH}/${CANVAS_HEIGHT}`,
-        overflow: 'hidden',
-      }}
-    >
-      <div
-        ref={scaleWrapperRef}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: CANVAS_WIDTH,
-          height: CANVAS_HEIGHT,
-          transformOrigin: 'top left',
-        }}
-      >
-        <canvas
-          ref={elementRef}
-          aria-label="Prévia do verso do cartão fidelidade com área de carimbos"
-        />
-      </div>
+    <div className="rounded-lg border border-border shadow-sm" style={{ display: 'inline-block' }}>
+      <canvas
+        ref={canvasRef}
+        width={CANVAS_WIDTH}
+        height={CANVAS_HEIGHT}
+        aria-label="Prévia do verso do cartão fidelidade com área de carimbos"
+        style={{ display: 'block' }}
+      />
     </div>
   )
 })

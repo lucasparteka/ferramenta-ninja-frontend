@@ -8,6 +8,14 @@ type Props = {
 	output: string;
 };
 
+function analyze(text: string) {
+	return {
+		doubleSpaces: (text.match(/ {2,}/g) || []).length,
+		lineBreaks: (text.match(/\n/g) || []).length,
+		invisible: (text.match(/[\u200B-\u200D\uFEFF]/g) || []).length,
+	};
+}
+
 function countStats(text: string) {
 	return {
 		characters: text.length,
@@ -22,6 +30,7 @@ export function TextCleanerResult({ output }: Props) {
 	}
 
 	const stats = countStats(output);
+	const analysis = analyze(output);
 
 	return (
 		<div className="flex flex-col gap-3">
@@ -36,9 +45,21 @@ export function TextCleanerResult({ output }: Props) {
 				</Button>
 			</div>
 
-			<div className="flex gap-4 text-xs text-muted-foreground">
+			<div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
 				<span>{stats.characters} caracteres</span>
 				<span>{stats.words} palavras</span>
+			</div>
+
+			<div className="flex flex-wrap gap-4 text-xs">
+				{analysis.doubleSpaces > 0 && (
+					<span>Espaços duplicados: {analysis.doubleSpaces}</span>
+				)}
+				{analysis.lineBreaks > 0 && (
+					<span>Quebras de linha: {analysis.lineBreaks}</span>
+				)}
+				{analysis.invisible > 0 && (
+					<span>Caracteres invisíveis: {analysis.invisible}</span>
+				)}
 			</div>
 
 			<div className="rounded-md border p-4">

@@ -2,21 +2,21 @@
 
 import { useEffect, useState } from "react";
 
-type Options = {
+export type TextCleanerOptions = {
 	removeExtraSpaces: boolean;
 	removeLineBreaks: boolean;
 	removeInvisible: boolean;
 	trimLines: boolean;
 };
 
-const defaultOptions: Options = {
+const defaultOptions: TextCleanerOptions = {
 	removeExtraSpaces: true,
 	removeLineBreaks: false,
 	removeInvisible: true,
 	trimLines: true,
 };
 
-function cleanText(text: string, options: Options) {
+function cleanText(text: string, options: TextCleanerOptions) {
 	let result = text;
 
 	if (options.removeInvisible) {
@@ -41,10 +41,13 @@ function cleanText(text: string, options: Options) {
 	return result;
 }
 
-export function useTextCleaner() {
+export function useTextCleaner(initialOptions?: Partial<TextCleanerOptions>) {
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState("");
-	const [options, setOptions] = useState(defaultOptions);
+	const [options, setOptions] = useState<TextCleanerOptions>({
+		...defaultOptions,
+		...initialOptions,
+	});
 
 	useEffect(() => {
 		if (!input) {
@@ -56,10 +59,20 @@ export function useTextCleaner() {
 		setOutput(cleaned);
 	}, [input, options]);
 
+	function detectIssues(text: string) {
+		return {
+			fromWord: /\u00A0/.test(text),
+			hasInvisible: /[\u200B-\u200D\uFEFF]/.test(text),
+			hasManyLineBreaks: (text.match(/\n/g) || []).length > 5,
+		};
+	}
+	const issues = detectIssues(input);
+
 	return {
 		input,
 		output,
 		options,
+		issues,
 		setInput,
 		setOptions,
 	};

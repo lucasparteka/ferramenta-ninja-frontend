@@ -68,6 +68,12 @@ const categories: ToolCategory[] = [
 					"Visualize arquivos CSV como tabela formatada, com paginação e ordenação por coluna",
 			},
 			{
+				name: "Converter CSV para JSON",
+				href: "/ferramentas/conversor-csv-json",
+				description:
+					"Converta arquivos CSV em JSON e vice-versa, com validação visual e correção de erros",
+			},
+			{
 				name: "Converter CSV para PDF",
 				href: "/ferramentas/converter-csv-para-pdf",
 				description:

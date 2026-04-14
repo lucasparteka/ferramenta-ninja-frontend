@@ -45,6 +45,12 @@ const categories: ToolCategory[] = [
 					"Gere Lorem Ipsum ou texto aleatório em palavras, frases ou parágrafos",
 			},
 			{
+				name: "Limpador de Texto",
+				href: "/ferramentas/limpar-texto",
+				description:
+					"Remova espaços extras, quebras de linha e caracteres invisíveis de textos copiados",
+			},
+			{
 				name: "Remover Duplicados",
 				href: "/ferramentas/remover-duplicados",
 				description: "Remova linhas duplicadas de listas e textos em um clique",

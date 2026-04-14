@@ -10,7 +10,16 @@ import { TemplateSelector } from './template-selector'
 import { FrontCanvas } from './front-canvas'
 import { BackCanvas } from './back-canvas'
 import { ExportPanel } from './export-panel'
-import type { BackData, CanvasHandle, FrontData, StampCount, StampStyle } from './types'
+import type {
+  Background,
+  BackData,
+  CanvasHandle,
+  FrontData,
+  GradientDirection,
+  StampCount,
+  StampStyle,
+  TextureType,
+} from './types'
 
 const STAMP_COUNTS: StampCount[] = [5, 6, 8, 10]
 
@@ -18,10 +27,10 @@ function buildDefaultFrontData(templateId: string): FrontData {
   const template = TEMPLATES.find((t) => t.id === templateId) ?? TEMPLATES[0]
   return {
     businessName: '',
-    optionalLine1: '',
-    optionalLine2: '',
+    slogan: '',
+    contactInfo: '',
     primaryColor: template.defaultFront.primaryColor,
-    backgroundColor: template.defaultFront.backgroundColor,
+    background: template.defaultFront.background,
     logoFile: null,
     logoPreview: null,
   }
@@ -32,8 +41,10 @@ function buildDefaultBackData(templateId: string): BackData {
   return {
     stampCount: 8,
     stampStyle: 'circle',
+    rewardText: '',
+    rulesText: '',
     primaryColor: template.defaultBack.primaryColor,
-    backgroundColor: template.defaultBack.backgroundColor,
+    background: template.defaultBack.background,
   }
 }
 
@@ -91,10 +102,164 @@ function downloadCanvas(canvas: HTMLCanvasElement, filename: string) {
   link.click()
 }
 
+type BackgroundPickerProps = {
+  value: Background
+  onChange: (bg: Background) => void
+}
+
+function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
+  const GRADIENT_DIRECTIONS: { value: GradientDirection; label: string }[] = [
+    { value: 'to-right', label: '→' },
+    { value: 'to-bottom', label: '↓' },
+    { value: 'diagonal', label: '↘' },
+  ]
+
+  const TEXTURES: { value: TextureType; label: string }[] = [
+    { value: 'dots', label: 'Pontos' },
+    { value: 'lines', label: 'Linhas' },
+    { value: 'grid', label: 'Grade' },
+    { value: 'stripes', label: 'Listras' },
+  ]
+
+  return (
+    <div className="space-y-3">
+      <Label>Fundo</Label>
+      <div className="flex gap-1 rounded-lg border border-border bg-muted p-1">
+        {(['solid', 'gradient', 'texture'] as const).map((type) => (
+          <button
+            key={type}
+            type="button"
+            onClick={() => {
+              if (type === 'solid') {
+                const color = value.type === 'solid' ? value.color
+                  : value.type === 'gradient' ? value.color1
+                  : value.color
+                onChange({ type: 'solid', color })
+              } else if (type === 'gradient') {
+                const color = value.type === 'solid' ? value.color
+                  : value.type === 'gradient' ? value.color1
+                  : value.color
+                onChange({ type: 'gradient', color1: color, color2: '#ffffff', direction: 'to-bottom' })
+              } else {
+                const color = value.type === 'solid' ? value.color
+                  : value.type === 'gradient' ? value.color1
+                  : value.color
+                onChange({ type: 'texture', color, texture: 'dots' })
+              }
+            }}
+            className={`flex-1 rounded px-2 py-1 text-xs font-medium transition-colors ${
+              value.type === type
+                ? 'bg-background text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            {type === 'solid' ? 'Sólido' : type === 'gradient' ? 'Gradiente' : 'Textura'}
+          </button>
+        ))}
+      </div>
+
+      {value.type === 'solid' && (
+        <div className="flex items-center gap-2">
+          <input
+            type="color"
+            value={value.color}
+            onChange={(e) => onChange({ type: 'solid', color: e.target.value })}
+            className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+            aria-label="Cor de fundo"
+          />
+          <span className="font-mono text-xs text-muted-foreground">{value.color}</span>
+        </div>
+      )}
+
+      {value.type === 'gradient' && (
+        <div className="space-y-2">
+          <div className="flex gap-3">
+            <div className="space-y-1">
+              <span className="text-xs text-muted-foreground">Cor 1</span>
+              <div className="flex items-center gap-2">
+                <input
+                  type="color"
+                  value={value.color1}
+                  onChange={(e) => onChange({ ...value, color1: e.target.value })}
+                  className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+                  aria-label="Cor inicial do gradiente"
+                />
+                <span className="font-mono text-xs text-muted-foreground">{value.color1}</span>
+              </div>
+            </div>
+            <div className="space-y-1">
+              <span className="text-xs text-muted-foreground">Cor 2</span>
+              <div className="flex items-center gap-2">
+                <input
+                  type="color"
+                  value={value.color2}
+                  onChange={(e) => onChange({ ...value, color2: e.target.value })}
+                  className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+                  aria-label="Cor final do gradiente"
+                />
+                <span className="font-mono text-xs text-muted-foreground">{value.color2}</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-1">
+            {GRADIENT_DIRECTIONS.map((dir) => (
+              <button
+                key={dir.value}
+                type="button"
+                onClick={() => onChange({ ...value, direction: dir.value })}
+                aria-pressed={value.direction === dir.value}
+                className={`h-8 w-10 rounded border text-sm font-medium transition-colors ${
+                  value.direction === dir.value
+                    ? 'border-primary bg-primary text-primary-foreground'
+                    : 'border-border bg-card text-foreground hover:bg-muted'
+                }`}
+              >
+                {dir.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {value.type === 'texture' && (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <input
+              type="color"
+              value={value.color}
+              onChange={(e) => onChange({ ...value, color: e.target.value })}
+              className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+              aria-label="Cor de fundo da textura"
+            />
+            <span className="font-mono text-xs text-muted-foreground">{value.color}</span>
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {TEXTURES.map((tex) => (
+              <button
+                key={tex.value}
+                type="button"
+                onClick={() => onChange({ ...value, texture: tex.value })}
+                aria-pressed={value.texture === tex.value}
+                className={`rounded border px-3 py-1.5 text-xs font-medium transition-colors ${
+                  value.texture === tex.value
+                    ? 'border-primary bg-primary text-primary-foreground'
+                    : 'border-border bg-card text-foreground hover:bg-muted'
+                }`}
+              >
+                {tex.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function LoyaltyCardEditor() {
-  const [selectedTemplateId, setSelectedTemplateId] = useState('generico')
-  const [frontData, setFrontData] = useState<FrontData>(() => buildDefaultFrontData('generico'))
-  const [backData, setBackData] = useState<BackData>(() => buildDefaultBackData('generico'))
+  const [selectedTemplateId, setSelectedTemplateId] = useState('classico')
+  const [frontData, setFrontData] = useState<FrontData>(() => buildDefaultFrontData('classico'))
+  const [backData, setBackData] = useState<BackData>(() => buildDefaultBackData('classico'))
   const [activeTab, setActiveTab] = useState<'frente' | 'verso'>('frente')
   const [logoError, setLogoError] = useState('')
 
@@ -111,12 +276,12 @@ export function LoyaltyCardEditor() {
     setFrontData((prev) => ({
       ...prev,
       primaryColor: template.defaultFront.primaryColor,
-      backgroundColor: template.defaultFront.backgroundColor,
+      background: template.defaultFront.background,
     }))
     setBackData((prev) => ({
       ...prev,
       primaryColor: template.defaultBack.primaryColor,
-      backgroundColor: template.defaultBack.backgroundColor,
+      background: template.defaultBack.background,
     }))
   }
 
@@ -213,12 +378,12 @@ export function LoyaltyCardEditor() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="optional-line1">Linha opcional 1 (slogan)</Label>
+                <Label htmlFor="slogan">Slogan</Label>
                 <Input
-                  id="optional-line1"
-                  value={frontData.optionalLine1}
+                  id="slogan"
+                  value={frontData.slogan}
                   onChange={(e) =>
-                    setFrontData((prev) => ({ ...prev, optionalLine1: e.target.value }))
+                    setFrontData((prev) => ({ ...prev, slogan: e.target.value }))
                   }
                   placeholder="Ex: Corte e barba com qualidade"
                   maxLength={50}
@@ -226,54 +391,40 @@ export function LoyaltyCardEditor() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="optional-line2">Linha opcional 2 (endereço ou redes)</Label>
+                <Label htmlFor="contact-info">Contato / redes sociais</Label>
                 <Input
-                  id="optional-line2"
-                  value={frontData.optionalLine2}
+                  id="contact-info"
+                  value={frontData.contactInfo}
                   onChange={(e) =>
-                    setFrontData((prev) => ({ ...prev, optionalLine2: e.target.value }))
+                    setFrontData((prev) => ({ ...prev, contactInfo: e.target.value }))
                   }
                   placeholder="Ex: @barbearia_joao · Rua das Flores, 123"
                   maxLength={60}
                 />
               </div>
 
-              <div className="flex gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="front-primary-color">Cor principal</Label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      id="front-primary-color"
-                      type="color"
-                      value={frontData.primaryColor}
-                      onChange={(e) =>
-                        setFrontData((prev) => ({ ...prev, primaryColor: e.target.value }))
-                      }
-                      className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
-                    />
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {frontData.primaryColor}
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="front-bg-color">Cor de fundo</Label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      id="front-bg-color"
-                      type="color"
-                      value={frontData.backgroundColor}
-                      onChange={(e) =>
-                        setFrontData((prev) => ({ ...prev, backgroundColor: e.target.value }))
-                      }
-                      className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
-                    />
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {frontData.backgroundColor}
-                    </span>
-                  </div>
+              <div className="space-y-2">
+                <Label htmlFor="front-primary-color">Cor principal</Label>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="front-primary-color"
+                    type="color"
+                    value={frontData.primaryColor}
+                    onChange={(e) =>
+                      setFrontData((prev) => ({ ...prev, primaryColor: e.target.value }))
+                    }
+                    className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+                  />
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {frontData.primaryColor}
+                  </span>
                 </div>
               </div>
+
+              <BackgroundPicker
+                value={frontData.background}
+                onChange={(bg) => setFrontData((prev) => ({ ...prev, background: bg }))}
+              />
 
               <div className="space-y-2">
                 <Label>Logo (PNG ou JPG, máx. 2MB)</Label>
@@ -357,42 +508,54 @@ export function LoyaltyCardEditor() {
                 </div>
               </div>
 
-              <div className="flex gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="back-primary-color">Cor principal</Label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      id="back-primary-color"
-                      type="color"
-                      value={backData.primaryColor}
-                      onChange={(e) =>
-                        setBackData((prev) => ({ ...prev, primaryColor: e.target.value }))
-                      }
-                      className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
-                    />
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {backData.primaryColor}
-                    </span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="back-bg-color">Cor de fundo</Label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      id="back-bg-color"
-                      type="color"
-                      value={backData.backgroundColor}
-                      onChange={(e) =>
-                        setBackData((prev) => ({ ...prev, backgroundColor: e.target.value }))
-                      }
-                      className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
-                    />
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {backData.backgroundColor}
-                    </span>
-                  </div>
+              <div className="space-y-2">
+                <Label htmlFor="reward-text">Texto do prêmio</Label>
+                <Input
+                  id="reward-text"
+                  value={backData.rewardText}
+                  onChange={(e) =>
+                    setBackData((prev) => ({ ...prev, rewardText: e.target.value }))
+                  }
+                  placeholder="Ex: Ganhe 1 grátis!"
+                  maxLength={50}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="rules-text">Regras</Label>
+                <Input
+                  id="rules-text"
+                  value={backData.rulesText}
+                  onChange={(e) =>
+                    setBackData((prev) => ({ ...prev, rulesText: e.target.value }))
+                  }
+                  placeholder="Ex: Válido por 6 meses após emissão"
+                  maxLength={80}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="back-primary-color">Cor principal</Label>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="back-primary-color"
+                    type="color"
+                    value={backData.primaryColor}
+                    onChange={(e) =>
+                      setBackData((prev) => ({ ...prev, primaryColor: e.target.value }))
+                    }
+                    className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+                  />
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {backData.primaryColor}
+                  </span>
                 </div>
               </div>
+
+              <BackgroundPicker
+                value={backData.background}
+                onChange={(bg) => setBackData((prev) => ({ ...prev, background: bg }))}
+              />
             </>
           )}
         </div>

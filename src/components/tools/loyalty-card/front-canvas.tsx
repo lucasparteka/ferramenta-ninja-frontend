@@ -6,6 +6,7 @@ import type {
 	CanvasHandle,
 	FrontData,
 	FrontLayout,
+	SocialNetwork,
 	Template,
 } from "./types";
 
@@ -76,7 +77,10 @@ export function drawBackground(
 		} else if (bg.direction === "to-bottom") {
 			grad = ctx.createLinearGradient(0, 0, 0, h);
 		} else {
-			grad = ctx.createLinearGradient(0, 0, w, h);
+			const cx = w / 2;
+			const cy = h / 2;
+			const d = (w + h) / 2 / Math.SQRT2;
+			grad = ctx.createLinearGradient(cx - d, cy - d, cx + d, cy + d);
 		}
 		grad.addColorStop(0, bg.color1);
 		grad.addColorStop(1, bg.color2);
@@ -90,7 +94,7 @@ export function drawBackground(
 
 	const patternColor = getContrastColor(bg.color);
 	ctx.save();
-	ctx.globalAlpha = 0.08;
+	ctx.globalAlpha = 0.04;
 	ctx.strokeStyle = patternColor;
 	ctx.fillStyle = patternColor;
 
@@ -181,33 +185,185 @@ function getBgBaseColor(bg: Background): string {
 	return bg.color;
 }
 
+function getSocialPlaceholder(network: SocialNetwork): string {
+	const map: Record<SocialNetwork, string> = {
+		facebook: "/sua-página",
+		instagram: "@sua-conta",
+		whatsapp: "(11) 99999-9999",
+		tiktok: "@sua-conta",
+		website: "www.seusite.com",
+	};
+	return map[network];
+}
+
+export function drawSocialIcon(
+	ctx: CanvasRenderingContext2D,
+	network: SocialNetwork,
+	x: number,
+	y: number,
+	size: number,
+	color: string,
+) {
+	const s = size;
+	ctx.save();
+	ctx.translate(x, y);
+
+	ctx.fillStyle = color;
+	ctx.beginPath();
+	ctx.roundRect(0, 0, s, s, Math.round(s * 0.22));
+	ctx.fill();
+
+	const contrast = getContrastColor(color);
+
+	switch (network) {
+		case "facebook": {
+			ctx.fillStyle = contrast;
+			ctx.font = `bold ${Math.round(s * 0.72)}px Arial, sans-serif`;
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle";
+			ctx.fillText("f", s * 0.55, s * 0.54);
+			break;
+		}
+		case "instagram": {
+			const pad = s * 0.15;
+			const is = s - pad * 2;
+			ctx.strokeStyle = contrast;
+			ctx.lineWidth = Math.max(1, s * 0.1);
+			ctx.beginPath();
+			ctx.roundRect(pad, pad, is, is, Math.round(is * 0.28));
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.arc(s / 2, s / 2, s * 0.2, 0, Math.PI * 2);
+			ctx.stroke();
+			ctx.fillStyle = contrast;
+			ctx.beginPath();
+			ctx.arc(s * 0.73, s * 0.27, s * 0.08, 0, Math.PI * 2);
+			ctx.fill();
+			break;
+		}
+		case "whatsapp": {
+			ctx.fillStyle = contrast;
+			ctx.beginPath();
+			ctx.arc(s * 0.34, s * 0.28, s * 0.13, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.beginPath();
+			ctx.arc(s * 0.68, s * 0.72, s * 0.13, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.strokeStyle = contrast;
+			ctx.lineWidth = Math.max(1, s * 0.12);
+			ctx.lineCap = "round";
+			ctx.beginPath();
+			ctx.moveTo(s * 0.34, s * 0.28);
+			ctx.bezierCurveTo(
+				s * 0.28,
+				s * 0.55,
+				s * 0.6,
+				s * 0.65,
+				s * 0.68,
+				s * 0.72,
+			);
+			ctx.stroke();
+			break;
+		}
+		case "tiktok": {
+			ctx.fillStyle = contrast;
+			ctx.font = `bold ${Math.round(s * 0.65)}px sans-serif`;
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle";
+			ctx.fillText("♪", s / 2, s * 0.56);
+			break;
+		}
+		case "website": {
+			ctx.strokeStyle = contrast;
+			ctx.lineWidth = Math.max(1, s * 0.09);
+			ctx.beginPath();
+			ctx.arc(s / 2, s / 2, s * 0.34, 0, Math.PI * 2);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(s * 0.16, s / 2);
+			ctx.lineTo(s * 0.84, s / 2);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.ellipse(s / 2, s / 2, s * 0.16, s * 0.34, 0, 0, Math.PI * 2);
+			ctx.stroke();
+			break;
+		}
+	}
+
+	ctx.restore();
+}
+
 const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 	classico(ctx, data, w, h) {
+		const bandH = 28;
+		const bandY = Math.round(h * 0.52);
 		const textColor = getContrastColor(getBgBaseColor(data.background));
-		ctx.fillStyle = data.primaryColor;
-		ctx.fillRect(0, 0, w, 8);
-		ctx.fillRect(0, 8, 4, h - 8);
+		const bandTextColor = getContrastColor(data.primaryColor);
 
 		ctx.fillStyle = data.primaryColor;
-		ctx.font = "bold 22px Inter, sans-serif";
+		ctx.fillRect(0, bandY, w, bandH);
+
+		ctx.fillStyle = bandTextColor;
+		ctx.font = "bold 11px Inter, sans-serif";
+		ctx.letterSpacing = "2px";
+		ctx.textAlign = "center";
+		ctx.fillText("CARTÃO FIDELIDADE", w / 2, bandY + bandH / 2 + 4);
+		ctx.letterSpacing = "0px";
+
+		if (data.logoPreview) {
+			renderLogo(
+				ctx,
+				data.logoPreview,
+				w / 2,
+				bandY / 2,
+				w - 40,
+				bandY - 20,
+				true,
+			);
+		} else {
+			ctx.fillStyle = textColor;
+			ctx.font = "bold 28px Inter, sans-serif";
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle";
+			ctx.fillText(data.businessName || "Sua Marca", w / 2, bandY / 2, w - 40);
+			ctx.textBaseline = "alphabetic";
+		}
+
+		const footerY = bandY + bandH;
+		const footerH = h - footerY;
+		const entries = (data.socialEntries ?? []).slice(0, 2);
+		const iconSize = 14;
+		const iconTextGap = 5;
+
+		ctx.font = "10px Inter, sans-serif";
+		ctx.textBaseline = "middle";
+
+		const positions = entries.length <= 1 ? [w / 2] : [w / 4, (3 * w) / 4];
+
+		for (let i = 0; i < entries.length && i < 2; i++) {
+			const entry = entries[i];
+			const handle = entry.handle || getSocialPlaceholder(entry.network);
+			const textWidth = ctx.measureText(handle).width;
+			const entryWidth = iconSize + iconTextGap + textWidth;
+			const ex = positions[i] - entryWidth / 2;
+			const cy = footerY + footerH / 2;
+
+			drawSocialIcon(
+				ctx,
+				entry.network,
+				ex,
+				cy - iconSize / 2,
+				iconSize,
+				data.primaryColor,
+			);
+
+			ctx.fillStyle = entry.handle ? textColor : `${textColor}66`;
+			ctx.textAlign = "left";
+			ctx.fillText(handle, ex + iconSize + iconTextGap, cy);
+		}
+
+		ctx.textBaseline = "alphabetic";
 		ctx.textAlign = "left";
-		ctx.fillText(data.businessName || "Nome do Negócio", 20, 52);
-
-		if (data.slogan) {
-			ctx.fillStyle = textColor;
-			ctx.font = "13px Inter, sans-serif";
-			ctx.fillText(data.slogan, 20, 78);
-		}
-
-		if (data.contactInfo) {
-			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.7;
-			ctx.font = "11px Inter, sans-serif";
-			ctx.fillText(data.contactInfo, 20, 98);
-			ctx.globalAlpha = 1;
-		}
-
-		renderLogo(ctx, data.logoPreview, w - 100, 20, 80, 80);
 	},
 
 	moderno(ctx, data, w, h) {

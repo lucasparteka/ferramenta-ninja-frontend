@@ -1,5 +1,12 @@
 export type StampStyle = "circle" | "square";
 
+export type SocialNetwork = "facebook" | "instagram" | "whatsapp" | "tiktok" | "website";
+
+export type SocialEntry = {
+	network: SocialNetwork;
+	handle: string;
+};
+
 export type StampCount = 5 | 6 | 8 | 10;
 
 export type TextureType = "dots" | "lines" | "grid" | "stripes";
@@ -41,6 +48,7 @@ export type FrontData = {
 	businessName: string;
 	slogan: string;
 	contactInfo: string;
+	socialEntries: SocialEntry[];
 	primaryColor: string;
 	background: Background;
 	logoFile: File | null;
@@ -52,6 +60,8 @@ export type BackData = {
 	stampStyle: StampStyle;
 	rewardText: string;
 	rulesText: string;
+	whatsapp: string;
+	extraText: string;
 	primaryColor: string;
 	background: Background;
 };

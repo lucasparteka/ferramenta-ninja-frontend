@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
-import { drawBackground } from "./front-canvas";
+import { drawBackground, drawSocialIcon } from "./front-canvas";
 import type { BackData, BackLayout, CanvasHandle, Template } from "./types";
 
 const CANVAS_WIDTH = 360;
@@ -39,9 +39,13 @@ function drawStamps(
 	labeled = false,
 ) {
 	const { cols, rows } = computeGrid(data.stampCount);
-	const stampSize = 28;
-	const gapX = 14;
-	const gapY = 14;
+	const gap = 10;
+	const targetSize = 50;
+	const maxByWidth = Math.floor((areaW - (cols - 1) * gap) / cols);
+	const maxByHeight = Math.floor((areaH - (rows - 1) * gap) / rows);
+	const stampSize = Math.min(targetSize, maxByWidth, maxByHeight);
+	const gapX = gap;
+	const gapY = gap;
 	const totalW = cols * stampSize + (cols - 1) * gapX;
 	const totalH = rows * stampSize + (rows - 1) * gapY;
 	const startX = areaX + (areaW - totalW) / 2;
@@ -122,36 +126,73 @@ type LayoutFn = (
 const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 	classico(ctx, data, w, h) {
 		const textColor = getContrastColor(getBgBaseColor(data));
-
-		ctx.fillStyle = data.primaryColor;
-		ctx.fillRect(0, 0, w, 8);
-		ctx.fillRect(0, h - 8, w, 8);
-
-		ctx.fillStyle = data.primaryColor;
-		ctx.font = "bold 11px Inter, sans-serif";
-		ctx.letterSpacing = "2px";
-		ctx.textAlign = "center";
-		ctx.fillText("CARTÃO FIDELIDADE", w / 2, 26);
-		ctx.letterSpacing = "0px";
-
-		if (data.rewardText) {
-			ctx.fillStyle = data.primaryColor;
-			ctx.font = "11px Inter, sans-serif";
-			ctx.fillText(data.rewardText, w / 2, 44);
-		}
-
-		const stampAreaY = data.rewardText ? 50 : 36;
-		const stampAreaH = h - stampAreaY - (data.rulesText ? 30 : 20);
-		drawStamps(ctx, data, 0, stampAreaY, w, stampAreaH);
+		const footerH = 28;
+		const rulesH = 32;
 
 		if (data.rulesText) {
-			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.5;
+			const maxLineW = w - 32;
+			const words = data.rulesText.split(" ");
+			const lines: string[] = [];
+			let current = "";
 			ctx.font = "9px Inter, sans-serif";
-			ctx.fillText(data.rulesText, w / 2, h - 14);
+			for (const word of words) {
+				const test = current ? `${current} ${word}` : word;
+				if (ctx.measureText(test).width > maxLineW && current) {
+					lines.push(current);
+					current = word;
+					if (lines.length >= 2) break;
+				} else {
+					current = test;
+				}
+			}
+			if (current && lines.length < 2) lines.push(current);
+
+			const lineH = 13;
+			const totalH = lines.length * lineH;
+			const startY = (rulesH - totalH) / 2 + lineH;
+			ctx.fillStyle = textColor;
+			ctx.globalAlpha = 0.75;
+			ctx.textAlign = "center";
+			for (let i = 0; i < lines.length; i++) {
+				ctx.fillText(lines[i], w / 2, startY + i * lineH);
+			}
 			ctx.globalAlpha = 1;
 		}
 
+		drawStamps(ctx, data, 0, rulesH, w, h - rulesH - footerH);
+
+		const sepY = h - footerH;
+		ctx.strokeStyle = data.primaryColor;
+		ctx.globalAlpha = 0.3;
+		ctx.lineWidth = 0.5;
+		ctx.beginPath();
+		ctx.moveTo(16, sepY);
+		ctx.lineTo(w - 16, sepY);
+		ctx.stroke();
+		ctx.globalAlpha = 1;
+
+		const footerCY = sepY + footerH / 2;
+		ctx.font = "9px Inter, sans-serif";
+		ctx.textBaseline = "middle";
+
+		if (data.whatsapp) {
+			drawSocialIcon(ctx, "whatsapp", 16, footerCY - 7, 14, data.primaryColor);
+			ctx.fillStyle = textColor;
+			ctx.globalAlpha = 0.8;
+			ctx.textAlign = "left";
+			ctx.fillText(data.whatsapp, 34, footerCY);
+			ctx.globalAlpha = 1;
+		}
+
+		if (data.extraText) {
+			ctx.fillStyle = textColor;
+			ctx.globalAlpha = 0.8;
+			ctx.textAlign = "right";
+			ctx.fillText(data.extraText, w - 16, footerCY);
+			ctx.globalAlpha = 1;
+		}
+
+		ctx.textBaseline = "alphabetic";
 		ctx.textAlign = "left";
 	},
 

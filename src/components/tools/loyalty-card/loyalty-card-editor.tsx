@@ -16,6 +16,7 @@ import type {
 	CanvasHandle,
 	FrontData,
 	GradientDirection,
+	SocialNetwork,
 	StampCount,
 	StampStyle,
 	TextureType,
@@ -29,6 +30,10 @@ function buildDefaultFrontData(templateId: string): FrontData {
 		businessName: "",
 		slogan: "",
 		contactInfo: "",
+		socialEntries: [
+			{ network: "instagram", handle: "" },
+			{ network: "facebook", handle: "" },
+		],
 		primaryColor: template.defaultFront.primaryColor,
 		background: template.defaultFront.background,
 		logoFile: null,
@@ -43,6 +48,8 @@ function buildDefaultBackData(templateId: string): BackData {
 		stampStyle: "circle",
 		rewardText: "",
 		rulesText: "",
+		whatsapp: "",
+		extraText: "",
 		primaryColor: template.defaultBack.primaryColor,
 		background: template.defaultBack.background,
 	};
@@ -345,6 +352,18 @@ export function LoyaltyCardEditor() {
 		if (logoInputRef.current) logoInputRef.current.value = "";
 	}
 
+	function updateSocialEntry(
+		index: number,
+		field: "network" | "handle",
+		value: string,
+	) {
+		setFrontData((prev) => {
+			const entries = [...prev.socialEntries];
+			entries[index] = { ...entries[index], [field]: value as SocialNetwork };
+			return { ...prev, socialEntries: entries };
+		});
+	}
+
 	async function handleExportFront() {
 		const dataUrl = frontCanvasRef.current?.getDataURL();
 		if (!dataUrl) return;
@@ -417,37 +436,81 @@ export function LoyaltyCardEditor() {
 								/>
 							</div>
 
-							<div className="space-y-2">
-								<Label htmlFor="slogan">Slogan</Label>
-								<Input
-									id="slogan"
-									value={frontData.slogan}
-									onChange={(e) =>
-										setFrontData((prev) => ({
-											...prev,
-											slogan: e.target.value,
-										}))
-									}
-									placeholder="Ex: Corte e barba com qualidade"
-									maxLength={50}
-								/>
-							</div>
+							{selectedTemplate.id === "classico" ? (
+								<div className="space-y-2">
+									<Label>Redes sociais</Label>
+									{(["rede-1", "rede-2"] as const).map((slotKey, index) => {
+										const entry = frontData.socialEntries[index];
+										return (
+											<div key={slotKey} className="flex gap-2">
+												<select
+													value={entry.network}
+													onChange={(e) =>
+														updateSocialEntry(
+															index,
+															"network",
+															e.target.value,
+														)
+													}
+													className="rounded border border-border bg-background px-2 py-1.5 text-sm text-foreground"
+												>
+													<option value="instagram">Instagram</option>
+													<option value="facebook">Facebook</option>
+													<option value="whatsapp">WhatsApp</option>
+													<option value="tiktok">TikTok</option>
+													<option value="website">Site</option>
+												</select>
+												<Input
+													value={entry.handle}
+													onChange={(e) =>
+														updateSocialEntry(
+															index,
+															"handle",
+															e.target.value,
+														)
+													}
+													placeholder="@handle ou link"
+													maxLength={40}
+												/>
+											</div>
+										);
+									})}
+								</div>
+							) : (
+								<>
+									<div className="space-y-2">
+										<Label htmlFor="slogan">Slogan</Label>
+										<Input
+											id="slogan"
+											value={frontData.slogan}
+											onChange={(e) =>
+												setFrontData((prev) => ({
+													...prev,
+													slogan: e.target.value,
+												}))
+											}
+											placeholder="Ex: Corte e barba com qualidade"
+											maxLength={50}
+										/>
+									</div>
 
-							<div className="space-y-2">
-								<Label htmlFor="contact-info">Contato / redes sociais</Label>
-								<Input
-									id="contact-info"
-									value={frontData.contactInfo}
-									onChange={(e) =>
-										setFrontData((prev) => ({
-											...prev,
-											contactInfo: e.target.value,
-										}))
-									}
-									placeholder="Ex: @barbearia_joao · Rua das Flores, 123"
-									maxLength={60}
-								/>
-							</div>
+									<div className="space-y-2">
+										<Label htmlFor="contact-info">Contato / redes sociais</Label>
+										<Input
+											id="contact-info"
+											value={frontData.contactInfo}
+											onChange={(e) =>
+												setFrontData((prev) => ({
+													...prev,
+													contactInfo: e.target.value,
+												}))
+											}
+											placeholder="Ex: @barbearia_joao · Rua das Flores, 123"
+											maxLength={60}
+										/>
+									</div>
+								</>
+							)}
 
 							<div className="space-y-2">
 								<Label htmlFor="front-primary-color">Cor principal</Label>
@@ -572,24 +635,30 @@ export function LoyaltyCardEditor() {
 								</div>
 							</div>
 
-							<div className="space-y-2">
-								<Label htmlFor="reward-text">Texto do prêmio</Label>
-								<Input
-									id="reward-text"
-									value={backData.rewardText}
-									onChange={(e) =>
-										setBackData((prev) => ({
-											...prev,
-											rewardText: e.target.value,
-										}))
-									}
-									placeholder="Ex: Ganhe 1 grátis!"
-									maxLength={50}
-								/>
-							</div>
+							{selectedTemplate.id !== "classico" && (
+								<div className="space-y-2">
+									<Label htmlFor="reward-text">Texto do prêmio</Label>
+									<Input
+										id="reward-text"
+										value={backData.rewardText}
+										onChange={(e) =>
+											setBackData((prev) => ({
+												...prev,
+												rewardText: e.target.value,
+											}))
+										}
+										placeholder="Ex: Ganhe 1 grátis!"
+										maxLength={50}
+									/>
+								</div>
+							)}
 
 							<div className="space-y-2">
-								<Label htmlFor="rules-text">Regras</Label>
+								<Label htmlFor="rules-text">
+									{selectedTemplate.id === "classico"
+										? "Texto de regras"
+										: "Regras"}
+								</Label>
 								<Input
 									id="rules-text"
 									value={backData.rulesText}
@@ -599,10 +668,50 @@ export function LoyaltyCardEditor() {
 											rulesText: e.target.value,
 										}))
 									}
-									placeholder="Ex: Válido por 6 meses após emissão"
+									placeholder={
+										selectedTemplate.id === "classico"
+											? "Ex: Complete o cartão e ganhe 1 grátis!"
+											: "Ex: Válido por 6 meses após emissão"
+									}
 									maxLength={80}
 								/>
 							</div>
+
+							{selectedTemplate.id === "classico" && (
+								<>
+									<div className="space-y-2">
+										<Label htmlFor="back-whatsapp">WhatsApp</Label>
+										<Input
+											id="back-whatsapp"
+											value={backData.whatsapp}
+											onChange={(e) =>
+												setBackData((prev) => ({
+													...prev,
+													whatsapp: e.target.value,
+												}))
+											}
+											placeholder="(11) 99999-9999"
+											maxLength={20}
+										/>
+									</div>
+
+									<div className="space-y-2">
+										<Label htmlFor="extra-text">Frase extra</Label>
+										<Input
+											id="extra-text"
+											value={backData.extraText}
+											onChange={(e) =>
+												setBackData((prev) => ({
+													...prev,
+													extraText: e.target.value,
+												}))
+											}
+											placeholder="Ex: Nós valorizamos a sua FIDELIDADE!"
+											maxLength={60}
+										/>
+									</div>
+								</>
+							)}
 
 							<div className="space-y-2">
 								<Label htmlFor="back-primary-color">Cor principal</Label>

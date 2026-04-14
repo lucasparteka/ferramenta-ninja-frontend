@@ -1,145 +1,163 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Download, Loader2, AlertTriangle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import type { TemplateId, ResumeFontVar, ResumeFontSize } from "@/components/tools/curriculo/resume-templates/config"
-import { RESUME_FONT_SIZE_OPTIONS, RESUME_FONT_DEFAULT } from "@/components/tools/curriculo/resume-templates/config"
-import type { ResumeTemplateData } from "@/components/tools/curriculo/resume-templates/types"
-import type { ResumeFormValues } from "@/components/tools/curriculo/resume-builder/types"
-import { cn } from "@/lib/utils"
+import { AlertTriangle, Download, Loader2 } from "lucide-react";
+import { useState } from "react";
+import type { ResumeFormValues } from "@/components/tools/curriculo/resume-builder/types";
+import type {
+	ResumeFontSize,
+	ResumeFontVar,
+	TemplateId,
+} from "@/components/tools/curriculo/resume-templates/config";
+import {
+	RESUME_FONT_DEFAULT,
+	RESUME_FONT_SIZE_OPTIONS,
+} from "@/components/tools/curriculo/resume-templates/config";
+import type { ResumeTemplateData } from "@/components/tools/curriculo/resume-templates/types";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type ResumePdfButtonProps = {
-  templateId: TemplateId
-  data: ResumeTemplateData
-  color: string
-  fontVar?: ResumeFontVar
-  fontSize?: ResumeFontSize
-  formData: ResumeFormValues
-  photoFile?: File | null
-  label?: string
-  variant?: React.ComponentProps<typeof Button>["variant"]
-  size?: React.ComponentProps<typeof Button>["size"]
-  className?: string
-  hasPendingChanges?: boolean
-}
+	templateId: TemplateId;
+	data: ResumeTemplateData;
+	color: string;
+	fontVar?: ResumeFontVar;
+	fontSize?: ResumeFontSize;
+	formData: ResumeFormValues;
+	photoFile?: File | null;
+	label?: string;
+	variant?: React.ComponentProps<typeof Button>["variant"];
+	size?: React.ComponentProps<typeof Button>["size"];
+	className?: string;
+	hasPendingChanges?: boolean;
+};
 
 async function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(reader.result as string)
-    reader.onerror = reject
-    reader.readAsDataURL(file)
-  })
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.onload = () => resolve(reader.result as string);
+		reader.onerror = reject;
+		reader.readAsDataURL(file);
+	});
 }
 
 export function ResumePdfButton({
-  templateId,
-  data,
-  color,
-  fontVar,
-  fontSize,
-  formData,
-  photoFile,
-  label = "Baixar PDF",
-  variant = "outline",
-  size = "default",
-  className,
-  hasPendingChanges = false,
+	templateId,
+	data,
+	color,
+	fontVar,
+	fontSize,
+	formData,
+	photoFile,
+	label = "Baixar PDF",
+	variant = "outline",
+	size = "default",
+	className,
+	hasPendingChanges = false,
 }: ResumePdfButtonProps) {
-  const [loading, setLoading] = useState(false)
-  const [confirming, setConfirming] = useState(false)
+	const [loading, setLoading] = useState(false);
+	const [confirming, setConfirming] = useState(false);
 
-  async function download() {
-    setConfirming(false)
-    setLoading(true)
-    try {
-      const zoom = RESUME_FONT_SIZE_OPTIONS.find((o) => o.value === fontSize)?.zoom ?? 1.0
-      const photoDataUrl = photoFile ? await fileToBase64(photoFile) : undefined
+	async function download() {
+		setConfirming(false);
+		setLoading(true);
+		try {
+			const zoom =
+				RESUME_FONT_SIZE_OPTIONS.find((o) => o.value === fontSize)?.zoom ?? 1.0;
+			const photoDataUrl = photoFile
+				? await fileToBase64(photoFile)
+				: undefined;
 
-      const res = await fetch("/api/curriculo/gerar-pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          formData,
-          layout: {
-            templateId,
-            color,
-            fontVar: fontVar ?? RESUME_FONT_DEFAULT,
-            fontSize: fontSize ?? "medium",
-            zoom,
-          },
-          photoDataUrl,
-        }),
-      })
+			const res = await fetch("/api/curriculo/gerar-pdf", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					formData,
+					layout: {
+						templateId,
+						color,
+						fontVar: fontVar ?? RESUME_FONT_DEFAULT,
+						fontSize: fontSize ?? "medium",
+						zoom,
+					},
+					photoDataUrl,
+				}),
+			});
 
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        throw new Error(body.error ?? "Falha ao gerar PDF")
-      }
+			if (!res.ok) {
+				const body = await res.json().catch(() => ({}));
+				throw new Error(body.error ?? "Falha ao gerar PDF");
+			}
 
-      const blob = await res.blob()
-      const filename = data.name
-        ? `curriculo-${data.name.toLowerCase().replace(/\s+/g, "-")}.pdf`
-        : "curriculo.pdf"
+			const blob = await res.blob();
+			const filename = data.name
+				? `curriculo-${data.name.toLowerCase().replace(/\s+/g, "-")}.pdf`
+				: "curriculo.pdf";
 
-      const link = document.createElement("a")
-      link.href = URL.createObjectURL(blob)
-      link.download = filename
-      link.click()
-      URL.revokeObjectURL(link.href)
-    } catch (err) {
-      console.error("[PDF] download failed:", err)
-    } finally {
-      setLoading(false)
-    }
-  }
+			const link = document.createElement("a");
+			link.href = URL.createObjectURL(blob);
+			link.download = filename;
+			link.click();
+			URL.revokeObjectURL(link.href);
+		} catch (err) {
+			console.error("[PDF] download failed:", err);
+		} finally {
+			setLoading(false);
+		}
+	}
 
-  function handleClick() {
-    if (hasPendingChanges) {
-      setConfirming(true)
-    } else {
-      download()
-    }
-  }
+	function handleClick() {
+		if (hasPendingChanges) {
+			setConfirming(true);
+		} else {
+			download();
+		}
+	}
 
-  return (
-    <div className="relative inline-flex max-md:w-full">
-      <Button
-        type="button"
-        variant={variant}
-        size={size}
-        className={cn("max-md:w-full", className)}
-        onClick={handleClick}
-        disabled={loading}
-      >
-        {loading ? (
-          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-        ) : (
-          <Download className="h-4 w-4 mr-2" />
-        )}
-        {loading ? "Gerando PDF..." : label}
-      </Button>
+	return (
+		<div className="relative inline-flex max-md:w-full">
+			<Button
+				type="button"
+				variant={variant}
+				size={size}
+				className={cn("max-md:w-full", className)}
+				onClick={handleClick}
+				disabled={loading}
+			>
+				{loading ? (
+					<Loader2 className="h-4 w-4 mr-2 animate-spin" />
+				) : (
+					<Download className="h-4 w-4 mr-2" />
+				)}
+				{loading ? "Gerando PDF..." : label}
+			</Button>
 
-      {confirming && (
-        <div className="absolute top-full left-0 mt-1 z-50 flex gap-3 rounded-md border bg-background p-3 shadow-lg w-80">
-          <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
-          <div className="space-y-2">
-            <p className="text-sm font-semibold leading-none">Alterações pendentes</p>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Você tem alterações não salvas. O PDF será gerado com os últimos dados salvos.
-            </p>
-            <div className="flex gap-2 pt-1">
-              <Button size="sm" variant="outline" className="flex-1" onClick={() => setConfirming(false)}>
-                Cancelar
-              </Button>
-              <Button size="sm" className="flex-1" onClick={download}>
-                Baixar assim mesmo
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
+			{confirming && (
+				<div className="absolute top-full left-0 mt-1 z-50 flex gap-3 rounded-md border bg-background p-3 shadow-lg w-80">
+					<AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+					<div className="space-y-2">
+						<p className="text-sm font-semibold leading-none">
+							Alterações pendentes
+						</p>
+						<p className="text-sm text-muted-foreground leading-relaxed">
+							Você tem alterações não salvas. O PDF será gerado com os últimos
+							dados salvos.
+						</p>
+						<div className="flex gap-2 pt-1">
+							<Button
+								size="sm"
+								variant="outline"
+								className="flex-1"
+								onClick={() => setConfirming(false)}
+							>
+								Cancelar
+							</Button>
+							<Button size="sm" className="flex-1" onClick={download}>
+								Baixar assim mesmo
+							</Button>
+						</div>
+					</div>
+				</div>
+			)}
+		</div>
+	);
 }

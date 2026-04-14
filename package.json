@@ -6,9 +6,9 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "pnpx biome lint ./src",
-		"format": "pnpx biome format --write ./src",
-		"check": "pnpx biome check --write ./src"
+		"lint": "biome lint ./src",
+		"format": "biome format --write ./src",
+		"check": "biome check --write ./src"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.3.0",
@@ -53,6 +53,7 @@
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "2.4.11",
 		"@types/diff-match-patch": "^1.0.36",
 		"@types/jsbarcode": "^3.11.4",
 		"@types/node": "^20",

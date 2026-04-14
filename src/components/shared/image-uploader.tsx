@@ -201,8 +201,11 @@ export default function ImageUploader({
 						)}
 					</div>
 					<div className="mt-4">
-						<label className="block text-sm mb-2">Zoom</label>
+						<label htmlFor="zoom-slider" className="block text-sm mb-2">
+							Zoom
+						</label>
 						<Slider
+							id="zoom-slider"
 							value={[zoom]}
 							min={1}
 							max={3}

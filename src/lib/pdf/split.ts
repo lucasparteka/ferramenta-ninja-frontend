@@ -42,7 +42,9 @@ export async function extractPages(
 
 	const result = await PDFDocument.create();
 	const pages = await result.copyPages(source, indices);
-	pages.forEach((page) => result.addPage(page));
+	pages.forEach((page) => {
+		result.addPage(page);
+	});
 
 	return result.save();
 }
@@ -90,7 +92,9 @@ export async function extractPagesByIndex(
 
 	const result = await PDFDocument.create();
 	const pages = await result.copyPages(source, validIndices);
-	pages.forEach((page) => result.addPage(page));
+	pages.forEach((page) => {
+		result.addPage(page);
+	});
 
 	return result.save();
 }

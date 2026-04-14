@@ -122,8 +122,11 @@ const EducationCardForm = memo(function EducationCardForm({
 	return (
 		<div className="border-t md:px-4 px-2 pb-4 pt-4 space-y-4">
 			<div className="space-y-2">
-				<label className="text-sm font-medium">Instituição *</label>
+				<label htmlFor="institution-input" className="text-sm font-medium">
+					Instituição *
+				</label>
 				<Input
+					id="institution-input"
 					placeholder="Ex: Universidade Federal de Santa Catarina"
 					{...register(`education.${index}.institution`)}
 				/>
@@ -158,8 +161,11 @@ const EducationCardForm = memo(function EducationCardForm({
 					)}
 				/>
 				<div className="space-y-2">
-					<label className="text-sm font-medium">Curso / Área</label>
+					<label htmlFor="course-area-input" className="text-sm font-medium">
+						Curso / Área
+					</label>
 					<Input
+						id="course-area-input"
 						placeholder="Ex: Ciência da Computação"
 						{...register(`education.${index}.field`)}
 					/>
@@ -223,9 +229,13 @@ const EducationCardForm = memo(function EducationCardForm({
 				name={`education.${index}.isCurrent`}
 				render={({ field }) => (
 					<FormItem>
-						<label className="flex items-center gap-2 cursor-pointer w-fit">
+						<label
+							htmlFor={`education-${index}-isCurrent`}
+							className="flex items-center gap-2 cursor-pointer w-fit"
+						>
 							<FormControl>
 								<Checkbox
+									id={`education-${index}-isCurrent`}
 									checked={field.value}
 									onCheckedChange={field.onChange}
 								/>
@@ -237,8 +247,11 @@ const EducationCardForm = memo(function EducationCardForm({
 			/>
 
 			<div className="space-y-2">
-				<label className="text-sm font-medium">Descrição</label>
+				<label htmlFor="education-description" className="text-sm font-medium">
+					Descrição
+				</label>
 				<Textarea
+					id="education-description"
 					placeholder="Atividades relevantes, TCC, projetos de destaque..."
 					rows={3}
 					{...register(`education.${index}.description`)}
@@ -290,8 +303,8 @@ function EducationCard({
 					isDropTarget && "border-primary border-l-4 bg-primary/5",
 				)}
 			>
-				<div
-					role="button"
+				<button
+					type="button"
 					tabIndex={0}
 					className="flex items-center px-3 py-3 cursor-pointer select-none"
 					onClick={handleToggle}
@@ -304,7 +317,7 @@ function EducationCard({
 						control={control}
 						isOpen={isOpen}
 					/>
-				</div>
+				</button>
 
 				{isOpen && <EducationCardForm index={index} control={control} />}
 			</div>

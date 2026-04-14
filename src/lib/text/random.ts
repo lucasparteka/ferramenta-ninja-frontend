@@ -118,7 +118,7 @@ function randomWord(): string {
 function buildSentence(wordCount: number): string {
 	const words = Array.from({ length: wordCount }, randomWord);
 	const text = words.join(" ");
-	return text.charAt(0).toUpperCase() + text.slice(1) + ".";
+	return `${text.charAt(0).toUpperCase() + text.slice(1)}.`;
 }
 
 export function generateRandomWords(count: number): string {

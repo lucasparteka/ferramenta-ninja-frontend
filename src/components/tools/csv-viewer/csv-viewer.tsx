@@ -151,10 +151,10 @@ function Pagination({
 			>
 				<ChevronLeft className="h-4 w-4" />
 			</Button>
-			{getPages().map((page, index) =>
+			{getPages().map((page) =>
 				page === "ellipsis" ? (
 					<span
-						key={`ellipsis-${index}`}
+						key={`ellipsis-${page.toString()}`}
 						className="px-2 text-sm text-muted-foreground"
 						aria-hidden="true"
 					>
@@ -336,6 +336,7 @@ export function CsvViewer() {
 
 	return (
 		<div className="space-y-4">
+			{/** biome-ignore lint/a11y/useSemanticElements: dnd */}
 			<div
 				role="button"
 				tabIndex={0}
@@ -398,7 +399,6 @@ export function CsvViewer() {
 					if (f) processFile(f);
 				}}
 				className="hidden"
-				aria-hidden="true"
 			/>
 
 			<div className="relative">
@@ -478,13 +478,14 @@ export function CsvViewer() {
 								<tr>
 									{parsed.headers.map((header, index) => (
 										<th
+											// biome-ignore lint/suspicious/noArrayIndexKey: "Índice é estável para colunas em um arquivo CSV"
 											key={index}
 											scope="col"
 											onClick={() => handleSort(index)}
 											className="cursor-pointer select-none whitespace-nowrap bg-primary px-4 py-3 text-left font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
 										>
 											<div className="flex items-center gap-1.5">
-												<span className="max-w-[180px] truncate" title={header}>
+												<span className="max-w-45 truncate" title={header}>
 													{header || `Coluna ${index + 1}`}
 												</span>
 												{sortConfig?.columnIndex === index ? (
@@ -503,18 +504,17 @@ export function CsvViewer() {
 							</thead>
 							<tbody className="divide-y divide-border bg-card">
 								{visibleRows.map((row, rowIndex) => (
+									// biome-ignore lint/suspicious/noArrayIndexKey: "Índice é estável para linhas em uma página"
 									<tr key={rowIndex} className="even:bg-secondary/50">
 										{row.map((cell, cellIndex) => (
 											<td
+												// biome-ignore lint/suspicious/noArrayIndexKey: "Índice é estável para células em uma linha"
 												key={cellIndex}
 												className={`px-4 py-2.5 text-foreground ${
 													cellIndex === 0 ? "font-medium" : ""
 												}`}
 											>
-												<span
-													className="block max-w-[200px] truncate"
-													title={cell}
-												>
+												<span className="block max-w-50 truncate" title={cell}>
 													{cell}
 												</span>
 											</td>

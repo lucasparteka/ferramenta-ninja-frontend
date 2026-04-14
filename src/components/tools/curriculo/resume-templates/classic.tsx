@@ -1,4 +1,5 @@
 import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
 import type { ResumeTemplateData } from "./types";
 
 function formatMonthYear(yyyyMM: string): string {
@@ -19,7 +20,7 @@ function formatMonthYear(yyyyMM: string): string {
 		"dez.",
 	];
 	const m = parseInt(month, 10);
-	if (isNaN(m) || m < 1 || m > 12) return year;
+	if (Number.isNaN(m) || m < 1 || m > 12) return year;
 	return `${labels[m - 1]} ${year}`;
 }
 
@@ -41,7 +42,7 @@ function SectionHeader({ title }: { title: string }) {
 }
 
 export function ClassicTemplate({
-	data,
+	data = {} as ResumeTemplateData,
 	color,
 	fontVar,
 	fontZoom,
@@ -114,8 +115,8 @@ export function ClassicTemplate({
 					</div>
 					{hasSocialLinks && (
 						<div className="flex flex-wrap gap-x-5 gap-y-1 mt-1.5 text-base text-[#444]">
-							{data.socialLinks!.map((link, i) => (
-								<span key={i} className="flex items-center gap-1">
+							{data.socialLinks?.map((link) => (
+								<span key={link.url} className="flex items-center gap-1">
 									<ExternalLink
 										size={9}
 										className="shrink-0"
@@ -127,7 +128,7 @@ export function ClassicTemplate({
 									>
 										{link.platform}:
 									</span>
-									<span className="text-[#666] truncate max-w-[180px]">
+									<span className="text-[#666] truncate max-w-45">
 										{link.url.replace(/^https?:\/\/(www\.)?/, "")}
 									</span>
 								</span>
@@ -136,8 +137,7 @@ export function ClassicTemplate({
 					)}
 				</div>
 				{data.photoUrl && (
-					// eslint-disable-next-line @next/next/no-img-element
-					<img
+					<Image
 						src={data.photoUrl}
 						alt={data.name}
 						className="size-18 rounded-full object-cover border-2 border-[#dde4ec] shrink-0"
@@ -157,8 +157,8 @@ export function ClassicTemplate({
 					<section className="section">
 						<SectionHeader title="Experiência Profissional" />
 						<div className="space-y-4">
-							{data.experiences!.map((exp, i) => (
-								<div key={i} className="pdf-item">
+							{data.experiences?.map((exp, i) => (
+								<div key={exp.endDate} className="pdf-item">
 									<div className="flex items-start justify-between gap-4">
 										<div className="min-w-0">
 											<p className="font-medium text-base text-[#111]">
@@ -187,7 +187,7 @@ export function ClassicTemplate({
 											{exp.description}
 										</p>
 									)}
-									{i < data.experiences!.length - 1 && (
+									{i < (data?.experiences?.length || 0) - 1 && (
 										<div className="border-b border-dashed border-[#e8e8e8] mt-4" />
 									)}
 								</div>
@@ -199,8 +199,8 @@ export function ClassicTemplate({
 					<section className="section">
 						<SectionHeader title="Formação Acadêmica" />
 						<div className="space-y-4">
-							{data.education!.map((edu, i) => (
-								<div key={i} className="pdf-item">
+							{data.education?.map((edu, i) => (
+								<div key={edu.degree + edu.startYear} className="pdf-item">
 									<div className="flex items-start justify-between gap-4">
 										<div className="min-w-0">
 											<p className="font-medium text-base text-[#111]">
@@ -224,7 +224,7 @@ export function ClassicTemplate({
 											{edu.description}
 										</p>
 									)}
-									{i < data.education!.length - 1 && (
+									{i < (data?.education?.length || 0) - 1 && (
 										<div className="border-b border-dashed border-[#e8e8e8] mt-4" />
 									)}
 								</div>
@@ -242,10 +242,13 @@ export function ClassicTemplate({
 							<section className="section">
 								<SectionHeader title="Habilidades" />
 								<ul className="space-y-1.5 text-neutral-700">
-									{data.skills!.map((s, i) => (
-										<li key={i} className="text-base flex items-center gap-2">
+									{data.skills?.map((s) => (
+										<li
+											key={s.name}
+											className="text-base flex items-center gap-2"
+										>
 											<span
-												className="w-[5px] h-[5px] rounded-full shrink-0 opacity-70"
+												className="size-5 rounded-full shrink-0 opacity-70"
 												style={{ backgroundColor: "var(--accent)" }}
 											/>
 											{s.name}
@@ -258,10 +261,13 @@ export function ClassicTemplate({
 							<section className="section">
 								<SectionHeader title="Idiomas" />
 								<ul className="space-y-1.5 text-neutral-700">
-									{data.languages!.map((l, i) => (
-										<li key={i} className="text-base flex items-center gap-2">
+									{data.languages?.map((l) => (
+										<li
+											key={l.name}
+											className="text-base flex items-center gap-2"
+										>
 											<span
-												className="w-[5px] h-[5px] rounded-full shrink-0 opacity-70"
+												className="size-5 rounded-full shrink-0 opacity-70"
 												style={{ backgroundColor: "var(--accent)" }}
 											/>
 											<span>{l.name}</span>

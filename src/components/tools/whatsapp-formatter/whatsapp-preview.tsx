@@ -8,9 +8,9 @@ function parseInline(text: string): React.ReactNode[] {
 	const regex = /(\*[^*\n]+\*|_[^_\n]+_|~[^~\n]+~|`[^`\n]+`)/g;
 	const parts: React.ReactNode[] = [];
 	let lastIndex = 0;
-	let match: RegExpExecArray | null;
+	let match = regex.exec(text);
 
-	while ((match = regex.exec(text)) !== null) {
+	while (match !== null) {
 		if (match.index > lastIndex) {
 			parts.push(text.slice(lastIndex, match.index));
 		}
@@ -38,6 +38,7 @@ function parseInline(text: string): React.ReactNode[] {
 		}
 
 		lastIndex = match.index + raw.length;
+		match = regex.exec(text);
 	}
 
 	if (lastIndex < text.length) {
@@ -50,7 +51,7 @@ function parseInline(text: string): React.ReactNode[] {
 function renderWhatsAppText(text: string): React.ReactNode {
 	const lines = text.split("\n");
 	return lines.map((line, index) => (
-		<span key={index}>
+		<span key={line}>
 			{parseInline(line)}
 			{index < lines.length - 1 && <br />}
 		</span>
@@ -74,7 +75,7 @@ export function WhatsAppPreview({ text }: WhatsAppPreviewProps) {
 			</div>
 
 			<div
-				className="flex min-h-[280px] flex-1 flex-col justify-end p-4"
+				className="flex min-h-70 flex-1 flex-col justify-end p-4"
 				style={{ backgroundColor: "#efeae2" }}
 			>
 				{text ? (
@@ -84,7 +85,7 @@ export function WhatsAppPreview({ text }: WhatsAppPreviewProps) {
 							style={{ backgroundColor: "#dcf8c6" }}
 						>
 							<p
-								className="text-sm leading-relaxed break-words"
+								className="text-sm leading-relaxed wrap-break-word"
 								style={{ color: "#111b21" }}
 							>
 								{renderWhatsAppText(text)}

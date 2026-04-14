@@ -198,8 +198,14 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 		<div className="border-t md:px-4 px-2 pb-4 pt-4 space-y-4">
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<div className="space-y-2">
-					<label className="text-sm font-medium">Cargo *</label>
-					<Input {...register(`experiences.${index}.role`)} />
+					<label htmlFor="experience-role" className="text-sm font-medium">
+						Cargo *
+					</label>
+					<Input
+						placeholder="Ex: Desenvolvedor Frontend"
+						id="experience-role"
+						{...register(`experiences.${index}.role`)}
+					/>
 					{errors.experiences?.[index]?.role && (
 						<p className="text-sm text-destructive">
 							{errors.experiences[index].role.message}
@@ -207,9 +213,12 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 					)}
 				</div>
 				<div className="space-y-2">
-					<label className="text-sm font-medium">Empresa *</label>
+					<label htmlFor="experience-company" className="text-sm font-medium">
+						Empresa *
+					</label>
 					<Input
 						placeholder="Ex: Empresa XPTO"
+						id="experience-company"
 						{...register(`experiences.${index}.company`)}
 					/>
 					{errors.experiences?.[index]?.company && (
@@ -221,9 +230,12 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 			</div>
 
 			<div className="space-y-2">
-				<label className="text-sm font-medium">Localização</label>
+				<label htmlFor="experience-location" className="text-sm font-medium">
+					Localização
+				</label>
 				<Input
 					placeholder="Ex: Florianópolis, SC · Remoto"
+					id="experience-location"
 					{...register(`experiences.${index}.location`)}
 				/>
 			</div>
@@ -267,9 +279,13 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 				name={`experiences.${index}.isCurrent`}
 				render={({ field }) => (
 					<FormItem>
-						<label className="flex items-center gap-2 cursor-pointer w-fit">
+						<label
+							htmlFor="experiences-current-work"
+							className="flex items-center gap-2 cursor-pointer w-fit"
+						>
 							<FormControl>
 								<Checkbox
+									id="experiences-current-work"
 									checked={field.value}
 									onCheckedChange={field.onChange}
 								/>
@@ -281,8 +297,11 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 			/>
 
 			<div className="space-y-2">
-				<label className="text-sm font-medium">Descrição</label>
+				<label htmlFor="experience-description" className="text-sm font-medium">
+					Descrição
+				</label>
 				<Textarea
+					id="experience-description"
 					placeholder="Descreva suas responsabilidades, projetos e conquistas..."
 					rows={3}
 					{...register(`experiences.${index}.description`)}
@@ -334,8 +353,8 @@ function ExperienceCard({
 					isDropTarget && "border-primary border-l-4 bg-primary/5",
 				)}
 			>
-				<div
-					role="button"
+				<button
+					type="button"
 					tabIndex={0}
 					className="flex items-center px-3 py-3 cursor-pointer select-none"
 					onClick={handleToggle}
@@ -348,7 +367,7 @@ function ExperienceCard({
 						control={control}
 						isOpen={isOpen}
 					/>
-				</div>
+				</button>
 
 				{isOpen && <ExperienceCardForm index={index} control={control} />}
 			</div>

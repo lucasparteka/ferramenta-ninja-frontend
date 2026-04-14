@@ -199,7 +199,7 @@ export function ResumeBuilder() {
 		setFontSize(layout.size);
 		savedLayoutRef.current = layout;
 		setHasSavedData(true);
-	}, []);
+	}, [form.reset]);
 
 	function handleImageUploaderChange(file: File | "") {
 		if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl);

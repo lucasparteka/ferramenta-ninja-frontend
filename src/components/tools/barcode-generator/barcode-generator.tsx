@@ -53,7 +53,7 @@ export function BarcodeGenerator() {
 	const [error, setError] = useState("");
 	const svgRef = useRef<SVGSVGElement>(null);
 
-	const currentFormat = FORMATS.find((f) => f.value === format)!;
+	const currentFormat = FORMATS.find((f) => f.value === format);
 
 	function handleGenerate() {
 		setError("");
@@ -120,7 +120,9 @@ export function BarcodeGenerator() {
 							</option>
 						))}
 					</select>
-					<p className="text-xs text-muted-foreground">{currentFormat.hint}</p>
+					<p className="text-xs text-muted-foreground">
+						{currentFormat?.hint || ""}
+					</p>
 				</div>
 
 				<div className="space-y-1">

@@ -120,7 +120,7 @@ function randomLoremWord(): string {
 
 function buildSentence(words: string[]): string {
 	const text = words.join(" ");
-	return text.charAt(0).toUpperCase() + text.slice(1) + ".";
+	return `${text.charAt(0).toUpperCase() + text.slice(1)}.`;
 }
 
 export function generateLoremWords(
@@ -143,7 +143,7 @@ export function generateLoremSentences(
 	startWithLorem: boolean,
 ): string {
 	return Array.from({ length: count }, (_, i) => {
-		if (i === 0 && startWithLorem) return LOREM_START + ".";
+		if (i === 0 && startWithLorem) return `${LOREM_START}.`;
 		const wordCount = Math.floor(Math.random() * 8) + 6;
 		return buildSentence(Array.from({ length: wordCount }, randomLoremWord));
 	}).join(" ");
@@ -157,7 +157,7 @@ export function generateLoremParagraphs(
 		const sentenceCount = Math.floor(Math.random() * 3) + 3;
 		return Array.from({ length: sentenceCount }, (__, sIndex) => {
 			if (pIndex === 0 && sIndex === 0 && startWithLorem)
-				return LOREM_START + ".";
+				return `${LOREM_START}.`;
 			const wordCount = Math.floor(Math.random() * 8) + 6;
 			return buildSentence(Array.from({ length: wordCount }, randomLoremWord));
 		}).join(" ");

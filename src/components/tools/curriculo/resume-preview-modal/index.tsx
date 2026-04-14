@@ -102,6 +102,7 @@ export function ResumePreviewModal({
 							<div />
 						)}
 						<button
+							type="button"
 							onClick={() => onOpenChange(false)}
 							className="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
 						>
@@ -166,6 +167,7 @@ export function ResumePreviewModal({
 						>
 							{TEMPLATE_IDS.map((id) => (
 								<button
+									type="button"
 									key={id}
 									onClick={() => onTemplateChange?.(id)}
 									className={cn(
@@ -199,10 +201,14 @@ export function ResumePreviewModal({
 						</div>
 						<div className="flex gap-3">
 							<div className="flex flex-col gap-1 flex-1">
-								<label className="text-xs font-medium text-muted-foreground">
+								<label
+									htmlFor="font-name"
+									className="text-xs font-medium text-muted-foreground"
+								>
 									Fonte
 								</label>
 								<NativeSelect
+									id="font-name"
 									value={fontVar}
 									onChange={(e) =>
 										onFontVarChange?.(e.target.value as ResumeFontVar)
@@ -218,10 +224,14 @@ export function ResumePreviewModal({
 								</NativeSelect>
 							</div>
 							<div className="flex flex-col gap-1 flex-1">
-								<label className="text-xs font-medium text-muted-foreground">
+								<label
+									htmlFor="font-size"
+									className="text-xs font-medium text-muted-foreground"
+								>
 									Tamanho da fonte
 								</label>
 								<NativeSelect
+									id="font-size"
 									value={fontSize}
 									onChange={(e) =>
 										onFontSizeChange?.(e.target.value as ResumeFontSize)

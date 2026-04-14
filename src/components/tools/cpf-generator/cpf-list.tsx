@@ -32,7 +32,7 @@ export function CpfList({ cpfs, onCopyAll, copiedAll }: CpfListProps) {
 			<ul className="space-y-2">
 				{cpfs.map((cpf, index) => (
 					<li
-						key={index}
+						key={cpf}
 						className="flex items-center justify-between rounded-lg border border-border bg-secondary px-4 py-2"
 					>
 						<span className="font-mono text-foreground">{cpf}</span>

@@ -36,7 +36,12 @@ export function CreditCardGenerator() {
 	return (
 		<div className="space-y-6">
 			<div className="space-y-2">
-				<label className="text-sm font-medium text-foreground">Bandeira</label>
+				<label
+					htmlFor="card-brand"
+					className="text-sm font-medium text-foreground"
+				>
+					Bandeira
+				</label>
 				<div className="flex flex-wrap gap-2">
 					{BRAND_KEYS.map((key) => (
 						<button

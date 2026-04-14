@@ -35,7 +35,7 @@ export function CopyGrid({ categories, itemClass }: CopyGridProps) {
 		return () => observer.disconnect();
 	}, [hasMore, categories.length]);
 
-	// 🟡 Fallback: garante carregamento se conteúdo não preencher a tela
+	// biome-ignore lint/correctness/useExhaustiveDependencies: we only want to trigger on scroll, not on categories change
 	useEffect(() => {
 		if (!hasMore) return;
 
@@ -43,13 +43,11 @@ export function CopyGrid({ categories, itemClass }: CopyGridProps) {
 			const pageHeight = document.documentElement.scrollHeight;
 			const viewportHeight = window.innerHeight;
 
-			// Se ainda não tem scroll suficiente, carrega mais
 			if (pageHeight <= viewportHeight + 100) {
 				setVisibleCount((n) => Math.min(n + BATCH, categories.length));
 			}
 		};
 
-		// roda no próximo frame (após render)
 		const id = requestAnimationFrame(checkAndLoad);
 
 		return () => cancelAnimationFrame(id);

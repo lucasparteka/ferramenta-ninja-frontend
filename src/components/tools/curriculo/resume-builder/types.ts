@@ -88,7 +88,7 @@ export const resumeFormSchema = z.object({
 						val.length > 0 &&
 						!/^https?:\/\//i.test(val)
 					) {
-						return "https://" + val;
+						return `https://${val}`;
 					}
 					return val;
 				}, z.string().url("URL inválida")),

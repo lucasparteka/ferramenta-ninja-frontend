@@ -32,7 +32,7 @@ export function CnpjList({ cnpjs, onCopyAll, copiedAll }: CnpjListProps) {
 			<ul className="space-y-2">
 				{cnpjs.map((cnpj, index) => (
 					<li
-						key={index}
+						key={cnpj}
 						className="flex items-center justify-between rounded-lg border border-border bg-secondary px-4 py-2"
 					>
 						<span className="font-mono text-foreground">{cnpj}</span>

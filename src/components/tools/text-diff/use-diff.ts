@@ -36,7 +36,7 @@ function computeWordDiff(left: string, right: string): DiffTuple[] {
 	dmp.diff_cleanupSemantic(diff);
 	const result: DiffTuple[] = [];
 	for (const [type, text] of diff) {
-		result.push([type as -1 | 0 | 1, text.replace(/\x00/g, "")]);
+		result.push([type as -1 | 0 | 1, text.replaceAll("\x00", "")]);
 	}
 	return result;
 }

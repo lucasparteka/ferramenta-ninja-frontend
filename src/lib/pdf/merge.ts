@@ -8,7 +8,9 @@ export async function mergePDFs(files: File[]): Promise<Uint8Array> {
 		const pdf = await PDFDocument.load(buffer);
 		const indices = pdf.getPageIndices();
 		const pages = await merged.copyPages(pdf, indices);
-		pages.forEach((page) => merged.addPage(page));
+		pages.forEach((page) => {
+			merged.addPage(page);
+		});
 	}
 
 	return merged.save();

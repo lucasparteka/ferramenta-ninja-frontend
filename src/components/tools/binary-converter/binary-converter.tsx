@@ -120,11 +120,19 @@ export function BinaryConverter() {
 
 			<div className="space-y-1 sm:flex-1">
 				<div className="flex items-center justify-between">
-					<label className="text-sm font-medium text-foreground">
+					<label
+						htmlFor="copy-result"
+						className="text-sm font-medium text-foreground"
+					>
 						Resultado
 					</label>
 					{output && (
-						<Button variant="outline" size="sm" onClick={handleCopy}>
+						<Button
+							id="copy-result"
+							variant="outline"
+							size="sm"
+							onClick={handleCopy}
+						>
 							{copied ? "Copiado!" : "Copiar"}
 						</Button>
 					)}

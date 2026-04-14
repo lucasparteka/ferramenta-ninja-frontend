@@ -26,9 +26,8 @@ export function CardPreview({ card }: CardPreviewProps) {
 
 	return (
 		<div
-			className={`relative w-full max-w-sm rounded-2xl bg-gradient-to-br ${gradient} p-6 shadow-xl`}
+			className={`relative w-full max-w-sm rounded-2xl bg-linear-to-br ${gradient} p-6 shadow-xl`}
 			style={{ aspectRatio: "1.586" }}
-			aria-label={`Cartão ${card.brandLabel} gerado`}
 		>
 			<div className="flex h-full flex-col justify-between">
 				<div className="flex items-start justify-between">

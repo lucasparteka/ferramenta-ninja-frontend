@@ -177,7 +177,7 @@ export function BatchBarcode() {
 				{entries.length > 0 ? (
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 						{entries.map((entry, i) => (
-							<BarcodeItem key={`${entry.value}-${i}`} {...entry} />
+							<BarcodeItem key={`${entry.value}`} {...entry} />
 						))}
 					</div>
 				) : (

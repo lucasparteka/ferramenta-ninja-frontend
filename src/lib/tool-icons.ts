@@ -4,7 +4,6 @@ import {
 	Braces,
 	Brush,
 	Calculator,
-	Code,
 	Database,
 	Diff,
 	File,
@@ -12,7 +11,7 @@ import {
 	FileStack,
 	FileText,
 	Hash,
-	Image,
+	LayoutList,
 	LineDotRightHorizontal,
 	Merge,
 	Minimize2,
@@ -25,7 +24,6 @@ import {
 	Shield,
 	Shuffle,
 	Smile,
-	Split,
 	Star,
 	Table,
 	TextCursorInput,
@@ -58,6 +56,7 @@ export const toolIcons: Record<string, any> = {
 	"gerador-de-cnpj": Hash,
 	"gerador-de-cartao-de-credito": Wallet,
 	"validador-de-cartao-de-credito": Wallet,
+	"previa-resultado-google": LayoutList,
 
 	// CALCULADORAS
 	"calculadora-de-porcentagem": Percent,

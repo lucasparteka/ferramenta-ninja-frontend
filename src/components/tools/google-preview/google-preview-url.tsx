@@ -6,7 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 type Props = {
-	onLoad: (data: { title: string; description: string; url: string }) => void;
+	onLoad: (data: {
+		title: string;
+		description: string;
+		url: string;
+		keyword: string;
+	}) => void;
 };
 
 export function GooglePreviewUrl({ onLoad }: Props) {

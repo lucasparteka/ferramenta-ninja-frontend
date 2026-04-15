@@ -174,6 +174,11 @@ const categories: ToolCategory[] = [
 				href: "/ferramentas/calculadora-salario-liquido",
 				description: "INSS, IRRF e descontos",
 			},
+			{
+				name: "Prévia de Resultado no Google",
+				href: "/ferramentas/previa-resultado-google",
+				description: "Veja como seu resultado aparece no Google",
+			},
 		],
 	},
 

@@ -11,6 +11,7 @@ export default function GooglePreviewPage() {
 		title: "",
 		description: "",
 		url: "",
+		keyword: "",
 	});
 
 	return (
@@ -27,12 +28,7 @@ export default function GooglePreviewPage() {
 
 			<Separator />
 
-			<GooglePreviewInput
-				title={data.title}
-				description={data.description}
-				url={data.url}
-				onChange={setData}
-			/>
+			<GooglePreviewInput data={data} onChange={setData} />
 
 			<Separator />
 

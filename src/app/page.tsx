@@ -132,6 +132,11 @@ const categories: ToolCategory[] = [
 		description: "Geradores e validadores brasileiros",
 		tools: [
 			{
+				name: "Checklist Personalizado",
+				href: "/ferramentas/checklist-personalizado",
+				description: "Crie e imprima checklists personalizados",
+			},
+			{
 				name: "Gerador de Recibo",
 				href: "/ferramentas/recibo-simples",
 				description: "Recibos prontos para impressão",

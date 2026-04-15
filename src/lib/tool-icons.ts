@@ -4,6 +4,7 @@ import {
 	Braces,
 	Brush,
 	Calculator,
+	CheckSquare,
 	Database,
 	Diff,
 	File,
@@ -85,6 +86,7 @@ export const toolIcons: Record<string, any> = {
 	"gerador-de-codigo-de-barras-em-lote": Barcode,
 
 	// DOCUMENTOS / PDF
+	"checklist-personalizado": CheckSquare,
 	"recibo-simples": FileDown,
 	"criador-de-curriculo": FileText,
 	"juntar-pdf": Merge,

@@ -32,7 +32,8 @@
       "Bash(pnpm lint:*)",
       "Bash(pnpm build:*)",
       "Bash(echo \"EXIT:$?\")",
-      "Bash(pnpm biome *)"
+      "Bash(pnpm biome *)",
+      "Bash(grep -n \"FRONT_LAYOUTS\\\\|BACK_LAYOUTS\" \"c:/Users/lucas/Documents/pessoal/Ferramenta Ninja/frontend/src/components/tools/loyalty-card\"/*.tsx)"
     ],
     "deny": [
       "Bash(rm -rf *)",

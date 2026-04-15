@@ -318,9 +318,7 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 		const iconSize = 14;
 		const iconTextGap = 5;
 
-		console.log("entries", entries);
-
-		ctx.font = "10px Inter, sans-serif";
+		ctx.font = "12px Inter, sans-serif";
 		ctx.textBaseline = "middle";
 
 		const positions = entries.length <= 1 ? [w / 2] : [w / 4, (3 * w) / 4];
@@ -361,19 +359,19 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 			ctx.fillStyle = data.primaryColor;
 			ctx.font = "bold 26px Inter, sans-serif";
 			ctx.textAlign = "left";
-			ctx.fillText(data.businessName || "Nome do Negócio", 20, 90);
+			ctx.fillText(data.businessName || "Nome do Negócio", 20, 102);
 
 			const nameWidth = ctx.measureText(
 				data.businessName || "Nome do Negócio",
 			).width;
 			ctx.fillStyle = data.primaryColor;
-			ctx.fillRect(20, 98, Math.min(nameWidth, w - 130), 2);
+			ctx.fillRect(20, 110, Math.min(nameWidth, w - 130), 2);
 		}
 
 		if (data.slogan) {
 			ctx.fillStyle = textColor;
 			ctx.font = "12px Inter, sans-serif";
-			ctx.fillText(data.slogan, 20, 118);
+			ctx.fillText(data.slogan, 20, 130);
 		}
 
 		if (data.contactInfo) {
@@ -395,7 +393,7 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 
 		const logoColor = getContrastColor(data.primaryColor);
 		if (data.logoPreview) {
-			renderLogo(ctx, data.logoPreview, divX / 2, h / 2, 64, 64, true);
+			renderLogo(ctx, data.logoPreview, divX / 2, h / 2, 88, 88, true);
 		} else {
 			ctx.fillStyle = logoColor;
 			ctx.globalAlpha = 0.3;
@@ -423,7 +421,6 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 
 		if (data.contactInfo) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.6;
 			ctx.font = "10px Inter, sans-serif";
 			ctx.fillText(data.contactInfo, textX, 96, maxTextW);
 			ctx.globalAlpha = 1;
@@ -451,7 +448,13 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 			renderLogo(ctx, data.logoPreview, w / 2, 70, 120, 120, true);
 		}
 
-		const nameY = hasLogo ? 118 : hasExtra ? 80 : 96;
+		const nameY = hasLogo
+			? hasSocial && hasContact
+				? 112
+				: 118
+			: hasExtra
+				? 80
+				: 96;
 		if (data.businessName) {
 			ctx.fillStyle = data.primaryColor;
 			ctx.font = `bold ${hasLogo ? 16 : 20}px Inter, sans-serif`;
@@ -477,8 +480,8 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 			const bottomH = rectY + rectH - bottomTop - 8;
 
 			if (hasSocial && hasContact) {
-				const socialCY = bottomTop + bottomH * 0.35;
-				const contactY = bottomTop + bottomH * 0.72;
+				const socialCY = bottomTop + bottomH * 0.22;
+				const contactY = bottomTop + bottomH * 0.82;
 				const iconSize = 14;
 				const iconTextGap = 5;
 				ctx.font = "500 12px Inter, sans-serif";
@@ -538,7 +541,7 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 
 	compacto(ctx, data, w, h) {
 		const textColor = getContrastColor(getBgBaseColor(data.background));
-		const logoSize = 44;
+		const logoSize = 58;
 
 		if (data.logoPreview) {
 			renderLogo(ctx, data.logoPreview, 16, 16, logoSize, logoSize);
@@ -555,24 +558,22 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 		ctx.fillStyle = data.primaryColor;
 		ctx.font = "bold 16px Inter, sans-serif";
 		ctx.textAlign = "left";
-		ctx.fillText(data.businessName || "Nome do Negócio", 70, 32);
+		ctx.fillText(data.businessName || "Nome do Negócio", 82, 32);
 
 		if (data.slogan) {
 			ctx.fillStyle = textColor;
 			ctx.font = "12px Inter, sans-serif";
-			ctx.fillText(data.slogan, 70, 50);
+			ctx.fillText(data.slogan, 82, 50);
 		}
 
 		ctx.fillStyle = data.primaryColor;
-		ctx.fillRect(16, 72, w - 32, 1.5);
+		ctx.fillRect(16, 80, w - 32, 1.5);
 
 		if (data.contactInfo) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.6;
 			ctx.font = "10px Inter, sans-serif";
 			ctx.textAlign = "right";
 			ctx.fillText(data.contactInfo, w - 16, h - 14);
-			ctx.globalAlpha = 1;
 			ctx.textAlign = "left";
 		}
 	},
@@ -595,11 +596,10 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 		}
 
 		if (data.slogan) {
-			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.6;
+			ctx.fillStyle = data.primaryColor;
+			ctx.textAlign = "center";
 			ctx.font = "11px Inter, sans-serif";
 			ctx.fillText(data.slogan, w / 2, nameY + 18, w - 60);
-			ctx.globalAlpha = 1;
 		}
 
 		const entry = data.socialEntries?.[0];
@@ -624,7 +624,7 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 				data.socialIconStyle ?? "flat",
 			);
 
-			ctx.fillStyle = entry.handle ? textColor : `${textColor}66`;
+			ctx.fillStyle = data.primaryColor;
 			ctx.textAlign = "left";
 			ctx.fillText(handle, ex + iconSize + iconTextGap, cy);
 			ctx.textBaseline = "alphabetic";
@@ -634,7 +634,7 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 	},
 
 	negrito(ctx, data, w, h) {
-		const bandW = Math.floor(w * 0.28);
+		const bandW = Math.floor(w * 0.38);
 		ctx.fillStyle = data.primaryColor;
 		ctx.fillRect(0, 0, bandW, h);
 
@@ -647,23 +647,19 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 		ctx.fillText(data.businessName || "Nome", textX, 68, w - textX - 12);
 
 		if (data.slogan) {
-			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.65;
+			ctx.fillStyle = data.primaryColor;
 			ctx.font = "12px Inter, sans-serif";
 			ctx.fillText(data.slogan, textX, 90, w - textX - 12);
-			ctx.globalAlpha = 1;
 		}
 
 		if (data.contactInfo) {
-			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.45;
-			ctx.font = "10px Inter, sans-serif";
+			ctx.fillStyle = data.primaryColor;
+			ctx.font = "12px Inter, sans-serif";
 			ctx.fillText(data.contactInfo, textX, h - 14, w - textX - 12);
-			ctx.globalAlpha = 1;
 		}
 
 		if (data.logoPreview) {
-			renderLogo(ctx, data.logoPreview, bandW / 2, h / 2, 44, 60, true);
+			renderLogo(ctx, data.logoPreview, bandW / 2, h / 2, 60, 80, true);
 		} else {
 			const bandTextColor = getContrastColor(data.primaryColor);
 			ctx.fillStyle = bandTextColor;
@@ -698,16 +694,14 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 
 		if (data.contactInfo) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.45;
 			ctx.font = "10px Inter, sans-serif";
 			ctx.fillText(data.contactInfo, w / 2, h - 14);
-			ctx.globalAlpha = 1;
 		}
 
 		ctx.textAlign = "left";
 
 		if (data.logoPreview) {
-			renderLogo(ctx, data.logoPreview, w / 2, 120, 52, 52, true);
+			renderLogo(ctx, data.logoPreview, w / 2, 120, 68, 68, true);
 		} else {
 			ctx.strokeStyle = data.primaryColor;
 			ctx.globalAlpha = 0.2;

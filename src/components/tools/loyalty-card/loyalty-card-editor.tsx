@@ -28,11 +28,11 @@ const STAMP_COUNTS: StampCount[] = [5, 6, 8, 10];
 function buildDefaultFrontData(templateId: string): FrontData {
 	const template = TEMPLATES.find((t) => t.id === templateId) ?? TEMPLATES[0];
 	return {
-		businessName: "",
-		slogan: "",
-		contactInfo: "",
+		businessName: "Café da Vila",
+		slogan: "Fidelidade que vale a pena",
+		contactInfo: "(99) 99999-9999",
 		socialEntries: [
-			{ network: "instagram", handle: "" },
+			{ network: "instagram", handle: "@cafedavila" },
 			{ network: "facebook", handle: "" },
 		],
 		socialIconStyle: "flat",
@@ -48,10 +48,10 @@ function buildDefaultBackData(templateId: string): BackData {
 	return {
 		stampCount: 8,
 		stampStyle: "circle",
-		rewardText: "",
-		rulesText: "",
-		whatsapp: "",
-		extraText: "",
+		rewardText: "1 café expresso grátis",
+		rulesText: "Válido por 90 dias após a emissão",
+		whatsapp: "(99)99999-9999",
+		extraText: "Obrigado pela preferência!",
 		primaryColor: template.defaultBack.primaryColor,
 		background: template.defaultBack.background,
 	};
@@ -132,7 +132,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 
 	return (
 		<div className="space-y-3">
-			<Label>Fundo</Label>
+			<Label>Cor de Fundo</Label>
 			<div className="flex gap-1 rounded-lg border border-border bg-muted p-1">
 				{(["solid", "gradient", "texture"] as const).map((type) => (
 					<button
@@ -448,11 +448,7 @@ export function LoyaltyCardEditor() {
 												<select
 													value={entry.network}
 													onChange={(e) =>
-														updateSocialEntry(
-															index,
-															"network",
-															e.target.value,
-														)
+														updateSocialEntry(index, "network", e.target.value)
 													}
 													className="rounded border border-border bg-background px-2 py-1.5 text-sm text-foreground"
 												>
@@ -465,11 +461,7 @@ export function LoyaltyCardEditor() {
 												<Input
 													value={entry.handle}
 													onChange={(e) =>
-														updateSocialEntry(
-															index,
-															"handle",
-															e.target.value,
-														)
+														updateSocialEntry(index, "handle", e.target.value)
 													}
 													placeholder="@handle ou link"
 													maxLength={40}
@@ -664,7 +656,9 @@ export function LoyaltyCardEditor() {
 									</div>
 
 									<div className="space-y-2">
-										<Label htmlFor="contact-info">Contato / redes sociais</Label>
+										<Label htmlFor="contact-info">
+											Contato / redes sociais
+										</Label>
 										<Input
 											id="contact-info"
 											value={frontData.contactInfo}
@@ -822,29 +816,31 @@ export function LoyaltyCardEditor() {
 								</div>
 							)}
 
-							<div className="space-y-2">
-								<Label htmlFor="rules-text">
-									{selectedTemplate.id === "classico"
-										? "Texto de regras"
-										: "Regras"}
-								</Label>
-								<Input
-									id="rules-text"
-									value={backData.rulesText}
-									onChange={(e) =>
-										setBackData((prev) => ({
-											...prev,
-											rulesText: e.target.value,
-										}))
-									}
-									placeholder={
-										selectedTemplate.id === "classico"
-											? "Ex: Complete o cartão e ganhe 1 grátis!"
-											: "Ex: Válido por 6 meses após emissão"
-									}
-									maxLength={80}
-								/>
-							</div>
+							{selectedTemplate.id !== "elegante" && (
+								<div className="space-y-2">
+									<Label htmlFor="rules-text">
+										{selectedTemplate.id === "classico"
+											? "Texto de regras"
+											: "Regras"}
+									</Label>
+									<Input
+										id="rules-text"
+										value={backData.rulesText}
+										onChange={(e) =>
+											setBackData((prev) => ({
+												...prev,
+												rulesText: e.target.value,
+											}))
+										}
+										placeholder={
+											selectedTemplate.id === "classico"
+												? "Ex: Complete o cartão e ganhe 1 grátis!"
+												: "Ex: Válido por 6 meses após emissão"
+										}
+										maxLength={80}
+									/>
+								</div>
+							)}
 
 							{selectedTemplate.id === "classico" && (
 								<>

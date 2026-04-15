@@ -136,7 +136,7 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 			const words = data.rulesText.split(" ");
 			const lines: string[] = [];
 			let current = "";
-			ctx.font = "9px Inter, sans-serif";
+			ctx.font = "12px Inter, sans-serif";
 			for (const word of words) {
 				const test = current ? `${current} ${word}` : word;
 				if (ctx.measureText(test).width > maxLineW && current) {
@@ -153,12 +153,10 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 			const totalH = lines.length * lineH;
 			const startY = (rulesH - totalH) / 2 + lineH;
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.75;
 			ctx.textAlign = "center";
 			for (let i = 0; i < lines.length; i++) {
 				ctx.fillText(lines[i], w / 2, startY + i * lineH);
 			}
-			ctx.globalAlpha = 1;
 		}
 
 		drawStamps(ctx, data, 0, rulesH, w, h - rulesH - footerH);
@@ -174,7 +172,7 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 		ctx.globalAlpha = 1;
 
 		const footerCY = sepY + footerH / 2;
-		ctx.font = "9px Inter, sans-serif";
+		ctx.font = "12px Inter, sans-serif";
 		ctx.textBaseline = "middle";
 
 		if (data.whatsapp) {
@@ -182,23 +180,20 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 				ctx,
 				"whatsapp",
 				16,
-				footerCY - 7,
-				14,
+				footerCY - 8,
+				16,
 				data.primaryColor,
 				"flat",
 			);
 			ctx.fillStyle = textColor;
-			// ctx.globalAlpha = 0.8;
 			ctx.textAlign = "left";
-			ctx.fillText(data.whatsapp, 34, footerCY);
-			ctx.globalAlpha = 1;
+			ctx.fillText(data.whatsapp, 36, footerCY);
 		}
 
 		if (data.extraText) {
 			ctx.fillStyle = textColor;
 			ctx.textAlign = "right";
 			ctx.fillText(data.extraText, w - 16, footerCY);
-			ctx.globalAlpha = 1;
 		}
 
 		ctx.textBaseline = "alphabetic";
@@ -221,7 +216,7 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 		ctx.fillRect(0, h - 36, w, 36);
 		ctx.globalAlpha = 1;
 
-		drawStamps(ctx, data, 0, 25, w, h - 60);
+		drawStamps(ctx, data, 0, 25, w, h - 60, false, 40);
 
 		ctx.fillStyle = data.primaryColor;
 		ctx.font = "bold 9px Inter, sans-serif";
@@ -240,7 +235,7 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 	},
 
 	dividido(ctx, data, w, h) {
-		const bandH = Math.floor(h * 0.3);
+		const bandH = Math.floor(h * 0.22);
 		ctx.fillStyle = data.primaryColor;
 		ctx.fillRect(0, 0, w, bandH);
 
@@ -412,19 +407,32 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 		ctx.fillRect(0, 0, splitX, h);
 
 		const leftTextColor = getContrastColor(data.primaryColor);
-		const rightTextColor = getContrastColor(getBgBaseColor(data));
 
 		if (data.rewardText) {
 			ctx.save();
 			ctx.fillStyle = leftTextColor;
 			ctx.font = "bold 12px Inter, sans-serif";
 			ctx.textAlign = "center";
-			const lines = data.rewardText.split(" ");
-			const mid = Math.ceil(lines.length / 2);
-			const line1 = lines.slice(0, mid).join(" ");
-			const line2 = lines.slice(mid).join(" ");
-			ctx.fillText(line1, splitX / 2, h / 2 - (line2 ? 8 : 0));
-			if (line2) ctx.fillText(line2, splitX / 2, h / 2 + 10);
+			const maxLineW = splitX - 20;
+			const words = data.rewardText.split(" ");
+			const wrappedLines: string[] = [];
+			let current = "";
+			for (const word of words) {
+				const test = current ? `${current} ${word}` : word;
+				if (ctx.measureText(test).width > maxLineW && current) {
+					wrappedLines.push(current);
+					current = word;
+				} else {
+					current = test;
+				}
+			}
+			if (current) wrappedLines.push(current);
+			const lineH = 16;
+			const totalH = wrappedLines.length * lineH;
+			const startY = h / 2 - totalH / 2 + lineH * 0.8;
+			for (let i = 0; i < wrappedLines.length; i++) {
+				ctx.fillText(wrappedLines[i], splitX / 2, startY + i * lineH);
+			}
 			ctx.restore();
 		} else {
 			ctx.fillStyle = leftTextColor;
@@ -439,16 +447,14 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 
 		drawStamps(ctx, data, splitX + 8, 16, w - splitX - 16, h - 44);
 
-		ctx.fillStyle = rightTextColor;
-		ctx.globalAlpha = 0.45;
-		ctx.font = "9px Inter, sans-serif";
+		ctx.fillStyle = data.primaryColor;
+		ctx.font = "11px Inter, sans-serif";
 		ctx.textAlign = "center";
 		ctx.fillText(
 			data.rulesText || `${data.stampCount} carimbos`,
 			(splitX + w) / 2,
 			h - 12,
 		);
-		ctx.globalAlpha = 1;
 		ctx.textAlign = "left";
 	},
 
@@ -456,26 +462,26 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 		const textColor = getContrastColor(getBgBaseColor(data));
 
 		ctx.fillStyle = data.primaryColor;
-		ctx.font = "bold 11px Inter, sans-serif";
+		ctx.font = "bold 13px Inter, sans-serif";
 		ctx.letterSpacing = "2px";
 		ctx.textAlign = "center";
 		ctx.fillText("CARTÃO FIDELIDADE", w / 2, 20);
 		ctx.letterSpacing = "0px";
 
-		drawStamps(ctx, data, 0, 28, w, h - 60, true);
+		drawStamps(ctx, data, 0, 28, w, h - 72, true, 40);
+
+		ctx.textAlign = "center";
 
 		if (data.rewardText) {
 			ctx.fillStyle = data.primaryColor;
-			ctx.font = "10px Inter, sans-serif";
-			ctx.fillText(data.rewardText, w / 2, h - 26);
+			ctx.font = "12px Inter, sans-serif";
+			ctx.fillText(data.rewardText, w / 2, h - 26, w - 32);
 		}
 
 		if (data.rulesText) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.5;
-			ctx.font = "9px Inter, sans-serif";
-			ctx.fillText(data.rulesText, w / 2, h - 12);
-			ctx.globalAlpha = 1;
+			ctx.font = "11px Inter, sans-serif";
+			ctx.fillText(data.rulesText, w / 2, h - 12, w - 32);
 		}
 
 		ctx.textAlign = "left";

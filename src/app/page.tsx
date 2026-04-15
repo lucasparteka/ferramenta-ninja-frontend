@@ -132,6 +132,11 @@ const categories: ToolCategory[] = [
 		description: "Geradores e validadores brasileiros",
 		tools: [
 			{
+				name: "Gerador de Recibo",
+				href: "/ferramentas/recibo-simples",
+				description: "Recibos prontos para impressão",
+			},
+			{
 				name: "Gerador de CPF",
 				href: "/ferramentas/gerador-de-cpf",
 				description: "Gere e valide CPFs",

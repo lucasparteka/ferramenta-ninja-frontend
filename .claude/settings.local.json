@@ -30,12 +30,23 @@
       "Bash(curl -s \"http://localhost:3000/_next/static/chunks/src_components_tools_loyalty-card_loyalty-card-editor_tsx_0m8qzm1._.js\")",
       "Bash(pnpm install:*)",
       "Bash(pnpm lint:*)",
-      "Bash(pnpm build:*)"
+      "Bash(pnpm build:*)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(pnpm biome *)"
     ],
     "deny": [
       "Bash(rm -rf *)",
       "Bash(git push *)",
       "Bash(git reset --hard *)"
+    ],
+    "allowedCommands": [
+      "ls",
+      "cat",
+      "grep",
+      "find",
+      "npm",
+      "pnpm",
+      "yarn"
     ]
   }
 }

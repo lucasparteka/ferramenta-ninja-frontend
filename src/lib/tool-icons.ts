@@ -7,6 +7,7 @@ import {
 	Database,
 	Diff,
 	File,
+	FileDown,
 	FileSearch,
 	FileStack,
 	FileText,
@@ -84,6 +85,7 @@ export const toolIcons: Record<string, any> = {
 	"gerador-de-codigo-de-barras-em-lote": Barcode,
 
 	// DOCUMENTOS / PDF
+	"recibo-simples": FileDown,
 	"criador-de-curriculo": FileText,
 	"juntar-pdf": Merge,
 	"dividir-pdf": FileStack,

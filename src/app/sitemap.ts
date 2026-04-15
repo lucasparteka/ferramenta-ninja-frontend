@@ -35,6 +35,7 @@ const tools = [
 	"gerador-de-uuid",
 	"juntar-pdf",
 	"leitor-de-qr-code",
+	"recibo-simples",
 	"remover-duplicados",
 	"simbolos",
 	"sorteio-online",

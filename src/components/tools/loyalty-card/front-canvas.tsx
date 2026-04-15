@@ -2,6 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { siFacebook, siInstagram, siTiktok, siWhatsapp } from "simple-icons";
+import { CARD } from "@/lib/print/dimensions";
 import type {
 	Background,
 	CanvasHandle,
@@ -22,8 +23,12 @@ const SOCIAL_ICONS: Record<SocialNetwork, BrandIcon | null> = {
 	website: null,
 };
 
-const CANVAS_WIDTH = 360;
-const CANVAS_HEIGHT = 200;
+const LOGICAL_WIDTH = 360;
+const LOGICAL_HEIGHT = 200;
+const CANVAS_WIDTH = CARD.width;
+const CANVAS_HEIGHT = CARD.height;
+const SCALE_X = CANVAS_WIDTH / LOGICAL_WIDTH;
+const SCALE_Y = CANVAS_HEIGHT / LOGICAL_HEIGHT;
 
 type FrontCanvasProps = {
 	frontData: FrontData;
@@ -47,10 +52,13 @@ export const FrontCanvas = forwardRef<CanvasHandle, FrontCanvasProps>(
 			if (!ctx) return;
 
 			ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-			drawBackground(ctx, frontData.background, CANVAS_WIDTH, CANVAS_HEIGHT);
+			ctx.save();
+			ctx.scale(SCALE_X, SCALE_Y);
+			drawBackground(ctx, frontData.background, LOGICAL_WIDTH, LOGICAL_HEIGHT);
 
 			const renderLayout = FRONT_LAYOUTS[template.frontLayout];
-			renderLayout(ctx, frontData, CANVAS_WIDTH, CANVAS_HEIGHT);
+			renderLayout(ctx, frontData, LOGICAL_WIDTH, LOGICAL_HEIGHT);
+			ctx.restore();
 		}, [frontData, template]);
 
 		return (
@@ -63,7 +71,7 @@ export const FrontCanvas = forwardRef<CanvasHandle, FrontCanvasProps>(
 					width={CANVAS_WIDTH}
 					height={CANVAS_HEIGHT}
 					aria-label="Prévia da frente do cartão fidelidade"
-					style={{ display: "block" }}
+					style={{ display: "block", width: `${LOGICAL_WIDTH}px`, height: `${LOGICAL_HEIGHT}px` }}
 				/>
 			</div>
 		);

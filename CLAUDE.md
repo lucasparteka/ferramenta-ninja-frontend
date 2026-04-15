@@ -1,119 +1,66 @@
 # CLAUDE.md – Frontend Development Guide
 
-## Purpose
+## Project Overview
 
-This document provides structured guidance for Claude (AI coding assistant) to work effectively within this frontend project.
-
-The goal is to ensure:
-
-* Consistency
-* High-quality code
-* Predictable structure
-* Alignment with project standards
-
----
-
-# Project Overview
-
-This is a **Next.js application** focused on building SEO-driven utility tools.
+Next.js application focused on building SEO-driven utility tools.
 
 ### Stack
 
-* Next.js (App Router)
-* TypeScript
-* Tailwind CSS (v4)
-* shadcn/ui
-* React Hook Form
-* Zod
-* pnpm
-* Biome
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS (v4)
+- shadcn/ui
+- React Hook Form + Zod
+- pnpm
+- Biome
 
 ---
 
-# Core Principles
+## Code Navigation (jCodeMunch MCP)
 
-## 1. Simplicity First
+Use the jcodemunch MCP server for all code exploration tasks. Prefer it over reading full files.
 
-* Prefer simple solutions over complex abstractions
-* Avoid premature optimization
-* Avoid unnecessary dependencies
+### When to use jcodemunch:
+- Before reading any file, use `get_file_outline` to see its structure first
+- Use `search_symbols` to find functions/classes by name instead of grepping
+- Use `get_symbol` to retrieve only the specific function/class you need
+- Use `get_repo_outline` when you need a high-level understanding of the project
+- Use `search_text` for full-text search across the codebase
 
----
+### Workflow:
+1. Start with `index_folder` if the project hasn't been indexed yet
+2. Use `get_repo_outline` to understand the structure
+3. Use `search_symbols` to locate relevant code
+4. Use `get_symbol` to read only what's needed
 
-## 2. Performance by Default
-
-* Prefer **Server Components** whenever possible
-* Use Client Components only when necessary (interactivity)
-* Avoid unnecessary state and effects
-* Optimize for Core Web Vitals
-
----
-
-## 3. SEO-First Architecture
-
-Every page must follow this structure:
-
-1. H1 title
-2. Supporting description
-3. Tool component
-4. Additional SEO content (text / FAQ)
-
-This must be implemented via a reusable **Server Component wrapper**.
+Never open an entire file just to find one function. Always prefer symbol-level retrieval.
 
 ---
 
-## 4. Accessibility First
+## Core Principles
 
-* Use semantic HTML
-* Ensure keyboard navigation
-* Add ARIA attributes when necessary
-* Inputs must always have labels
-
----
-
-## 5. Consistency Over Preference
-
-* Follow existing patterns strictly
-* Do not introduce new patterns unless necessary
+1. **Simplicity first** — prefer simple solutions, avoid premature optimization
+2. **Performance by default** — prefer Server Components, avoid unnecessary state and effects
+3. **SEO-first** — every page follows the defined structure (see `/app/CLAUDE.md`)
+4. **Accessibility first** — semantic HTML, keyboard navigation, ARIA when needed
+5. **Consistency over preference** — follow existing patterns strictly
 
 ---
 
-# Code Style Rules
+## Code Style
 
-## General
-
-* Code must be written in **English**
-* No comments
-* No emojis
-* Prefer `type` over `interface`
-* Prefer `function` over arrow functions
-
----
-
-## Naming
-
-* Use descriptive names
-* Avoid abbreviations
-* Components: PascalCase
-* Functions: camelCase
-* Files: kebab-case
+- Language: **English** (UI labels in **pt-BR**)
+- No comments, no emojis
+- Prefer `type` over `interface`
+- Prefer `function` over arrow functions
+- Components: PascalCase | Functions: camelCase | Files: kebab-case
+- Use descriptive names, avoid abbreviations
 
 ---
 
-## Example
+## Project Structure
 
-```ts
-type CharacterCountResult = {
-  characters: number
-  words: number
-}
 ```
-
----
-
-# Project Structure
-
-```id="pjk32a"
 /app
 /components
   /ui
@@ -125,165 +72,24 @@ type CharacterCountResult = {
 
 ---
 
-# Component Guidelines
+## What NOT to Do
 
-## Server vs Client
-
-### Use Server Components when:
-
-* Static content
-* SEO content
-* Layouts
-
-### Use Client Components when:
-
-* User input
-* Event handling
-* Dynamic UI updates
+- Do not add comments in code
+- Do not introduce new libraries without clear need
+- Do not break existing patterns
+- Do not hardcode styles outside design tokens
+- Do not use inline styles
+- Do not expose env variables in code
+- Do not expose internal errors to users
 
 ---
 
-## Reusability
+## Expected Behavior
 
-* Extract reusable logic into components
-* Avoid duplication
-* Keep components small and focused
+When generating code:
 
----
-
-# Styling Rules
-
-## Tailwind Usage
-
-* Use Tailwind utility classes
-* Do not hardcode colors
-* Always use design tokens from global CSS
-
----
-
-## Design System
-
-* Follow predefined tokens (colors, spacing, radius)
-* Ensure visual consistency across pages
-
----
-
-# Forms
-
-* Use `react-hook-form`
-* Validate with `zod`
-* Do not implement manual validation logic
-
----
-
-# State Management
-
-* Use local React state
-* Avoid global state unless strictly necessary
-
----
-
-# Data Handling
-
-* No backend integration by default
-* All tools should run client-side unless explicitly required
-
----
-
-# Environment Variables
-
-* Never expose env variables in code
-* Use `.env` for local development
-* Use platform secrets for production
-
----
-
-# Error Handling
-
-* Fail gracefully
-* Do not expose internal errors to users
-* Provide user-friendly messages (pt-BR)
-
----
-
-# Internationalization
-
-* UI labels must be in **pt-BR**
-* Code must remain in English
-
----
-
-# Performance Guidelines
-
-* Avoid unnecessary re-renders
-* Avoid large dependencies
-* Lazy load when appropriate
-
----
-
-# Accessibility Checklist
-
-* All inputs have labels
-* Buttons are keyboard accessible
-* Proper focus states
-* Semantic HTML usage
-
----
-
-# SEO Guidelines
-
-* Use proper heading hierarchy
-* Include meaningful text content
-* Avoid empty pages
-* Prefer server-rendered content
-
----
-
-# shadcn/ui Usage
-
-* Use shadcn components as base
-* Customize via Tailwind + tokens
-* Do not modify library core files directly
-
----
-
-# What NOT to Do
-
-* Do not add comments in code
-* Do not introduce new libraries without clear need
-* Do not break existing patterns
-* Do not hardcode styles outside tokens
-* Do not use inline styles
-
----
-
-# Expected Behavior from Claude
-
-When generating code, Claude should:
-
-* Follow all rules in this document
-* Respect project structure
-* Produce clean, production-ready code
-* Avoid overengineering
-* Prefer clarity over cleverness
-
----
-
-# Output Expectations
-
-Claude should generate:
-
-* Complete, working code
-* Proper typing
-* Clean structure
-* No unnecessary explanation unless requested
-
----
-
-# Final Note
-
-If any requirement is unclear:
-
-* Default to simplicity
-* Follow existing patterns
-* Optimize for performance and SEO
+- Follow all rules in this document and in subdirectory CLAUDE.md files
+- Produce complete, working, production-ready code
+- Avoid overengineering — prefer clarity over cleverness
+- No unnecessary explanation unless requested
+- If any requirement is unclear: default to simplicity, follow existing patterns

@@ -5,6 +5,8 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { exportPdf } from "@/lib/print/export-pdf";
+import { exportPng } from "@/lib/print/export-png";
 import { BackCanvas } from "./back-canvas";
 import { ExportPanel } from "./export-panel";
 import { FrontCanvas } from "./front-canvas";
@@ -16,6 +18,7 @@ import type {
 	CanvasHandle,
 	FrontData,
 	GradientDirection,
+	LayoutMode,
 	SocialIconStyle,
 	SocialNetwork,
 	StampCount,
@@ -57,59 +60,6 @@ function buildDefaultBackData(templateId: string): BackData {
 	};
 }
 
-function loadImage(src: string): Promise<HTMLImageElement> {
-	return new Promise((resolve, reject) => {
-		const img = new Image();
-		img.onload = () => resolve(img);
-		img.onerror = reject;
-		img.src = src;
-	});
-}
-
-async function buildA4Sheet(cardDataUrl: string): Promise<HTMLCanvasElement> {
-	const A4_W = 2480;
-	const A4_H = 3508;
-	const CARD_W = 1080;
-	const CARD_H = 600;
-	const COLS = 2;
-	const ROWS = 4;
-	const GAP_X = Math.floor((A4_W - COLS * CARD_W) / (COLS + 1));
-	const GAP_Y = Math.floor((A4_H - ROWS * CARD_H) / (ROWS + 1));
-
-	const sheet = document.createElement("canvas");
-	sheet.width = A4_W;
-	sheet.height = A4_H;
-	const ctx = sheet.getContext("2d");
-	if (!ctx) return sheet;
-
-	ctx.fillStyle = "#ffffff";
-	ctx.fillRect(0, 0, A4_W, A4_H);
-
-	const img = await loadImage(cardDataUrl);
-
-	for (let row = 0; row < ROWS; row++) {
-		for (let col = 0; col < COLS; col++) {
-			const x = GAP_X + col * (CARD_W + GAP_X);
-			const y = GAP_Y + row * (CARD_H + GAP_Y);
-			ctx.drawImage(img, x, y, CARD_W, CARD_H);
-
-			ctx.strokeStyle = "#cccccc";
-			ctx.lineWidth = 1;
-			ctx.setLineDash([6, 4]);
-			ctx.strokeRect(x - 1, y - 1, CARD_W + 2, CARD_H + 2);
-			ctx.setLineDash([]);
-		}
-	}
-
-	return sheet;
-}
-
-function downloadCanvas(canvas: HTMLCanvasElement, filename: string) {
-	const link = document.createElement("a");
-	link.href = canvas.toDataURL("image/png");
-	link.download = filename;
-	link.click();
-}
 
 type BackgroundPickerProps = {
 	value: Background;
@@ -304,6 +254,7 @@ export function LoyaltyCardEditor() {
 		buildDefaultBackData("classico"),
 	);
 	const [activeTab, setActiveTab] = useState<"frente" | "verso">("frente");
+	const [layoutMode, setLayoutMode] = useState<LayoutMode>("8");
 	const [logoError, setLogoError] = useState("");
 
 	const frontCanvasRef = useRef<CanvasHandle>(null);
@@ -366,18 +317,28 @@ export function LoyaltyCardEditor() {
 		});
 	}
 
-	async function handleExportFront() {
+	async function handleExportFrontPdf() {
 		const dataUrl = frontCanvasRef.current?.getDataURL();
 		if (!dataUrl) return;
-		const sheet = await buildA4Sheet(dataUrl);
-		downloadCanvas(sheet, "cartao-fidelidade-frente.png");
+		await exportPdf(dataUrl, "cartao-fidelidade-frente.pdf", layoutMode);
 	}
 
-	async function handleExportBack() {
+	async function handleExportFrontPng() {
+		const dataUrl = frontCanvasRef.current?.getDataURL();
+		if (!dataUrl) return;
+		await exportPng(dataUrl, "cartao-fidelidade-frente.png", layoutMode);
+	}
+
+	async function handleExportBackPdf() {
 		const dataUrl = backCanvasRef.current?.getDataURL();
 		if (!dataUrl) return;
-		const sheet = await buildA4Sheet(dataUrl);
-		downloadCanvas(sheet, "cartao-fidelidade-verso.png");
+		await exportPdf(dataUrl, "cartao-fidelidade-verso.pdf", layoutMode);
+	}
+
+	async function handleExportBackPng() {
+		const dataUrl = backCanvasRef.current?.getDataURL();
+		if (!dataUrl) return;
+		await exportPng(dataUrl, "cartao-fidelidade-verso.png", layoutMode);
 	}
 
 	return (
@@ -928,14 +889,19 @@ export function LoyaltyCardEditor() {
 						/>
 					</div>
 					<p className="text-xs text-muted-foreground">
-						Tamanho real: 9cm × 5cm · A folha A4 exportada contém 8 cartões
+						Tamanho real: 9cm × 5cm · A folha A4 exportada contém {layoutMode}{" "}
+						cartões
 					</p>
 				</div>
 			</div>
 
 			<ExportPanel
-				onExportFront={handleExportFront}
-				onExportBack={handleExportBack}
+				layoutMode={layoutMode}
+				onLayoutChange={setLayoutMode}
+				onExportFrontPdf={handleExportFrontPdf}
+				onExportFrontPng={handleExportFrontPng}
+				onExportBackPdf={handleExportBackPdf}
+				onExportBackPng={handleExportBackPng}
 			/>
 		</div>
 	);

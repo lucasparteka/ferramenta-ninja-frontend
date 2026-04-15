@@ -1,11 +1,16 @@
 "use client";
 
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { CARD } from "@/lib/print/dimensions";
 import { drawBackground, drawSocialIcon } from "./front-canvas";
 import type { BackData, BackLayout, CanvasHandle, Template } from "./types";
 
-const CANVAS_WIDTH = 360;
-const CANVAS_HEIGHT = 200;
+const LOGICAL_WIDTH = 360;
+const LOGICAL_HEIGHT = 200;
+const CANVAS_WIDTH = CARD.width;
+const CANVAS_HEIGHT = CARD.height;
+const SCALE_X = CANVAS_WIDTH / LOGICAL_WIDTH;
+const SCALE_Y = CANVAS_HEIGHT / LOGICAL_HEIGHT;
 
 type BackCanvasProps = {
 	backData: BackData;
@@ -505,10 +510,13 @@ export const BackCanvas = forwardRef<CanvasHandle, BackCanvasProps>(
 			if (!ctx) return;
 
 			ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-			drawBackground(ctx, backData.background, CANVAS_WIDTH, CANVAS_HEIGHT);
+			ctx.save();
+			ctx.scale(SCALE_X, SCALE_Y);
+			drawBackground(ctx, backData.background, LOGICAL_WIDTH, LOGICAL_HEIGHT);
 
 			const renderLayout = BACK_LAYOUTS[template.backLayout];
-			renderLayout(ctx, backData, CANVAS_WIDTH, CANVAS_HEIGHT);
+			renderLayout(ctx, backData, LOGICAL_WIDTH, LOGICAL_HEIGHT);
+			ctx.restore();
 		}, [backData, template]);
 
 		return (
@@ -521,7 +529,7 @@ export const BackCanvas = forwardRef<CanvasHandle, BackCanvasProps>(
 					width={CANVAS_WIDTH}
 					height={CANVAS_HEIGHT}
 					aria-label="Prévia do verso do cartão fidelidade com área de carimbos"
-					style={{ display: "block" }}
+					style={{ display: "block", width: `${LOGICAL_WIDTH}px`, height: `${LOGICAL_HEIGHT}px` }}
 				/>
 			</div>
 		);

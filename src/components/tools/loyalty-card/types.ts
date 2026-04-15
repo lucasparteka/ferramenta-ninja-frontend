@@ -72,3 +72,5 @@ export type BackData = {
 export type CanvasHandle = {
 	getDataURL: () => string;
 };
+
+export type LayoutMode = "8" | "10";

@@ -1,5 +1,7 @@
 export type StampStyle = "circle" | "square";
 
+export type SocialIconStyle = "flat" | "colorido";
+
 export type SocialNetwork = "facebook" | "instagram" | "whatsapp" | "tiktok" | "website";
 
 export type SocialEntry = {
@@ -49,6 +51,7 @@ export type FrontData = {
 	slogan: string;
 	contactInfo: string;
 	socialEntries: SocialEntry[];
+	socialIconStyle: SocialIconStyle;
 	primaryColor: string;
 	background: Background;
 	logoFile: File | null;

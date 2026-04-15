@@ -29,7 +29,8 @@
       "Bash(curl -s \"http://localhost:3000/ferramentas/desenhar-online\")",
       "Bash(curl -s \"http://localhost:3000/_next/static/chunks/src_components_tools_loyalty-card_loyalty-card-editor_tsx_0m8qzm1._.js\")",
       "Bash(pnpm install:*)",
-      "Bash(pnpm lint:*)"
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm build:*)"
     ],
     "deny": [
       "Bash(rm -rf *)",

@@ -49,22 +49,12 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "elegante",
 		backLayout: "elegante",
 		defaultFront: {
-			primaryColor: "#b45309",
-			background: {
-				type: "gradient",
-				color1: "#fef3c7",
-				color2: "#ffffff",
-				direction: "to-bottom",
-			},
+			primaryColor: "#1c1917",
+			background: { type: "solid", color: "#feac4d" },
 		},
 		defaultBack: {
-			primaryColor: "#b45309",
-			background: {
-				type: "gradient",
-				color1: "#fef3c7",
-				color2: "#ffffff",
-				direction: "to-bottom",
-			},
+			primaryColor: "#1c1917",
+			background: { type: "solid", color: "#feac4d" },
 		},
 	},
 	{
@@ -87,8 +77,8 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "minimalista",
 		backLayout: "minimalista",
 		defaultFront: {
-			primaryColor: "#374151",
-			background: { type: "solid", color: "#ffffff" },
+			primaryColor: "#ffffff",
+			background: { type: "solid", color: "#374151" },
 		},
 		defaultBack: {
 			primaryColor: "#374151",

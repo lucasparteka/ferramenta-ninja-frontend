@@ -16,6 +16,7 @@ import type {
 	CanvasHandle,
 	FrontData,
 	GradientDirection,
+	SocialIconStyle,
 	SocialNetwork,
 	StampCount,
 	StampStyle,
@@ -34,6 +35,7 @@ function buildDefaultFrontData(templateId: string): FrontData {
 			{ network: "instagram", handle: "" },
 			{ network: "facebook", handle: "" },
 		],
+		socialIconStyle: "flat",
 		primaryColor: template.defaultFront.primaryColor,
 		background: template.defaultFront.background,
 		logoFile: null,
@@ -475,7 +477,174 @@ export function LoyaltyCardEditor() {
 											</div>
 										);
 									})}
+									<div className="space-y-2">
+										<Label>Estilo dos ícones</Label>
+										<div className="flex gap-2">
+											{(["flat", "colorido"] as SocialIconStyle[]).map((s) => (
+												<button
+													key={s}
+													type="button"
+													onClick={() =>
+														setFrontData((prev) => ({
+															...prev,
+															socialIconStyle: s,
+														}))
+													}
+													aria-pressed={frontData.socialIconStyle === s}
+													className={`rounded border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+														frontData.socialIconStyle === s
+															? "border-primary bg-primary text-primary-foreground"
+															: "border-border bg-card text-foreground hover:bg-muted"
+													}`}
+												>
+													{s === "flat" ? "Flat" : "Colorido"}
+												</button>
+											))}
+										</div>
+									</div>
 								</div>
+							) : selectedTemplate.id === "minimalista" ? (
+								<>
+									<div className="space-y-2">
+										<Label htmlFor="slogan">Slogan</Label>
+										<Input
+											id="slogan"
+											value={frontData.slogan}
+											onChange={(e) =>
+												setFrontData((prev) => ({
+													...prev,
+													slogan: e.target.value,
+												}))
+											}
+											placeholder="Ex: Qualidade em cada detalhe"
+											maxLength={50}
+										/>
+									</div>
+
+									<div className="space-y-2">
+										<Label>Rede social</Label>
+										<div className="flex gap-2">
+											<select
+												value={frontData.socialEntries[0].network}
+												onChange={(e) =>
+													updateSocialEntry(0, "network", e.target.value)
+												}
+												className="rounded border border-border bg-background px-2 py-1.5 text-sm text-foreground"
+											>
+												<option value="instagram">Instagram</option>
+												<option value="facebook">Facebook</option>
+												<option value="whatsapp">WhatsApp</option>
+												<option value="tiktok">TikTok</option>
+												<option value="website">Site</option>
+											</select>
+											<Input
+												value={frontData.socialEntries[0].handle}
+												onChange={(e) =>
+													updateSocialEntry(0, "handle", e.target.value)
+												}
+												placeholder="@handle ou link"
+												maxLength={40}
+											/>
+										</div>
+									</div>
+
+									<div className="space-y-2">
+										<Label>Estilo do ícone</Label>
+										<div className="flex gap-2">
+											{(["flat", "colorido"] as SocialIconStyle[]).map((s) => (
+												<button
+													key={s}
+													type="button"
+													onClick={() =>
+														setFrontData((prev) => ({
+															...prev,
+															socialIconStyle: s,
+														}))
+													}
+													aria-pressed={frontData.socialIconStyle === s}
+													className={`rounded border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+														frontData.socialIconStyle === s
+															? "border-primary bg-primary text-primary-foreground"
+															: "border-border bg-card text-foreground hover:bg-muted"
+													}`}
+												>
+													{s === "flat" ? "Flat" : "Colorido"}
+												</button>
+											))}
+										</div>
+									</div>
+								</>
+							) : selectedTemplate.id === "elegante" ? (
+								<>
+									<div className="space-y-2">
+										<Label>Rede social</Label>
+										<div className="flex gap-2">
+											<select
+												value={frontData.socialEntries[0].network}
+												onChange={(e) =>
+													updateSocialEntry(0, "network", e.target.value)
+												}
+												className="rounded border border-border bg-background px-2 py-1.5 text-sm text-foreground"
+											>
+												<option value="instagram">Instagram</option>
+												<option value="facebook">Facebook</option>
+												<option value="whatsapp">WhatsApp</option>
+												<option value="tiktok">TikTok</option>
+												<option value="website">Site</option>
+											</select>
+											<Input
+												value={frontData.socialEntries[0].handle}
+												onChange={(e) =>
+													updateSocialEntry(0, "handle", e.target.value)
+												}
+												placeholder="@handle ou link"
+												maxLength={40}
+											/>
+										</div>
+									</div>
+
+									<div className="space-y-2">
+										<Label>Estilo do ícone</Label>
+										<div className="flex gap-2">
+											{(["flat", "colorido"] as SocialIconStyle[]).map((s) => (
+												<button
+													key={s}
+													type="button"
+													onClick={() =>
+														setFrontData((prev) => ({
+															...prev,
+															socialIconStyle: s,
+														}))
+													}
+													aria-pressed={frontData.socialIconStyle === s}
+													className={`rounded border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+														frontData.socialIconStyle === s
+															? "border-primary bg-primary text-primary-foreground"
+															: "border-border bg-card text-foreground hover:bg-muted"
+													}`}
+												>
+													{s === "flat" ? "Flat" : "Colorido"}
+												</button>
+											))}
+										</div>
+									</div>
+
+									<div className="space-y-2">
+										<Label htmlFor="contact-info">Texto complementar</Label>
+										<Input
+											id="contact-info"
+											value={frontData.contactInfo}
+											onChange={(e) =>
+												setFrontData((prev) => ({
+													...prev,
+													contactInfo: e.target.value,
+												}))
+											}
+											placeholder="Ex: Rua das Flores, 123"
+											maxLength={60}
+										/>
+									</div>
+								</>
 							) : (
 								<>
 									<div className="space-y-2">

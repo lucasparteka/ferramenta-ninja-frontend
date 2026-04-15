@@ -37,10 +37,12 @@ function drawStamps(
 	areaW: number,
 	areaH: number,
 	labeled = false,
+	maxStampSize = 50,
+	labelFontSize = 8,
 ) {
 	const { cols, rows } = computeGrid(data.stampCount);
 	const gap = 10;
-	const targetSize = 50;
+	const targetSize = maxStampSize;
 	const maxByWidth = Math.floor((areaW - (cols - 1) * gap) / cols);
 	const maxByHeight = Math.floor((areaH - (rows - 1) * gap) / rows);
 	const stampSize = Math.min(targetSize, maxByWidth, maxByHeight);
@@ -93,7 +95,7 @@ function drawStamps(
 			if (labeled) {
 				ctx.fillStyle = data.primaryColor;
 				ctx.globalAlpha = 0.5;
-				ctx.font = "8px Inter, sans-serif";
+				ctx.font = `${labelFontSize}px Inter, sans-serif`;
 				ctx.textAlign = "center";
 				ctx.fillText(
 					String(rendered + 1),
@@ -176,9 +178,17 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 		ctx.textBaseline = "middle";
 
 		if (data.whatsapp) {
-			drawSocialIcon(ctx, "whatsapp", 16, footerCY - 7, 14, data.primaryColor);
+			drawSocialIcon(
+				ctx,
+				"whatsapp",
+				16,
+				footerCY - 7,
+				14,
+				data.primaryColor,
+				"flat",
+			);
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.8;
+			// ctx.globalAlpha = 0.8;
 			ctx.textAlign = "left";
 			ctx.fillText(data.whatsapp, 34, footerCY);
 			ctx.globalAlpha = 1;
@@ -186,7 +196,6 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 
 		if (data.extraText) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.8;
 			ctx.textAlign = "right";
 			ctx.fillText(data.extraText, w - 16, footerCY);
 			ctx.globalAlpha = 1;
@@ -212,7 +221,7 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 		ctx.fillRect(0, h - 36, w, 36);
 		ctx.globalAlpha = 1;
 
-		drawStamps(ctx, data, 0, 36, w * 0.65, h - 72);
+		drawStamps(ctx, data, 0, 25, w, h - 60);
 
 		ctx.fillStyle = data.primaryColor;
 		ctx.font = "bold 9px Inter, sans-serif";
@@ -223,7 +232,6 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 
 		if (data.rulesText) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.5;
 			ctx.font = "9px Inter, sans-serif";
 			ctx.fillText(data.rulesText, w - 16, h - 8);
 			ctx.globalAlpha = 1;
@@ -247,8 +255,7 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 		const textColor = getContrastColor(getBgBaseColor(data));
 		if (data.rulesText) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.5;
-			ctx.font = "9px Inter, sans-serif";
+			ctx.font = "12px Inter, sans-serif";
 			ctx.fillText(data.rulesText, w / 2, h - 10);
 			ctx.globalAlpha = 1;
 		}
@@ -257,55 +264,48 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 	},
 
 	elegante(ctx, data, w, h) {
-		const textColor = getContrastColor(getBgBaseColor(data));
+		const margin = 20;
+		const rectX = margin;
+		const rectY = margin;
+		const rectW = w - margin * 2;
+		const rectH = h - margin * 2;
+		const innerTextColor = "#1c1917";
 
-		ctx.fillStyle = data.primaryColor;
-		ctx.font = "bold 11px Inter, sans-serif";
-		ctx.letterSpacing = "2px";
-		ctx.textAlign = "center";
-		ctx.fillText("CARTÃO FIDELIDADE", w / 2, 22);
-		ctx.letterSpacing = "0px";
-
-		const frameX = 20;
-		const frameY = 30;
-		const frameW = w - 40;
-		const frameH = h - 65;
+		ctx.fillStyle = "#ffffff";
+		ctx.fillRect(rectX, rectY, rectW, rectH);
 
 		ctx.strokeStyle = data.primaryColor;
-		ctx.lineWidth = 1.5;
-		const fr = 6;
-		ctx.beginPath();
-		ctx.moveTo(frameX + fr, frameY);
-		ctx.lineTo(frameX + frameW - fr, frameY);
-		ctx.arcTo(frameX + frameW, frameY, frameX + frameW, frameY + fr, fr);
-		ctx.lineTo(frameX + frameW, frameY + frameH - fr);
-		ctx.arcTo(
-			frameX + frameW,
-			frameY + frameH,
-			frameX + frameW - fr,
-			frameY + frameH,
-			fr,
-		);
-		ctx.lineTo(frameX + fr, frameY + frameH);
-		ctx.arcTo(frameX, frameY + frameH, frameX, frameY + frameH - fr, fr);
-		ctx.lineTo(frameX, frameY + fr);
-		ctx.arcTo(frameX, frameY, frameX + fr, frameY, fr);
-		ctx.closePath();
-		ctx.stroke();
+		ctx.lineWidth = 1.2;
+		ctx.strokeRect(rectX, rectY, rectW, rectH);
 
-		drawStamps(ctx, data, frameX, frameY, frameW, frameH);
+		ctx.fillStyle = innerTextColor;
+		ctx.font = "bold 14px Inter, sans-serif";
+		ctx.letterSpacing = "2px";
+		ctx.textAlign = "center";
+		ctx.fillText("CARTÃO FIDELIDADE", w / 2, rectY + 30);
+		ctx.letterSpacing = "0px";
+
+		const hasFooter = !!data.rewardText;
+		const footerH = hasFooter ? 20 : 8;
+		const stampAreaTop = rectY + 30;
+		const stampAreaH = rectH - 30 - footerH;
+		drawStamps(
+			ctx,
+			data,
+			rectX + 6,
+			stampAreaTop,
+			rectW - 12,
+			stampAreaH,
+			true,
+			34,
+			11,
+		);
 
 		if (data.rewardText) {
-			ctx.fillStyle = data.primaryColor;
-			ctx.font = "10px Inter, sans-serif";
-			ctx.fillText(data.rewardText, w / 2, h - 26);
-		}
-
-		if (data.rulesText) {
-			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.45;
-			ctx.font = "9px Inter, sans-serif";
-			ctx.fillText(data.rulesText, w / 2, h - 12);
+			ctx.fillStyle = innerTextColor;
+			ctx.font = "500 14px Inter, sans-serif";
+			ctx.textAlign = "center";
+			ctx.fillText(data.rewardText, w / 2, rectY + rectH - 8, rectW - 20);
 			ctx.globalAlpha = 1;
 		}
 
@@ -334,8 +334,7 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 
 		if (data.rulesText) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.5;
-			ctx.font = "9px Inter, sans-serif";
+			ctx.font = "12px Inter, sans-serif";
 			ctx.textAlign = "center";
 			ctx.fillText(data.rulesText, w / 2, h - 10);
 			ctx.globalAlpha = 1;
@@ -347,30 +346,60 @@ const BACK_LAYOUTS: Record<BackLayout, LayoutFn> = {
 	minimalista(ctx, data, w, h) {
 		const textColor = getContrastColor(getBgBaseColor(data));
 
+		const headerH = 34;
+		const headerText = "CARTÃO FIDELIDADE";
+		ctx.font = "bold 11px Inter, sans-serif";
+		ctx.letterSpacing = "1.5px";
+		ctx.textAlign = "center";
+
+		const textW = ctx.measureText(headerText).width;
+		const lineGap = 10;
+		const lineY = 22;
+
+		ctx.strokeStyle = textColor;
+		ctx.globalAlpha = 0.4;
+		ctx.lineWidth = 0.8;
+		ctx.beginPath();
+		ctx.moveTo(16, lineY);
+		ctx.lineTo(w / 2 - textW / 2 - lineGap, lineY);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(w / 2 + textW / 2 + lineGap, lineY);
+		ctx.lineTo(w - 16, lineY);
+		ctx.stroke();
+		ctx.globalAlpha = 1;
+
+		ctx.fillStyle = textColor;
+		ctx.fillText(headerText, w / 2, lineY + 4);
+		ctx.letterSpacing = "0px";
+
+		const hasFooter = !!(data.rewardText || data.rulesText);
+		const footerH = hasFooter
+			? data.rewardText && data.rulesText
+				? 46
+				: 28
+			: 10;
+
+		drawStamps(ctx, data, 0, headerH, w, h - headerH - footerH, false, 40);
+
 		if (data.rewardText) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.5;
-			ctx.font = "10px Inter, sans-serif";
+			ctx.font = "bold 10px Inter, sans-serif";
 			ctx.textAlign = "center";
-			ctx.fillText(data.rewardText, w / 2, 18);
-			ctx.globalAlpha = 1;
+			ctx.fillText(
+				data.rewardText,
+				w / 2,
+				h - (data.rulesText ? 24 : 12),
+				w - 32,
+			);
 		}
-
-		const stampAreaY = data.rewardText ? 24 : 10;
-		drawStamps(
-			ctx,
-			data,
-			0,
-			stampAreaY,
-			w,
-			h - stampAreaY - (data.rulesText ? 22 : 10),
-		);
 
 		if (data.rulesText) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.35;
+			ctx.globalAlpha = 0.65;
 			ctx.font = "9px Inter, sans-serif";
-			ctx.fillText(data.rulesText, w / 2, h - 8);
+			ctx.textAlign = "center";
+			ctx.fillText(data.rulesText, w / 2, h - 10, w - 32);
 			ctx.globalAlpha = 1;
 		}
 

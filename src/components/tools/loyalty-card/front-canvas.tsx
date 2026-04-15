@@ -1,14 +1,26 @@
 "use client";
 
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { siFacebook, siInstagram, siTiktok, siWhatsapp } from "simple-icons";
 import type {
 	Background,
 	CanvasHandle,
 	FrontData,
 	FrontLayout,
+	SocialIconStyle,
 	SocialNetwork,
 	Template,
 } from "./types";
+
+type BrandIcon = { path: string; hex: string };
+
+const SOCIAL_ICONS: Record<SocialNetwork, BrandIcon | null> = {
+	facebook: siFacebook,
+	instagram: siInstagram,
+	whatsapp: siWhatsapp,
+	tiktok: siTiktok,
+	website: null,
+};
 
 const CANVAS_WIDTH = 360;
 const CANVAS_HEIGHT = 200;
@@ -203,77 +215,31 @@ export function drawSocialIcon(
 	y: number,
 	size: number,
 	color: string,
+	style: SocialIconStyle | "badge" = "badge",
 ) {
 	const s = size;
 	ctx.save();
 	ctx.translate(x, y);
 
-	ctx.fillStyle = color;
-	ctx.beginPath();
-	ctx.roundRect(0, 0, s, s, Math.round(s * 0.22));
-	ctx.fill();
+	const brandIcon = SOCIAL_ICONS[network];
 
-	const contrast = getContrastColor(color);
+	if (style === "badge") {
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.roundRect(0, 0, s, s, Math.round(s * 0.22));
+		ctx.fill();
 
-	switch (network) {
-		case "facebook": {
+		const contrast = getContrastColor(color);
+
+		if (brandIcon) {
+			const padding = s * 0.15;
+			const iconArea = s - padding * 2;
+			const scale = iconArea / 24;
+			ctx.translate(padding, padding);
+			ctx.scale(scale, scale);
 			ctx.fillStyle = contrast;
-			ctx.font = `bold ${Math.round(s * 0.72)}px Arial, sans-serif`;
-			ctx.textAlign = "center";
-			ctx.textBaseline = "middle";
-			ctx.fillText("f", s * 0.55, s * 0.54);
-			break;
-		}
-		case "instagram": {
-			const pad = s * 0.15;
-			const is = s - pad * 2;
-			ctx.strokeStyle = contrast;
-			ctx.lineWidth = Math.max(1, s * 0.1);
-			ctx.beginPath();
-			ctx.roundRect(pad, pad, is, is, Math.round(is * 0.28));
-			ctx.stroke();
-			ctx.beginPath();
-			ctx.arc(s / 2, s / 2, s * 0.2, 0, Math.PI * 2);
-			ctx.stroke();
-			ctx.fillStyle = contrast;
-			ctx.beginPath();
-			ctx.arc(s * 0.73, s * 0.27, s * 0.08, 0, Math.PI * 2);
-			ctx.fill();
-			break;
-		}
-		case "whatsapp": {
-			ctx.fillStyle = contrast;
-			ctx.beginPath();
-			ctx.arc(s * 0.34, s * 0.28, s * 0.13, 0, Math.PI * 2);
-			ctx.fill();
-			ctx.beginPath();
-			ctx.arc(s * 0.68, s * 0.72, s * 0.13, 0, Math.PI * 2);
-			ctx.fill();
-			ctx.strokeStyle = contrast;
-			ctx.lineWidth = Math.max(1, s * 0.12);
-			ctx.lineCap = "round";
-			ctx.beginPath();
-			ctx.moveTo(s * 0.34, s * 0.28);
-			ctx.bezierCurveTo(
-				s * 0.28,
-				s * 0.55,
-				s * 0.6,
-				s * 0.65,
-				s * 0.68,
-				s * 0.72,
-			);
-			ctx.stroke();
-			break;
-		}
-		case "tiktok": {
-			ctx.fillStyle = contrast;
-			ctx.font = `bold ${Math.round(s * 0.65)}px sans-serif`;
-			ctx.textAlign = "center";
-			ctx.textBaseline = "middle";
-			ctx.fillText("♪", s / 2, s * 0.56);
-			break;
-		}
-		case "website": {
+			ctx.fill(new Path2D(brandIcon.path));
+		} else {
 			ctx.strokeStyle = contrast;
 			ctx.lineWidth = Math.max(1, s * 0.09);
 			ctx.beginPath();
@@ -286,7 +252,32 @@ export function drawSocialIcon(
 			ctx.beginPath();
 			ctx.ellipse(s / 2, s / 2, s * 0.16, s * 0.34, 0, 0, Math.PI * 2);
 			ctx.stroke();
-			break;
+		}
+	} else {
+		const iconColor =
+			style === "colorido" && brandIcon ? `#${brandIcon.hex}` : color;
+
+		if (brandIcon) {
+			const padding = s * 0.1;
+			const iconArea = s - padding * 2;
+			const scale = iconArea / 24;
+			ctx.translate(padding, padding);
+			ctx.scale(scale, scale);
+			ctx.fillStyle = iconColor;
+			ctx.fill(new Path2D(brandIcon.path));
+		} else {
+			ctx.strokeStyle = color;
+			ctx.lineWidth = Math.max(1, s * 0.09);
+			ctx.beginPath();
+			ctx.arc(s / 2, s / 2, s * 0.34, 0, Math.PI * 2);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.moveTo(s * 0.16, s / 2);
+			ctx.lineTo(s * 0.84, s / 2);
+			ctx.stroke();
+			ctx.beginPath();
+			ctx.ellipse(s / 2, s / 2, s * 0.16, s * 0.34, 0, 0, Math.PI * 2);
+			ctx.stroke();
 		}
 	}
 
@@ -311,15 +302,7 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 		ctx.letterSpacing = "0px";
 
 		if (data.logoPreview) {
-			renderLogo(
-				ctx,
-				data.logoPreview,
-				w / 2,
-				bandY / 2,
-				w - 40,
-				bandY - 20,
-				true,
-			);
+			renderLogo(ctx, data.logoPreview, w / 2, bandY / 2, 120, 120, true);
 		} else {
 			ctx.fillStyle = textColor;
 			ctx.font = "bold 28px Inter, sans-serif";
@@ -335,6 +318,8 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 		const iconSize = 14;
 		const iconTextGap = 5;
 
+		console.log("entries", entries);
+
 		ctx.font = "10px Inter, sans-serif";
 		ctx.textBaseline = "middle";
 
@@ -348,18 +333,21 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 			const ex = positions[i] - entryWidth / 2;
 			const cy = footerY + footerH / 2;
 
-			drawSocialIcon(
-				ctx,
-				entry.network,
-				ex,
-				cy - iconSize / 2,
-				iconSize,
-				data.primaryColor,
-			);
+			if (entry.handle) {
+				drawSocialIcon(
+					ctx,
+					entry.network,
+					ex,
+					cy - iconSize / 2,
+					iconSize,
+					textColor,
+					data.socialIconStyle ?? "flat",
+				);
 
-			ctx.fillStyle = entry.handle ? textColor : `${textColor}66`;
-			ctx.textAlign = "left";
-			ctx.fillText(handle, ex + iconSize + iconTextGap, cy);
+				ctx.fillStyle = entry.handle ? textColor : `${textColor}`;
+				ctx.textAlign = "left";
+				ctx.fillText(handle, ex + iconSize + iconTextGap, cy);
+			}
 		}
 
 		ctx.textBaseline = "alphabetic";
@@ -369,16 +357,18 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 	moderno(ctx, data, w, h) {
 		const textColor = getContrastColor(getBgBaseColor(data.background));
 
-		ctx.fillStyle = data.primaryColor;
-		ctx.font = "bold 26px Inter, sans-serif";
-		ctx.textAlign = "left";
-		ctx.fillText(data.businessName || "Nome do Negócio", 20, 90);
+		if (data.businessName) {
+			ctx.fillStyle = data.primaryColor;
+			ctx.font = "bold 26px Inter, sans-serif";
+			ctx.textAlign = "left";
+			ctx.fillText(data.businessName || "Nome do Negócio", 20, 90);
 
-		const nameWidth = ctx.measureText(
-			data.businessName || "Nome do Negócio",
-		).width;
-		ctx.fillStyle = data.primaryColor;
-		ctx.fillRect(20, 98, Math.min(nameWidth, w - 130), 2);
+			const nameWidth = ctx.measureText(
+				data.businessName || "Nome do Negócio",
+			).width;
+			ctx.fillStyle = data.primaryColor;
+			ctx.fillRect(20, 98, Math.min(nameWidth, w - 130), 2);
+		}
 
 		if (data.slogan) {
 			ctx.fillStyle = textColor;
@@ -388,15 +378,14 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 
 		if (data.contactInfo) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.5;
-			ctx.font = "10px Inter, sans-serif";
+			ctx.font = "11px Inter, sans-serif";
 			ctx.textAlign = "right";
 			ctx.fillText(data.contactInfo, w - 16, h - 14);
 			ctx.globalAlpha = 1;
 			ctx.textAlign = "left";
 		}
 
-		renderLogo(ctx, data.logoPreview, w - 80, 16, 64, 64);
+		renderLogo(ctx, data.logoPreview, w - 120, 16, 100, 100);
 	},
 
 	dividido(ctx, data, w, h) {
@@ -442,39 +431,109 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 	},
 
 	elegante(ctx, data, w, h) {
-		const bandH = Math.floor(h * 0.35);
-		const bandY = h - bandH;
+		const margin = 20;
+		const rectX = margin;
+		const rectY = margin;
+		const rectW = w - margin * 2;
+		const rectH = h - margin * 2;
 
-		ctx.fillStyle = data.primaryColor;
-		ctx.fillRect(0, bandY, w, bandH);
+		ctx.strokeStyle = data.primaryColor;
+		ctx.lineWidth = 1.2;
+		ctx.strokeRect(rectX, rectY, rectW, rectH);
 
-		const bandTextColor = getContrastColor(data.primaryColor);
-		const topTextColor = getContrastColor(getBgBaseColor(data.background));
+		const hasLogo = !!data.logoPreview;
+		const entry = data.socialEntries?.[0];
+		const hasSocial = !!entry?.handle;
+		const hasContact = !!data.contactInfo;
+		const hasExtra = hasSocial || hasContact;
 
-		ctx.fillStyle = topTextColor;
-		ctx.font = "bold 20px Inter, sans-serif";
-		ctx.textAlign = "left";
-		ctx.fillText(data.businessName || "Nome do Negócio", 20, 36);
-
-		if (data.slogan) {
-			ctx.fillStyle = topTextColor;
-			ctx.globalAlpha = 0.7;
-			ctx.font = "12px Inter, sans-serif";
-			ctx.fillText(data.slogan, 20, 56);
-			ctx.globalAlpha = 1;
+		if (hasLogo) {
+			renderLogo(ctx, data.logoPreview, w / 2, 70, 120, 120, true);
 		}
 
-		ctx.fillStyle = bandTextColor;
-		ctx.globalAlpha = 0.9;
-		ctx.font = "10px Inter, sans-serif";
-		ctx.textAlign = "center";
-		ctx.fillText(data.contactInfo || "", w / 2, bandY + bandH / 2 + 4);
-		ctx.globalAlpha = 1;
-		ctx.textAlign = "left";
-
-		if (data.logoPreview) {
-			renderLogo(ctx, data.logoPreview, w - 84, 16, 64, 64);
+		const nameY = hasLogo ? 118 : hasExtra ? 80 : 96;
+		if (data.businessName) {
+			ctx.fillStyle = data.primaryColor;
+			ctx.font = `bold ${hasLogo ? 16 : 20}px Inter, sans-serif`;
+			ctx.textAlign = "center";
+			ctx.fillText(data.businessName, w / 2, nameY, rectW - 20);
 		}
+
+		const logoBottom = 104;
+		const sepY = data.businessName
+			? nameY + 12
+			: hasLogo
+				? logoBottom + 6
+				: nameY + 12;
+		const sepHalfW = rectW * 0.3;
+		ctx.strokeStyle = data.primaryColor;
+		ctx.beginPath();
+		ctx.moveTo(w / 2 - sepHalfW, sepY);
+		ctx.lineTo(w / 2 + sepHalfW, sepY);
+		ctx.stroke();
+
+		if (hasExtra) {
+			const bottomTop = sepY + 10;
+			const bottomH = rectY + rectH - bottomTop - 8;
+
+			if (hasSocial && hasContact) {
+				const socialCY = bottomTop + bottomH * 0.35;
+				const contactY = bottomTop + bottomH * 0.72;
+				const iconSize = 14;
+				const iconTextGap = 5;
+				ctx.font = "500 12px Inter, sans-serif";
+				ctx.textBaseline = "middle";
+				const textWidth = ctx.measureText(entry.handle).width;
+				const entryWidth = iconSize + iconTextGap + textWidth;
+				const ex = w / 2 - entryWidth / 2;
+				drawSocialIcon(
+					ctx,
+					entry.network,
+					ex,
+					socialCY - iconSize / 2,
+					iconSize,
+					data.primaryColor,
+					data.socialIconStyle ?? "flat",
+				);
+				ctx.fillStyle = data.primaryColor;
+				ctx.textAlign = "left";
+				ctx.fillText(entry.handle, ex + iconSize + iconTextGap, socialCY);
+				ctx.textBaseline = "alphabetic";
+				ctx.font = "500 12px Inter, sans-serif";
+				ctx.textAlign = "center";
+				ctx.fillText(data.contactInfo, w / 2, contactY, rectW - 40);
+			} else if (hasSocial) {
+				const cy = bottomTop + bottomH / 2;
+				const iconSize = 14;
+				const iconTextGap = 5;
+				ctx.font = "500 12px Inter, sans-serif";
+				ctx.textBaseline = "middle";
+				const textWidth = ctx.measureText(entry.handle).width;
+				const entryWidth = iconSize + iconTextGap + textWidth;
+				const ex = w / 2 - entryWidth / 2;
+				drawSocialIcon(
+					ctx,
+					entry.network,
+					ex,
+					cy - iconSize / 2,
+					iconSize,
+					data.primaryColor,
+					data.socialIconStyle ?? "flat",
+				);
+				ctx.fillStyle = data.primaryColor;
+				ctx.textAlign = "left";
+				ctx.fillText(entry.handle, ex + iconSize + iconTextGap, cy);
+				ctx.textBaseline = "alphabetic";
+			} else {
+				const cy = bottomTop + bottomH / 2;
+				ctx.fillStyle = data.primaryColor;
+				ctx.font = "500 12px Inter, sans-serif";
+				ctx.textAlign = "center";
+				ctx.fillText(data.contactInfo, w / 2, cy, rectW - 40);
+			}
+		}
+
+		ctx.textAlign = "left";
 	},
 
 	compacto(ctx, data, w, h) {
@@ -520,33 +579,58 @@ const FRONT_LAYOUTS: Record<FrontLayout, LayoutFn> = {
 
 	minimalista(ctx, data, w, h) {
 		const textColor = getContrastColor(getBgBaseColor(data.background));
+		const hasLogo = !!data.logoPreview;
 
-		ctx.fillStyle = textColor;
-		ctx.font = "bold 24px Inter, sans-serif";
-		ctx.textAlign = "center";
-		ctx.fillText(data.businessName || "Nome do Negócio", w / 2, h / 2 - 8);
+		const nameY = hasLogo ? 106 : 90;
+
+		if (hasLogo) {
+			renderLogo(ctx, data.logoPreview, w / 2, 52, 62, 62, true);
+		}
+
+		if (data.businessName) {
+			ctx.fillStyle = textColor;
+			ctx.font = `bold ${hasLogo ? 18 : 22}px Inter, sans-serif`;
+			ctx.textAlign = "center";
+			ctx.fillText(data.businessName, w / 2, nameY, w - 40);
+		}
 
 		if (data.slogan) {
 			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.55;
-			ctx.font = "12px Inter, sans-serif";
-			ctx.fillText(data.slogan, w / 2, h / 2 + 14);
+			ctx.globalAlpha = 0.6;
+			ctx.font = "11px Inter, sans-serif";
+			ctx.fillText(data.slogan, w / 2, nameY + 18, w - 60);
 			ctx.globalAlpha = 1;
 		}
 
-		if (data.contactInfo) {
-			ctx.fillStyle = textColor;
-			ctx.globalAlpha = 0.35;
+		const entry = data.socialEntries?.[0];
+		if (entry) {
+			const iconSize = 17;
+			const iconTextGap = 5;
+			const handle = entry.handle || getSocialPlaceholder(entry.network);
 			ctx.font = "10px Inter, sans-serif";
-			ctx.fillText(data.contactInfo, w / 2, h - 16);
-			ctx.globalAlpha = 1;
+			ctx.textBaseline = "middle";
+			const textWidth = ctx.measureText(handle).width;
+			const entryWidth = iconSize + iconTextGap + textWidth;
+			const ex = w / 2 - entryWidth / 2;
+			const cy = h - 22;
+
+			drawSocialIcon(
+				ctx,
+				entry.network,
+				ex,
+				cy - iconSize / 2,
+				iconSize,
+				textColor,
+				data.socialIconStyle ?? "flat",
+			);
+
+			ctx.fillStyle = entry.handle ? textColor : `${textColor}66`;
+			ctx.textAlign = "left";
+			ctx.fillText(handle, ex + iconSize + iconTextGap, cy);
+			ctx.textBaseline = "alphabetic";
 		}
 
 		ctx.textAlign = "left";
-
-		if (data.logoPreview) {
-			renderLogo(ctx, data.logoPreview, w - 56, h - 56, 40, 40);
-		}
 	},
 
 	negrito(ctx, data, w, h) {

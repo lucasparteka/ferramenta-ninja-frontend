@@ -128,6 +128,15 @@ export const categories: ToolCategory[] = [
 		name: "Documentos",
 		tools: [
 			{
+				name: "Criador de Currículo",
+				href: "/ferramentas/criador-de-curriculo",
+				description:
+					"Crie currículos profissionais prontos para impressão em PDF",
+				tags: ["pdf", "impressao", "carreira", "design"],
+				intent: "generate",
+				weight: 2,
+			},
+			{
 				name: "Criador de Cardápio",
 				href: "/ferramentas/cardapio-online",
 				description:

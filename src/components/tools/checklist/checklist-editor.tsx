@@ -1,7 +1,28 @@
 "use client";
 
-import { FileDown, Image, Plus, Trash2 } from "lucide-react";
-import { useRef, useState } from "react";
+import { DragDropProvider } from "@dnd-kit/react";
+import { isSortableOperation, useSortable } from "@dnd-kit/react/sortable";
+import {
+	Copy,
+	FileDown,
+	GripVertical,
+	Hash,
+	Image,
+	Plus,
+	Trash2,
+} from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,12 +30,23 @@ import { exportChecklistPdf, exportChecklistPng } from "@/lib/checklist/export";
 import { CHECKLIST_TEMPLATES } from "@/lib/checklist/templates";
 import type {
 	CanvasHandle,
+	ChecklistHeader,
+	ChecklistItem,
+	ChecklistItemKind,
 	ChecklistLayout,
 	ChecklistState,
 	ChecklistStyle,
 } from "@/lib/checklist/types";
 import { ChecklistCanvas } from "./checklist-canvas";
 import { TemplateSelector } from "./template-selector";
+
+const DEFAULT_HEADER: ChecklistHeader = {
+	enabled: false,
+	subtitle: "",
+	date: "",
+	name: "",
+	backgroundColor: "#1e3a5f",
+};
 
 function buildInitialState(): ChecklistState {
 	const template = CHECKLIST_TEMPLATES[0];
@@ -23,6 +55,7 @@ function buildInitialState(): ChecklistState {
 		items: [...template.content.items],
 		layout: { ...template.layout },
 		style: { ...template.style },
+		header: { ...DEFAULT_HEADER },
 	};
 }
 
@@ -57,23 +90,117 @@ function ToggleGroup<T extends string>({
 	);
 }
 
+type SortableItemProps = {
+	id: string;
+	index: number;
+	item: string;
+	kind: ChecklistItemKind;
+	inputRef: (el: HTMLInputElement | null) => void;
+	onUpdate: (index: number, value: string) => void;
+	onDuplicate: (index: number) => void;
+	onRemove: (index: number) => void;
+	onAddAfter: (index: number) => void;
+	disableRemove: boolean;
+};
+
+function SortableItem({
+	id,
+	index,
+	item,
+	kind,
+	inputRef,
+	onUpdate,
+	onDuplicate,
+	onRemove,
+	onAddAfter,
+	disableRemove,
+}: SortableItemProps) {
+	const { ref, handleRef, isDragSource } = useSortable({ id, index });
+	const isGroup = kind === "group";
+	return (
+		<li
+			ref={ref}
+			className={`flex items-center gap-2${isDragSource ? " opacity-50" : ""}${isGroup ? " mt-5" : ""}`}
+		>
+			<button
+				ref={handleRef}
+				type="button"
+				aria-label="Reordenar item"
+				className="cursor-grab touch-none text-muted-foreground"
+			>
+				<GripVertical className="size-4" />
+			</button>
+			{isGroup && <Hash className="size-4 shrink-0 text-muted-foreground" />}
+			<Input
+				ref={inputRef}
+				value={item}
+				onChange={(e) => onUpdate(index, e.target.value)}
+				onKeyDown={(e) => e.key === "Enter" && onAddAfter(index)}
+				placeholder={isGroup ? "Nome do grupo..." : "Digite uma tarefa..."}
+				className={isGroup ? "font-semibold" : ""}
+			/>
+			<Button
+				type="button"
+				variant="ghost"
+				size="icon"
+				onClick={() => onDuplicate(index)}
+				aria-label="Duplicar item"
+			>
+				<Copy className="size-4" />
+			</Button>
+			<Button
+				type="button"
+				variant="ghost"
+				size="icon"
+				onClick={() => onRemove(index)}
+				aria-label="Remover item"
+				disabled={disableRemove}
+			>
+				<Trash2 className="size-4" />
+			</Button>
+		</li>
+	);
+}
+
 export function ChecklistEditor() {
 	const [state, setState] = useState<ChecklistState>(buildInitialState);
 	const [selectedTemplateId, setSelectedTemplateId] = useState(
 		CHECKLIST_TEMPLATES[0].id,
 	);
 	const canvasRef = useRef<CanvasHandle>(null);
+	const idCounter = useRef(0);
+	const [itemIds, setItemIds] = useState<string[]>(() =>
+		buildInitialState().items.map(() => String(idCounter.current++)),
+	);
+	const focusIndexRef = useRef<number | null>(null);
+	const inputRefs = useRef<Map<number, HTMLInputElement>>(new Map());
+	const [activeTab, setActiveTab] = useState<"aparencia" | "itens">(
+		"aparencia",
+	);
+
+	useEffect(() => {
+		if (focusIndexRef.current !== null) {
+			inputRefs.current.get(focusIndexRef.current)?.focus();
+			focusIndexRef.current = null;
+		}
+	});
 
 	function handleSelectTemplate(id: string) {
 		const template = CHECKLIST_TEMPLATES.find((t) => t.id === id);
 		if (!template) return;
 		setSelectedTemplateId(id);
-		setState({
+		setState((prev) => ({
 			title: template.content.title,
 			items: [...template.content.items],
 			layout: { ...template.layout },
 			style: { ...template.style },
-		});
+			header: { ...prev.header },
+		}));
+		setItemIds(template.content.items.map(() => String(idCounter.current++)));
+	}
+
+	function updateHeader(patch: Partial<ChecklistHeader>) {
+		setState((prev) => ({ ...prev, header: { ...prev.header, ...patch } }));
 	}
 
 	function updateLayout(patch: Partial<ChecklistLayout>) {
@@ -87,13 +214,45 @@ export function ChecklistEditor() {
 	function updateItem(index: number, value: string) {
 		setState((prev) => {
 			const items = [...prev.items];
-			items[index] = value;
+			items[index] = { ...items[index], text: value };
 			return { ...prev, items };
 		});
 	}
 
+	function insertItem(afterIndex: number, newItem: ChecklistItem) {
+		setState((prev) => {
+			const items = [...prev.items];
+			items.splice(afterIndex, 0, newItem);
+			return { ...prev, items };
+		});
+		setItemIds((prev) => {
+			const ids = [...prev];
+			ids.splice(afterIndex, 0, String(idCounter.current++));
+			return ids;
+		});
+	}
+
 	function addItem() {
-		setState((prev) => ({ ...prev, items: [...prev.items, ""] }));
+		insertItem(state.items.length, { text: "", kind: "item" });
+		focusIndexRef.current = state.items.length;
+	}
+
+	function addGroup() {
+		insertItem(state.items.length, { text: "", kind: "group" });
+		focusIndexRef.current = state.items.length;
+	}
+
+	const setInputRef = useCallback(
+		(index: number, el: HTMLInputElement | null) => {
+			if (el) inputRefs.current.set(index, el);
+			else inputRefs.current.delete(index);
+		},
+		[],
+	);
+
+	function addItemAfter(index: number) {
+		insertItem(index + 1, { text: "", kind: "item" });
+		focusIndexRef.current = index + 1;
 	}
 
 	function removeItem(index: number) {
@@ -101,10 +260,40 @@ export function ChecklistEditor() {
 			...prev,
 			items: prev.items.filter((_, i) => i !== index),
 		}));
+		setItemIds((prev) => prev.filter((_, i) => i !== index));
 	}
 
 	function clearItems() {
-		setState((prev) => ({ ...prev, items: [""] }));
+		setState((prev) => ({ ...prev, items: [{ text: "", kind: "item" }] }));
+		setItemIds([String(idCounter.current++)]);
+	}
+
+	function duplicateItem(index: number) {
+		setState((prev) => {
+			const items = [...prev.items];
+			items.splice(index + 1, 0, { ...prev.items[index] });
+			return { ...prev, items };
+		});
+		setItemIds((prev) => {
+			const ids = [...prev];
+			ids.splice(index + 1, 0, String(idCounter.current++));
+			return ids;
+		});
+	}
+
+	function reorderItems(from: number, to: number) {
+		setState((prev) => {
+			const items = [...prev.items];
+			const [moved] = items.splice(from, 1);
+			items.splice(to, 0, moved);
+			return { ...prev, items };
+		});
+		setItemIds((prev) => {
+			const ids = [...prev];
+			const [moved] = ids.splice(from, 1);
+			ids.splice(to, 0, moved);
+			return ids;
+		});
 	}
 
 	async function handleExportPdf() {
@@ -119,164 +308,371 @@ export function ChecklistEditor() {
 
 	return (
 		<div className="grid gap-6 lg:grid-cols-2">
-			<div className="space-y-5">
-				<div className="space-y-2 max-md:max-w-[90vw]">
-					<Label className="text-sm font-medium">Template</Label>
-					<TemplateSelector
-						templates={CHECKLIST_TEMPLATES}
-						selectedId={selectedTemplateId}
-						onSelect={handleSelectTemplate}
-					/>
-				</div>
-				<div className="space-y-2">
-					<Label htmlFor="checklist-title" className="text-sm font-medium">
-						Título
-					</Label>
-					<Input
-						id="checklist-title"
-						value={state.title}
-						onChange={(e) =>
-							setState((prev) => ({ ...prev, title: e.target.value }))
-						}
-						maxLength={80}
-						placeholder="Título do checklist"
-					/>
-				</div>
-				<div className="grid md:grid-cols-2 gap-4">
-					<div className="space-y-2">
-						<Label className="text-sm font-medium">Colunas</Label>
-						<ToggleGroup
-							options={[
-								{ value: "1" as const, label: "1 coluna" },
-								{ value: "2" as const, label: "2 colunas" },
-							]}
-							value={String(state.layout.columns) as "1" | "2"}
-							onChange={(v) => updateLayout({ columns: Number(v) as 1 | 2 })}
-						/>
-					</div>
-					<div className="space-y-2">
-						<Label className="text-sm font-medium">Espaçamento</Label>
-						<ToggleGroup
-							options={[
-								{ value: "compact" as const, label: "Compacto" },
-								{ value: "comfortable" as const, label: "Confortável" },
-							]}
-							value={state.layout.spacing}
-							onChange={(v) => updateLayout({ spacing: v })}
-						/>
-					</div>
-				</div>
-				<div className="grid grid-cols-2 gap-4">
-					<div className="space-y-2">
-						<Label className="text-sm font-medium">Tamanho da fonte</Label>
-						<ToggleGroup
-							options={[
-								{ value: "sm" as const, label: "P" },
-								{ value: "md" as const, label: "M" },
-								{ value: "lg" as const, label: "G" },
-							]}
-							value={state.style.fontSize}
-							onChange={(v) => updateStyle({ fontSize: v })}
-						/>
-					</div>
-					<div className="space-y-2">
-						<Label className="text-sm font-medium">Alinhamento do título</Label>
-						<ToggleGroup
-							options={[
-								{ value: "left" as const, label: "Esquerda" },
-								{ value: "center" as const, label: "Centro" },
-							]}
-							value={state.style.titleAlign}
-							onChange={(v) => updateStyle({ titleAlign: v })}
-						/>
-					</div>
-				</div>
-				<div className="flex flex-wrap gap-4">
-					<label className="flex cursor-pointer items-center gap-2 text-sm">
-						<input
-							type="checkbox"
-							checked={state.layout.showCheckbox}
-							onChange={(e) => updateLayout({ showCheckbox: e.target.checked })}
-							className="rounded"
-						/>
-						Mostrar caixas de seleção
-					</label>
-					<label className="flex cursor-pointer items-center gap-2 text-sm">
-						<input
-							type="checkbox"
-							checked={state.layout.showDividers}
-							onChange={(e) => updateLayout({ showDividers: e.target.checked })}
-							className="rounded"
-						/>
-						Mostrar divisores
-					</label>
-				</div>
-				<div className="space-y-2">
-					<Label className="text-sm font-medium">Cor de fundo</Label>
-					<div className="flex items-center gap-3">
-						<input
-							type="color"
-							value={state.style.backgroundColor}
-							onChange={(e) => updateStyle({ backgroundColor: e.target.value })}
-							className="h-9 w-12 cursor-pointer rounded-md border border-border bg-card p-1"
-						/>
-						<Input
-							value={state.style.backgroundColor}
-							onChange={(e) => updateStyle({ backgroundColor: e.target.value })}
-							maxLength={7}
-							className="w-28 font-mono text-sm"
-						/>
-					</div>
-				</div>
-				<div className="space-y-2">
-					<div className="flex items-center justify-between">
-						<Label className="text-sm font-medium">Itens</Label>
+			<div>
+				<div className="flex border-b border-border mb-5">
+					{(
+						[
+							{ id: "aparencia", label: "Aparência" },
+							{
+								id: "itens",
+								label: `Itens${state.items.length > 0 ? ` (${state.items.length})` : ""}`,
+							},
+						] as const
+					).map((tab) => (
 						<button
+							key={tab.id}
 							type="button"
-							onClick={clearItems}
-							className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+							onClick={() => setActiveTab(tab.id)}
+							className={`-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none ${
+								activeTab === tab.id
+									? "border-primary text-foreground"
+									: "border-transparent text-muted-foreground hover:text-foreground"
+							}`}
 						>
-							Limpar
+							{tab.label}
 						</button>
-					</div>
-					<ul className="space-y-2">
-						{state.items.map((item, index) => (
-							<li
-								key={`item-${
-									// biome-ignore lint/suspicious/noArrayIndexKey: ordered list
-									index
-								}`}
-								className="flex items-center gap-2"
-							>
-								<Input
-									value={item}
-									onChange={(e) => updateItem(index, e.target.value)}
-									placeholder={`Item ${index + 1}`}
+					))}
+				</div>
+
+				{activeTab === "aparencia" && (
+					<div className="space-y-5">
+						<div className="space-y-2">
+							<Label className="text-sm font-medium">Template</Label>
+							<TemplateSelector
+								templates={CHECKLIST_TEMPLATES}
+								selectedId={selectedTemplateId}
+								onSelect={handleSelectTemplate}
+							/>
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="checklist-title" className="text-sm font-medium">
+								Título
+							</Label>
+							<Input
+								id="checklist-title"
+								value={state.title}
+								onChange={(e) =>
+									setState((prev) => ({ ...prev, title: e.target.value }))
+								}
+								maxLength={80}
+								placeholder="Título do checklist"
+							/>
+						</div>
+						<div className="space-y-3">
+							<label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
+								<input
+									type="checkbox"
+									checked={state.header.enabled}
+									onChange={(e) => updateHeader({ enabled: e.target.checked })}
+									className="rounded"
 								/>
+								Cabeçalho personalizado
+							</label>
+							{state.header.enabled && (
+								<div className="space-y-3 rounded-md border border-border p-3">
+									<div className="space-y-2">
+										<Label className="text-sm font-medium">Cor de fundo</Label>
+										<div className="flex items-center gap-3">
+											<input
+												type="color"
+												value={state.header.backgroundColor}
+												onChange={(e) =>
+													updateHeader({
+														backgroundColor: e.target.value,
+													})
+												}
+												className="h-9 w-12 cursor-pointer rounded-md border border-border bg-card p-1"
+											/>
+											<Input
+												value={state.header.backgroundColor}
+												onChange={(e) =>
+													updateHeader({
+														backgroundColor: e.target.value,
+													})
+												}
+												maxLength={7}
+												className="w-28 font-mono text-sm"
+											/>
+										</div>
+									</div>
+									<div className="space-y-2">
+										<Label className="text-sm font-medium">
+											Subtítulo
+											<span className="ml-1 font-normal text-muted-foreground">
+												(opcional)
+											</span>
+										</Label>
+										<Input
+											value={state.header.subtitle}
+											onChange={(e) =>
+												updateHeader({ subtitle: e.target.value })
+											}
+											maxLength={120}
+											placeholder="Ex: Semana 42 · Projeto X"
+										/>
+									</div>
+									<div className="grid grid-cols-2 gap-3">
+										<div className="space-y-2">
+											<Label className="text-sm font-medium">
+												Data
+												<span className="ml-1 font-normal text-muted-foreground">
+													(opcional)
+												</span>
+											</Label>
+											<Input
+												value={state.header.date}
+												onChange={(e) => updateHeader({ date: e.target.value })}
+												maxLength={40}
+												placeholder="Ex: 15/04/2026"
+											/>
+										</div>
+										<div className="space-y-2">
+											<Label className="text-sm font-medium">
+												Nome
+												<span className="ml-1 font-normal text-muted-foreground">
+													(opcional)
+												</span>
+											</Label>
+											<Input
+												value={state.header.name}
+												onChange={(e) => updateHeader({ name: e.target.value })}
+												maxLength={60}
+												placeholder="Ex: Lucas"
+											/>
+										</div>
+									</div>
+								</div>
+							)}
+						</div>
+						<div className="grid md:grid-cols-2 gap-4">
+							<div className="space-y-2">
+								<Label className="text-sm font-medium">Colunas</Label>
+								<ToggleGroup
+									options={[
+										{ value: "1" as const, label: "1 coluna" },
+										{ value: "2" as const, label: "2 colunas" },
+									]}
+									value={String(state.layout.columns) as "1" | "2"}
+									onChange={(v) =>
+										updateLayout({ columns: Number(v) as 1 | 2 })
+									}
+								/>
+							</div>
+							<div className="space-y-2">
+								<Label className="text-sm font-medium">Espaçamento</Label>
+								<ToggleGroup
+									options={[
+										{ value: "compact" as const, label: "Compacto" },
+										{
+											value: "comfortable" as const,
+											label: "Confortável",
+										},
+									]}
+									value={state.layout.spacing}
+									onChange={(v) => updateLayout({ spacing: v })}
+								/>
+							</div>
+						</div>
+						<div className="grid grid-cols-2 gap-4">
+							<div className="space-y-2">
+								<Label className="text-sm font-medium">Tamanho da fonte</Label>
+								<ToggleGroup
+									options={[
+										{ value: "sm" as const, label: "P" },
+										{ value: "md" as const, label: "M" },
+										{ value: "lg" as const, label: "G" },
+									]}
+									value={state.style.fontSize}
+									onChange={(v) => updateStyle({ fontSize: v })}
+								/>
+							</div>
+							<div className="space-y-2">
+								<Label className="text-sm font-medium">
+									Alinhamento do título
+								</Label>
+								<ToggleGroup
+									options={[
+										{ value: "left" as const, label: "Esquerda" },
+										{ value: "center" as const, label: "Centro" },
+									]}
+									value={state.style.titleAlign}
+									onChange={(v) => updateStyle({ titleAlign: v })}
+								/>
+							</div>
+						</div>
+						<div className="space-y-2">
+							<Label className="text-sm font-medium">
+								Linhas para escrita manual
+							</Label>
+							<div className="flex items-center gap-2">
 								<Button
 									type="button"
-									variant="ghost"
+									variant="outline"
 									size="icon"
-									onClick={() => removeItem(index)}
-									aria-label="Remover item"
-									disabled={state.items.length <= 1}
+									className="h-8 w-8 shrink-0 bg-white"
+									onClick={() =>
+										updateLayout({
+											writingLines: Math.max(0, state.layout.writingLines - 1),
+										})
+									}
+									disabled={state.layout.writingLines <= 0}
 								>
-									<Trash2 className="size-4" />
+									−
 								</Button>
-							</li>
-						))}
-					</ul>
-					<Button
-						type="button"
-						variant="outline"
-						size="sm"
-						onClick={addItem}
-						className="w-full"
-					>
-						<Plus className="size-4" />
-						Adicionar item
-					</Button>
-				</div>
+								<span className="w-6 text-center text-sm tabular-nums">
+									{state.layout.writingLines}
+								</span>
+								<Button
+									type="button"
+									variant="outline"
+									size="icon"
+									className="h-8 w-8 shrink-0 bg-white"
+									onClick={() =>
+										updateLayout({
+											writingLines: Math.min(20, state.layout.writingLines + 1),
+										})
+									}
+									disabled={state.layout.writingLines >= 20}
+								>
+									+
+								</Button>
+							</div>
+						</div>
+						<div className="flex flex-wrap gap-4">
+							<label className="flex cursor-pointer items-center gap-2 text-sm">
+								<input
+									type="checkbox"
+									checked={state.layout.showCheckbox}
+									onChange={(e) =>
+										updateLayout({ showCheckbox: e.target.checked })
+									}
+									className="rounded"
+								/>
+								Mostrar caixas de seleção
+							</label>
+							<label className="flex cursor-pointer items-center gap-2 text-sm">
+								<input
+									type="checkbox"
+									checked={state.layout.showDividers}
+									onChange={(e) =>
+										updateLayout({ showDividers: e.target.checked })
+									}
+									className="rounded"
+								/>
+								Mostrar divisores
+							</label>
+						</div>
+						<div className="space-y-2">
+							<Label className="text-sm font-medium">Cor de fundo</Label>
+							<div className="flex items-center gap-3">
+								<input
+									type="color"
+									value={state.style.backgroundColor}
+									onChange={(e) =>
+										updateStyle({ backgroundColor: e.target.value })
+									}
+									className="h-9 w-12 cursor-pointer rounded-md border border-border bg-card p-1"
+								/>
+								<Input
+									value={state.style.backgroundColor}
+									onChange={(e) =>
+										updateStyle({ backgroundColor: e.target.value })
+									}
+									maxLength={7}
+									className="w-28 font-mono text-sm"
+								/>
+							</div>
+						</div>
+					</div>
+				)}
+
+				{activeTab === "itens" && (
+					<div className="space-y-2">
+						<Label className="text-sm font-medium block mb-1">Itens</Label>
+						<DragDropProvider
+							onDragEnd={({ operation, canceled }) => {
+								if (canceled || !isSortableOperation(operation)) return;
+								if (operation.source == null) return;
+								if (operation.source.initialIndex !== operation.source.index) {
+									reorderItems(
+										operation.source.initialIndex,
+										operation.source.index,
+									);
+								}
+							}}
+						>
+							<ul className="space-y-2">
+								{state.items.map((item, index) => (
+									<SortableItem
+										key={itemIds[index]}
+										id={itemIds[index]}
+										index={index}
+										item={item.text}
+										kind={item.kind}
+										inputRef={(el) => setInputRef(index, el)}
+										onUpdate={updateItem}
+										onDuplicate={duplicateItem}
+										onRemove={removeItem}
+										onAddAfter={addItemAfter}
+										disableRemove={state.items.length <= 1}
+									/>
+								))}
+							</ul>
+						</DragDropProvider>
+						<div className="flex gap-2 pt-1">
+							<Button
+								type="button"
+								variant="outline"
+								size="sm"
+								onClick={addItem}
+								className="flex-1"
+							>
+								<Plus className="size-4" />
+								Adicionar item
+							</Button>
+							<Button
+								type="button"
+								variant="outline"
+								size="sm"
+								onClick={addGroup}
+								className="flex-1"
+							>
+								<Hash className="size-4" />
+								Adicionar grupo
+							</Button>
+						</div>
+						<AlertDialog>
+							<AlertDialogTrigger
+								render={
+									<Button
+										type="button"
+										variant="destructive"
+										size="sm"
+										className="mt-4"
+									/>
+								}
+							>
+								<Trash2 className="size-4" />
+								Limpar todos os itens
+							</AlertDialogTrigger>
+							<AlertDialogContent size="sm">
+								<AlertDialogHeader>
+									<AlertDialogTitle>Limpar itens</AlertDialogTitle>
+									<AlertDialogDescription>
+										Todos os itens serão removidos. Essa ação não pode ser
+										desfeita.
+									</AlertDialogDescription>
+								</AlertDialogHeader>
+								<AlertDialogFooter>
+									<AlertDialogCancel>Cancelar</AlertDialogCancel>
+									<AlertDialogAction variant="destructive" onClick={clearItems}>
+										Limpar
+									</AlertDialogAction>
+								</AlertDialogFooter>
+							</AlertDialogContent>
+						</AlertDialog>
+					</div>
+				)}
 			</div>
 			<div className="space-y-4">
 				<div className="overflow-hidden rounded-lg border border-border bg-white shadow-sm">

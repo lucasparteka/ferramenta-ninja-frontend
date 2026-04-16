@@ -33,7 +33,12 @@
       "Bash(pnpm build:*)",
       "Bash(echo \"EXIT:$?\")",
       "Bash(pnpm biome *)",
-      "Bash(grep -n \"FRONT_LAYOUTS\\\\|BACK_LAYOUTS\" \"c:/Users/lucas/Documents/pessoal/Ferramenta Ninja/frontend/src/components/tools/loyalty-card\"/*.tsx)"
+      "Bash(grep -n \"FRONT_LAYOUTS\\\\|BACK_LAYOUTS\" \"c:/Users/lucas/Documents/pessoal/Ferramenta Ninja/frontend/src/components/tools/loyalty-card\"/*.tsx)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "mcp__jcodemunch__get_file_outline",
+      "mcp__jcodemunch__get_symbol_source",
+      "Bash(node -e \"const s = require\\('@dnd-kit/dom/sortable'\\); console.log\\(Object.keys\\(s\\)\\)\")"
     ],
     "deny": [
       "Bash(rm -rf *)",

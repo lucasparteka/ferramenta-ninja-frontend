@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 const tools = [
 	"calculadora-adicional-noturno",
+	"cardapio-online",
 	"cartao-fidelidade",
 	"checklist-personalizado",
 	"calculadora-de-porcentagem",
@@ -36,6 +37,8 @@ const tools = [
 	"gerador-de-uuid",
 	"juntar-pdf",
 	"leitor-de-qr-code",
+	"limpar-texto",
+	"previa-resultado-google",
 	"recibo-simples",
 	"remover-duplicados",
 	"simbolos",

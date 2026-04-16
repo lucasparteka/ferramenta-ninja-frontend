@@ -1,20 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { ToolCategory } from "@/lib/data/tools";
 import { ToolCard } from "./tool-card";
-
-type Tool = {
-	name: string;
-	href: string;
-	description: string;
-};
-
-type ToolCategory = {
-	id: string;
-	name: string;
-	description: string;
-	tools: Tool[];
-};
 
 type Props = {
 	categories: ToolCategory[];

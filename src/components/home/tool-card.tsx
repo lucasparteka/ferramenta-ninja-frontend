@@ -1,16 +1,14 @@
 import Link from "next/link";
-import { toolIcons } from "@/lib/tool-icons";
+import type { LucideIcon } from "@/lib/data/tools";
 
 type Props = {
 	name: string;
 	href: string;
 	description: string;
+	icon: LucideIcon | null;
 };
 
-export function ToolCard({ name, href, description }: Props) {
-	const key = href.split("/").pop() || "";
-	const Icon = toolIcons[key];
-
+export function ToolCard({ name, href, description, icon: Icon }: Props) {
 	return (
 		<Link
 			href={href}
@@ -19,7 +17,6 @@ export function ToolCard({ name, href, description }: Props) {
 			<div className="flex h-8 min-w-8 items-center justify-center rounded-sm bg-muted">
 				{Icon && <Icon className="h-4 w-4" />}
 			</div>
-
 			<div className="flex flex-col">
 				<span className="text-sm font-medium text-foreground group-hover:text-primary">
 					{name}

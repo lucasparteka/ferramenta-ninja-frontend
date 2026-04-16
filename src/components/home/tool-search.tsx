@@ -1,18 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { ToolCategory } from "@/lib/data/tools";
+import { categories } from "@/lib/data/tools";
 import { ToolCard } from "./tool-card";
 
-type Props = {
-	categories: ToolCategory[];
-};
-
 function normalize(text: string) {
-	return text.toLowerCase();
+	return text
+		.toLowerCase()
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "");
 }
 
-export function ToolSearch({ categories }: Props) {
+export function ToolSearch() {
 	const [query, setQuery] = useState("");
 
 	const filtered = useMemo(() => {
@@ -28,7 +27,7 @@ export function ToolSearch({ categories }: Props) {
 				),
 			}))
 			.filter((category) => category.tools.length > 0);
-	}, [query, categories]);
+	}, [query]);
 
 	return (
 		<div className="flex flex-col gap-8">

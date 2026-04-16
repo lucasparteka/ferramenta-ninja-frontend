@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ToolSearch } from "@/components/home/tool-search";
-import { categories } from "@/lib/data/tools";
 
 export const metadata: Metadata = {
 	title: "Ferramentas Online Gratuitas",
@@ -26,7 +25,7 @@ export default function HomePage() {
 
 			<section className="py-16">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-					<ToolSearch categories={categories} />
+					<ToolSearch />
 				</div>
 			</section>
 

@@ -85,8 +85,8 @@ const DEFAULT_DATA: MenuData = {
 		},
 	],
 	style: {
-		primaryColor: "#1a1a2e",
-		backgroundColor: "#ffffff",
+		primaryColor: "#080872",
+		backgroundColor: "#fdfcfc",
 		showPrices: true,
 		fontFamily: "--font-inter",
 	},
@@ -109,6 +109,32 @@ export function MenuEditor() {
 
 	function updateStyle(patch: Partial<MenuData["style"]>) {
 		setData((prev) => ({ ...prev, style: { ...prev.style, ...patch } }));
+	}
+
+	function updateLogo(patch: Partial<NonNullable<MenuData["logo"]>>) {
+		setData((prev) => {
+			if (!prev.logo) return prev;
+			return { ...prev, logo: { ...prev.logo, ...patch } };
+		});
+	}
+
+	const logoInputRef = useRef<HTMLInputElement>(null);
+
+	function handleLogoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+		const file = e.target.files?.[0];
+		if (!file) return;
+		const reader = new FileReader();
+		reader.onload = () => {
+			updateData({
+				logo: {
+					dataUrl: reader.result as string,
+					size: 50,
+					position: "center",
+				},
+			});
+		};
+		reader.readAsDataURL(file);
+		e.target.value = "";
 	}
 
 	function updateSectionName(si: number, name: string) {
@@ -263,6 +289,85 @@ export function MenuEditor() {
 						</div>
 
 						<div className="space-y-2">
+							<Label className="text-sm font-medium">
+								Logo{" "}
+								<span className="font-normal text-muted-foreground">
+									(opcional)
+								</span>
+							</Label>
+							<input
+								ref={logoInputRef}
+								type="file"
+								accept="image/png,image/jpeg,image/webp,image/svg+xml"
+								onChange={handleLogoUpload}
+								className="sr-only"
+							/>
+							{data.logo ? (
+								<div className="space-y-3">
+									<div className="flex items-center gap-3">
+										<img
+											src={data.logo.dataUrl}
+											alt="Logo"
+											className="h-10 w-auto rounded border border-border object-contain bg-muted"
+										/>
+										<button
+											type="button"
+											onClick={() => updateData({ logo: undefined })}
+											className="text-sm text-muted-foreground hover:text-destructive"
+										>
+											Remover
+										</button>
+									</div>
+									<div className="space-y-1.5">
+										<Label className="text-sm font-medium">Tamanho</Label>
+										<input
+											type="range"
+											min={20}
+											max={100}
+											value={data.logo.size}
+											onChange={(e) =>
+												updateLogo({ size: Number(e.target.value) })
+											}
+											className="w-full accent-primary"
+										/>
+									</div>
+									<div className="space-y-1.5">
+										<Label className="text-sm font-medium">Posição</Label>
+										<div className="flex gap-1">
+											{(["left", "center", "right"] as const).map((pos) => (
+												<button
+													key={pos}
+													type="button"
+													onClick={() => updateLogo({ position: pos })}
+													className={`flex-1 rounded-md border px-2 py-1.5 text-xs font-medium transition-colors ${
+														data.logo?.position === pos
+															? "border-primary bg-primary text-primary-foreground"
+															: "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
+													}`}
+												>
+													{pos === "left"
+														? "Esquerda"
+														: pos === "center"
+															? "Centro"
+															: "Direita"}
+												</button>
+											))}
+										</div>
+									</div>
+								</div>
+							) : (
+								<Button
+									type="button"
+									variant="outline"
+									onClick={() => logoInputRef.current?.click()}
+									className="w-full"
+								>
+									Carregar logo
+								</Button>
+							)}
+						</div>
+
+						<div className="space-y-2">
 							<Label className="text-sm font-medium">Fonte</Label>
 							<FontSelector
 								value={data.style.fontFamily}
@@ -393,20 +498,13 @@ export function MenuEditor() {
 													className="flex-1 h-8 text-sm"
 												/>
 												{data.style.showPrices && (
-													<CurrencyInput
+													<Input
 														value={item.price ?? ""}
-														onChangeValue={(_, __, maskedValue) =>
-															updateItem(si, ii, {
-																price: maskedValue as string,
-															})
+														onChange={(e) =>
+															updateItem(si, ii, { price: e.target.value })
 														}
-														InputElement={
-															<Input
-																type="text"
-																placeholder="R$"
-																className="w-28 h-8"
-															/>
-														}
+														placeholder="Preço"
+														className="h-8 text-sm w-24"
 													/>
 												)}
 												<button

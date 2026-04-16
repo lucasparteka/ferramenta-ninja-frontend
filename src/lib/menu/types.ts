@@ -7,6 +7,11 @@ export type MenuItem = {
 export type MenuData = {
 	title: string;
 	subtitle?: string;
+	logo?: {
+		dataUrl: string;
+		size: number;
+		position: "left" | "center" | "right";
+	};
 	sections: {
 		name: string;
 		items: MenuItem[];

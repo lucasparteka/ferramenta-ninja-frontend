@@ -6,6 +6,7 @@ import {
 	useImperativeHandle,
 	useMemo,
 	useRef,
+	useState,
 } from "react";
 import { paginateMenu, renderMenuPage } from "@/lib/menu/renderer";
 import type { MenuData, MenuTemplate, MultiCanvasHandle } from "@/lib/menu/types";
@@ -18,7 +19,19 @@ type MenuCanvasProps = {
 export const MenuCanvas = forwardRef<MultiCanvasHandle, MenuCanvasProps>(
 	function MenuCanvas({ data, template }, ref) {
 		const canvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
-		const slices = useMemo(() => paginateMenu(data, template), [data, template]);
+		const [logoImg, setLogoImg] = useState<HTMLImageElement | null>(null);
+
+		useEffect(() => {
+			if (!data.logo?.dataUrl) {
+				setLogoImg(null);
+				return;
+			}
+			const img = new Image();
+			img.onload = () => setLogoImg(img);
+			img.src = data.logo.dataUrl;
+		}, [data.logo?.dataUrl]);
+
+		const slices = useMemo(() => paginateMenu(data, template, logoImg), [data, template, logoImg]);
 
 		useImperativeHandle(ref, () => ({
 			getDataURLs() {
@@ -34,9 +47,9 @@ export const MenuCanvas = forwardRef<MultiCanvasHandle, MenuCanvasProps>(
 				if (!canvas) return;
 				const ctx = canvas.getContext("2d");
 				if (!ctx) return;
-				renderMenuPage(ctx, data, template, slice, i);
+				renderMenuPage(ctx, data, template, slice, i, logoImg);
 			});
-		}, [data, template, slices]);
+		}, [data, template, slices, logoImg]);
 
 		return (
 			<div className="flex flex-col gap-3">

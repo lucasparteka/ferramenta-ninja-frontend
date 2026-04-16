@@ -1,5 +1,11 @@
 import { getCanvasFamily } from "./fonts";
-import type { MenuItem, MenuData, MenuTemplate, PageSection, PageSlice } from "./types";
+import type {
+	MenuData,
+	MenuItem,
+	MenuTemplate,
+	PageSection,
+	PageSlice,
+} from "./types";
 
 export const CANVAS_WIDTH = 1240;
 export const CANVAS_HEIGHT = 1754;
@@ -8,11 +14,12 @@ const CONTENT_WIDTH = CANVAS_WIDTH - MARGIN * 2;
 const COL_GAP = 40;
 const COL_WIDTH_2 = (CONTENT_WIDTH - COL_GAP) / 2;
 const CONTINUATION_HEADER_H = 36;
+const MAX_LOGO_HEIGHT = 200;
 
-const COLOR_SUBTITLE = "#6b7280";
+const COLOR_SUBTITLE = "#3d3d3d";
 const COLOR_SECTION_LINE = "#d1d5db";
-const COLOR_ITEM_DESC = "#6b7280";
-const COLOR_PRICE = "#374151";
+const COLOR_ITEM_DESC = "#3d3d3d";
+const COLOR_PRICE = "#3d3d3d";
 
 const BOTTOM = CANVAS_HEIGHT - MARGIN;
 
@@ -33,10 +40,34 @@ function truncateText(
 ): string {
 	if (ctx.measureText(text).width <= maxWidth) return text;
 	let truncated = text;
-	while (truncated.length > 0 && ctx.measureText(`${truncated}…`).width > maxWidth) {
+	while (
+		truncated.length > 0 &&
+		ctx.measureText(`${truncated}…`).width > maxWidth
+	) {
 		truncated = truncated.slice(0, -1);
 	}
 	return `${truncated}…`;
+}
+
+function wrapText(
+	ctx: CanvasRenderingContext2D,
+	text: string,
+	maxWidth: number,
+): string[] {
+	const words = text.split(" ");
+	const lines: string[] = [];
+	let current = "";
+	for (const word of words) {
+		const test = current ? `${current} ${word}` : word;
+		if (ctx.measureText(test).width > maxWidth && current) {
+			lines.push(current);
+			current = word;
+		} else {
+			current = test;
+		}
+	}
+	if (current) lines.push(current);
+	return lines.length > 0 ? lines : [text];
 }
 
 function sectionHeaderH(typography: MenuTemplate["typography"]): number {
@@ -49,29 +80,65 @@ function itemBlockH(
 	spacing: MenuTemplate["spacing"],
 ): number {
 	const descH = Math.round(typography.itemSize * 0.85);
-	return typography.itemSize + (item.description ? descH + 4 : 0) + spacing.itemGap;
+	return (
+		typography.itemSize + (item.description ? descH + 4 : 0) + spacing.itemGap
+	);
 }
 
-function headerEndY(data: MenuData, template: MenuTemplate): number {
+function logoPixelHeight(size: number): number {
+	return Math.round((size / 100) * MAX_LOGO_HEIGHT);
+}
+
+function titleBlockH(data: MenuData, template: MenuTemplate): number {
+	let h = 0;
+	if (data.title) h += template.typography.titleSize + 16;
+	if (data.subtitle) h += Math.round(template.typography.titleSize * 0.45) + 12;
+	return h;
+}
+
+function headerEndY(
+	data: MenuData,
+	template: MenuTemplate,
+	logoImg?: HTMLImageElement | null,
+): number {
+	const hasLogo = Boolean(data.logo && logoImg);
+	const hasTitle = Boolean(data.title || data.subtitle);
+
+	if (!hasLogo && !hasTitle) return MARGIN;
+
 	let y = MARGIN;
-	y += template.typography.titleSize + 16;
-	if (data.subtitle) {
-		y += Math.round(template.typography.titleSize * 0.45) + 12;
+
+	if (data.logo && logoImg) {
+		const logoH = logoPixelHeight(data.logo.size);
+		const tbH = titleBlockH(data, template);
+		if (data.logo.position === "center") {
+			y += logoH;
+			if (tbH > 0) y += 16 + tbH;
+		} else {
+			y += tbH > 0 ? Math.max(logoH, tbH) : logoH;
+		}
+	} else {
+		y += titleBlockH(data, template);
 	}
+
 	y += 16 + 2 + 24;
 	return y;
 }
 
 // --- Pagination ---
 
-export function paginateMenu(data: MenuData, template: MenuTemplate): PageSlice[] {
+export function paginateMenu(
+	data: MenuData,
+	template: MenuTemplate,
+	logoImg?: HTMLImageElement | null,
+): PageSlice[] {
 	const { layout, typography, spacing } = template;
 	const secH = sectionHeaderH(typography);
 
 	const pages: PageSlice[] = [];
 	let currentSections: PageSection[] = [];
 
-	let y = headerEndY(data, template);
+	let y = headerEndY(data, template, logoImg);
 	let col0Y = y;
 	let col1Y = y;
 
@@ -84,8 +151,9 @@ export function paginateMenu(data: MenuData, template: MenuTemplate): PageSlice[
 	}
 
 	for (const section of data.sections) {
-		const firstItemH =
-			section.items[0] ? itemBlockH(section.items[0], typography, spacing) : 0;
+		const firstItemH = section.items[0]
+			? itemBlockH(section.items[0], typography, spacing)
+			: 0;
 
 		if (layout.columns === 1) {
 			const nextY = y + spacing.sectionGap;
@@ -101,7 +169,11 @@ export function paginateMenu(data: MenuData, template: MenuTemplate): PageSlice[
 			for (const item of section.items) {
 				const h = itemBlockH(item, typography, spacing);
 				if (y + h > BOTTOM) {
-					currentSections.push({ name: section.name, isPartial, items: [...pageItems] });
+					currentSections.push({
+						name: section.name,
+						isPartial,
+						items: [...pageItems],
+					});
 					commitPage();
 					y += secH;
 					pageItems.length = 0;
@@ -114,7 +186,10 @@ export function paginateMenu(data: MenuData, template: MenuTemplate): PageSlice[
 			currentSections.push({ name: section.name, isPartial, items: pageItems });
 		} else {
 			const syncY = Math.max(col0Y, col1Y);
-			if (syncY + spacing.sectionGap + secH + firstItemH > BOTTOM && currentSections.length > 0) {
+			if (
+				syncY + spacing.sectionGap + secH + firstItemH > BOTTOM &&
+				currentSections.length > 0
+			) {
 				commitPage();
 			}
 
@@ -131,9 +206,13 @@ export function paginateMenu(data: MenuData, template: MenuTemplate): PageSlice[
 				const h = itemBlockH(item, typography, spacing);
 
 				if (curColY + h > BOTTOM) {
-					currentSections.push({ name: section.name, isPartial, items: [...pageItems] });
+					currentSections.push({
+						name: section.name,
+						isPartial,
+						items: [...pageItems],
+					});
 					commitPage();
-					col0Y = (MARGIN + CONTINUATION_HEADER_H) + secH;
+					col0Y = MARGIN + CONTINUATION_HEADER_H + secH;
 					col1Y = col0Y;
 					pageItems.length = 0;
 					isPartial = true;
@@ -207,12 +286,10 @@ function renderSections1Col(
 
 		for (const item of section.items) {
 			if (y > BOTTOM) break;
-			const hasDesc = Boolean(item.description);
-			const itemH = typography.itemSize + (hasDesc ? descLineH + 4 : 0);
 
 			ctx.save();
 			ctx.fillStyle = textColor;
-			ctx.font = `${typography.itemSize}px ${fontFamily}`;
+			ctx.font = `500 ${typography.itemSize}px ${fontFamily}`;
 			ctx.textBaseline = "top";
 			ctx.textAlign = "left";
 
@@ -224,25 +301,25 @@ function renderSections1Col(
 
 			if (priceText) {
 				ctx.fillStyle = COLOR_PRICE;
-				ctx.font = `bold ${typography.priceSize}px ${fontFamily}`;
+				ctx.font = `500 ${typography.priceSize}px ${fontFamily}`;
 				ctx.textAlign = "right";
 				ctx.fillText(priceText, MARGIN + CONTENT_WIDTH, y);
 			}
 
-			if (hasDesc) {
+			let descTotalH = 0;
+			if (item.description) {
 				ctx.fillStyle = COLOR_ITEM_DESC;
 				ctx.font = `${descLineH}px ${fontFamily}`;
 				ctx.textAlign = "left";
-				ctx.fillText(
-					truncateText(ctx, item.description ?? "", CONTENT_WIDTH - priceWidth),
-					MARGIN,
-					y + typography.itemSize + 4,
-					CONTENT_WIDTH,
-				);
+				const lines = wrapText(ctx, item.description, CONTENT_WIDTH - priceWidth);
+				for (let li = 0; li < lines.length; li++) {
+					ctx.fillText(lines[li], MARGIN, y + typography.itemSize + 4 + li * (descLineH + 2));
+				}
+				descTotalH = lines.length * descLineH + (lines.length - 1) * 2 + 4;
 			}
 			ctx.restore();
 
-			y += itemH + spacing.itemGap;
+			y += typography.itemSize + descTotalH + spacing.itemGap;
 		}
 	}
 }
@@ -301,8 +378,6 @@ function renderSections2Col(
 			const col = (colIdx % 2) as 0 | 1;
 			if (colY[col] > BOTTOM) break;
 
-			const hasDesc = Boolean(item.description);
-			const itemH = typography.itemSize + (hasDesc ? descLineH + 4 : 0);
 			const x = colX[col];
 
 			ctx.save();
@@ -315,29 +390,34 @@ function renderSections2Col(
 			const priceWidth = priceText ? ctx.measureText(priceText).width + 8 : 0;
 			const nameMaxW = COL_WIDTH_2 - priceWidth;
 
-			ctx.fillText(truncateText(ctx, item.name, nameMaxW), x, colY[col], nameMaxW);
+			ctx.fillText(
+				truncateText(ctx, item.name, nameMaxW),
+				x,
+				colY[col],
+				nameMaxW,
+			);
 
 			if (priceText) {
 				ctx.fillStyle = COLOR_PRICE;
-				ctx.font = `bold ${typography.priceSize}px ${fontFamily}`;
+				ctx.font = `500 ${typography.priceSize}px ${fontFamily}`;
 				ctx.textAlign = "right";
 				ctx.fillText(priceText, x + COL_WIDTH_2, colY[col]);
 			}
 
-			if (hasDesc) {
+			let descTotalH = 0;
+			if (item.description) {
 				ctx.fillStyle = COLOR_ITEM_DESC;
 				ctx.font = `${descLineH}px ${fontFamily}`;
 				ctx.textAlign = "left";
-				ctx.fillText(
-					truncateText(ctx, item.description ?? "", nameMaxW),
-					x,
-					colY[col] + typography.itemSize + 4,
-					COL_WIDTH_2,
-				);
+				const lines = wrapText(ctx, item.description, nameMaxW);
+				for (let li = 0; li < lines.length; li++) {
+					ctx.fillText(lines[li], x, colY[col] + typography.itemSize + 4 + li * (descLineH + 2));
+				}
+				descTotalH = lines.length * descLineH + (lines.length - 1) * 2 + 4;
 			}
 			ctx.restore();
 
-			colY[col] += itemH + spacing.itemGap;
+			colY[col] += typography.itemSize + descTotalH + spacing.itemGap;
 			colIdx++;
 		}
 	}
@@ -349,6 +429,7 @@ export function renderMenuPage(
 	template: MenuTemplate,
 	slice: PageSlice,
 	pageIndex: number,
+	logoImg?: HTMLImageElement | null,
 ): void {
 	const { style } = data;
 	const { layout, typography } = template;
@@ -360,39 +441,146 @@ export function renderMenuPage(
 	let contentStartY: number;
 
 	if (pageIndex === 0) {
-		let y = MARGIN;
-		const titleAlign = layout.headerAlign;
-		const titleX = titleAlign === "center" ? CANVAS_WIDTH / 2 : MARGIN;
+		const hasLogo = Boolean(data.logo && logoImg);
+		const hasTitle = Boolean(data.title || data.subtitle);
 
-		ctx.save();
-		ctx.fillStyle = style.primaryColor;
-		ctx.font = `bold ${typography.titleSize}px ${fontFamily}`;
-		ctx.textBaseline = "top";
-		ctx.textAlign = titleAlign;
-		ctx.fillText(truncateText(ctx, data.title, CONTENT_WIDTH), titleX, y, CONTENT_WIDTH);
-		y += typography.titleSize + 16;
+		if (!hasLogo && !hasTitle) {
+			contentStartY = MARGIN;
+		} else {
+			let y = MARGIN;
 
-		if (data.subtitle) {
-			const subSize = Math.round(typography.titleSize * 0.45);
-			ctx.font = `${subSize}px ${fontFamily}`;
-			ctx.fillStyle = COLOR_SUBTITLE;
-			ctx.textAlign = titleAlign;
-			ctx.fillText(truncateText(ctx, data.subtitle, CONTENT_WIDTH), titleX, y, CONTENT_WIDTH);
-			y += subSize + 12;
+			if (data.logo && logoImg) {
+				const logoH = logoPixelHeight(data.logo.size);
+				const logoW = Math.round(
+					logoH * (logoImg.naturalWidth / logoImg.naturalHeight),
+				);
+				const { position } = data.logo;
+
+				if (position === "center") {
+					const logoX = Math.round((CANVAS_WIDTH - logoW) / 2);
+					ctx.drawImage(logoImg, logoX, y, logoW, logoH);
+					y += logoH;
+
+					if (hasTitle) {
+						y += 16;
+						ctx.save();
+						ctx.fillStyle = style.primaryColor;
+						ctx.font = `bold ${typography.titleSize}px ${fontFamily}`;
+						ctx.textBaseline = "top";
+						ctx.textAlign = layout.headerAlign;
+						const titleX =
+							layout.headerAlign === "center" ? CANVAS_WIDTH / 2 : MARGIN;
+						if (data.title) {
+							ctx.fillText(
+								truncateText(ctx, data.title, CONTENT_WIDTH),
+								titleX,
+								y,
+								CONTENT_WIDTH,
+							);
+							y += typography.titleSize + 10;
+						}
+						if (data.subtitle) {
+							const subSize = Math.round(typography.titleSize * 0.45);
+							ctx.font = `${subSize}px ${fontFamily}`;
+							ctx.fillStyle = COLOR_SUBTITLE;
+							ctx.fillText(
+								truncateText(ctx, data.subtitle, CONTENT_WIDTH),
+								titleX,
+								y,
+								CONTENT_WIDTH,
+							);
+							y += subSize + 12;
+						}
+						ctx.restore();
+					}
+				} else {
+					const logoX =
+						position === "left" ? MARGIN : MARGIN + CONTENT_WIDTH - logoW;
+					const textX = position === "left" ? MARGIN + logoW + 24 : MARGIN;
+					const textMaxW = CONTENT_WIDTH - logoW - 24;
+
+					ctx.drawImage(logoImg, logoX, y, logoW, logoH);
+
+					if (hasTitle) {
+						let textY = y;
+						ctx.save();
+						ctx.fillStyle = style.primaryColor;
+						ctx.font = `bold ${typography.titleSize}px ${fontFamily}`;
+						ctx.textBaseline = "top";
+						ctx.textAlign = "left";
+						if (data.title) {
+							ctx.fillText(
+								truncateText(ctx, data.title, textMaxW),
+								textX,
+								textY,
+								textMaxW,
+							);
+							textY += typography.titleSize + 10;
+						}
+						if (data.subtitle) {
+							const subSize = Math.round(typography.titleSize * 0.45);
+							ctx.font = `${subSize}px ${fontFamily}`;
+							ctx.fillStyle = COLOR_SUBTITLE;
+							ctx.fillText(
+								truncateText(ctx, data.subtitle, textMaxW),
+								textX,
+								textY,
+								textMaxW,
+							);
+							textY += subSize + 12;
+						}
+						ctx.restore();
+						y += Math.max(logoH, textY - y);
+					} else {
+						y += logoH;
+					}
+				}
+			} else {
+				const titleAlign = layout.headerAlign;
+				const titleX = titleAlign === "center" ? CANVAS_WIDTH / 2 : MARGIN;
+
+				ctx.save();
+				ctx.fillStyle = style.primaryColor;
+				ctx.font = `bold ${typography.titleSize}px ${fontFamily}`;
+				ctx.textBaseline = "top";
+				ctx.textAlign = titleAlign;
+				if (data.title) {
+					ctx.fillText(
+						truncateText(ctx, data.title, CONTENT_WIDTH),
+						titleX,
+						y,
+						CONTENT_WIDTH,
+					);
+					y += typography.titleSize + 10;
+				}
+				if (data.subtitle) {
+					const subSize = Math.round(typography.titleSize * 0.45);
+					ctx.font = `${subSize}px ${fontFamily}`;
+					ctx.fillStyle = COLOR_SUBTITLE;
+					ctx.textAlign = titleAlign;
+					ctx.fillText(
+						truncateText(ctx, data.subtitle, CONTENT_WIDTH),
+						titleX,
+						y,
+						CONTENT_WIDTH,
+					);
+					y += subSize + 12;
+				}
+				ctx.restore();
+			}
+
+			y += 36;
+			ctx.save();
+			ctx.strokeStyle = style.primaryColor;
+			ctx.lineWidth = 2;
+			ctx.beginPath();
+			ctx.moveTo(MARGIN, y);
+			ctx.lineTo(MARGIN + CONTENT_WIDTH, y);
+			ctx.stroke();
+			ctx.restore();
+
+			contentStartY = y + 24;
 		}
-		ctx.restore();
-
-		y += 16;
-		ctx.save();
-		ctx.strokeStyle = style.primaryColor;
-		ctx.lineWidth = 2;
-		ctx.beginPath();
-		ctx.moveTo(MARGIN, y);
-		ctx.lineTo(MARGIN + CONTENT_WIDTH, y);
-		ctx.stroke();
-		ctx.restore();
-
-		contentStartY = y + 24;
 	} else {
 		ctx.save();
 		ctx.fillStyle = style.primaryColor;

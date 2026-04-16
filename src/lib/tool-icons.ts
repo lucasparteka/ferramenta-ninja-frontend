@@ -15,6 +15,7 @@ import {
 	Hash,
 	LayoutList,
 	LineDotRightHorizontal,
+	type LucideProps,
 	Merge,
 	Minimize2,
 	MoonStar,
@@ -26,14 +27,21 @@ import {
 	Shield,
 	Shuffle,
 	Smile,
+	SquareMenu,
 	Star,
 	Table,
 	TextCursorInput,
 	Type,
 	Wallet,
 } from "lucide-react";
+import type { ForwardRefExoticComponent, RefAttributes } from "react";
 
-export const toolIcons: Record<string, any> = {
+export const toolIcons: Record<
+	string,
+	ForwardRefExoticComponent<
+		Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+	>
+> = {
 	// TEXTO
 	"contador-de-caracteres": TextCursorInput,
 	"conversor-de-texto": Type,
@@ -59,6 +67,7 @@ export const toolIcons: Record<string, any> = {
 	"gerador-de-cartao-de-credito": Wallet,
 	"validador-de-cartao-de-credito": Wallet,
 	"previa-resultado-google": LayoutList,
+	"cardapio-online": SquareMenu,
 
 	// CALCULADORAS
 	"calculadora-de-porcentagem": Percent,

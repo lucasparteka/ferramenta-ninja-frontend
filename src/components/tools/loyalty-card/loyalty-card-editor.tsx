@@ -5,8 +5,10 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { NativeSelect } from "@/components/ui/select-native";
 import { exportPdf } from "@/lib/print/export-pdf";
 import { exportPng } from "@/lib/print/export-png";
+import { cn } from "@/lib/utils";
 import { BackCanvas } from "./back-canvas";
 import { ExportPanel } from "./export-panel";
 import { FrontCanvas } from "./front-canvas";
@@ -31,12 +33,12 @@ const STAMP_COUNTS: StampCount[] = [5, 6, 8, 10];
 function buildDefaultFrontData(templateId: string): FrontData {
 	const template = TEMPLATES.find((t) => t.id === templateId) ?? TEMPLATES[0];
 	return {
-		businessName: "Café da Vila",
-		slogan: "Fidelidade que vale a pena",
+		businessName: "Nome ou Logo",
+		slogan: "Slogan ou frase adicional",
 		contactInfo: "(99) 99999-9999",
 		socialEntries: [
-			{ network: "instagram", handle: "@cafedavila" },
-			{ network: "facebook", handle: "" },
+			{ network: "instagram", handle: "@seu_instagram" },
+			{ network: "facebook", handle: "@seu_facebook" },
 		],
 		socialIconStyle: "flat",
 		primaryColor: template.defaultFront.primaryColor,
@@ -51,15 +53,14 @@ function buildDefaultBackData(templateId: string): BackData {
 	return {
 		stampCount: 8,
 		stampStyle: "circle",
-		rewardText: "1 café expresso grátis",
-		rulesText: "Válido por 90 dias após a emissão",
+		rewardText: "Ganhe 1 item grátis",
+		rulesText: "Junte 10 carimbos e ganhe um item grátis!",
 		whatsapp: "(99)99999-9999",
 		extraText: "Obrigado pela preferência!",
 		primaryColor: template.defaultBack.primaryColor,
 		background: template.defaultBack.background,
 	};
 }
-
 
 type BackgroundPickerProps = {
 	value: Background;
@@ -229,11 +230,12 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 								type="button"
 								onClick={() => onChange({ ...value, texture: tex.value })}
 								aria-pressed={value.texture === tex.value}
-								className={`rounded border px-3 py-1.5 text-xs font-medium transition-colors ${
+								className={cn(
+									"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 									value.texture === tex.value
-										? "border-primary bg-primary text-primary-foreground"
-										: "border-border bg-card text-foreground hover:bg-muted"
-								}`}
+										? "border-primary bg-primary text-white"
+										: "border-border bg-background text-foreground hover:border-primary",
+								)}
 							>
 								{tex.label}
 							</button>
@@ -380,7 +382,7 @@ export function LoyaltyCardEditor() {
 			</div>
 
 			<div className="grid gap-6 lg:grid-cols-2">
-				<div className="space-y-4">
+				<div className="space-y-4 md:space-y-6">
 					{activeTab === "frente" ? (
 						<>
 							<div className="space-y-2">
@@ -398,27 +400,26 @@ export function LoyaltyCardEditor() {
 									maxLength={40}
 								/>
 							</div>
-
 							{selectedTemplate.id === "classico" ? (
-								<div className="space-y-2">
+								<div className="space-y-4">
 									<Label>Redes sociais</Label>
 									{(["rede-1", "rede-2"] as const).map((slotKey, index) => {
 										const entry = frontData.socialEntries[index];
 										return (
 											<div key={slotKey} className="flex gap-2">
-												<select
+												<NativeSelect
 													value={entry.network}
 													onChange={(e) =>
 														updateSocialEntry(index, "network", e.target.value)
 													}
-													className="rounded border border-border bg-background px-2 py-1.5 text-sm text-foreground"
+													className="md:w-28"
 												>
 													<option value="instagram">Instagram</option>
 													<option value="facebook">Facebook</option>
 													<option value="whatsapp">WhatsApp</option>
 													<option value="tiktok">TikTok</option>
 													<option value="website">Site</option>
-												</select>
+												</NativeSelect>
 												<Input
 													value={entry.handle}
 													onChange={(e) =>
@@ -444,11 +445,12 @@ export function LoyaltyCardEditor() {
 														}))
 													}
 													aria-pressed={frontData.socialIconStyle === s}
-													className={`rounded border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+													className={cn(
+														"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 														frontData.socialIconStyle === s
-															? "border-primary bg-primary text-primary-foreground"
-															: "border-border bg-card text-foreground hover:bg-muted"
-													}`}
+															? "border-primary bg-primary text-white"
+															: "border-border bg-background text-foreground hover:border-primary",
+													)}
 												>
 													{s === "flat" ? "Flat" : "Colorido"}
 												</button>
@@ -477,19 +479,19 @@ export function LoyaltyCardEditor() {
 									<div className="space-y-2">
 										<Label>Rede social</Label>
 										<div className="flex gap-2">
-											<select
+											<NativeSelect
 												value={frontData.socialEntries[0].network}
 												onChange={(e) =>
 													updateSocialEntry(0, "network", e.target.value)
 												}
-												className="rounded border border-border bg-background px-2 py-1.5 text-sm text-foreground"
+												className="md:w-28"
 											>
 												<option value="instagram">Instagram</option>
 												<option value="facebook">Facebook</option>
 												<option value="whatsapp">WhatsApp</option>
 												<option value="tiktok">TikTok</option>
 												<option value="website">Site</option>
-											</select>
+											</NativeSelect>
 											<Input
 												value={frontData.socialEntries[0].handle}
 												onChange={(e) =>
@@ -515,11 +517,12 @@ export function LoyaltyCardEditor() {
 														}))
 													}
 													aria-pressed={frontData.socialIconStyle === s}
-													className={`rounded border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+													className={cn(
+														"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 														frontData.socialIconStyle === s
-															? "border-primary bg-primary text-primary-foreground"
-															: "border-border bg-card text-foreground hover:bg-muted"
-													}`}
+															? "border-primary bg-primary text-white"
+															: "border-border bg-background text-foreground hover:border-primary",
+													)}
 												>
 													{s === "flat" ? "Flat" : "Colorido"}
 												</button>
@@ -532,19 +535,19 @@ export function LoyaltyCardEditor() {
 									<div className="space-y-2">
 										<Label>Rede social</Label>
 										<div className="flex gap-2">
-											<select
+											<NativeSelect
 												value={frontData.socialEntries[0].network}
 												onChange={(e) =>
 													updateSocialEntry(0, "network", e.target.value)
 												}
-												className="rounded border border-border bg-background px-2 py-1.5 text-sm text-foreground"
+												className="md:w-28"
 											>
 												<option value="instagram">Instagram</option>
 												<option value="facebook">Facebook</option>
 												<option value="whatsapp">WhatsApp</option>
 												<option value="tiktok">TikTok</option>
 												<option value="website">Site</option>
-											</select>
+											</NativeSelect>
 											<Input
 												value={frontData.socialEntries[0].handle}
 												onChange={(e) =>
@@ -570,11 +573,12 @@ export function LoyaltyCardEditor() {
 														}))
 													}
 													aria-pressed={frontData.socialIconStyle === s}
-													className={`rounded border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+													className={cn(
+														"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 														frontData.socialIconStyle === s
-															? "border-primary bg-primary text-primary-foreground"
-															: "border-border bg-card text-foreground hover:bg-muted"
-													}`}
+															? "border-primary bg-primary text-white"
+															: "border-border bg-background text-foreground hover:border-primary",
+													)}
 												>
 													{s === "flat" ? "Flat" : "Colorido"}
 												</button>
@@ -724,11 +728,12 @@ export function LoyaltyCardEditor() {
 												setBackData((prev) => ({ ...prev, stampCount: count }))
 											}
 											aria-pressed={backData.stampCount === count}
-											className={`h-9 w-12 rounded border text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+											className={cn(
+												"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 												backData.stampCount === count
-													? "border-primary bg-primary text-primary-foreground"
-													: "border-border bg-card text-foreground hover:bg-muted"
-											}`}
+													? "border-primary bg-primary text-white"
+													: "border-border bg-background text-foreground hover:border-primary",
+											)}
 										>
 											{count}
 										</button>
@@ -747,11 +752,12 @@ export function LoyaltyCardEditor() {
 												setBackData((prev) => ({ ...prev, stampStyle: style }))
 											}
 											aria-pressed={backData.stampStyle === style}
-											className={`rounded border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+											className={cn(
+												"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 												backData.stampStyle === style
-													? "border-primary bg-primary text-primary-foreground"
-													: "border-border bg-card text-foreground hover:bg-muted"
-											}`}
+													? "border-primary bg-primary text-white"
+													: "border-border bg-background text-foreground hover:border-primary",
+											)}
 										>
 											{style === "circle" ? "Círculo" : "Quadrado"}
 										</button>

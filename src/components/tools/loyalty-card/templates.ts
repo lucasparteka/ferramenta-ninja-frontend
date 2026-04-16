@@ -7,12 +7,12 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "classico",
 		backLayout: "classico",
 		defaultFront: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F8FAFC",
+			background: { type: "solid", color: "#0F172A" },
 		},
 		defaultBack: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F8FAFC",
+			background: { type: "solid", color: "#0F172A" },
 		},
 	},
 	{
@@ -21,12 +21,12 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "moderno",
 		backLayout: "moderno",
 		defaultFront: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F8FAFC",
+			background: { type: "solid", color: "#020617" },
 		},
 		defaultBack: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F8FAFC",
+			background: { type: "solid", color: "#020617" },
 		},
 	},
 	{
@@ -35,12 +35,22 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "dividido",
 		backLayout: "dividido",
 		defaultFront: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F8FAFC",
+			background: {
+				type: "gradient",
+				color1: "#0F172A",
+				color2: "#1E293B",
+				direction: "to-right",
+			},
 		},
 		defaultBack: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F8FAFC",
+			background: {
+				type: "gradient",
+				color1: "#0F172A",
+				color2: "#1E293B",
+				direction: "to-bottom",
+			},
 		},
 	},
 	{
@@ -49,12 +59,12 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "elegante",
 		backLayout: "elegante",
 		defaultFront: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F8FAFC",
+			background: { type: "solid", color: "#111827" },
 		},
 		defaultBack: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#111827",
+			background: { type: "solid", color: "#111827" },
 		},
 	},
 	{
@@ -63,12 +73,12 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "compacto",
 		backLayout: "compacto",
 		defaultFront: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F1F5F9",
+			background: { type: "solid", color: "#1E293B" },
 		},
 		defaultBack: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#F1F5F9",
+			background: { type: "solid", color: "#1E293B" },
 		},
 	},
 	{
@@ -77,12 +87,12 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "minimalista",
 		backLayout: "minimalista",
 		defaultFront: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#2c2c2c" },
+			primaryColor: "#E2E8F0",
+			background: { type: "solid", color: "#18181B" },
 		},
 		defaultBack: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#E2E8F0",
+			background: { type: "solid", color: "#09090B" },
 		},
 	},
 	{
@@ -91,12 +101,12 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "negrito",
 		backLayout: "negrito",
 		defaultFront: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#FFFFFF",
+			background: { type: "solid", color: "#1D4ED8" },
 		},
 		defaultBack: {
-			primaryColor: "#fafafa",
-			background: { type: "solid", color: "#1a1a1a" },
+			primaryColor: "#FFFFFF",
+			background: { type: "solid", color: "#1E40AF" },
 		},
 	},
 	{
@@ -105,12 +115,20 @@ export const TEMPLATES: Template[] = [
 		frontLayout: "grade",
 		backLayout: "grade",
 		defaultFront: {
-			primaryColor: "#fafafa",
-			background: { type: "texture", color: "#1a1a1a", texture: "dots" },
+			primaryColor: "#F8FAFC",
+			background: {
+				type: "texture",
+				color: "#020617",
+				texture: "grid",
+			},
 		},
 		defaultBack: {
-			primaryColor: "#fafafa",
-			background: { type: "texture", color: "#1a1a1a", texture: "dots" },
+			primaryColor: "#F8FAFC",
+			background: {
+				type: "texture",
+				color: "#020617",
+				texture: "lines",
+			},
 		},
 	},
 ];

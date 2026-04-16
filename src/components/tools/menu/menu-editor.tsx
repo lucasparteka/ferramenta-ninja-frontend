@@ -212,10 +212,12 @@ export function MenuEditor() {
 		setIsExporting(false);
 	}
 
-	function handleExportPng() {
+	async function handleExportPng() {
 		const dataUrls = canvasRef.current?.getDataURLs();
 		if (!dataUrls?.length) return;
-		exportMenuPng(dataUrls);
+		setIsExporting(true);
+		await exportMenuPng(dataUrls);
+		setIsExporting(false);
 	}
 
 	const tabs = [

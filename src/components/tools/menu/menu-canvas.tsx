@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: lista é fixa */
 "use client";
 
 import {
@@ -9,7 +10,11 @@ import {
 	useState,
 } from "react";
 import { paginateMenu, renderMenuPage } from "@/lib/menu/renderer";
-import type { MenuData, MenuTemplate, MultiCanvasHandle } from "@/lib/menu/types";
+import type {
+	MenuData,
+	MenuTemplate,
+	MultiCanvasHandle,
+} from "@/lib/menu/types";
 
 type MenuCanvasProps = {
 	data: MenuData;
@@ -31,7 +36,10 @@ export const MenuCanvas = forwardRef<MultiCanvasHandle, MenuCanvasProps>(
 			img.src = data.logo.dataUrl;
 		}, [data.logo?.dataUrl]);
 
-		const slices = useMemo(() => paginateMenu(data, template, logoImg), [data, template, logoImg]);
+		const slices = useMemo(
+			() => paginateMenu(data, template, logoImg),
+			[data, template, logoImg],
+		);
 
 		useImperativeHandle(ref, () => ({
 			getDataURLs() {

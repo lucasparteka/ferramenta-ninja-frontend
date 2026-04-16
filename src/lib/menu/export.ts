@@ -21,11 +21,14 @@ export async function exportMenuPdf(dataUrls: string[]): Promise<void> {
 	URL.revokeObjectURL(url);
 }
 
-export function exportMenuPng(dataUrls: string[]): void {
+export async function exportMenuPng(dataUrls: string[]): Promise<void> {
 	for (let i = 0; i < dataUrls.length; i++) {
 		const a = document.createElement("a");
 		a.href = dataUrls[i];
 		a.download = dataUrls.length > 1 ? `cardapio-pagina-${i + 1}.png` : "cardapio.png";
 		a.click();
+		if (i < dataUrls.length - 1) {
+			await new Promise<void>((resolve) => setTimeout(resolve, 200));
+		}
 	}
 }

@@ -78,11 +78,28 @@ function itemBlockH(
 	item: MenuItem,
 	typography: MenuTemplate["typography"],
 	spacing: MenuTemplate["spacing"],
+	ctx?: CanvasRenderingContext2D | null,
+	fontFamily?: string,
+	colWidth?: number,
+	showPrices?: boolean,
 ): number {
 	const descH = Math.round(typography.itemSize * 0.85);
-	return (
-		typography.itemSize + (item.description ? descH + 4 : 0) + spacing.itemGap
-	);
+	if (!item.description) return typography.itemSize + spacing.itemGap;
+
+	let lineCount = 1;
+	if (ctx && fontFamily && colWidth) {
+		let descMaxW = colWidth;
+		if (showPrices && item.price) {
+			ctx.font = `500 ${typography.priceSize}px ${fontFamily}`;
+			const pad = colWidth === CONTENT_WIDTH ? 16 : 8;
+			descMaxW = colWidth - ctx.measureText(item.price).width - pad;
+		}
+		ctx.font = `${descH}px ${fontFamily}`;
+		lineCount = wrapText(ctx, item.description, Math.max(descMaxW, 1)).length;
+	}
+
+	const descTotalH = lineCount * descH + (lineCount - 1) * 2 + 4;
+	return typography.itemSize + descTotalH + spacing.itemGap;
 }
 
 function logoPixelHeight(size: number): number {
@@ -133,7 +150,22 @@ export function paginateMenu(
 	logoImg?: HTMLImageElement | null,
 ): PageSlice[] {
 	const { layout, typography, spacing } = template;
+	const fontFamily = getCanvasFamily(data.style.fontFamily);
 	const secH = sectionHeaderH(typography);
+
+	let measureCtx: CanvasRenderingContext2D | null = null;
+	if (typeof document !== "undefined") {
+		const offscreen = document.createElement("canvas");
+		offscreen.width = 10;
+		offscreen.height = 10;
+		measureCtx = offscreen.getContext("2d");
+	}
+
+	const colWidth = layout.columns === 1 ? CONTENT_WIDTH : COL_WIDTH_2;
+
+	function itemH(item: MenuItem): number {
+		return itemBlockH(item, typography, spacing, measureCtx, fontFamily, colWidth, data.style.showPrices);
+	}
 
 	const pages: PageSlice[] = [];
 	let currentSections: PageSection[] = [];
@@ -151,9 +183,7 @@ export function paginateMenu(
 	}
 
 	for (const section of data.sections) {
-		const firstItemH = section.items[0]
-			? itemBlockH(section.items[0], typography, spacing)
-			: 0;
+		const firstItemH = section.items[0] ? itemH(section.items[0]) : 0;
 
 		if (layout.columns === 1) {
 			const nextY = y + spacing.sectionGap;
@@ -167,7 +197,7 @@ export function paginateMenu(
 			let isPartial = false;
 
 			for (const item of section.items) {
-				const h = itemBlockH(item, typography, spacing);
+				const h = itemH(item);
 				if (y + h > BOTTOM) {
 					currentSections.push({
 						name: section.name,
@@ -175,7 +205,6 @@ export function paginateMenu(
 						items: [...pageItems],
 					});
 					commitPage();
-					y += secH;
 					pageItems.length = 0;
 					isPartial = true;
 				}
@@ -203,7 +232,7 @@ export function paginateMenu(
 			for (const item of section.items) {
 				const col = (colIdx % 2) as 0 | 1;
 				const curColY = col === 0 ? col0Y : col1Y;
-				const h = itemBlockH(item, typography, spacing);
+				const h = itemH(item);
 
 				if (curColY + h > BOTTOM) {
 					currentSections.push({
@@ -212,7 +241,7 @@ export function paginateMenu(
 						items: [...pageItems],
 					});
 					commitPage();
-					col0Y = MARGIN + CONTINUATION_HEADER_H + secH;
+					col0Y = MARGIN + CONTINUATION_HEADER_H;
 					col1Y = col0Y;
 					pageItems.length = 0;
 					isPartial = true;
@@ -255,34 +284,27 @@ function renderSections1Col(
 	for (const section of sections) {
 		if (y > BOTTOM) break;
 
-		y += section.isPartial ? 0 : spacing.sectionGap;
+		if (!section.isPartial) {
+			y += spacing.sectionGap;
 
-		ctx.save();
-		ctx.fillStyle = style.primaryColor;
-		ctx.font = `bold ${typography.sectionSize}px ${fontFamily}`;
-		ctx.textBaseline = "top";
-		ctx.textAlign = "left";
-		ctx.fillText(
-			truncateText(
-				ctx,
-				section.name + (section.isPartial ? " (cont.)" : ""),
-				CONTENT_WIDTH,
-			),
-			MARGIN,
-			y,
-			CONTENT_WIDTH,
-		);
-		y += typography.sectionSize + 8;
+			ctx.save();
+			ctx.fillStyle = style.primaryColor;
+			ctx.font = `bold ${typography.sectionSize}px ${fontFamily}`;
+			ctx.textBaseline = "top";
+			ctx.textAlign = "left";
+			ctx.fillText(truncateText(ctx, section.name, CONTENT_WIDTH), MARGIN, y, CONTENT_WIDTH);
+			y += typography.sectionSize + 8;
 
-		ctx.strokeStyle = COLOR_SECTION_LINE;
-		ctx.lineWidth = 1;
-		ctx.beginPath();
-		ctx.moveTo(MARGIN, y);
-		ctx.lineTo(MARGIN + CONTENT_WIDTH, y);
-		ctx.stroke();
-		ctx.restore();
+			ctx.strokeStyle = COLOR_SECTION_LINE;
+			ctx.lineWidth = 1;
+			ctx.beginPath();
+			ctx.moveTo(MARGIN, y);
+			ctx.lineTo(MARGIN + CONTENT_WIDTH, y);
+			ctx.stroke();
+			ctx.restore();
 
-		y += 16;
+			y += 16;
+		}
 
 		for (const item of section.items) {
 			if (y > BOTTOM) break;
@@ -342,36 +364,32 @@ function renderSections2Col(
 		const syncY = Math.max(colY[0], colY[1]);
 		if (syncY > BOTTOM) break;
 
-		colY[0] = section.isPartial ? syncY : syncY + spacing.sectionGap;
-		colY[1] = colY[0];
+		if (!section.isPartial) {
+			colY[0] = syncY + spacing.sectionGap;
+			colY[1] = colY[0];
 
-		ctx.save();
-		ctx.fillStyle = style.primaryColor;
-		ctx.font = `bold ${typography.sectionSize}px ${fontFamily}`;
-		ctx.textBaseline = "top";
-		ctx.textAlign = "left";
-		ctx.fillText(
-			truncateText(
-				ctx,
-				section.name + (section.isPartial ? " (cont.)" : ""),
-				CONTENT_WIDTH,
-			),
-			MARGIN,
-			colY[0],
-			CONTENT_WIDTH,
-		);
-		colY[0] += typography.sectionSize + 8;
+			ctx.save();
+			ctx.fillStyle = style.primaryColor;
+			ctx.font = `bold ${typography.sectionSize}px ${fontFamily}`;
+			ctx.textBaseline = "top";
+			ctx.textAlign = "left";
+			ctx.fillText(truncateText(ctx, section.name, CONTENT_WIDTH), MARGIN, colY[0], CONTENT_WIDTH);
+			colY[0] += typography.sectionSize + 8;
 
-		ctx.strokeStyle = COLOR_SECTION_LINE;
-		ctx.lineWidth = 1;
-		ctx.beginPath();
-		ctx.moveTo(MARGIN, colY[0]);
-		ctx.lineTo(MARGIN + CONTENT_WIDTH, colY[0]);
-		ctx.stroke();
-		ctx.restore();
+			ctx.strokeStyle = COLOR_SECTION_LINE;
+			ctx.lineWidth = 1;
+			ctx.beginPath();
+			ctx.moveTo(MARGIN, colY[0]);
+			ctx.lineTo(MARGIN + CONTENT_WIDTH, colY[0]);
+			ctx.stroke();
+			ctx.restore();
 
-		colY[0] += 16;
-		colY[1] = colY[0];
+			colY[0] += 16;
+			colY[1] = colY[0];
+		} else {
+			colY[0] = syncY;
+			colY[1] = syncY;
+		}
 
 		let colIdx = 0;
 		for (const item of section.items) {

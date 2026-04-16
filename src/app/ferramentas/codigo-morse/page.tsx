@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { MorseConverter } from "@/components/tools/morse-converter/morse-converter";
 
 export const metadata: Metadata = {
@@ -244,6 +245,7 @@ export default function CodigoMorsePage() {
 		<PageLayout
 			title="Conversor de Código Morse Online Grátis"
 			description="Converta texto para código Morse e código Morse para texto. Suporte a letras, números e pontuação conforme o padrão ITU."
+			relatedTools={<RelatedTools currentHref="/ferramentas/codigo-morse" />}
 			extraContent={<SeoContent />}
 		>
 			<MorseConverter />

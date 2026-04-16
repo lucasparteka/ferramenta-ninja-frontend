@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { MergePDF } from "@/components/tools/pdf/merge/merge-pdf";
 
 export const metadata: Metadata = {
@@ -153,6 +154,7 @@ export default function JuntarPDFPage() {
 		<PageLayout
 			title="Juntar PDF Online Grátis"
 			description="Una múltiplos arquivos PDF em um único documento. Selecione os arquivos, organize a ordem e baixe o resultado — sem enviar dados para servidores."
+			relatedTools={<RelatedTools currentHref="/ferramentas/juntar-pdf" />}
 			extraContent={<SeoContent />}
 		>
 			<MergePDF />

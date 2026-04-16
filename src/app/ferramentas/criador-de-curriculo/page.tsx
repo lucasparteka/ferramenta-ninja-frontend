@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { ResumeBuilder } from "@/components/tools/curriculo/resume-builder";
 
 export const metadata: Metadata = {
@@ -165,6 +166,7 @@ export default function CriadorDeCurriculoPage() {
 		<PageLayout
 			title="Criador de Currículo Online Grátis"
 			description="Monte seu currículo profissional com templates modernos. Personalize o visual, salve no navegador e baixe em PDF — sem cadastro e sem enviar seus dados."
+			relatedTools={<RelatedTools currentHref="/ferramentas/criador-de-curriculo" />}
 			extraContent={<SeoContent />}
 		>
 			<ResumeBuilder />

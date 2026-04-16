@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CreditCardValidator } from "@/components/tools/credit-card-generator/credit-card-validator";
 
 export const metadata: Metadata = {
@@ -171,6 +172,7 @@ export default function ValidadorDeCartaoDeCreditoPage() {
 		<PageLayout
 			title="Validador de Cartão de Crédito Online Grátis"
 			description="Valide números de cartão de crédito pelo algoritmo de Luhn e identifique automaticamente a bandeira. Funciona com Visa, Mastercard, American Express, Elo e Hipercard."
+			relatedTools={<RelatedTools currentHref="/ferramentas/validador-de-cartao-de-credito" />}
 			extraContent={<SeoContent />}
 		>
 			<CreditCardValidator />

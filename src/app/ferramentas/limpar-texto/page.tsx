@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { TextCleaner } from "@/components/tools/text-cleaner/text-cleaner";
 
 export const metadata: Metadata = {
@@ -105,6 +106,7 @@ export default function LimparTextoPage() {
 		<PageLayout
 			title="Limpador de Texto Avançado"
 			description="Remova espaços extras, caracteres invisíveis e normalize textos rapidamente."
+			relatedTools={<RelatedTools currentHref="/ferramentas/limpar-texto" />}
 			extraContent={<SeoContent />}
 		>
 			<TextCleaner />

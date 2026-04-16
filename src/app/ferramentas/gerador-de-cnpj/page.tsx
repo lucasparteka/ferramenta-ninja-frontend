@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CnpjGenerator } from "@/components/tools/cnpj-generator/cnpj-generator";
 import { CnpjValidator } from "@/components/tools/cnpj-generator/cnpj-validator";
 
@@ -192,6 +193,7 @@ export default function GeradorDeCnpjPage() {
 		<PageLayout
 			title="Gerador de CNPJ Válido Online Grátis"
 			description="Gere CNPJs válidos para testes ou valide CNPJs existentes. Os números gerados são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-cnpj" />}
 			extraContent={<SeoContent />}
 		>
 			<div className="space-y-8">

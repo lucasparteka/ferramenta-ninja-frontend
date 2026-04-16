@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { QRReader } from "@/components/tools/qr-reader/qr-reader";
 
 export const metadata: Metadata = {
@@ -103,6 +104,7 @@ export default function LeitorDeQrCodePage() {
 		<PageLayout
 			title="Leitor de QR Code Online"
 			description="Decodifique QR Codes a partir de imagens no seu computador. Arraste a imagem ou clique para selecionar."
+			relatedTools={<RelatedTools currentHref="/ferramentas/leitor-de-qr-code" />}
 			extraContent={<SeoContent />}
 		>
 			<QRReader />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { RemoveDuplicates } from "@/components/tools/remove-duplicates/remove-duplicates";
 
 export const metadata: Metadata = {
@@ -184,6 +185,7 @@ export default function RemoverDuplicadosPage() {
 		<PageLayout
 			title="Remover Linhas Duplicadas Online Grátis"
 			description="Cole sua lista, remova entradas repetidas e obtenha apenas os valores únicos. Suporte a ordenação, comparação sem distinção de maiúsculas e remoção de linhas vazias."
+			relatedTools={<RelatedTools currentHref="/ferramentas/remover-duplicados" />}
 			extraContent={<SeoContent />}
 		>
 			<RemoveDuplicates />

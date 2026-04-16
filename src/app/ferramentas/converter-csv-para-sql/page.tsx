@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CsvToSql } from "@/components/tools/csv-to-sql/csv-to-sql";
 
 export const metadata: Metadata = {
@@ -206,6 +207,7 @@ export default function ConverterCsvParaSqlPage() {
 		<PageLayout
 			title="Converter CSV para SQL Online Grátis"
 			description="Converta arquivos CSV em comandos SQL INSERT diretamente no navegador. Suporte a MySQL, PostgreSQL, SQLite, Oracle e SQL Server — sem cadastro e sem enviar dados."
+			relatedTools={<RelatedTools currentHref="/ferramentas/converter-csv-para-sql" />}
 			extraContent={<SeoContent />}
 		>
 			<CsvToSql />

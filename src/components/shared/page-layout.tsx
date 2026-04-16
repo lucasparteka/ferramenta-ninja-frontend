@@ -4,6 +4,7 @@ type PageLayoutProps = {
 	title: string;
 	description: string;
 	children: React.ReactNode;
+	relatedTools?: React.ReactNode;
 	extraContent?: React.ReactNode;
 };
 
@@ -11,6 +12,7 @@ export function PageLayout({
 	title,
 	description,
 	children,
+	relatedTools,
 	extraContent,
 }: PageLayoutProps) {
 	return (
@@ -23,6 +25,7 @@ export function PageLayout({
 			</div>
 			<Separator className="mb-5 lg:mb-7" />
 			{children}
+			{relatedTools && <div className="mt-12">{relatedTools}</div>}
 			{extraContent && (
 				<div className="mt-12 space-y-8 text-muted-foreground">
 					{extraContent}

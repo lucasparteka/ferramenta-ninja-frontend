@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CreditCardGenerator } from "@/components/tools/credit-card-generator/credit-card-generator";
 
 export const metadata: Metadata = {
@@ -183,6 +184,7 @@ export default function GeradorDeCartaoDeCreditoPage() {
 		<PageLayout
 			title="Gerador de Cartão de Crédito Online Grátis"
 			description="Gere números de cartão de crédito válidos para testes com Visa, Mastercard, American Express, Elo e Hipercard. Os números são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-cartao-de-credito" />}
 			extraContent={<SeoContent />}
 		>
 			<CreditCardGenerator />

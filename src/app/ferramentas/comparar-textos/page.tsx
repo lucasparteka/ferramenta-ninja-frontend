@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { TextDiff } from "@/components/tools/text-diff/text-diff";
 
 export const metadata: Metadata = {
@@ -184,6 +185,7 @@ export default function ComparadorDeTextosPage() {
 		<PageLayout
 			title="Comparador de Textos Online"
 			description="Cole dois textos, clique em comparar e visualize as diferenças com destaque por cores. Adições em verde, remoções em vermelho."
+			relatedTools={<RelatedTools currentHref="/ferramentas/comparar-textos" />}
 			extraContent={<SeoContent />}
 		>
 			<TextDiff />

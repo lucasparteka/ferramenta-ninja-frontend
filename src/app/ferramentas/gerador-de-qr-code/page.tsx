@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { QRGenerator } from "@/components/tools/qr-generator/qr-generator";
 
 export const metadata: Metadata = {
@@ -208,6 +209,7 @@ export default function GeradorDeQrCodePage() {
 		<PageLayout
 			title="Gerador de QR Code Online Grátis"
 			description="Gere QR Codes a partir de qualquer texto ou URL. Escolha o tamanho e o nível de correção de erro e baixe em PNG."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-qr-code" />}
 			extraContent={<SeoContent />}
 		>
 			<QRGenerator />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { NumberGenerator } from "@/components/tools/number-generator/number-generator";
 
 export const metadata: Metadata = {
@@ -164,6 +165,7 @@ export default function GeradorDeNumerosPage() {
 		<PageLayout
 			title="Gerador de Números Aleatórios Online Grátis"
 			description="Gere números aleatórios com intervalo, quantidade, colunas e ordenação personalizados. Suporte a números únicos e cópia com um clique."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-numeros" />}
 			extraContent={<SeoContent />}
 		>
 			<NumberGenerator />

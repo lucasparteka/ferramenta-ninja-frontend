@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { GooglePreviewTool } from "@/components/tools/google-preview/google-preview-tool";
 
 export const metadata: Metadata = {
@@ -152,6 +153,7 @@ export default function PreviaResultadoGooglePage() {
 		<PageLayout
 			title="Prévia do Resultado do Google"
 			description="Simule como seu site aparece nos resultados de busca. Edite o título, a meta descrição e a URL e veja o snippet atualizar em tempo real."
+			relatedTools={<RelatedTools currentHref="/ferramentas/previa-resultado-google" />}
 			extraContent={<SeoContent />}
 		>
 			<GooglePreviewTool />

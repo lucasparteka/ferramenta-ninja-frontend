@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { TextGenerator } from "@/components/tools/text-generator/text-generator";
 
 export const metadata: Metadata = {
@@ -152,6 +153,7 @@ export default function GeradorDeTextoPage() {
 		<PageLayout
 			title="Gerador de Texto Online (Lorem Ipsum e Texto Aleatório)"
 			description="Gere Lorem Ipsum ou texto aleatório em palavras, frases ou parágrafos. Ideal para designers, desenvolvedores e prototipação de interfaces."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-texto" />}
 			extraContent={<SeoContent />}
 		>
 			<TextGenerator />

@@ -35,7 +35,7 @@ export const CHECKLIST_TEMPLATES: ChecklistTemplate[] = [
 			spacing: "compact",
 			writingLines: 0,
 		},
-		style: { fontSize: "sm", titleAlign: "left", backgroundColor: "#ffffff" },
+		style: { fontSize: "md", titleAlign: "left", backgroundColor: "#ffffff" },
 		content: {
 			title: "Lista de Compras",
 			items: [

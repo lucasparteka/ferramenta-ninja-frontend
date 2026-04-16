@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { WifiQR } from "@/components/tools/wifi-qr/wifi-qr";
 
 export const metadata: Metadata = {
@@ -134,6 +135,7 @@ export default function GeradorDeQrCodeWifiPage() {
 		<PageLayout
 			title="Gerador de QR Code Wi-Fi"
 			description="Compartilhe sua rede Wi-Fi sem digitar senha. Gere um QR Code que conecta qualquer celular automaticamente ao escanear."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-qr-code-wifi" />}
 			extraContent={<SeoContent />}
 		>
 			<WifiQR />

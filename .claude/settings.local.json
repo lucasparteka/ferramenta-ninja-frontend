@@ -38,7 +38,12 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "mcp__jcodemunch__get_file_outline",
       "mcp__jcodemunch__get_symbol_source",
-      "Bash(node -e \"const s = require\\('@dnd-kit/dom/sortable'\\); console.log\\(Object.keys\\(s\\)\\)\")"
+      "Bash(node -e \"const s = require\\('@dnd-kit/dom/sortable'\\); console.log\\(Object.keys\\(s\\)\\)\")",
+      "mcp__jcodemunch__index_folder",
+      "mcp__jcodemunch__get_repo_outline",
+      "mcp__jcodemunch__get_file_tree",
+      "mcp__jcodemunch__search_symbols",
+      "Bash(node -e ' *)"
     ],
     "deny": [
       "Bash(rm -rf *)",

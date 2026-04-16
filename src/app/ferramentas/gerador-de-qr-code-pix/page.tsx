@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { PixQR } from "@/components/tools/pix-qr/pix-qr";
 
 export const metadata: Metadata = {
@@ -139,6 +140,7 @@ export default function GeradorDeQrCodePixPage() {
 		<PageLayout
 			title="Gerador de QR Code Pix"
 			description="Gere QR Codes Pix estáticos para receber pagamentos instantâneos. Suporte a CPF, CNPJ, telefone, e-mail e chave aleatória."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-qr-code-pix" />}
 			extraContent={<SeoContent />}
 		>
 			<PixQR />

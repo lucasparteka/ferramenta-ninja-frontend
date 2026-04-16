@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { ReceiptClient } from "@/components/tools/receipt/receipt-client";
 
 export const metadata: Metadata = {
@@ -121,6 +122,7 @@ export default function ReciboSimplesPage() {
 		<PageLayout
 			title="Gerador de Recibo Simples"
 			description="Crie recibos prontos para impressão em segundos. Preencha os dados, visualize em tempo real e exporte em PDF."
+			relatedTools={<RelatedTools currentHref="/ferramentas/recibo-simples" />}
 			extraContent={<SeoContent />}
 		>
 			<ReceiptClient />

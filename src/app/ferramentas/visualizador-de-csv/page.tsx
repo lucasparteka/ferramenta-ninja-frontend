@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CsvViewer } from "@/components/tools/csv-viewer/csv-viewer";
 
 export const metadata: Metadata = {
@@ -164,6 +165,7 @@ export default function VisualizadorDeCsvPage() {
 		<PageLayout
 			title="Visualizador de CSV Online Grátis"
 			description="Visualize arquivos CSV como tabela formatada diretamente no navegador. Faça upload ou cole o conteúdo, ordene colunas e navegue pelas páginas — sem cadastro e sem enviar dados."
+			relatedTools={<RelatedTools currentHref="/ferramentas/visualizador-de-csv" />}
 			extraContent={<SeoContent />}
 		>
 			<CsvViewer />

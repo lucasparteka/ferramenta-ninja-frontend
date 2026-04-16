@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { TextCleaner } from "@/components/tools/text-cleaner/text-cleaner";
 
 export const metadata: Metadata = {
@@ -43,6 +44,7 @@ export default function Page() {
 		<PageLayout
 			title="Remover Quebras de Linha"
 			description="Una linhas quebradas e normalize seu texto automaticamente."
+			relatedTools={<RelatedTools currentHref="/ferramentas/remover-quebras-de-linhas" />}
 			extraContent={<SeoContent />}
 		>
 			<TextCleaner

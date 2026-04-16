@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { RandomPicker } from "@/components/tools/random-picker/random-picker";
 
 export const metadata: Metadata = {
@@ -151,6 +152,7 @@ export default function SorteioOnlinePage() {
 		<PageLayout
 			title="Sorteio Online Grátis (Sortear Nomes e Números)"
 			description="Sorteie nomes, números ou qualquer lista de forma justa e instantânea. Configure a quantidade de vencedores e a opção de repetição."
+			relatedTools={<RelatedTools currentHref="/ferramentas/sorteio-online" />}
 			extraContent={<SeoContent />}
 		>
 			<RandomPicker />

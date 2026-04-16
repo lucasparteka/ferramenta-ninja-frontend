@@ -49,7 +49,7 @@ export function ToolSearch({ categories }: Props) {
 				placeholder="Buscar ferramenta..."
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
-				className="w-full rounded-md border border-border bg-background px-4 py-2 text-sm outline-none focus:border-primary"
+				className="w-full rounded-md border border-border px-4 py-2 text-sm outline-none focus:border-primary bg-white"
 			/>
 
 			<div className="space-y-12">

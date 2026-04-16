@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CharacterCounter } from "@/components/tools/character-counter/character-counter";
 
 export const metadata: Metadata = {
@@ -112,6 +113,7 @@ export default function ContadorDeCaracteresPage() {
 		<PageLayout
 			title="Contador de Caracteres"
 			description="Analise seu texto em tempo real: conte caracteres, palavras, linhas e parágrafos instantaneamente."
+			relatedTools={<RelatedTools currentHref="/ferramentas/contador-de-caracteres" />}
 			extraContent={<SeoContent />}
 		>
 			<CharacterCounter />

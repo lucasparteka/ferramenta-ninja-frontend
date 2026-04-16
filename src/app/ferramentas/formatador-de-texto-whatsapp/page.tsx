@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { WhatsAppFormatter } from "@/components/tools/whatsapp-formatter/whatsapp-formatter";
 
 export const metadata: Metadata = {
@@ -180,6 +181,7 @@ export default function FormatadorWhatsAppPage() {
 		<PageLayout
 			title="Formatador de Texto para WhatsApp Online"
 			description="Escreva ou cole sua mensagem, aplique negrito, itálico, tachado ou monoespaçado e copie com um clique."
+			relatedTools={<RelatedTools currentHref="/ferramentas/formatador-de-texto-whatsapp" />}
 			extraContent={<SeoContent />}
 		>
 			<WhatsAppFormatter />

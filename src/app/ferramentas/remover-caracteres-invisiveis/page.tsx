@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { TextCleaner } from "@/components/tools/text-cleaner/text-cleaner";
 
 export const metadata: Metadata = {
@@ -68,6 +69,7 @@ export default function Page() {
 		<PageLayout
 			title="Remover Caracteres Invisíveis"
 			description="Cole seu texto e remova automaticamente caracteres ocultos e invisíveis."
+			relatedTools={<RelatedTools currentHref="/ferramentas/remover-caracteres-invisiveis" />}
 			extraContent={<SeoContent />}
 		>
 			<TextCleaner

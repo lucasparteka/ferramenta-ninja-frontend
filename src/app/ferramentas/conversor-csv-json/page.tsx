@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CsvJsonConverter } from "@/components/tools/csv-json/csv-json-converter";
 
 export const metadata: Metadata = {
@@ -100,6 +101,7 @@ export default function Page() {
 		<PageLayout
 			title="Conversor CSV ↔ JSON"
 			description="Converta CSV em JSON ou JSON em CSV com validação visual e correção de erros."
+			relatedTools={<RelatedTools currentHref="/ferramentas/conversor-csv-json" />}
 			extraContent={<SeoContent />}
 		>
 			<CsvJsonConverter />

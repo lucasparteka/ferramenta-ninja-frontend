@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { UuidGenerator } from "@/components/tools/uuid-generator/uuid-generator";
 import { UuidValidator } from "@/components/tools/uuid-generator/uuid-validator";
 
@@ -230,6 +231,7 @@ export default function GeradorDeUuidPage() {
 		<PageLayout
 			title="Gerador de UUID Online"
 			description="Gere UUIDs únicos nas versões v1, v3, v4 e v5 ou valide um UUID existente. Tudo funciona diretamente no navegador, sem enviar dados a nenhum servidor."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-uuid" />}
 			extraContent={<SeoContent />}
 		>
 			<div className="space-y-8">

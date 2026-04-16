@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { TextCleaner } from "@/components/tools/text-cleaner/text-cleaner";
 
 export const metadata: Metadata = {
@@ -43,6 +44,7 @@ export default function Page() {
 		<PageLayout
 			title="Remover Espaços Duplicados"
 			description="Elimine espaços extras do seu texto com um clique."
+			relatedTools={<RelatedTools currentHref="/ferramentas/remover-espacos-duplicados" />}
 			extraContent={<SeoContent />}
 		>
 			<TextCleaner

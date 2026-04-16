@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CpfGenerator } from "@/components/tools/cpf-generator/cpf-generator";
 import { CpfValidator } from "@/components/tools/cpf-generator/cpf-validator";
 
@@ -177,6 +178,7 @@ export default function GeradorDeCpfPage() {
 		<PageLayout
 			title="Gerador de CPF Válido Online Grátis"
 			description="Gere CPFs válidos para testes ou valide CPFs existentes. Os números gerados são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-cpf" />}
 			extraContent={<SeoContent />}
 		>
 			<div className="space-y-8">

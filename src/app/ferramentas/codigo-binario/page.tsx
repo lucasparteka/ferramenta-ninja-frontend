@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { BinaryConverter } from "@/components/tools/binary-converter/binary-converter";
 
 export const metadata: Metadata = {
@@ -216,6 +217,7 @@ export default function CodigoBinarioPage() {
 		<PageLayout
 			title="Conversor de Código Binário Online Grátis"
 			description="Converta texto para código binário e código binário para texto. Suporte completo a UTF-8 e todos os caracteres Unicode."
+			relatedTools={<RelatedTools currentHref="/ferramentas/codigo-binario" />}
 			extraContent={<SeoContent />}
 		>
 			<BinaryConverter />

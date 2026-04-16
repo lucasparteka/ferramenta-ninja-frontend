@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { BatchBarcode } from "@/components/tools/batch-barcode/batch-barcode";
 
 export const metadata: Metadata = {
@@ -101,6 +102,7 @@ export default function GeradorDeCodigoDeBarrasEmLotePage() {
 		<PageLayout
 			title="Gerador de Código de Barras em Lote"
 			description="Gere vários códigos de barras de uma só vez. Cole a lista de valores, escolha o formato e baixe cada código em SVG."
+			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-codigo-de-barras-em-lote" />}
 			extraContent={<SeoContent />}
 		>
 			<BatchBarcode />

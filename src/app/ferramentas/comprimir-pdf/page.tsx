@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { CompressPDF } from "@/components/tools/pdf/compress/compress-pdf";
 
 export const metadata: Metadata = {
@@ -180,6 +181,7 @@ export default function ComprimirPDFPage() {
 		<PageLayout
 			title="Comprimir PDF Online Grátis"
 			description="Reduza o tamanho de arquivos PDF diretamente no navegador. Selecione o nível de compressão e veja a redução de tamanho antes de baixar."
+			relatedTools={<RelatedTools currentHref="/ferramentas/comprimir-pdf" />}
 			extraContent={<SeoContent />}
 		>
 			<CompressPDF />

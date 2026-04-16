@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { SplitPDF } from "@/components/tools/pdf/split/split-pdf";
 
 export const metadata: Metadata = {
@@ -154,6 +155,7 @@ export default function DividirPDFPage() {
 		<PageLayout
 			title="Dividir PDF Online Grátis"
 			description="Extraia páginas específicas ou divida um PDF em partes no navegador. Selecione o arquivo, escolha as páginas e baixe o resultado."
+			relatedTools={<RelatedTools currentHref="/ferramentas/dividir-pdf" />}
 			extraContent={<SeoContent />}
 		>
 			<SplitPDF />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { DrawingCanvasClient } from "@/components/tools/drawing-canvas/drawing-canvas-client";
 
 export const metadata: Metadata = {
@@ -198,6 +199,7 @@ export default function DesenharOnlinePage() {
 		<PageLayout
 			title="Desenhar Online Grátis (Tipo Paint)"
 			description="Desenhe livremente no navegador com lápis, borracha, formas e cores. Exporte em PNG sem instalar nada."
+			relatedTools={<RelatedTools currentHref="/ferramentas/desenhar-online" />}
 			extraContent={<SeoContent />}
 		>
 			<DrawingCanvasClient />

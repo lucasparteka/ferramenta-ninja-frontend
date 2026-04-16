@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CopyGrid } from "@/components/shared/copy-grid";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { symbolCategories } from "@/lib/data/symbols";
 
 export const metadata: Metadata = {

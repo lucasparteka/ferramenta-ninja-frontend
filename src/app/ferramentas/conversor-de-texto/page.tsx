@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { TextConverter } from "@/components/tools/text-converter/text-converter";
 
 export const metadata: Metadata = {
@@ -186,6 +187,7 @@ export default function ConversorDeTextoPage() {
 		<PageLayout
 			title="Conversor de Texto Online Grátis"
 			description="Converta texto para maiúsculo, minúsculo, capitalize, remova acentos e espaços extras com um clique."
+			relatedTools={<RelatedTools currentHref="/ferramentas/conversor-de-texto" />}
 			extraContent={<SeoContent />}
 		>
 			<TextConverter />

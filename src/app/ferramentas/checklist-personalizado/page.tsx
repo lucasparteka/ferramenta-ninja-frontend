@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
+import { RelatedTools } from "@/components/shared/related-tools";
 import { ChecklistClient } from "@/components/tools/checklist/checklist-client";
 
 export const metadata: Metadata = {
@@ -155,6 +156,7 @@ export default function ChecklistPersonalizadoPage() {
 		<PageLayout
 			title="Checklist Personalizado para Imprimir"
 			description="Crie checklists personalizados com templates prontos para compras, limpeza, viagem e mais. Exporte em PDF ou PNG e imprima em A4."
+			relatedTools={<RelatedTools currentHref="/ferramentas/checklist-personalizado" />}
 			extraContent={<SeoContent />}
 		>
 			<ChecklistClient />

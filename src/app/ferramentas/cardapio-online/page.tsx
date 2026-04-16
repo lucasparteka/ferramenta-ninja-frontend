@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
 import { MenuClient } from "@/components/tools/menu/menu-client";
+import type { LucideIcon } from "@/lib/data/tools";
 
 export const metadata: Metadata = {
 	title: "Criador de Cardápio Online Grátis para Imprimir | Ferramenta Ninja",

@@ -6,7 +6,7 @@ const MAX_RELATED = 6;
 
 type RelatedToolsProps = {
 	currentHref: string;
-	customTools?: Tool[];
+	customTools?: Omit<Tool, "icon">[];
 };
 
 function getScore(current: Tool, candidate: Tool, isSameCategory: boolean) {

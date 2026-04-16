@@ -78,9 +78,7 @@ function generateFileContent(
 	return `${importsBlock}
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 
-export type LucideIcon = ForwardRefExoticComponent
-  Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
->;
+export type LucideIcon = ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
 
 export type Tool = {
   name: string;

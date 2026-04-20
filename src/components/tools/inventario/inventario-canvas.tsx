@@ -26,7 +26,17 @@ export const InventarioCanvas = forwardRef<
 
 	useImperativeHandle(ref, () => ({
 		getDataURL() {
-			return canvasRef.current?.toDataURL("image/png") ?? "";
+			const canvas = canvasRef.current;
+			if (!canvas) return "";
+			const SCALE = 2;
+			const offscreen = document.createElement("canvas");
+			offscreen.width = canvasW * SCALE;
+			offscreen.height = canvasH * SCALE;
+			const ctx = offscreen.getContext("2d");
+			if (!ctx) return canvas.toDataURL("image/png");
+			ctx.scale(SCALE, SCALE);
+			renderInventario(ctx, state);
+			return offscreen.toDataURL("image/png");
 		},
 	}));
 

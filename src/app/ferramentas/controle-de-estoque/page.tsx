@@ -4,7 +4,8 @@ import { RelatedTools } from "@/components/shared/related-tools";
 import { InventarioClient } from "@/components/tools/inventario/inventario-client";
 
 export const metadata: Metadata = {
-	title: "Planilha de Controle de Estoque para Imprimir Grátis | Ferramenta Ninja",
+	title:
+		"Planilha de Controle de Estoque para Imprimir Grátis | Ferramenta Ninja",
 	description:
 		"Crie sua planilha de controle de estoque personalizada online, grátis e pronta para imprimir em PDF. Adicione colunas, produtos e imprima sem instalar nada.",
 	keywords: [
@@ -54,8 +55,8 @@ function SeoContent() {
 				</h2>
 				<ol className="list-decimal space-y-2 pl-6">
 					<li>
-						<strong className="text-foreground">Configure o documento</strong> na
-						aba "Geral": defina o título, escolha entre orientação retrato ou
+						<strong className="text-foreground">Configure o documento</strong>{" "}
+						na aba "Geral": defina o título, escolha entre orientação retrato ou
 						paisagem e selecione a cor do cabeçalho da tabela.
 					</li>
 					<li>
@@ -64,14 +65,14 @@ function SeoContent() {
 						Setor e Responsável, ou adicione novos campos.
 					</li>
 					<li>
-						<strong className="text-foreground">Defina as colunas</strong> na aba
-						"Colunas": renomeie, ajuste a largura ou adicione novas colunas
+						<strong className="text-foreground">Defina as colunas</strong> na
+						aba "Colunas": renomeie, ajuste a largura ou adicione novas colunas
 						conforme a necessidade.
 					</li>
 					<li>
-						<strong className="text-foreground">Preencha os itens</strong> na aba
-						"Itens": adicione cada produto com seus dados correspondentes a cada
-						coluna.
+						<strong className="text-foreground">Preencha os itens</strong> na
+						aba "Itens": adicione cada produto com seus dados correspondentes a
+						cada coluna.
 					</li>
 					<li>
 						<strong className="text-foreground">Exporte em PDF ou PNG</strong> e
@@ -86,12 +87,14 @@ function SeoContent() {
 				</h2>
 				<div className="space-y-3">
 					<p>
-						<strong className="text-foreground">Pequenos negócios:</strong> lojas,
-						restaurantes, oficinas e qualquer estabelecimento que precise
+						<strong className="text-foreground">Pequenos negócios:</strong>{" "}
+						lojas, restaurantes, oficinas e qualquer estabelecimento que precise
 						controlar mercadorias sem adotar um sistema complexo.
 					</p>
 					<p>
-						<strong className="text-foreground">Profissionais autônomos:</strong>{" "}
+						<strong className="text-foreground">
+							Profissionais autônomos:
+						</strong>{" "}
 						revendedores, costureiras, artesãos e outros que precisam de um
 						inventário simples e rápido de preencher.
 					</p>
@@ -124,8 +127,8 @@ function SeoContent() {
 						</h3>
 						<p>
 							Sim. Você pode adicionar, renomear e remover colunas livremente.
-							Ajuste a largura de cada coluna para que o layout fique adequado ao
-							conteúdo.
+							Ajuste a largura de cada coluna para que o layout fique adequado
+							ao conteúdo.
 						</p>
 					</div>
 					<div>
@@ -133,9 +136,9 @@ function SeoContent() {
 							Qual orientação usar: retrato ou paisagem?
 						</h3>
 						<p>
-							Para tabelas com muitas colunas, a orientação paisagem (horizontal)
-							aproveita melhor o espaço e evita que colunas fiquem muito
-							estreitas. Para poucos campos, o retrato é suficiente.
+							Para tabelas com muitas colunas, a orientação paisagem
+							(horizontal) aproveita melhor o espaço e evita que colunas fiquem
+							muito estreitas. Para poucos campos, o retrato é suficiente.
 						</p>
 					</div>
 					<div>
@@ -143,8 +146,8 @@ function SeoContent() {
 							Preciso instalar algum programa?
 						</h3>
 						<p>
-							Não. A ferramenta funciona diretamente no navegador, sem necessidade
-							de cadastro, instalação ou pagamento.
+							Não. A ferramenta funciona diretamente no navegador, sem
+							necessidade de cadastro, instalação ou pagamento.
 						</p>
 					</div>
 				</div>
@@ -156,8 +159,8 @@ function SeoContent() {
 export default function ControleDeEstoquePage() {
 	return (
 		<PageLayout
-			title="Controle de Estoque"
-			description="Crie sua planilha de controle de estoque personalizada. Adicione colunas, itens e exporte em PDF ou PNG para imprimir."
+			title="Controle de Estoque e Inventario Grátis para Imprimir"
+			description="Crie sua planilha de controle de estoque ou inventário personalizada. Adicione colunas, itens e exporte em PDF ou PNG para imprimir."
 			relatedTools={
 				<RelatedTools currentHref="/ferramentas/controle-de-estoque" />
 			}

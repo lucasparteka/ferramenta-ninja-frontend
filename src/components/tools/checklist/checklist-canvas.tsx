@@ -18,7 +18,17 @@ export const ChecklistCanvas = forwardRef<CanvasHandle, ChecklistCanvasProps>(
 
 		useImperativeHandle(ref, () => ({
 			getDataURL() {
-				return canvasRef.current?.toDataURL("image/png") ?? "";
+				const canvas = canvasRef.current;
+				if (!canvas) return "";
+				const SCALE = 2;
+				const offscreen = document.createElement("canvas");
+				offscreen.width = canvas.width * SCALE;
+				offscreen.height = canvas.height * SCALE;
+				const ctx = offscreen.getContext("2d");
+				if (!ctx) return canvas.toDataURL("image/png");
+				ctx.scale(SCALE, SCALE);
+				renderChecklist(ctx, state);
+				return offscreen.toDataURL("image/png");
 			},
 		}));
 

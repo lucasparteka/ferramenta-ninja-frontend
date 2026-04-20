@@ -43,9 +43,17 @@ export const MenuCanvas = forwardRef<MultiCanvasHandle, MenuCanvasProps>(
 
 		useImperativeHandle(ref, () => ({
 			getDataURLs() {
-				return canvasRefs.current
-					.filter(Boolean)
-					.map((c) => c!.toDataURL("image/png"));
+				const SCALE = 2;
+				return slices.map((slice, i) => {
+					const offscreen = document.createElement("canvas");
+					offscreen.width = 1240 * SCALE;
+					offscreen.height = 1754 * SCALE;
+					const ctx = offscreen.getContext("2d");
+					if (!ctx) return canvasRefs.current[i]?.toDataURL("image/png") ?? "";
+					ctx.scale(SCALE, SCALE);
+					renderMenuPage(ctx, data, template, slice, i, logoImg);
+					return offscreen.toDataURL("image/png");
+				});
 			},
 		}));
 

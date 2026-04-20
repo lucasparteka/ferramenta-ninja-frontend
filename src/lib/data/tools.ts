@@ -20,6 +20,7 @@ import {
 	Merge,
 	Minimize2,
 	MoonStar,
+	Package,
 	Percent,
 	Pi,
 	QrCode,
@@ -271,6 +272,14 @@ export const categories: ToolCategory[] = [
 				description: "Gere ordens de serviço prontas para impressão",
 				icon: FileText,
 				tags: ["pdf", "financeiro", "documento"],
+				intent: "generate",
+			},
+			{
+				name: "Controle de Estoque",
+				href: "/ferramentas/controle-de-estoque",
+				description: "Crie planilhas de estoque personalizadas para imprimir",
+				icon: Package,
+				tags: ["pdf", "estoque", "documento", "impressão"],
 				intent: "generate",
 			},
 			{

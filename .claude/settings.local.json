@@ -47,7 +47,8 @@
       "mcp__jcodemunch__list_repos",
       "mcp__jcodemunch__get_file_content",
       "mcp__jcodemunch__search_text",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "mcp__jcodemunch__get_extraction_candidates"
     ],
     "deny": [
       "Bash(rm -rf *)",

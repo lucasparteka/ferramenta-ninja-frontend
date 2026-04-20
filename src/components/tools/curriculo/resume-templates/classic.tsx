@@ -1,5 +1,4 @@
 import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
-import Image from "next/image";
 import type { ResumeTemplateData } from "./types";
 
 function formatMonthYear(yyyyMM: string): string {
@@ -137,7 +136,7 @@ export function ClassicTemplate({
 					)}
 				</div>
 				{data.photoUrl && (
-					<Image
+					<img
 						src={data.photoUrl}
 						alt={data.name}
 						className="size-18 rounded-full object-cover border-2 border-[#dde4ec] shrink-0"

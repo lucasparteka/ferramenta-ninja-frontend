@@ -166,7 +166,63 @@ export default function CriadorDeCurriculoPage() {
 		<PageLayout
 			title="Criador de Currículo Online Grátis"
 			description="Monte seu currículo profissional com templates modernos. Personalize o visual, salve no navegador e baixe em PDF — sem cadastro e sem enviar seus dados."
-			relatedTools={<RelatedTools currentHref="/ferramentas/criador-de-curriculo" />}
+			relatedTools={
+				<RelatedTools
+					currentHref="/ferramentas/criador-de-curriculo"
+					customTools={[
+						{
+							name: "Calculadora de Salário Líquido",
+							href: "/ferramentas/calculadora-salario-liquido",
+							description: "INSS, IRRF e descontos",
+							tags: ["calculo", "financeiro"],
+							intent: "analyze",
+						},
+						{
+							name: "Calculadora Adicional Noturno",
+							href: "/ferramentas/calculadora-adicional-noturno",
+							description: "Calcule o adicional noturno",
+							tags: ["calculo", "financeiro"],
+							intent: "analyze",
+						},
+						{
+							name: "Gerador de Senha",
+							href: "/ferramentas/gerador-de-senha",
+							description: "Senhas seguras",
+							tags: ["seguranca", "senha"],
+							intent: "generate",
+							weight: 1,
+						},
+						{
+							name: "Juntar PDF",
+							href: "/ferramentas/juntar-pdf",
+							description: "Una PDFs",
+							tags: ["pdf"],
+							intent: "convert",
+						},
+						{
+							name: "Dividir PDF",
+							href: "/ferramentas/dividir-pdf",
+							description: "Separe páginas",
+							tags: ["pdf"],
+							intent: "convert",
+						},
+						{
+							name: "Comprimir PDF",
+							href: "/ferramentas/comprimir-pdf",
+							description: "Reduza tamanho",
+							tags: ["pdf"],
+							intent: "convert",
+						},
+						{
+							name: "Checklist Personalizado",
+							href: "/ferramentas/checklist-personalizado",
+							description: "Crie e imprima checklists personalizados",
+							tags: ["pdf", "impressao", "organizacao"],
+							intent: "generate",
+						},
+					]}
+				/>
+			}
 			extraContent={<SeoContent />}
 		>
 			<ResumeBuilder />

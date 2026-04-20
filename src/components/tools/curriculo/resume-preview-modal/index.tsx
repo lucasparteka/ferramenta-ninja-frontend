@@ -22,6 +22,7 @@ import {
 	ScaledResume,
 } from "@/components/tools/curriculo/resume-templates/scaled-resume";
 import type { ResumeTemplateData } from "@/components/tools/curriculo/resume-templates/types";
+import { resumeFontVars } from "@/lib/fonts/resume-fonts";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
@@ -112,7 +113,7 @@ export function ResumePreviewModal({
 					</div>
 
 					<div className="flex-1 overflow-y-auto">
-						<div className="max-w-198.5 mx-auto py-10">
+						<div className={`max-w-198.5 mx-auto py-10 ${resumeFontVars}`}>
 							{data ? (
 								<div
 									className="bg-white shadow-xl ring-1 ring-black/8"
@@ -249,7 +250,7 @@ export function ResumePreviewModal({
 						</div>
 					</div>
 				)}
-				<div className="overflow-y-auto flex-1 bg-[#f0f2f5] p-4">
+				<div className={`overflow-y-auto flex-1 bg-[#f0f2f5] p-4 ${resumeFontVars}`}>
 					{data ? (
 						<ScaledResume
 							templateId={templateId}

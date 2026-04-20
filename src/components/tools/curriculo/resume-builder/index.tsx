@@ -151,6 +151,7 @@ export function ResumeBuilder() {
 		font: fontVar,
 		size: fontSize,
 	});
+	const savedPhotoRef = useRef<File | null>(null);
 
 	const form = useForm<ResumeFormValues>({
 		resolver: zodResolver(resumeFormSchema) as Resolver<ResumeFormValues>,
@@ -180,7 +181,7 @@ export function ResumeBuilder() {
 		accentColor !== saved.color ||
 		fontVar !== saved.font ||
 		fontSize !== saved.size;
-	const hasPendingChanges = isDirty || photoFile !== null || hasLayoutChanges;
+	const hasPendingChanges = isDirty || photoFile !== savedPhotoRef.current || hasLayoutChanges;
 
 	const livePreviewData = useMemo<ResumeTemplateData>(
 		() => toPreviewData(watchedValues as ResumeFormValues, photoPreviewUrl),
@@ -221,6 +222,7 @@ export function ResumeBuilder() {
 		};
 		saveToLocalStorage(data, layout);
 		savedLayoutRef.current = layout;
+		savedPhotoRef.current = photoFile;
 		setHasSavedData(true);
 		form.reset(data, { keepValues: true, keepDirty: false });
 		toast.success("Currículo salvo com sucesso!");
@@ -246,6 +248,7 @@ export function ResumeBuilder() {
 		if (photoPreviewUrl) URL.revokeObjectURL(photoPreviewUrl);
 		setPhotoFile(null);
 		setPhotoPreviewUrl(null);
+		savedPhotoRef.current = null;
 	}
 
 	const photoSection = (

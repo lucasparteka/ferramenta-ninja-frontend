@@ -101,7 +101,9 @@ export default function Page() {
 		<PageLayout
 			title="Conversor CSV ↔ JSON"
 			description="Converta CSV em JSON ou JSON em CSV com validação visual e correção de erros."
-			relatedTools={<RelatedTools currentHref="/ferramentas/conversor-csv-json" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/conversor-csv-json" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<CsvJsonConverter />

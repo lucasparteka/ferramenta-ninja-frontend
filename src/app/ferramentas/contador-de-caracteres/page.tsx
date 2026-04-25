@@ -113,7 +113,9 @@ export default function ContadorDeCaracteresPage() {
 		<PageLayout
 			title="Contador de Caracteres"
 			description="Analise seu texto em tempo real: conte caracteres, palavras, linhas e parágrafos instantaneamente."
-			relatedTools={<RelatedTools currentHref="/ferramentas/contador-de-caracteres" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/contador-de-caracteres" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<CharacterCounter />

@@ -18,9 +18,9 @@ function SeoContent() {
 				</h2>
 				<p>
 					A ferramenta simula em tempo real como o seu site será exibido nos
-					resultados de busca do Google. Você pode importar os dados
-					diretamente de uma URL ou preenchê-los manualmente, ajustando o
-					título, a meta descrição e a URL da página.
+					resultados de busca do Google. Você pode importar os dados diretamente
+					de uma URL ou preenchê-los manualmente, ajustando o título, a meta
+					descrição e a URL da página.
 				</p>
 				<ul className="mt-4 list-disc space-y-2 pl-6">
 					<li>
@@ -34,12 +34,16 @@ function SeoContent() {
 						atualizar instantaneamente.
 					</li>
 					<li>
-						<strong className="text-foreground">Prévia desktop e mobile:</strong>{" "}
+						<strong className="text-foreground">
+							Prévia desktop e mobile:
+						</strong>{" "}
 						alterne entre as visualizações para garantir que o snippet fique bem
 						em todos os dispositivos.
 					</li>
 					<li>
-						<strong className="text-foreground">Destaque de palavra-chave:</strong>{" "}
+						<strong className="text-foreground">
+							Destaque de palavra-chave:
+						</strong>{" "}
 						informe a palavra-chave principal para visualizar como o Google pode
 						destacá-la em negrito no resultado.
 					</li>
@@ -52,11 +56,11 @@ function SeoContent() {
 				</h2>
 				<div className="space-y-3">
 					<p>
-						<strong className="text-foreground">Título (title tag):</strong> é
-						o texto clicável exibido em azul nos resultados do Google. Ele deve
-						descrever com clareza o conteúdo da página e conter a
-						palavra-chave principal. O tamanho ideal é entre 30 e 60 caracteres
-						para que não seja cortado na exibição.
+						<strong className="text-foreground">Título (title tag):</strong> é o
+						texto clicável exibido em azul nos resultados do Google. Ele deve
+						descrever com clareza o conteúdo da página e conter a palavra-chave
+						principal. O tamanho ideal é entre 30 e 60 caracteres para que não
+						seja cortado na exibição.
 					</p>
 					<p>
 						<strong className="text-foreground">Meta descrição:</strong> é o
@@ -89,8 +93,8 @@ function SeoContent() {
 					<p>
 						Manter o título entre 30 e 60 caracteres garante que ele seja
 						exibido por completo na maioria dos dispositivos. Para a meta
-						descrição, o intervalo de 120 a 160 caracteres é suficiente para
-						uma apresentação clara sem ser cortado.
+						descrição, o intervalo de 120 a 160 caracteres é suficiente para uma
+						apresentação clara sem ser cortado.
 					</p>
 				</div>
 			</section>
@@ -118,8 +122,8 @@ function SeoContent() {
 						<p>
 							Não diretamente. A meta descrição não é um fator de ranqueamento
 							do algoritmo do Google. No entanto, ela influencia a taxa de
-							cliques (CTR), que pode impactar indiretamente a posição da
-							página nos resultados.
+							cliques (CTR), que pode impactar indiretamente a posição da página
+							nos resultados.
 						</p>
 					</div>
 					<div>
@@ -153,7 +157,9 @@ export default function PreviaResultadoGooglePage() {
 		<PageLayout
 			title="Prévia do Resultado do Google"
 			description="Simule como seu site aparece nos resultados de busca. Edite o título, a meta descrição e a URL e veja o snippet atualizar em tempo real."
-			relatedTools={<RelatedTools currentHref="/ferramentas/previa-resultado-google" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/previa-resultado-google" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<GooglePreviewTool />

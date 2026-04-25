@@ -184,7 +184,9 @@ export default function GeradorDeCartaoDeCreditoPage() {
 		<PageLayout
 			title="Gerador de Cartão de Crédito Online Grátis"
 			description="Gere números de cartão de crédito válidos para testes com Visa, Mastercard, American Express, Elo e Hipercard. Os números são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
-			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-cartao-de-credito" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/gerador-de-cartao-de-credito" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<CreditCardGenerator />

@@ -529,7 +529,11 @@ export const BackCanvas = forwardRef<CanvasHandle, BackCanvasProps>(
 					width={CANVAS_WIDTH}
 					height={CANVAS_HEIGHT}
 					aria-label="Prévia do verso do cartão fidelidade com área de carimbos"
-					style={{ display: "block", width: `${LOGICAL_WIDTH}px`, height: `${LOGICAL_HEIGHT}px` }}
+					style={{
+						display: "block",
+						width: `${LOGICAL_WIDTH}px`,
+						height: `${LOGICAL_HEIGHT}px`,
+					}}
 				/>
 			</div>
 		);

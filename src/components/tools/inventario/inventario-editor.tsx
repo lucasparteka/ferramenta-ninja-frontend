@@ -167,7 +167,7 @@ export function InventarioEditor() {
 												state.orientation === opt.value
 													? "border-foreground bg-foreground text-background"
 													: "border-border text-foreground hover:bg-muted"
-												}`}
+											}`}
 										>
 											{opt.label}
 										</button>

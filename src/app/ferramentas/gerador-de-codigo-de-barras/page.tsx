@@ -128,7 +128,9 @@ export default function GeradorDeCodigoDeBarrasPage() {
 		<PageLayout
 			title="Gerador de Código de Barras 1D"
 			description="Gere códigos de barras EAN-13, UPC-A, EAN-8, CODE 128, CODE 39 e ITF-14. Baixe em SVG com qualidade para impressão."
-			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-codigo-de-barras" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/gerador-de-codigo-de-barras" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<BarcodeGenerator />

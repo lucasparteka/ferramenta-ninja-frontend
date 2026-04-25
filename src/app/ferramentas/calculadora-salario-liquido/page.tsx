@@ -247,7 +247,9 @@ export default function CalculadoraSalarioLiquidoPage() {
 		<PageLayout
 			title="Calculadora de Salário Líquido"
 			description="Descubra quanto do seu salário você realmente recebe. Nossa calculadora considera os descontos de INSS, IRRF e dependentes para calcular o valor líquido."
-			relatedTools={<RelatedTools currentHref="/ferramentas/calculadora-salario-liquido" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/calculadora-salario-liquido" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<SalaryContent />

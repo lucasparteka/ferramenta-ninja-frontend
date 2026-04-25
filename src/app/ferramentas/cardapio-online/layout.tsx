@@ -1,8 +1,4 @@
-import {
-	lora,
-	playfair,
-	roboto,
-} from "@/lib/fonts/resume-fonts";
+import { lora, playfair, roboto } from "@/lib/fonts/resume-fonts";
 
 export default function CardapioOnlineLayout({
 	children,

@@ -135,7 +135,9 @@ export default function GeradorDeQrCodeWifiPage() {
 		<PageLayout
 			title="Gerador de QR Code Wi-Fi"
 			description="Compartilhe sua rede Wi-Fi sem digitar senha. Gere um QR Code que conecta qualquer celular automaticamente ao escanear."
-			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-qr-code-wifi" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/gerador-de-qr-code-wifi" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<WifiQR />

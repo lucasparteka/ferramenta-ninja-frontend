@@ -164,7 +164,15 @@ export function paginateMenu(
 	const colWidth = layout.columns === 1 ? CONTENT_WIDTH : COL_WIDTH_2;
 
 	function itemH(item: MenuItem): number {
-		return itemBlockH(item, typography, spacing, measureCtx, fontFamily, colWidth, data.style.showPrices);
+		return itemBlockH(
+			item,
+			typography,
+			spacing,
+			measureCtx,
+			fontFamily,
+			colWidth,
+			data.style.showPrices,
+		);
 	}
 
 	const pages: PageSlice[] = [];
@@ -292,7 +300,12 @@ function renderSections1Col(
 			ctx.font = `bold ${typography.sectionSize}px ${fontFamily}`;
 			ctx.textBaseline = "top";
 			ctx.textAlign = "left";
-			ctx.fillText(truncateText(ctx, section.name, CONTENT_WIDTH), MARGIN, y, CONTENT_WIDTH);
+			ctx.fillText(
+				truncateText(ctx, section.name, CONTENT_WIDTH),
+				MARGIN,
+				y,
+				CONTENT_WIDTH,
+			);
 			y += typography.sectionSize + 8;
 
 			ctx.strokeStyle = COLOR_SECTION_LINE;
@@ -333,9 +346,17 @@ function renderSections1Col(
 				ctx.fillStyle = COLOR_ITEM_DESC;
 				ctx.font = `${descLineH}px ${fontFamily}`;
 				ctx.textAlign = "left";
-				const lines = wrapText(ctx, item.description, CONTENT_WIDTH - priceWidth);
+				const lines = wrapText(
+					ctx,
+					item.description,
+					CONTENT_WIDTH - priceWidth,
+				);
 				for (let li = 0; li < lines.length; li++) {
-					ctx.fillText(lines[li], MARGIN, y + typography.itemSize + 4 + li * (descLineH + 2));
+					ctx.fillText(
+						lines[li],
+						MARGIN,
+						y + typography.itemSize + 4 + li * (descLineH + 2),
+					);
 				}
 				descTotalH = lines.length * descLineH + (lines.length - 1) * 2 + 4;
 			}
@@ -373,7 +394,12 @@ function renderSections2Col(
 			ctx.font = `bold ${typography.sectionSize}px ${fontFamily}`;
 			ctx.textBaseline = "top";
 			ctx.textAlign = "left";
-			ctx.fillText(truncateText(ctx, section.name, CONTENT_WIDTH), MARGIN, colY[0], CONTENT_WIDTH);
+			ctx.fillText(
+				truncateText(ctx, section.name, CONTENT_WIDTH),
+				MARGIN,
+				colY[0],
+				CONTENT_WIDTH,
+			);
 			colY[0] += typography.sectionSize + 8;
 
 			ctx.strokeStyle = COLOR_SECTION_LINE;
@@ -429,7 +455,11 @@ function renderSections2Col(
 				ctx.textAlign = "left";
 				const lines = wrapText(ctx, item.description, nameMaxW);
 				for (let li = 0; li < lines.length; li++) {
-					ctx.fillText(lines[li], x, colY[col] + typography.itemSize + 4 + li * (descLineH + 2));
+					ctx.fillText(
+						lines[li],
+						x,
+						colY[col] + typography.itemSize + 4 + li * (descLineH + 2),
+					);
 				}
 				descTotalH = lines.length * descLineH + (lines.length - 1) * 2 + 4;
 			}

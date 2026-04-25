@@ -207,7 +207,9 @@ export default function ConverterCsvParaSqlPage() {
 		<PageLayout
 			title="Converter CSV para SQL Online Grátis"
 			description="Converta arquivos CSV em comandos SQL INSERT diretamente no navegador. Suporte a MySQL, PostgreSQL, SQLite, Oracle e SQL Server — sem cadastro e sem enviar dados."
-			relatedTools={<RelatedTools currentHref="/ferramentas/converter-csv-para-sql" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/converter-csv-para-sql" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<CsvToSql />

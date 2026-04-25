@@ -2,7 +2,12 @@ export type StampStyle = "circle" | "square";
 
 export type SocialIconStyle = "flat" | "colorido";
 
-export type SocialNetwork = "facebook" | "instagram" | "whatsapp" | "tiktok" | "website";
+export type SocialNetwork =
+	| "facebook"
+	| "instagram"
+	| "whatsapp"
+	| "tiktok"
+	| "website";
 
 export type SocialEntry = {
 	network: SocialNetwork;

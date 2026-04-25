@@ -48,7 +48,10 @@
       "mcp__jcodemunch__get_file_content",
       "mcp__jcodemunch__search_text",
       "Bash(curl *)",
-      "mcp__jcodemunch__get_extraction_candidates"
+      "mcp__jcodemunch__get_extraction_candidates",
+      "mcp__jcodemunch__resolve_repo",
+      "WebSearch",
+      "Bash(pnpm check *)"
     ],
     "deny": [
       "Bash(rm -rf *)",

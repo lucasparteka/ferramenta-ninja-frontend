@@ -151,7 +151,9 @@ export default function GeradorDeSenhaPage() {
 		<PageLayout
 			title="Gerador de Senha"
 			description="Crie senhas seguras e aleatórias em segundos. Configure o tamanho e os tipos de caracteres conforme sua necessidade."
-			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-senha" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/gerador-de-senha" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<PasswordGenerator />

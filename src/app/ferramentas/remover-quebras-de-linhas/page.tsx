@@ -44,7 +44,9 @@ export default function Page() {
 		<PageLayout
 			title="Remover Quebras de Linha"
 			description="Una linhas quebradas e normalize seu texto automaticamente."
-			relatedTools={<RelatedTools currentHref="/ferramentas/remover-quebras-de-linhas" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/remover-quebras-de-linhas" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<TextCleaner

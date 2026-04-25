@@ -104,7 +104,9 @@ export default function LeitorDeQrCodePage() {
 		<PageLayout
 			title="Leitor de QR Code Online"
 			description="Decodifique QR Codes a partir de imagens no seu computador. Arraste a imagem ou clique para selecionar."
-			relatedTools={<RelatedTools currentHref="/ferramentas/leitor-de-qr-code" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/leitor-de-qr-code" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<QRReader />

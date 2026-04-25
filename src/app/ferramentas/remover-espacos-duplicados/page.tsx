@@ -44,7 +44,9 @@ export default function Page() {
 		<PageLayout
 			title="Remover Espaços Duplicados"
 			description="Elimine espaços extras do seu texto com um clique."
-			relatedTools={<RelatedTools currentHref="/ferramentas/remover-espacos-duplicados" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/remover-espacos-duplicados" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<TextCleaner

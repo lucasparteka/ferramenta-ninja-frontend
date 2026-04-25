@@ -181,7 +181,9 @@ export default function FormatadorWhatsAppPage() {
 		<PageLayout
 			title="Formatador de Texto para WhatsApp Online"
 			description="Escreva ou cole sua mensagem, aplique negrito, itálico, tachado ou monoespaçado e copie com um clique."
-			relatedTools={<RelatedTools currentHref="/ferramentas/formatador-de-texto-whatsapp" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/formatador-de-texto-whatsapp" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<WhatsAppFormatter />

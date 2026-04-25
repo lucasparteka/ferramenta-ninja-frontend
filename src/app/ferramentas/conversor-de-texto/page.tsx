@@ -187,7 +187,9 @@ export default function ConversorDeTextoPage() {
 		<PageLayout
 			title="Conversor de Texto Online Grátis"
 			description="Converta texto para maiúsculo, minúsculo, capitalize, remova acentos e espaços extras com um clique."
-			relatedTools={<RelatedTools currentHref="/ferramentas/conversor-de-texto" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/conversor-de-texto" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<TextConverter />

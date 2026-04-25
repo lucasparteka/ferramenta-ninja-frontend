@@ -189,7 +189,9 @@ export default function ConverterImagemEmTextoPage() {
 		<PageLayout
 			title="Converter Imagem em Texto (OCR) Online Grátis"
 			description="Extraia texto de imagens, prints e documentos escaneados diretamente no navegador. Selecione a imagem, escolha o idioma e copie o resultado."
-			relatedTools={<RelatedTools currentHref="/ferramentas/converter-imagem-em-texto" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/converter-imagem-em-texto" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<ImageToText />

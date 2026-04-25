@@ -71,7 +71,11 @@ export const FrontCanvas = forwardRef<CanvasHandle, FrontCanvasProps>(
 					width={CANVAS_WIDTH}
 					height={CANVAS_HEIGHT}
 					aria-label="Prévia da frente do cartão fidelidade"
-					style={{ display: "block", width: `${LOGICAL_WIDTH}px`, height: `${LOGICAL_HEIGHT}px` }}
+					style={{
+						display: "block",
+						width: `${LOGICAL_WIDTH}px`,
+						height: `${LOGICAL_HEIGHT}px`,
+					}}
 				/>
 			</div>
 		);

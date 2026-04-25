@@ -182,7 +182,9 @@ export default function ConverterCsvParaPdfPage() {
 		<PageLayout
 			title="Converter CSV para PDF Online Grátis"
 			description="Converta arquivos CSV em um PDF com tabela formatada diretamente no navegador. Faça upload ou cole o CSV, visualize os dados e baixe o PDF — sem cadastro e sem enviar dados."
-			relatedTools={<RelatedTools currentHref="/ferramentas/converter-csv-para-pdf" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/converter-csv-para-pdf" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<CsvToPdf />

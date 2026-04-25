@@ -63,8 +63,7 @@ function renderHeader(
 	ctx.fillStyle = "#ffffff";
 	ctx.textBaseline = "middle";
 
-	const titleX =
-		titleAlign === "center" ? CANVAS_WIDTH / 2 : HEADER_PAD_H;
+	const titleX = titleAlign === "center" ? CANVAS_WIDTH / 2 : HEADER_PAD_H;
 	ctx.font = `bold ${titleFontSize}px ${FONT_FAMILY}`;
 	ctx.textAlign = titleAlign;
 	ctx.fillText(title, titleX, HEADER_PAD_V + HEADER_TITLE_H / 2, CONTENT_WIDTH);

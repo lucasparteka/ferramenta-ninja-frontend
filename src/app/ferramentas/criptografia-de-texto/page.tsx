@@ -206,7 +206,9 @@ export default function CriptografiaDeTextoPage() {
 		<PageLayout
 			title="Criptografia de Texto Online Grátis"
 			description="Cifre e decifre textos com AES-256-GCM, Base64 ou ROT13 diretamente no navegador. Seus dados nunca saem do dispositivo."
-			relatedTools={<RelatedTools currentHref="/ferramentas/criptografia-de-texto" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/criptografia-de-texto" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<TextCipher />

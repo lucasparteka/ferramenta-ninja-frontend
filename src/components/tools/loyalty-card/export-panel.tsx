@@ -29,8 +29,8 @@ export function ExportPanel({
 					Exportar para impressão
 				</h3>
 				<p className="text-sm text-muted-foreground">
-					Gera uma folha A4 com cartões prontos para gráfica, com sangria de
-					3mm e marcas de corte.
+					Gera uma folha A4 com cartões prontos para gráfica, com sangria de 3mm
+					e marcas de corte.
 				</p>
 			</div>
 

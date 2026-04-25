@@ -140,7 +140,9 @@ export default function GeradorDeQrCodePixPage() {
 		<PageLayout
 			title="Gerador de QR Code Pix"
 			description="Gere QR Codes Pix estáticos para receber pagamentos instantâneos. Suporte a CPF, CNPJ, telefone, e-mail e chave aleatória."
-			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-qr-code-pix" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/gerador-de-qr-code-pix" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<PixQR />

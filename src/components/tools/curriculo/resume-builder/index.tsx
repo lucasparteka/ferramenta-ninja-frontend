@@ -181,7 +181,8 @@ export function ResumeBuilder() {
 		accentColor !== saved.color ||
 		fontVar !== saved.font ||
 		fontSize !== saved.size;
-	const hasPendingChanges = isDirty || photoFile !== savedPhotoRef.current || hasLayoutChanges;
+	const hasPendingChanges =
+		isDirty || photoFile !== savedPhotoRef.current || hasLayoutChanges;
 
 	const livePreviewData = useMemo<ResumeTemplateData>(
 		() => toPreviewData(watchedValues as ResumeFormValues, photoPreviewUrl),

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { Monitor, Smartphone } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 import { formatDisplayUrl, getDomain } from "@/lib/seo/format-url";
 
 type Props = {
@@ -66,14 +66,19 @@ type SnippetProps = {
 	mobile: boolean;
 };
 
-function GoogleSnippet({ title, description, url, keyword, mobile }: SnippetProps) {
+function GoogleSnippet({
+	title,
+	description,
+	url,
+	keyword,
+	mobile,
+}: SnippetProps) {
 	const displayUrl = formatDisplayUrl(url);
 	const domain = getDomain(url);
 
 	const isEmpty = !title && !description && !url;
 
-	const titleText =
-		title || "Título da sua página aparece aqui";
+	const titleText = title || "Título da sua página aparece aqui";
 	const descText =
 		description ||
 		"A meta descrição da sua página aparece aqui. Use este espaço para convencer o usuário a clicar no seu resultado nos mecanismos de busca.";

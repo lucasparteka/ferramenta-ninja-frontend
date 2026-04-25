@@ -156,7 +156,9 @@ export default function ChecklistPersonalizadoPage() {
 		<PageLayout
 			title="Checklist Personalizado para Imprimir"
 			description="Crie checklists personalizados com templates prontos para compras, limpeza, viagem e mais. Exporte em PDF ou PNG e imprima em A4."
-			relatedTools={<RelatedTools currentHref="/ferramentas/checklist-personalizado" />}
+			relatedTools={
+				<RelatedTools currentHref="/ferramentas/checklist-personalizado" />
+			}
 			extraContent={<SeoContent />}
 		>
 			<ChecklistClient />

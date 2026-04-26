@@ -2,6 +2,7 @@
 
 import { ArrowLeftRight } from "lucide-react";
 import { useMemo, useState } from "react";
+import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
@@ -146,14 +147,13 @@ export function UnitConverterClient() {
 			</div>
 
 			{Number.isFinite(result) && value.trim() !== "" && (
-				<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-					<p className="text-sm text-muted-foreground">Conversão</p>
+				<ResultBox label="Conversão">
 					<p className="text-lg font-semibold text-foreground">
 						{value} {category.units.find((u) => u.id === fromId)?.label} ={" "}
 						{formatConverted(result)}{" "}
 						{category.units.find((u) => u.id === toId)?.label}
 					</p>
-				</div>
+				</ResultBox>
 			)}
 		</div>
 	);

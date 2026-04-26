@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -176,7 +177,7 @@ function SystemCard({
 	result: AmortizationResult;
 }) {
 	return (
-		<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
+		<ResultBox>
 			<p className="text-sm font-semibold text-foreground">{title}</p>
 			<dl className="mt-3 space-y-1 text-sm">
 				<Row label="Primeira parcela" value={brl(result.firstPayment)} />
@@ -184,13 +185,13 @@ function SystemCard({
 				<Row label="Total pago" value={brl(result.totalPaid)} />
 				<Row label="Total em juros" value={brl(result.totalInterest)} />
 			</dl>
-		</div>
+		</ResultBox>
 	);
 }
 
 function Schedule({ result }: { result: AmortizationResult }) {
 	return (
-		<details className="rounded-md border border-border bg-background/60 p-3">
+		<details className="rounded-lg border border-border bg-card p-3">
 			<summary className="cursor-pointer text-sm font-medium text-foreground">
 				Tabela de amortização ({result.system === "sac" ? "SAC" : "Price"})
 			</summary>

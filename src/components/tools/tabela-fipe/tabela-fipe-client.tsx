@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ResultBox, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	type FipeBrand,
 	type FipeModel,
 	type FipePrice,
-	type VehicleType,
 	fetchBrands,
 	fetchModels,
 	fetchPrice,
+	type VehicleType,
 } from "@/lib/fipe/client";
 
 const TYPES: { value: VehicleType; label: string }[] = [
@@ -161,17 +162,19 @@ export function TabelaFipeClient() {
 			</Button>
 
 			{error && (
-				<div className="rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm text-foreground">
-					{error}
-				</div>
+				<ResultBox tone="warning">
+					<p className="text-sm text-foreground">{error}</p>
+				</ResultBox>
 			)}
 
 			{prices && prices.length > 0 && <PricesResult prices={prices} />}
 
 			{prices && prices.length === 0 && (
-				<div className="rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm text-foreground">
-					Nenhum preço encontrado para este modelo.
-				</div>
+				<ResultBox tone="warning">
+					<p className="text-sm text-foreground">
+						Nenhum preço encontrado para este modelo.
+					</p>
+				</ResultBox>
 			)}
 		</div>
 	);
@@ -181,15 +184,11 @@ function PricesResult({ prices }: { prices: FipePrice[] }) {
 	const first = prices[0];
 	return (
 		<div className="space-y-4">
-			<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-				<p className="text-sm text-muted-foreground">
-					{first.marca} · {first.modelo}
-				</p>
-				<p className="text-3xl font-bold text-foreground">{first.valor}</p>
-				<p className="mt-1 text-xs text-muted-foreground">
-					Código FIPE {first.codigoFipe} · Referência {first.mesReferencia}
-				</p>
-			</div>
+			<ResultBox
+				label={`${first.marca} · ${first.modelo}`}
+				value={first.valor}
+				hint={`Código FIPE ${first.codigoFipe} · Referência ${first.mesReferencia}`}
+			/>
 
 			{prices.length > 1 && (
 				<div>
@@ -198,15 +197,11 @@ function PricesResult({ prices }: { prices: FipePrice[] }) {
 					</h3>
 					<dl className="space-y-2 text-sm">
 						{prices.map((p) => (
-							<div
+							<ResultRow
 								key={`${p.anoModelo}-${p.siglaCombustivel}`}
-								className="flex justify-between rounded-md border border-border bg-background px-3 py-2"
-							>
-								<dt className="text-muted-foreground">
-									{p.anoModelo} · {p.combustivel}
-								</dt>
-								<dd className="font-medium text-foreground">{p.valor}</dd>
-							</div>
+								label={`${p.anoModelo} · ${p.combustivel}`}
+								value={p.valor}
+							/>
 						))}
 					</dl>
 				</div>

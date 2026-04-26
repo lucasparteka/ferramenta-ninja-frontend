@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import {
 	decodePixBrCode,
@@ -72,9 +73,7 @@ type PixResultProps = {
 };
 
 function PixResult({ result, onCopy, copied }: PixResultProps) {
-	const statusClass = result.valid
-		? "border-primary/30 bg-primary/5"
-		: "border-warning/30 bg-warning/10";
+	const tone = result.valid ? "primary" : "warning";
 
 	const rows: { key: string; label: string; value?: string }[] = [
 		{
@@ -105,7 +104,7 @@ function PixResult({ result, onCopy, copied }: PixResultProps) {
 	];
 
 	return (
-		<div className={`rounded-lg border p-4 ${statusClass} space-y-4`}>
+		<ResultBox tone={tone} className="space-y-4">
 			<div className="flex flex-wrap items-center gap-3">
 				<span
 					className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
@@ -137,7 +136,7 @@ function PixResult({ result, onCopy, copied }: PixResultProps) {
 					.map((row) => (
 						<div
 							key={row.key}
-							className="rounded-md border border-border bg-background/60 p-3"
+							className="rounded-lg border border-border bg-card p-3"
 						>
 							<dt className="text-xs font-medium text-muted-foreground">
 								{row.label}
@@ -157,6 +156,6 @@ function PixResult({ result, onCopy, copied }: PixResultProps) {
 						</div>
 					))}
 			</dl>
-		</div>
+		</ResultBox>
 	);
 }

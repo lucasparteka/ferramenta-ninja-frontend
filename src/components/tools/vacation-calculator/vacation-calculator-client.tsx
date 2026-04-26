@@ -5,6 +5,11 @@ import { useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+	ResultBox,
+	ResultGrid,
+	ResultRow,
+} from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -192,10 +197,12 @@ export function VacationCalculatorClient() {
 function ResultCard({ result }: { result: VacationResult }) {
 	if (result.entitledDays === 0) {
 		return (
-			<div className="rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm text-foreground">
-				Sem direito a férias no período informado (faltas excessivas ou tempo
-				insuficiente).
-			</div>
+			<ResultBox tone="warning">
+				<p className="text-sm text-foreground">
+					Sem direito a férias no período informado (faltas excessivas ou tempo
+					insuficiente).
+				</p>
+			</ResultBox>
 		);
 	}
 
@@ -209,40 +216,44 @@ function ResultCard({ result }: { result: VacationResult }) {
 	return (
 		<div className="space-y-4">
 			{validationLabel && (
-				<div className="rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm text-foreground">
-					{validationLabel}
-				</div>
+				<ResultBox tone="warning">
+					<p className="text-sm text-foreground">{validationLabel}</p>
+				</ResultBox>
 			)}
-			<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-				<p className="text-sm text-muted-foreground">Total líquido a receber</p>
-				<p className="text-3xl font-bold text-foreground">
-					{brl(result.netAmount)}
-				</p>
-			</div>
-			<dl className="grid gap-2 text-sm sm:grid-cols-2">
-				<Row label="Dias de direito" value={`${result.entitledDays} dias`} />
-				<Row
+			<ResultBox
+				label="Total líquido a receber"
+				value={brl(result.netAmount)}
+			/>
+			<ResultGrid>
+				<ResultRow
+					label="Dias de direito"
+					value={`${result.entitledDays} dias`}
+				/>
+				<ResultRow
 					label="Disponível para férias"
 					value={`${result.availableForVacation} dias`}
 				/>
-				<Row label="Dias de férias" value={`${result.vacationDaysTaken} dias`} />
-				<Row label="Dias vendidos (abono)" value={`${result.abonoDays} dias`} />
-				<Row label="Férias (base)" value={brl(result.vacationBase)} />
-				<Row label="1/3 constitucional" value={brl(result.oneThirdBonus)} />
-				<Row label="Abono pecuniário" value={brl(result.abonoPecuniario)} />
-				<Row label="1/3 sobre abono" value={brl(result.abonoOneThird)} />
-				<Row label="INSS" value={brl(result.inss)} />
-				<Row label="IRRF" value={brl(result.irrf)} />
-			</dl>
-		</div>
-	);
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-	return (
-		<div className="flex justify-between rounded-md border border-border bg-background px-3 py-2">
-			<dt className="text-muted-foreground">{label}</dt>
-			<dd className="font-medium text-foreground">{value}</dd>
+				<ResultRow
+					label="Dias de férias"
+					value={`${result.vacationDaysTaken} dias`}
+				/>
+				<ResultRow
+					label="Dias vendidos (abono)"
+					value={`${result.abonoDays} dias`}
+				/>
+				<ResultRow label="Férias (base)" value={brl(result.vacationBase)} />
+				<ResultRow
+					label="1/3 constitucional"
+					value={brl(result.oneThirdBonus)}
+				/>
+				<ResultRow
+					label="Abono pecuniário"
+					value={brl(result.abonoPecuniario)}
+				/>
+				<ResultRow label="1/3 sobre abono" value={brl(result.abonoOneThird)} />
+				<ResultRow label="INSS" value={brl(result.inss)} />
+				<ResultRow label="IRRF" value={brl(result.irrf)} />
+			</ResultGrid>
 		</div>
 	);
 }

@@ -5,6 +5,11 @@ import { useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+	ResultBox,
+	ResultGrid,
+	ResultRow,
+} from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -18,7 +23,6 @@ import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	calculateFixedIncome,
-	type FixedIncomeKind,
 	type FixedIncomeResult,
 	type IndexType,
 } from "@/lib/finance/fixed-income";
@@ -212,39 +216,24 @@ export function FixedIncomeClient() {
 function ResultCard({ result }: { result: FixedIncomeResult }) {
 	return (
 		<div className="space-y-4">
-			<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-				<p className="text-sm text-muted-foreground">Valor líquido final</p>
-				<p className="text-3xl font-bold text-foreground">
-					{brl(result.netFinal)}
-				</p>
-				<p className="mt-1 text-xs text-muted-foreground">
-					Rentabilidade líquida anual equivalente:{" "}
-					{(result.effectiveAnnualRate * 100).toFixed(2)}%
-				</p>
-			</div>
-
-			<dl className="grid gap-2 text-sm sm:grid-cols-2">
-				<Row label="Rendimento bruto" value={brl(result.grossYield)} />
-				<Row label="Valor bruto final" value={brl(result.grossFinal)} />
-				<Row
+			<ResultBox
+				label="Valor líquido final"
+				value={brl(result.netFinal)}
+				hint={`Rentabilidade líquida anual equivalente: ${(result.effectiveAnnualRate * 100).toFixed(2)}%`}
+			/>
+			<ResultGrid>
+				<ResultRow label="Rendimento bruto" value={brl(result.grossYield)} />
+				<ResultRow label="Valor bruto final" value={brl(result.grossFinal)} />
+				<ResultRow
 					label={`IOF (${(result.iofRate * 100).toFixed(0)}%)`}
 					value={brl(result.iof)}
 				/>
-				<Row
+				<ResultRow
 					label={`IR (${(result.irRate * 100).toFixed(2)}%)`}
 					value={brl(result.ir)}
 				/>
-				<Row label="Rendimento líquido" value={brl(result.netYield)} />
-			</dl>
-		</div>
-	);
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-	return (
-		<div className="flex justify-between rounded-md border border-border bg-background px-3 py-2">
-			<dt className="text-muted-foreground">{label}</dt>
-			<dd className="font-medium text-foreground">{value}</dd>
+				<ResultRow label="Rendimento líquido" value={brl(result.netYield)} />
+			</ResultGrid>
 		</div>
 	);
 }

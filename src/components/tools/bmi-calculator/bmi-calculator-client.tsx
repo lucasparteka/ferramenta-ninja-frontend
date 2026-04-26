@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import { ResultBox, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -29,13 +30,16 @@ const bmiSchema = z.object({
 
 type BmiFormValues = z.infer<typeof bmiSchema>;
 
-const COLOR_BY_CLASS: Record<BmiResult["classification"], string> = {
-	underweight: "border-warning/40 bg-warning/10",
-	normal: "border-emerald-500/40 bg-emerald-500/10",
-	overweight: "border-warning/40 bg-warning/10",
-	obesity1: "border-destructive/40 bg-destructive/10",
-	obesity2: "border-destructive/40 bg-destructive/10",
-	obesity3: "border-destructive/40 bg-destructive/10",
+const TONE_BY_CLASS: Record<
+	BmiResult["classification"],
+	"primary" | "warning" | "destructive"
+> = {
+	underweight: "warning",
+	normal: "primary",
+	overweight: "warning",
+	obesity1: "destructive",
+	obesity2: "destructive",
+	obesity3: "destructive",
 };
 
 export function BmiCalculatorClient() {
@@ -104,8 +108,9 @@ export function BmiCalculatorClient() {
 			</Form>
 
 			{result && (
-				<div
-					className={`rounded-lg border p-4 space-y-3 ${COLOR_BY_CLASS[result.classification]}`}
+				<ResultBox
+					tone={TONE_BY_CLASS[result.classification]}
+					className="space-y-3"
 				>
 					<div>
 						<p className="text-sm text-muted-foreground">Seu IMC</p>
@@ -123,31 +128,22 @@ export function BmiCalculatorClient() {
 							{result.healthyRange.max.toFixed(1)} kg
 						</strong>
 					</p>
-				</div>
+				</ResultBox>
 			)}
 
-			<div className="rounded-lg border border-border bg-background/60 p-4">
+			<div className="rounded-lg border border-border bg-card p-4">
 				<h3 className="mb-3 text-sm font-semibold text-foreground">
 					Tabela de classificação OMS
 				</h3>
 				<dl className="grid gap-2 text-sm sm:grid-cols-2">
-					<ClassRow label="Abaixo do peso" range="< 18,5" />
-					<ClassRow label="Peso normal" range="18,5 — 24,9" />
-					<ClassRow label="Sobrepeso" range="25,0 — 29,9" />
-					<ClassRow label="Obesidade grau I" range="30,0 — 34,9" />
-					<ClassRow label="Obesidade grau II" range="35,0 — 39,9" />
-					<ClassRow label="Obesidade grau III" range="≥ 40,0" />
+					<ResultRow label="Abaixo do peso" value="< 18,5" />
+					<ResultRow label="Peso normal" value="18,5 — 24,9" />
+					<ResultRow label="Sobrepeso" value="25,0 — 29,9" />
+					<ResultRow label="Obesidade grau I" value="30,0 — 34,9" />
+					<ResultRow label="Obesidade grau II" value="35,0 — 39,9" />
+					<ResultRow label="Obesidade grau III" value="≥ 40,0" />
 				</dl>
 			</div>
-		</div>
-	);
-}
-
-function ClassRow({ label, range }: { label: string; range: string }) {
-	return (
-		<div className="flex items-center justify-between rounded-md border border-border bg-background px-3 py-2">
-			<dt className="text-foreground">{label}</dt>
-			<dd className="text-muted-foreground">{range}</dd>
 		</div>
 	);
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -61,16 +62,18 @@ export function ConsultaCnpjClient() {
 				</div>
 				<Button
 					type="submit"
-					disabled={state.kind === "loading" || sanitizeCnpj(value).length !== 14}
+					disabled={
+						state.kind === "loading" || sanitizeCnpj(value).length !== 14
+					}
 				>
 					{state.kind === "loading" ? "Consultando..." : "Consultar CNPJ"}
 				</Button>
 			</form>
 
 			{state.kind === "error" && (
-				<div className="rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm text-foreground">
-					{state.message}
-				</div>
+				<ResultBox tone="warning">
+					<p className="text-sm text-foreground">{state.message}</p>
+				</ResultBox>
 			)}
 
 			{state.kind === "success" && <CnpjResult data={state.data} />}
@@ -117,14 +120,14 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 	];
 
 	return (
-		<div className="space-y-4 rounded-lg border border-primary/30 bg-primary/5 p-4">
+		<ResultBox className="space-y-4">
 			<dl className="grid gap-3 sm:grid-cols-2">
 				{rows
 					.filter((r) => r.value)
 					.map((r) => (
 						<div
 							key={r.label}
-							className="rounded-md border border-border bg-background/60 p-3"
+							className="rounded-lg border border-border bg-card p-3"
 						>
 							<dt className="text-xs font-medium text-muted-foreground">
 								{r.label}
@@ -135,7 +138,7 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 			</dl>
 
 			{fullAddress && (
-				<div className="rounded-md border border-border bg-background/60 p-3">
+				<div className="rounded-lg border border-border bg-card p-3">
 					<p className="text-xs font-medium text-muted-foreground">Endereço</p>
 					<p className="mt-1 text-sm text-foreground">{fullAddress}</p>
 				</div>
@@ -165,7 +168,7 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 						{data.partners.map((p) => (
 							<li
 								key={`${p.name}-${p.role ?? ""}`}
-								className="rounded-md border border-border bg-background/60 p-3 text-sm"
+								className="rounded-lg border border-border bg-card p-3 text-sm"
 							>
 								<p className="font-medium text-foreground">{p.name}</p>
 								{p.role && (
@@ -189,6 +192,6 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 					Copiar dados
 				</Button>
 			</div>
-		</div>
+		</ResultBox>
 	);
 }

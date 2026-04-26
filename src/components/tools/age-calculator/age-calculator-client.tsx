@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { DateInput } from "@/components/ui/date-input";
 import { calculateAge, dateDiff } from "@/lib/date/age";
@@ -69,7 +70,9 @@ function AgeMode(props: {
 		if (!props.birth) return null;
 		const birthDate = parseIsoLocal(props.birth);
 		if (!birthDate) return null;
-		const refDate = props.reference ? parseIsoLocal(props.reference) : new Date();
+		const refDate = props.reference
+			? parseIsoLocal(props.reference)
+			: new Date();
 		if (!refDate) return null;
 		if (birthDate.getTime() > refDate.getTime()) return null;
 		try {
@@ -112,17 +115,19 @@ function AgeMode(props: {
 
 			{result && (
 				<div className="space-y-4">
-					<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-						<p className="text-sm text-muted-foreground">Idade</p>
+					<ResultBox label="Idade">
 						<p className="text-2xl font-bold text-foreground">
 							{result.years} {result.years === 1 ? "ano" : "anos"},{" "}
 							{result.months} {result.months === 1 ? "mês" : "meses"} e{" "}
 							{result.days} {result.days === 1 ? "dia" : "dias"}
 						</p>
-					</div>
+					</ResultBox>
 
 					<dl className="grid gap-3 sm:grid-cols-2">
-						<Stat label="Total de dias" value={result.totalDays.toLocaleString("pt-BR")} />
+						<Stat
+							label="Total de dias"
+							value={result.totalDays.toLocaleString("pt-BR")}
+						/>
 						<Stat
 							label="Total de semanas"
 							value={result.totalWeeks.toLocaleString("pt-BR")}
@@ -138,14 +143,13 @@ function AgeMode(props: {
 					</dl>
 
 					{result.nextBirthday && (
-						<div className="rounded-md border border-border bg-background/60 p-3 text-sm text-foreground">
+						<div className="rounded-lg border border-border bg-card p-3 text-sm text-foreground">
 							Próximo aniversário em{" "}
 							<strong>
 								{result.nextBirthday.daysUntil}{" "}
 								{result.nextBirthday.daysUntil === 1 ? "dia" : "dias"}
 							</strong>{" "}
-							(
-							{result.nextBirthday.date.toLocaleDateString("pt-BR")})
+							({result.nextBirthday.date.toLocaleDateString("pt-BR")})
 						</div>
 					)}
 				</div>
@@ -201,14 +205,13 @@ function DiffMode(props: {
 
 			{result && (
 				<div className="space-y-4">
-					<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-						<p className="text-sm text-muted-foreground">Diferença</p>
+					<ResultBox label="Diferença">
 						<p className="text-2xl font-bold text-foreground">
 							{result.years} {result.years === 1 ? "ano" : "anos"},{" "}
 							{result.months} {result.months === 1 ? "mês" : "meses"} e{" "}
 							{result.days} {result.days === 1 ? "dia" : "dias"}
 						</p>
-					</div>
+					</ResultBox>
 					<dl className="grid gap-3 sm:grid-cols-2">
 						<Stat
 							label="Total de dias"
@@ -227,7 +230,7 @@ function DiffMode(props: {
 
 function Stat({ label, value }: { label: string; value: string }) {
 	return (
-		<div className="rounded-md border border-border bg-background/60 p-3">
+		<div className="rounded-lg border border-border bg-card p-3">
 			<dt className="text-xs text-muted-foreground">{label}</dt>
 			<dd className="mt-1 text-base font-semibold text-foreground">{value}</dd>
 		</div>

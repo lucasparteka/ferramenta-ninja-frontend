@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -43,7 +44,10 @@ export function ValidadorBoletoClient() {
 						Cole os 47 dígitos (boleto bancário) ou 48 (arrecadação). {lenInfo}
 					</p>
 				</div>
-				<Button type="submit" disabled={digits.length !== 47 && digits.length !== 48}>
+				<Button
+					type="submit"
+					disabled={digits.length !== 47 && digits.length !== 48}
+				>
 					Validar boleto
 				</Button>
 			</form>
@@ -56,26 +60,28 @@ export function ValidadorBoletoClient() {
 function ResultCard({ result }: { result: BoletoResult }) {
 	if (result.kind === "unknown") {
 		return (
-			<div className="rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm text-foreground">
-				{result.reason}
-			</div>
+			<ResultBox tone="warning">
+				<p className="text-sm text-foreground">{result.reason}</p>
+			</ResultBox>
 		);
 	}
 
-	const banner = result.valid
-		? "border-primary/30 bg-primary/5"
-		: "border-destructive/30 bg-destructive/10";
+	const tone = result.valid ? "primary" : "destructive";
 
 	return (
 		<div className="space-y-4">
-			<div className={`rounded-lg border p-4 ${banner}`}>
-				<p className="text-sm text-muted-foreground">
-					{result.kind === "banking" ? "Boleto bancário" : "Boleto de arrecadação"}
-				</p>
+			<ResultBox
+				tone={tone}
+				label={
+					result.kind === "banking"
+						? "Boleto bancário"
+						: "Boleto de arrecadação"
+				}
+			>
 				<p className="text-xl font-bold text-foreground">
 					{result.valid ? "Linha digitável válida" : "Linha digitável inválida"}
 				</p>
-			</div>
+			</ResultBox>
 
 			{result.kind === "banking" && <BankingDetails result={result} />}
 			{result.kind === "collection" && <CollectionDetails result={result} />}
@@ -90,7 +96,10 @@ function BankingDetails({
 }) {
 	const rows: { label: string; value: string }[] = [
 		{ label: "Banco emissor", value: result.bankCode },
-		{ label: "Moeda", value: result.currencyCode === "9" ? "Real (BRL)" : result.currencyCode },
+		{
+			label: "Moeda",
+			value: result.currencyCode === "9" ? "Real (BRL)" : result.currencyCode,
+		},
 		{
 			label: "Valor",
 			value: result.amount.toLocaleString("pt-BR", {
@@ -114,12 +123,14 @@ function BankingDetails({
 				{rows.map((r) => (
 					<div
 						key={r.label}
-						className="rounded-md border border-border bg-background/60 p-3"
+						className="rounded-lg border border-border bg-card p-3"
 					>
 						<dt className="text-xs font-medium text-muted-foreground">
 							{r.label}
 						</dt>
-						<dd className="mt-1 break-all text-sm text-foreground">{r.value}</dd>
+						<dd className="mt-1 break-all text-sm text-foreground">
+							{r.value}
+						</dd>
 					</div>
 				))}
 			</dl>
@@ -179,12 +190,14 @@ function CollectionDetails({
 				{rows.map((r) => (
 					<div
 						key={r.label}
-						className="rounded-md border border-border bg-background/60 p-3"
+						className="rounded-lg border border-border bg-card p-3"
 					>
 						<dt className="text-xs font-medium text-muted-foreground">
 							{r.label}
 						</dt>
-						<dd className="mt-1 break-all text-sm text-foreground">{r.value}</dd>
+						<dd className="mt-1 break-all text-sm text-foreground">
+							{r.value}
+						</dd>
 					</div>
 				))}
 			</dl>
@@ -195,11 +208,7 @@ function CollectionDetails({
 				</h3>
 				<ul className="space-y-1 text-sm">
 					{result.checks.fields.map((ok, i) => (
-						<CheckRow
-							key={`field-${i + 1}`}
-							label={`Bloco ${i + 1}`}
-							ok={ok}
-						/>
+						<CheckRow key={`field-${i + 1}`} label={`Bloco ${i + 1}`} ok={ok} />
 					))}
 				</ul>
 			</div>
@@ -209,7 +218,7 @@ function CollectionDetails({
 
 function CheckRow({ label, ok }: { label: string; ok: boolean }) {
 	return (
-		<li className="flex items-center justify-between rounded-md border border-border bg-background px-3 py-2">
+		<li className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2">
 			<span className="text-foreground">{label}</span>
 			<span
 				className={

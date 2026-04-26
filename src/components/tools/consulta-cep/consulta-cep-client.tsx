@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -68,9 +69,9 @@ export function ConsultaCepClient() {
 			</form>
 
 			{state.kind === "error" && (
-				<div className="rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm text-foreground">
-					{state.message}
-				</div>
+				<ResultBox tone="warning">
+					<p className="text-sm text-foreground">{state.message}</p>
+				</ResultBox>
 			)}
 
 			{state.kind === "success" && <CepResult data={state.data} />}
@@ -103,14 +104,14 @@ function CepResult({ data }: { data: CepAddress }) {
 	];
 
 	return (
-		<div className="space-y-4 rounded-lg border border-primary/30 bg-primary/5 p-4">
+		<ResultBox className="space-y-4">
 			<dl className="grid gap-3 sm:grid-cols-2">
 				{rows
 					.filter((r) => r.value)
 					.map((r) => (
 						<div
 							key={r.label}
-							className="rounded-md border border-border bg-background/60 p-3"
+							className="rounded-lg border border-border bg-card p-3"
 						>
 							<dt className="text-xs font-medium text-muted-foreground">
 								{r.label}
@@ -137,6 +138,6 @@ function CepResult({ data }: { data: CepAddress }) {
 					Ver no Google Maps
 				</a>
 			</div>
-		</div>
+		</ResultBox>
 	);
 }

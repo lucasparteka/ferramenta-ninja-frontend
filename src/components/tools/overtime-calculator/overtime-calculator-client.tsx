@@ -5,6 +5,11 @@ import { useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+	ResultBox,
+	ResultGrid,
+	ResultRow,
+} from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -206,37 +211,26 @@ export function OvertimeCalculatorClient() {
 
 function OvertimeResultCard({ result }: { result: OvertimeResult }) {
 	return (
-		<div className="rounded-lg border border-primary/30 bg-primary/5 p-4 space-y-3">
-			<div>
-				<p className="text-sm text-muted-foreground">Total de horas extras</p>
-				<p className="text-3xl font-bold text-foreground">
-					{brl(result.total)}
-				</p>
-			</div>
-			<dl className="grid gap-2 text-sm sm:grid-cols-2">
-				<Row label="Valor da hora normal" value={brl(result.hourlyRate)} />
-				<Row
+		<div className="space-y-4">
+			<ResultBox label="Total de horas extras" value={brl(result.total)} />
+			<ResultGrid>
+				<ResultRow
+					label="Valor da hora normal"
+					value={brl(result.hourlyRate)}
+				/>
+				<ResultRow
 					label="Horas Extras 50% total"
 					value={brl(result.overtime50Total)}
 				/>
-				<Row
+				<ResultRow
 					label="Horas Extras 100% total"
 					value={brl(result.overtime100Total)}
 				/>
-				<Row
+				<ResultRow
 					label="DSR - Descanso semanal remunerado"
 					value={brl(result.dsr)}
 				/>
-			</dl>
-		</div>
-	);
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-	return (
-		<div className="flex justify-between rounded-md border border-border bg-background px-3 py-2">
-			<dt className="text-muted-foreground">{label}</dt>
-			<dd className="font-medium text-foreground">{value}</dd>
+			</ResultGrid>
 		</div>
 	);
 }

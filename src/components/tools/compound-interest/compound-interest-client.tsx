@@ -5,6 +5,11 @@ import { useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+	ResultBox,
+	ResultGrid,
+	ResultRow,
+} from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -17,8 +22,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
-	calculateCompoundInterest,
 	type CompoundInterestResult,
+	calculateCompoundInterest,
 } from "@/lib/finance/compound-interest";
 import { parseCurrencyToNumber } from "@/utils/number";
 
@@ -166,21 +171,17 @@ export function CompoundInterestClient() {
 function ResultCard({ result }: { result: CompoundInterestResult }) {
 	return (
 		<div className="space-y-4">
-			<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-				<p className="text-sm text-muted-foreground">Montante final</p>
-				<p className="text-3xl font-bold text-foreground">
-					{brl(result.finalBalance)}
-				</p>
-				<p className="mt-1 text-xs text-muted-foreground">
-					Taxa mensal equivalente: {(result.monthlyRate * 100).toFixed(4)}%
-				</p>
-			</div>
-			<dl className="grid gap-2 text-sm sm:grid-cols-2">
-				<Row label="Total investido" value={brl(result.totalInvested)} />
-				<Row label="Total em juros" value={brl(result.totalInterest)} />
-			</dl>
+			<ResultBox
+				label="Montante final"
+				value={brl(result.finalBalance)}
+				hint={`Taxa mensal equivalente: ${(result.monthlyRate * 100).toFixed(4)}%`}
+			/>
+			<ResultGrid>
+				<ResultRow label="Total investido" value={brl(result.totalInvested)} />
+				<ResultRow label="Total em juros" value={brl(result.totalInterest)} />
+			</ResultGrid>
 
-			<details className="rounded-md border border-border bg-background/60 p-3">
+			<details className="rounded-lg border border-border bg-card p-3">
 				<summary className="cursor-pointer text-sm font-medium text-foreground">
 					Ver evolução mês a mês
 				</summary>
@@ -205,15 +206,6 @@ function ResultCard({ result }: { result: CompoundInterestResult }) {
 					</table>
 				</div>
 			</details>
-		</div>
-	);
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-	return (
-		<div className="flex justify-between rounded-md border border-border bg-background px-3 py-2">
-			<dt className="text-muted-foreground">{label}</dt>
-			<dd className="font-medium text-foreground">{value}</dd>
 		</div>
 	);
 }

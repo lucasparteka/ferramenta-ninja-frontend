@@ -5,6 +5,11 @@ import { useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+	ResultBox,
+	ResultGrid,
+	ResultRow,
+} from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -17,8 +22,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
-	calculateChristmasBonus,
 	type ChristmasBonusResult,
+	calculateChristmasBonus,
 } from "@/lib/labor/christmas-bonus";
 import { parseCurrencyToNumber } from "@/utils/number";
 
@@ -63,7 +68,10 @@ export function ChristmasBonusCalculatorClient() {
 	return (
 		<div className="space-y-6">
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-xl">
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="space-y-6 max-w-xl"
+				>
 					<FormField
 						control={form.control}
 						name="salary"
@@ -119,9 +127,7 @@ export function ChristmasBonusCalculatorClient() {
 						name="additional"
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>
-									Média de adicionais habituais (opcional)
-								</FormLabel>
+								<FormLabel>Média de adicionais habituais (opcional)</FormLabel>
 								<FormControl>
 									<CurrencyInput
 										value={field.value}
@@ -146,7 +152,9 @@ export function ChristmasBonusCalculatorClient() {
 								<FormLabel>Pagamento da 1ª parcela</FormLabel>
 								<FormControl>
 									<NativeSelect {...field}>
-										<option value="november">Até 30 de novembro (padrão)</option>
+										<option value="november">
+											Até 30 de novembro (padrão)
+										</option>
 										<option value="vacation">
 											Adiantar junto às férias (Lei 4.749/65 art. 2º §2º)
 										</option>
@@ -169,14 +177,11 @@ export function ChristmasBonusCalculatorClient() {
 function ResultCard({ result }: { result: ChristmasBonusResult }) {
 	return (
 		<div className="space-y-4">
-			<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-				<p className="text-sm text-muted-foreground">13º líquido total</p>
-				<p className="text-3xl font-bold text-foreground">{brl(result.netTotal)}</p>
-			</div>
-			<dl className="grid gap-2 text-sm sm:grid-cols-2">
-				<Row label="13º bruto" value={brl(result.grossBonus)} />
-				<Row label="Avos" value={`${result.avos}/12`} />
-				<Row
+			<ResultBox label="13º líquido total" value={brl(result.netTotal)} />
+			<ResultGrid>
+				<ResultRow label="13º bruto" value={brl(result.grossBonus)} />
+				<ResultRow label="Avos" value={`${result.avos}/12`} />
+				<ResultRow
 					label={
 						result.firstInstallmentTiming === "vacation"
 							? "1ª parcela (junto às férias)"
@@ -184,22 +189,16 @@ function ResultCard({ result }: { result: ChristmasBonusResult }) {
 					}
 					value={brl(result.firstInstallment)}
 				/>
-				<Row label="2ª parcela (até 20/dez)" value={brl(result.secondInstallment)} />
-				<Row label="INSS" value={brl(result.inss)} />
-				<Row label="IRRF" value={brl(result.irrf)} />
-			</dl>
+				<ResultRow
+					label="2ª parcela (até 20/dez)"
+					value={brl(result.secondInstallment)}
+				/>
+				<ResultRow label="INSS" value={brl(result.inss)} />
+				<ResultRow label="IRRF" value={brl(result.irrf)} />
+			</ResultGrid>
 			<p className="text-xs text-muted-foreground">
 				{result.firstInstallmentDueLabel}
 			</p>
-		</div>
-	);
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-	return (
-		<div className="flex justify-between rounded-md border border-border bg-background px-3 py-2">
-			<dt className="text-muted-foreground">{label}</dt>
-			<dd className="font-medium text-foreground">{value}</dd>
 		</div>
 	);
 }

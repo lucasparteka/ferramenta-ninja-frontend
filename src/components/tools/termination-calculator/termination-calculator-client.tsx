@@ -5,7 +5,9 @@ import { useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import { ResultBox, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
+import { DateInput } from "@/components/ui/date-input";
 import {
 	Form,
 	FormControl,
@@ -14,7 +16,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { DateInput } from "@/components/ui/date-input";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
@@ -80,7 +81,10 @@ export function TerminationCalculatorClient() {
 		const admission = new Date(`${data.admissionDate}T00:00:00Z`);
 		const termination = new Date(`${data.terminationDate}T00:00:00Z`);
 
-		if (Number.isNaN(admission.getTime()) || Number.isNaN(termination.getTime())) {
+		if (
+			Number.isNaN(admission.getTime()) ||
+			Number.isNaN(termination.getTime())
+		) {
 			setError("Datas inválidas.");
 			setResult(null);
 			return;
@@ -142,10 +146,7 @@ export function TerminationCalculatorClient() {
 								<FormItem>
 									<FormLabel>Data de admissão</FormLabel>
 									<FormControl>
-										<DateInput
-											value={field.value}
-											onChange={field.onChange}
-										/>
+										<DateInput value={field.value} onChange={field.onChange} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -158,10 +159,7 @@ export function TerminationCalculatorClient() {
 								<FormItem>
 									<FormLabel>Data de rescisão</FormLabel>
 									<FormControl>
-										<DateInput
-											value={field.value}
-											onChange={field.onChange}
-										/>
+										<DateInput value={field.value} onChange={field.onChange} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -272,9 +270,9 @@ export function TerminationCalculatorClient() {
 			</Form>
 
 			{error && (
-				<div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-foreground">
-					{error}
-				</div>
+				<ResultBox tone="destructive">
+					<p className="text-sm text-foreground">{error}</p>
+				</ResultBox>
 			)}
 
 			{result && <ResultCard result={result} />}
@@ -285,23 +283,24 @@ export function TerminationCalculatorClient() {
 function ResultCard({ result }: { result: TerminationResult }) {
 	return (
 		<div className="space-y-4">
-			<div className="rounded-lg border border-primary/30 bg-primary/5 p-4">
-				<p className="text-sm text-muted-foreground">Total líquido a receber</p>
-				<p className="text-3xl font-bold text-foreground">{brl(result.netTotal)}</p>
-				<p className="mt-1 text-xs text-muted-foreground">
-					Bruto: {brl(result.grossTotal)} · INSS: {brl(result.inss)} · IRRF:{" "}
-					{brl(result.irrf)}
-				</p>
-			</div>
+			<ResultBox
+				label="Total líquido a receber"
+				value={brl(result.netTotal)}
+				hint={`Bruto: ${brl(result.grossTotal)} · INSS: ${brl(result.inss)} · IRRF: ${brl(result.irrf)}`}
+			/>
 
 			<dl className="space-y-2 text-sm">
 				{result.lines.map((line) => (
-					<Row key={line.label} label={line.label} value={brl(line.amount)} />
+					<ResultRow
+						key={line.label}
+						label={line.label}
+						value={brl(line.amount)}
+					/>
 				))}
 			</dl>
 
 			{result.fgtsWithdrawable > 0 && (
-				<div className="rounded-md border border-border bg-background/60 p-3 text-sm">
+				<div className="rounded-lg border border-border bg-card p-3 text-sm">
 					<p className="text-muted-foreground">FGTS sacável</p>
 					<p className="font-semibold text-foreground">
 						{brl(result.fgtsWithdrawable)}
@@ -309,32 +308,24 @@ function ResultCard({ result }: { result: TerminationResult }) {
 				</div>
 			)}
 
-			<div className="rounded-md border border-border bg-background/60 p-3 text-sm text-foreground">
+			<div className="rounded-lg border border-border bg-card p-3 text-sm text-foreground">
 				Tempo de empresa: <strong>{result.yearsAtCompany}</strong> anos e{" "}
 				<strong>{result.monthsAtCompany % 12}</strong> meses · Aviso prévio:{" "}
 				<strong>{result.noticeDays}</strong> dias
 			</div>
 
-			<div
-				className={
-					result.unemploymentInsuranceEligible
-						? "rounded-md border border-primary/30 bg-primary/5 p-3 text-sm text-foreground"
-						: "rounded-md border border-border bg-background/60 p-3 text-sm text-muted-foreground"
-				}
-			>
-				{result.unemploymentInsuranceEligible
-					? "Possível direito ao seguro-desemprego (verifique requisitos no gov.br)."
-					: "Modalidade sem direito a seguro-desemprego."}
-			</div>
-		</div>
-	);
-}
-
-function Row({ label, value }: { label: string; value: string }) {
-	return (
-		<div className="flex justify-between rounded-md border border-border bg-background px-3 py-2">
-			<dt className="text-muted-foreground">{label}</dt>
-			<dd className="font-medium text-foreground">{value}</dd>
+			{result.unemploymentInsuranceEligible ? (
+				<ResultBox>
+					<p className="text-sm text-foreground">
+						Possível direito ao seguro-desemprego (verifique requisitos no
+						gov.br).
+					</p>
+				</ResultBox>
+			) : (
+				<div className="rounded-lg border border-border bg-card p-3 text-sm text-muted-foreground">
+					Modalidade sem direito a seguro-desemprego.
+				</div>
+			)}
 		</div>
 	);
 }

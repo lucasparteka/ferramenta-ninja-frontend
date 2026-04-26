@@ -92,6 +92,7 @@ function SeoContent() {
 export default function BmiCalculatorPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-de-imc"
 			title="Calculadora de IMC"
 			description="Informe peso e altura para descobrir seu IMC e a classificação segundo a OMS."
 			relatedTools={

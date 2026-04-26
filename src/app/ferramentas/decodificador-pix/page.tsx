@@ -145,6 +145,7 @@ function SeoContent() {
 export default function DecodificadorPixPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/decodificador-pix"
 			title="Decodificador PIX Copia e Cola"
 			description="Cole um código PIX e veja beneficiário, valor e chave antes de pagar. Tudo acontece no seu navegador."
 			relatedTools={

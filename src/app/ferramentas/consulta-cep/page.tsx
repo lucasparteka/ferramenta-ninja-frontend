@@ -99,6 +99,7 @@ function SeoContent() {
 export default function ConsultaCepPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/consulta-cep"
 			title="Consulta de CEP Online"
 			description="Digite um CEP e obtenha o endereço completo em segundos. Consulta gratuita com dados do ViaCEP."
 			relatedTools={<RelatedTools currentHref="/ferramentas/consulta-cep" />}

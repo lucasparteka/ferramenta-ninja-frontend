@@ -113,6 +113,7 @@ function SeoContent() {
 export default function ChristmasBonusPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-13-salario"
 			title="Calculadora de 13º Salário"
 			description="Descubra o valor das duas parcelas e os descontos com tabelas oficiais 2026."
 			relatedTools={

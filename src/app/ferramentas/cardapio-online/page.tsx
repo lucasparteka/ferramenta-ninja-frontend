@@ -153,6 +153,7 @@ function SeoContent() {
 export default function CardapioOnlinePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/cardapio-online"
 			title="Criador de Cardápio Online"
 			description="Crie cardápios personalizados com templates prontos. Exporte em PDF ou PNG e imprima em A4. Sem cadastro, sem instalação."
 			relatedTools={

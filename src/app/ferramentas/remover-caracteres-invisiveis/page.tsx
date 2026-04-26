@@ -67,6 +67,7 @@ function SeoContent() {
 export default function Page() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/remover-caracteres-invisiveis"
 			title="Remover Caracteres Invisíveis"
 			description="Cole seu texto e remova automaticamente caracteres ocultos e invisíveis."
 			relatedTools={

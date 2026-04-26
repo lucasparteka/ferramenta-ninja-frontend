@@ -243,6 +243,7 @@ function SeoContent() {
 export default function CodigoMorsePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/codigo-morse"
 			title="Conversor de Código Morse Online Grátis"
 			description="Converta texto para código Morse e código Morse para texto. Suporte a letras, números e pontuação conforme o padrão ITU."
 			relatedTools={<RelatedTools currentHref="/ferramentas/codigo-morse" />}

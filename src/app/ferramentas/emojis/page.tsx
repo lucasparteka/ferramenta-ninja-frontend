@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 export default function EmojisPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/emojis"
 			title="Emojis para Copiar e Colar"
 			description="Clique em qualquer emoji para copiá-lo para a área de transferência."
 			extraContent={

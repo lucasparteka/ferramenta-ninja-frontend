@@ -216,6 +216,7 @@ function SeoContent() {
 export default function CartaoFidelidadePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/cartao-fidelidade"
 			title="Criador de Cartão Fidelidade para Imprimir"
 			description="Crie cartões fidelidade personalizados com seu logo e cores. Templates prontos para barbearia, cafeteria, restaurante e mais. Exporte em PNG pronto para imprimir."
 			relatedTools={

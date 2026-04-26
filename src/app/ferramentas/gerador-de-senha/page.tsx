@@ -149,6 +149,7 @@ function SeoContent() {
 export default function GeradorDeSenhaPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/gerador-de-senha"
 			title="Gerador de Senha"
 			description="Crie senhas seguras e aleatórias em segundos. Configure o tamanho e os tipos de caracteres conforme sua necessidade."
 			relatedTools={

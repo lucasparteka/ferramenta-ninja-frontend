@@ -197,6 +197,7 @@ function SeoContent() {
 export default function DesenharOnlinePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/desenhar-online"
 			title="Desenhar Online Grátis (Tipo Paint)"
 			description="Desenhe livremente no navegador com lápis, borracha, formas e cores. Exporte em PNG sem instalar nada."
 			relatedTools={<RelatedTools currentHref="/ferramentas/desenhar-online" />}

@@ -163,6 +163,7 @@ function SeoContent() {
 export default function VisualizadorDeCsvPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/visualizador-de-csv"
 			title="Visualizador de CSV Online Grátis"
 			description="Visualize arquivos CSV como tabela formatada diretamente no navegador. Faça upload ou cole o conteúdo, ordene colunas e navegue pelas páginas — sem cadastro e sem enviar dados."
 			relatedTools={

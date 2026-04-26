@@ -245,6 +245,7 @@ function SeoContent() {
 export default function CalculadoraSalarioLiquidoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-salario-liquido"
 			title="Calculadora de Salário Líquido"
 			description="Descubra quanto do seu salário você realmente recebe. Nossa calculadora considera os descontos de INSS, IRRF e dependentes para calcular o valor líquido."
 			relatedTools={

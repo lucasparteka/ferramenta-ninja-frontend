@@ -170,6 +170,7 @@ function SeoContent() {
 export default function ValidadorDeCartaoDeCreditoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/validador-de-cartao-de-credito"
 			title="Validador de Cartão de Crédito Online Grátis"
 			description="Valide números de cartão de crédito pelo algoritmo de Luhn e identifique automaticamente a bandeira. Funciona com Visa, Mastercard, American Express, Elo e Hipercard."
 			relatedTools={

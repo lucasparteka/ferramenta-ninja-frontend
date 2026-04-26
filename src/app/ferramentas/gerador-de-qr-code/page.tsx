@@ -207,6 +207,7 @@ function SeoContent() {
 export default function GeradorDeQrCodePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/gerador-de-qr-code"
 			title="Gerador de QR Code Online Grátis"
 			description="Gere QR Codes a partir de qualquer texto ou URL. Escolha o tamanho e o nível de correção de erro e baixe em PNG."
 			relatedTools={

@@ -111,6 +111,7 @@ function SeoContent() {
 export default function ContadorDeCaracteresPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/contador-de-caracteres"
 			title="Contador de Caracteres"
 			description="Analise seu texto em tempo real: conte caracteres, palavras, linhas e parágrafos instantaneamente."
 			relatedTools={

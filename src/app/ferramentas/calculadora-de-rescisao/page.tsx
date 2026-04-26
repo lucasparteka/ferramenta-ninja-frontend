@@ -135,6 +135,7 @@ function SeoContent() {
 export default function TerminationCalculatorPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-de-rescisao"
 			title="Calculadora de Rescisão Trabalhista"
 			description="Verbas rescisórias com aviso, 13º, férias e multa do FGTS."
 			relatedTools={

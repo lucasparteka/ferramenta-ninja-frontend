@@ -99,6 +99,7 @@ function SeoContent() {
 export default function Page() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/conversor-csv-json"
 			title="Conversor CSV ↔ JSON"
 			description="Converta CSV em JSON ou JSON em CSV com validação visual e correção de erros."
 			relatedTools={

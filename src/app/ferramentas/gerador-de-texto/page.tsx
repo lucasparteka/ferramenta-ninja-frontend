@@ -151,6 +151,7 @@ function SeoContent() {
 export default function GeradorDeTextoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/gerador-de-texto"
 			title="Gerador de Texto Online (Lorem Ipsum e Texto Aleatório)"
 			description="Gere Lorem Ipsum ou texto aleatório em palavras, frases ou parágrafos. Ideal para designers, desenvolvedores e prototipação de interfaces."
 			relatedTools={

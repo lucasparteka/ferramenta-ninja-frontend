@@ -152,6 +152,7 @@ function SeoContent() {
 export default function JuntarPDFPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/juntar-pdf"
 			title="Juntar PDF Online Grátis"
 			description="Una múltiplos arquivos PDF em um único documento. Selecione os arquivos, organize a ordem e baixe o resultado — sem enviar dados para servidores."
 			relatedTools={<RelatedTools currentHref="/ferramentas/juntar-pdf" />}

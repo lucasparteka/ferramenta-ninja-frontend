@@ -164,6 +164,7 @@ function SeoContent() {
 export default function CriadorDeCurriculoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/criador-de-curriculo"
 			title="Criador de Currículo Online Grátis"
 			description="Monte seu currículo profissional com templates modernos. Personalize o visual, salve no navegador e baixe em PDF — sem cadastro e sem enviar seus dados."
 			relatedTools={

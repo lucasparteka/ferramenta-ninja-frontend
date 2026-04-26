@@ -187,6 +187,7 @@ function SeoContent() {
 export default function ConverterImagemEmTextoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/converter-imagem-em-texto"
 			title="Converter Imagem em Texto (OCR) Online Grátis"
 			description="Extraia texto de imagens, prints e documentos escaneados diretamente no navegador. Selecione a imagem, escolha o idioma e copie o resultado."
 			relatedTools={

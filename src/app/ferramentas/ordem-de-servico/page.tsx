@@ -162,6 +162,7 @@ function SeoContent() {
 export default function OrdemDeServicoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/ordem-de-servico"
 			title="Criador de Ordem de Serviço"
 			description="Crie ordens de serviço profissionais com dados do prestador, cliente e itens. Exporte em PDF ou PNG gratuitamente."
 			relatedTools={

@@ -176,6 +176,7 @@ function SeoContent() {
 export default function GeradorDeCpfPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/gerador-de-cpf"
 			title="Gerador de CPF Válido Online Grátis"
 			description="Gere CPFs válidos para testes ou valide CPFs existentes. Os números gerados são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
 			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-cpf" />}

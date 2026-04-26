@@ -191,6 +191,7 @@ function SeoContent() {
 export default function CalculadoraDePorcentagemPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-de-porcentagem"
 			title="Calculadora de Porcentagem Online Grátis"
 			description="5 calculadoras de porcentagem em uma só página: calcule valores, variações, descontos e aumentos percentuais com resultado em tempo real."
 			relatedTools={

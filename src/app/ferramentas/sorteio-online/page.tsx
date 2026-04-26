@@ -150,6 +150,7 @@ function SeoContent() {
 export default function SorteioOnlinePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/sorteio-online"
 			title="Sorteio Online Grátis (Sortear Nomes e Números)"
 			description="Sorteie nomes, números ou qualquer lista de forma justa e instantânea. Configure a quantidade de vencedores e a opção de repetição."
 			relatedTools={<RelatedTools currentHref="/ferramentas/sorteio-online" />}

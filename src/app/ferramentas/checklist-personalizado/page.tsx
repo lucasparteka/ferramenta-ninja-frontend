@@ -154,6 +154,7 @@ function SeoContent() {
 export default function ChecklistPersonalizadoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/checklist-personalizado"
 			title="Checklist Personalizado para Imprimir"
 			description="Crie checklists personalizados com templates prontos para compras, limpeza, viagem e mais. Exporte em PDF ou PNG e imprima em A4."
 			relatedTools={

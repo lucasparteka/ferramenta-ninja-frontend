@@ -104,6 +104,7 @@ function SeoContent() {
 export default function LimparTextoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/limpar-texto"
 			title="Limpador de Texto Avançado"
 			description="Remova espaços extras, caracteres invisíveis e normalize textos rapidamente."
 			relatedTools={<RelatedTools currentHref="/ferramentas/limpar-texto" />}

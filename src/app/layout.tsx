@@ -4,6 +4,8 @@ import { headers } from "next/headers";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { JsonLd } from "@/components/seo/json-ld";
+import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
 import "./globals.css";
 
 const inter = Inter({
@@ -65,6 +67,10 @@ export default async function RootLayout({
 
 	return (
 		<html lang="pt-BR" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+			<head>
+				<JsonLd data={organizationSchema()} />
+				<JsonLd data={websiteSchema()} />
+			</head>
 			<body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
 				<Header />
 				<main className="flex-1">{children}</main>

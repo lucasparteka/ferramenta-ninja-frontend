@@ -229,6 +229,7 @@ function SeoContent() {
 export default function GeradorDeUuidPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/gerador-de-uuid"
 			title="Gerador de UUID Online"
 			description="Gere UUIDs únicos nas versões v1, v3, v4 e v5 ou valide um UUID existente. Tudo funciona diretamente no navegador, sem enviar dados a nenhum servidor."
 			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-uuid" />}

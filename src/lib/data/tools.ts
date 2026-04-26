@@ -696,3 +696,20 @@ export const categories: ToolCategory[] = [
 		],
 	},
 ];
+
+export function findToolByHref(href: string): Tool | undefined {
+	for (const cat of categories) {
+		const found = cat.tools.find((t) => t.href === href);
+		if (found) return found;
+	}
+	return undefined;
+}
+
+export function findCategoryByToolHref(href: string): ToolCategory | undefined {
+	return categories.find((cat) => cat.tools.some((t) => t.href === href));
+}
+
+export function getAllTools(): Tool[] {
+	return categories.flatMap((c) => c.tools);
+}
+

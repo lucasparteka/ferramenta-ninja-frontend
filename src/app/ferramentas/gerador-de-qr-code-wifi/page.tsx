@@ -133,6 +133,7 @@ function SeoContent() {
 export default function GeradorDeQrCodeWifiPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/gerador-de-qr-code-wifi"
 			title="Gerador de QR Code Wi-Fi"
 			description="Compartilhe sua rede Wi-Fi sem digitar senha. Gere um QR Code que conecta qualquer celular automaticamente ao escanear."
 			relatedTools={

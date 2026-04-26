@@ -99,6 +99,7 @@ function SeoContent() {
 export default function ConsultaCnpjPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/consulta-cnpj"
 			title="Consulta de CNPJ Online"
 			description="Digite um CNPJ e obtenha os dados cadastrais oficiais da Receita Federal em segundos."
 			relatedTools={<RelatedTools currentHref="/ferramentas/consulta-cnpj" />}

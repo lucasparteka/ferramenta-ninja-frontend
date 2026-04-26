@@ -42,6 +42,7 @@ function SeoContent() {
 export default function Page() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/remover-espacos-duplicados"
 			title="Remover Espaços Duplicados"
 			description="Elimine espaços extras do seu texto com um clique."
 			relatedTools={

@@ -119,6 +119,7 @@ function SeoContent() {
 export default function NumeroPorExtensoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/numero-por-extenso"
 			title="Número por Extenso em Reais"
 			description="Digite um valor e receba a versão escrita em extenso pronta para cheques, contratos e recibos."
 			relatedTools={

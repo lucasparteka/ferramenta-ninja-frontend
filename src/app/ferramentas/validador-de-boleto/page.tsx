@@ -103,6 +103,7 @@ function SeoContent() {
 export default function ValidadorBoletoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/validador-de-boleto"
 			title="Validador de Boleto"
 			description="Confira a linha digitável e extraia valor, vencimento e código de barras."
 			relatedTools={

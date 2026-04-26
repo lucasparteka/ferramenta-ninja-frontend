@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 export default function SimbolosPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/simbolos"
 			title="Símbolos para Copiar e Colar"
 			description="Clique em qualquer símbolo para copiá-lo para a área de transferência."
 			extraContent={

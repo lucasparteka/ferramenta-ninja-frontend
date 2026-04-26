@@ -185,6 +185,7 @@ function SeoContent() {
 export default function ConversorDeTextoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/conversor-de-texto"
 			title="Conversor de Texto Online Grátis"
 			description="Converta texto para maiúsculo, minúsculo, capitalize, remova acentos e espaços extras com um clique."
 			relatedTools={

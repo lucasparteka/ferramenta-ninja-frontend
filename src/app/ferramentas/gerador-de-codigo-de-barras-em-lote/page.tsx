@@ -100,6 +100,7 @@ function SeoContent() {
 export default function GeradorDeCodigoDeBarrasEmLotePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/gerador-de-codigo-de-barras-em-lote"
 			title="Gerador de Código de Barras em Lote"
 			description="Gere vários códigos de barras de uma só vez. Cole a lista de valores, escolha o formato e baixe cada código em SVG."
 			relatedTools={

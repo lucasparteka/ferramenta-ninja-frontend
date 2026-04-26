@@ -153,6 +153,7 @@ function SeoContent() {
 export default function DividirPDFPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/dividir-pdf"
 			title="Dividir PDF Online Grátis"
 			description="Extraia páginas específicas ou divida um PDF em partes no navegador. Selecione o arquivo, escolha as páginas e baixe o resultado."
 			relatedTools={<RelatedTools currentHref="/ferramentas/dividir-pdf" />}

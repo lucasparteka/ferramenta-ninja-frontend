@@ -102,6 +102,7 @@ function SeoContent() {
 export default function LeitorDeQrCodePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/leitor-de-qr-code"
 			title="Leitor de QR Code Online"
 			description="Decodifique QR Codes a partir de imagens no seu computador. Arraste a imagem ou clique para selecionar."
 			relatedTools={

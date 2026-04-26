@@ -95,6 +95,7 @@ function SeoContent() {
 export default function AgeCalculatorPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-de-idade"
 			title="Calculadora de Idade e Datas Online"
 			description="Descubra sua idade exata ou calcule a diferença entre duas datas em segundos."
 			relatedTools={

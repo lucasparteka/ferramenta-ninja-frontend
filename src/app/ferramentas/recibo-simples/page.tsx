@@ -120,6 +120,7 @@ function SeoContent() {
 export default function ReciboSimplesPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/recibo-simples"
 			title="Gerador de Recibo Simples"
 			description="Crie recibos prontos para impressão em segundos. Preencha os dados, visualize em tempo real e exporte em PDF."
 			relatedTools={<RelatedTools currentHref="/ferramentas/recibo-simples" />}

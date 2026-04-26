@@ -99,6 +99,7 @@ function SeoContent() {
 export default function OvertimeCalculatorPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-de-hora-extra"
 			title="Calculadora de Hora Extra"
 			description="Calcule horas extras 50%, 100% e o reflexo no DSR em segundos."
 			relatedTools={

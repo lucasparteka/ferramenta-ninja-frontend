@@ -204,6 +204,7 @@ function SeoContent() {
 export default function CriptografiaDeTextoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/criptografia-de-texto"
 			title="Criptografia de Texto Online Grátis"
 			description="Cifre e decifre textos com AES-256-GCM, Base64 ou ROT13 diretamente no navegador. Seus dados nunca saem do dispositivo."
 			relatedTools={

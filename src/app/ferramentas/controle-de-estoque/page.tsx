@@ -159,6 +159,7 @@ function SeoContent() {
 export default function ControleDeEstoquePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/controle-de-estoque"
 			title="Controle de Estoque e Inventario Grátis para Imprimir"
 			description="Crie sua planilha de controle de estoque ou inventário personalizada. Adicione colunas, itens e exporte em PDF ou PNG para imprimir."
 			relatedTools={

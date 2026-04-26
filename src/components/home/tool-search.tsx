@@ -41,7 +41,11 @@ export function ToolSearch() {
 
 			<div className="space-y-12">
 				{filtered.map((category) => (
-					<div key={category.id}>
+					<div
+						key={category.id}
+						id={`categoria-${category.id}`}
+						className="scroll-mt-20"
+					>
 						<h2 className="text-xl font-semibold">{category.name}</h2>
 
 						<div className="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">

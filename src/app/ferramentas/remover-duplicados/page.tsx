@@ -183,6 +183,7 @@ function SeoContent() {
 export default function RemoverDuplicadosPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/remover-duplicados"
 			title="Remover Linhas Duplicadas Online Grátis"
 			description="Cole sua lista, remova entradas repetidas e obtenha apenas os valores únicos. Suporte a ordenação, comparação sem distinção de maiúsculas e remoção de linhas vazias."
 			relatedTools={

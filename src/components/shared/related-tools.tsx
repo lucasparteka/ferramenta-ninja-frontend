@@ -7,6 +7,7 @@ const MAX_RELATED = 6;
 type RelatedToolsProps = {
 	currentHref: string;
 	customTools?: Omit<Tool, "icon">[];
+	excludeSameCategory?: boolean;
 };
 
 function getScore(current: Tool, candidate: Tool, isSameCategory: boolean) {
@@ -34,7 +35,10 @@ function getScore(current: Tool, candidate: Tool, isSameCategory: boolean) {
 	return score;
 }
 
-function getRelatedTools(currentHref: string): Tool[] {
+function getRelatedTools(
+	currentHref: string,
+	excludeSameCategory = false,
+): Tool[] {
 	const allTools = categories.flatMap((c) => c.tools);
 
 	const current = allTools.find((t) => t.href === currentHref);
@@ -46,6 +50,10 @@ function getRelatedTools(currentHref: string): Tool[] {
 
 	const scored = allTools
 		.filter((t) => t.href !== currentHref)
+		.filter((t) => {
+			if (!excludeSameCategory) return true;
+			return !currentCategory?.tools.some((ct) => ct.href === t.href);
+		})
 		.map((tool) => {
 			const isSameCategory = currentCategory?.tools.some(
 				(t) => t.href === tool.href,
@@ -61,8 +69,13 @@ function getRelatedTools(currentHref: string): Tool[] {
 	return scored.slice(0, MAX_RELATED).map((s) => s.tool);
 }
 
-export function RelatedTools({ currentHref, customTools }: RelatedToolsProps) {
-	const related = customTools ?? getRelatedTools(currentHref);
+export function RelatedTools({
+	currentHref,
+	customTools,
+	excludeSameCategory = true,
+}: RelatedToolsProps) {
+	const related =
+		customTools ?? getRelatedTools(currentHref, excludeSameCategory);
 
 	if (related.length < MIN_RELATED) return null;
 

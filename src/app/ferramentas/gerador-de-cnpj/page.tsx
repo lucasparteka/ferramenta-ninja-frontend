@@ -191,6 +191,7 @@ function SeoContent() {
 export default function GeradorDeCnpjPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/gerador-de-cnpj"
 			title="Gerador de CNPJ Válido Online Grátis"
 			description="Gere CNPJs válidos para testes ou valide CNPJs existentes. Os números gerados são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
 			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-cnpj" />}

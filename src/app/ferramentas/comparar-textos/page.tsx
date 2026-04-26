@@ -183,6 +183,7 @@ function SeoContent() {
 export default function ComparadorDeTextosPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/comparar-textos"
 			title="Comparador de Textos Online"
 			description="Cole dois textos, clique em comparar e visualize as diferenças com destaque por cores. Adições em verde, remoções em vermelho."
 			relatedTools={<RelatedTools currentHref="/ferramentas/comparar-textos" />}

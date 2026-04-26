@@ -215,6 +215,7 @@ function SeoContent() {
 export default function CodigoBinarioPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/codigo-binario"
 			title="Conversor de Código Binário Online Grátis"
 			description="Converta texto para código binário e código binário para texto. Suporte completo a UTF-8 e todos os caracteres Unicode."
 			relatedTools={<RelatedTools currentHref="/ferramentas/codigo-binario" />}

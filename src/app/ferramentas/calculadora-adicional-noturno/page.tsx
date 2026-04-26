@@ -156,6 +156,7 @@ function SeoContent() {
 export default function CalculadoraAdicionalNoturnoPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-adicional-noturno"
 			title="Calculadora de Adicional Noturno"
 			description="Calcule o valor do adicional noturno de forma simples e rápida. Saiba quanto você deve receber a mais pelo trabalho realizado à noite, conforme a legislação trabalhista."
 			relatedTools={

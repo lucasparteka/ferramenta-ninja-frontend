@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 export default function EmoticonsPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/emoticons"
 			title="Emoticons para Copiar e Colar"
 			description="Clique em qualquer emoticon para copiá-lo para a área de transferência."
 			extraContent={

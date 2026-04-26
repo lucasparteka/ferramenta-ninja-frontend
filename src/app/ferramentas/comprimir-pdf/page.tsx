@@ -179,6 +179,7 @@ function SeoContent() {
 export default function ComprimirPDFPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/comprimir-pdf"
 			title="Comprimir PDF Online Grátis"
 			description="Reduza o tamanho de arquivos PDF diretamente no navegador. Selecione o nível de compressão e veja a redução de tamanho antes de baixar."
 			relatedTools={<RelatedTools currentHref="/ferramentas/comprimir-pdf" />}

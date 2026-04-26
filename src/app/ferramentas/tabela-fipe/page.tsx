@@ -85,6 +85,7 @@ function SeoContent() {
 export default function TabelaFipePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/tabela-fipe"
 			title="Tabela FIPE Online"
 			description="Consulte o preço médio de carros, motos e caminhões pela tabela oficial."
 			relatedTools={<RelatedTools currentHref="/ferramentas/tabela-fipe" />}

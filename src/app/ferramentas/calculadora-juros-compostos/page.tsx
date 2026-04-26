@@ -91,6 +91,7 @@ function SeoContent() {
 export default function CompoundInterestPage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/calculadora-juros-compostos"
 			title="Calculadora de Juros Compostos"
 			description="Simule investimentos com aportes mensais e veja a evolução do patrimônio."
 			relatedTools={

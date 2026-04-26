@@ -155,6 +155,7 @@ function SeoContent() {
 export default function PreviaResultadoGooglePage() {
 	return (
 		<PageLayout
+			toolHref="/ferramentas/previa-resultado-google"
 			title="Prévia do Resultado do Google"
 			description="Simule como seu site aparece nos resultados de busca. Edite o título, a meta descrição e a URL e veja o snippet atualizar em tempo real."
 			relatedTools={

@@ -10,6 +10,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { DateInput } from "@/components/ui/date-input";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
@@ -122,7 +123,7 @@ export function ReceiptForm({ control, form }: ReceiptFormProps) {
 						<FormItem>
 							<FormLabel>Data</FormLabel>
 							<FormControl>
-								<Input type="date" {...field} />
+								<DateInput value={field.value} onChange={field.onChange} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

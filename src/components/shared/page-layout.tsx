@@ -7,9 +7,9 @@ import {
 	faqSchema,
 	webApplicationSchema,
 } from "@/lib/seo/jsonld";
+import { CategoryToolsSection } from "./category-tools-section";
 import { Separator } from "../ui/separator";
 import { Breadcrumb } from "./breadcrumb";
-import { ToolSidebar } from "./tool-sidebar";
 
 type PageLayoutProps = {
 	title: string;
@@ -43,8 +43,6 @@ export function PageLayout({
 			]
 		: [];
 
-	const hasSidebar = Boolean(tool);
-
 	return (
 		<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 			{tool && breadcrumbs.length > 0 && <Breadcrumb items={breadcrumbs} />}
@@ -57,32 +55,19 @@ export function PageLayout({
 			</div>
 			<Separator className="mb-5 lg:mb-7" />
 
-			{hasSidebar && tool ? (
-				<div className="grid gap-8 lg:grid-cols-[1fr_280px]">
-					<div className="min-w-0">
-						{children}
-						{relatedTools && <div className="mt-12">{relatedTools}</div>}
-						{extraContent && (
-							<div className="mt-12 space-y-8 text-muted-foreground">
-								{extraContent}
-							</div>
-						)}
-						{faq && faq.length > 0 && <FaqSection items={faq} />}
-					</div>
-					<ToolSidebar currentHref={tool.href} />
+			{children}
+
+			{toolHref && <CategoryToolsSection currentHref={toolHref} />}
+
+			{relatedTools && <div className="mt-12">{relatedTools}</div>}
+
+			{extraContent && (
+				<div className="mt-12 space-y-8 text-muted-foreground">
+					{extraContent}
 				</div>
-			) : (
-				<>
-					{children}
-					{relatedTools && <div className="mt-12">{relatedTools}</div>}
-					{extraContent && (
-						<div className="mt-12 space-y-8 text-muted-foreground">
-							{extraContent}
-						</div>
-					)}
-					{faq && faq.length > 0 && <FaqSection items={faq} />}
-				</>
 			)}
+
+			{faq && faq.length > 0 && <FaqSection items={faq} />}
 
 			{tool && (
 				<>

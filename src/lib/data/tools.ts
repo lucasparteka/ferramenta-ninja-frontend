@@ -7,6 +7,7 @@ import {
 	Brush,
 	Building2,
 	Calculator,
+	CalendarCheck2,
 	CalendarDays,
 	Car,
 	Clock,
@@ -58,6 +59,7 @@ import {
 	Table,
 	Tags,
 	TextCursorInput,
+	Thermometer,
 	Timer,
 	TrendingUp,
 	Type,
@@ -232,6 +234,15 @@ export const categories: ToolCategory[] = [
 				description: "Comprimento, massa, volume, temperatura e mais",
 				icon: Ruler,
 				tags: ["conversor", "unidades", "medidas"],
+				intent: "convert",
+				weight: 2,
+			},
+			{
+				name: "Conversor de Temperatura",
+				href: "/ferramentas/conversor-de-temperatura",
+				description: "Converta entre Celsius, Fahrenheit e Kelvin instantaneamente",
+				icon: Thermometer,
+				tags: ["conversor", "temperatura", "celsius", "fahrenheit", "kelvin"],
 				intent: "convert",
 				weight: 2,
 			},
@@ -540,6 +551,16 @@ export const categories: ToolCategory[] = [
 				intent: "analyze",
 				weight: 2,
 			},
+			{
+				name: "Calculadora de Dias Úteis",
+				href: "/ferramentas/calculadora-de-dias-uteis",
+				description:
+					"Calcule dias úteis entre datas com feriados nacionais brasileiros",
+				icon: CalendarCheck2,
+				tags: ["dias uteis", "feriados", "prazo", "calculo", "brasil"],
+				intent: "analyze",
+				weight: 2,
+			},
 		],
 	},
 	{
@@ -606,6 +627,16 @@ export const categories: ToolCategory[] = [
 				icon: QrCode,
 				tags: ["qr", "compartilhamento"],
 				intent: "generate",
+			},
+			{
+				name: "QR Code Personalizado",
+				href: "/ferramentas/gerador-de-qr-code-personalizado",
+				description:
+					"QR codes com cores, estilos, logo central e múltiplos tipos de conteúdo",
+				icon: QrCode,
+				tags: ["qr", "personalizado", "logo", "wifi", "pix", "email"],
+				intent: "generate",
+				weight: 2,
 			},
 			{
 				name: "QR Code Wi-Fi",
@@ -758,6 +789,16 @@ export const categories: ToolCategory[] = [
 				icon: Minimize2,
 				tags: ["desenvolvedor", "css", "js", "html", "otimizacao"],
 				intent: "format",
+			},
+			{
+				name: "Markdown para HTML",
+				href: "/ferramentas/converter-markdown-para-html",
+				description:
+					"Converta Markdown para HTML com preview em tempo real e exportação",
+				icon: Code,
+				tags: ["desenvolvedor", "markdown", "html", "converter"],
+				intent: "convert",
+				weight: 2,
 			},
 			{
 				name: "Gerador de Meta Tags",

@@ -37,7 +37,7 @@ Ferramentas com alto volume de busca e implementação frontend-only simples.
 - `src/components/ui/textarea.tsx` — Textarea com `rounded-lg`
 - `src/components/ui/select-native.tsx` — NativeSelect com `rounded-lg`
 
-**Infraestrutura criada nos Tiers 2-3:**
+**Infraestrutura criada nos Tiers 2-4:**
 - `src/lib/color/palette.ts` — conversão HEX↔RGB↔HSL, geração de paletas
 - `src/lib/color/gradient.ts` — construção de gradientes CSS com color stops
 - `src/lib/text/typing-test.ts` — amostras de texto, cálculos WPM/CPM/acurácia
@@ -45,6 +45,9 @@ Ferramentas com alto volume de busca e implementação frontend-only simples.
 - `@theme inline` em `globals.css` — tokens `--color-code-bg` e `--color-code-text` para blocos escuros
 - Chips toggle — substituíram `<NativeSelect>` onde aplicável (proporções, formatos, etc)
 - `src/components/tools/email-signature/` — sistema de templates para assinatura de email (6 templates, exportação HTML/PNG, react-hook-form + zod)
+- `src/lib/date/holidays.ts` — feriados nacionais BR fixos + móveis (Páscoa, Carnaval, Corpus Christi), cálculo de dias úteis
+- `marked` + `dompurify` — parsing e sanitização de Markdown para HTML
+- `qr-code-styling` — QR codes com estilização avançada (cores, cantos arredondados, logo central)
 
 ---
 
@@ -79,17 +82,29 @@ Ferramentas de design/código com volume moderado.
 
 ---
 
-## Tier 4 — Requer backend (futuro)
+## Tier 4 — Média prioridade (implementado)
+
+Ferramentas frontend-only adicionais com bom volume de busca.
+
+| # | Ferramenta | Slug | Keyword principal | Volume mensal | Status |
+|---|---|---|---|---|---|---|
+| 16 | Conversor de Temperatura | `/ferramentas/conversor-de-temperatura` | conversor de temperatura | ~8.100 | ✅ Implementado |
+| 17 | Calculadora de Dias Úteis | `/ferramentas/calculadora-de-dias-uteis` | calculadora dias uteis | ~4.400 | ✅ Implementado |
+| 18 | Markdown → HTML | `/ferramentas/converter-markdown-para-html` | markdown para html | ~2.900 | ✅ Implementado |
+| 19 | QR Code Personalizado | `/ferramentas/gerador-de-qr-code-personalizado` | qr code personalizado | ~3.600 | ✅ Implementado |
+
+---
+
+## Tier 5 — Requer backend (futuro)
 
 Ferramentas que precisariam de API ou processamento server-side.
 
 | # | Ferramenta | Slug | Keyword principal | Volume mensal | Status |
-|---|---|---|---|---|---|
-| 16 | Markdown → HTML | `/ferramentas/markdown-para-html` | markdown para html | ~2.900 | 🔲 Backend |
-| 17 | SVG → PNG | `/ferramentas/svg-para-png` | converter svg para png | ~2.400 | 🔲 Backend |
-| 18 | Regex Tester | `/ferramentas/teste-regex` | regex tester | ~3.600 | 🔲 Backend* |
-| 19 | Conversor de Moeda | `/ferramentas/converter-moeda` | converter moeda/dolar | ~14.800 | 🔲 Backend |
-| 20 | Texto para Redes Sociais | `/ferramentas/texto-redes-sociais` | texto para instagram | ~2.400 | 🔲 Backend* |
+|---|---|---|---|---|---|---|
+| 20 | SVG → PNG | `/ferramentas/svg-para-png` | converter svg para png | ~2.400 | 🔲 Backend |
+| 21 | Regex Tester | `/ferramentas/teste-regex` | regex tester | ~3.600 | 🔲 Backend* |
+| 22 | Conversor de Moeda | `/ferramentas/converter-moeda` | converter moeda/dolar | ~14.800 | 🔲 Backend |
+| 23 | Texto para Redes Sociais | `/ferramentas/texto-redes-sociais` | texto para instagram | ~2.400 | 🔲 Backend* |
 
 *Regex e Texto redes sociais podem ser frontend-only, mas precisam de UX mais complexa.
 
@@ -102,8 +117,9 @@ Ferramentas que precisariam de API ou processamento server-side.
 | T1 (implementado) | 4 | ~34.800 |
 | T2 (implementado) | 6 | ~38.400 |
 | T3 (implementado) | 5/5 | ~15.700 |
-| T4 (backend) | 5 | ~26.100 |
-| **Total** | **20** | **~115.000** |
+| T4 (implementado) | 4/4 | ~19.000 |
+| T5 (backend) | 4 | ~23.100 |
+| **Total** | **23** | **~131.000** |
 
 ---
 

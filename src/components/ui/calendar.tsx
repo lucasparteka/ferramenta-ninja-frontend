@@ -7,10 +7,10 @@ import {
 } from "lucide-react";
 import * as React from "react";
 import {
-	type DayButton,
+	type DayButtonProps,
 	DayPicker,
 	getDefaultClassNames,
-	type Locale,
+	useDayPicker,
 } from "react-day-picker";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -147,7 +147,7 @@ function Calendar({
 						/>
 					);
 				},
-				Chevron: ({ className, orientation, ...props }) => {
+				Chevron: ({ className, orientation, disabled, size, ...props }) => {
 					if (orientation === "left") {
 						return (
 							<ChevronLeftIcon className={cn("size-4", className)} {...props} />
@@ -167,10 +167,8 @@ function Calendar({
 						<ChevronDownIcon className={cn("size-4", className)} {...props} />
 					);
 				},
-				DayButton: ({ ...props }) => (
-					<CalendarDayButton locale={locale} {...props} />
-				),
-				WeekNumber: ({ children, ...props }) => {
+				DayButton: ({ ...props }) => <CalendarDayButton {...props} />,
+				WeekNumber: ({ children, week, ...props }) => {
 					return (
 						<td {...props}>
 							<div className="flex size-(--cell-size) items-center justify-center text-center">
@@ -190,10 +188,11 @@ function CalendarDayButton({
 	className,
 	day,
 	modifiers,
-	locale,
 	...props
-}: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
+}: DayButtonProps) {
 	const defaultClassNames = getDefaultClassNames();
+	const { dayPickerProps } = useDayPicker();
+	const localeCode = dayPickerProps.locale?.code;
 
 	const ref = React.useRef<HTMLButtonElement>(null);
 	React.useEffect(() => {
@@ -204,7 +203,7 @@ function CalendarDayButton({
 		<Button
 			variant="ghost"
 			size="icon"
-			data-day={day.date.toLocaleDateString(locale?.code)}
+			data-day={day.date.toLocaleDateString(localeCode)}
 			data-selected-single={
 				modifiers.selected &&
 				!modifiers.range_start &&

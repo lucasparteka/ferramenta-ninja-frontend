@@ -44,6 +44,7 @@ Ferramentas com alto volume de busca e implementação frontend-only simples.
 - `src/utils/image.ts` — extração de crop via Canvas (`getCroppedImg`, `getCroppedImgFromElement`)
 - `@theme inline` em `globals.css` — tokens `--color-code-bg` e `--color-code-text` para blocos escuros
 - Chips toggle — substituíram `<NativeSelect>` onde aplicável (proporções, formatos, etc)
+- `src/components/tools/email-signature/` — sistema de templates para assinatura de email (6 templates, exportação HTML/PNG, react-hook-form + zod)
 
 ---
 
@@ -74,7 +75,7 @@ Ferramentas de design/código com volume moderado.
 | 12 | Gerador de Gradiente CSS | `/ferramentas/gerador-gradiente-css` | gradiente css | ~2.900 | ✅ Implementado |
 | 13 | Recortar Imagem | `/ferramentas/recortar-imagem` | recortar imagem | ~3.600 | ✅ Implementado |
 | 14 | Gerador de Meta Tags | `/ferramentas/gerador-meta-tags` | meta tags gerador | ~2.400 | ✅ Implementado |
-| 15 | Assinatura de Email | `/ferramentas/assinatura-email` | assinatura email | ~2.400 | 🔲 Pendente |
+| 15 | Assinatura de Email | `/ferramentas/assinatura-de-email` | assinatura email | ~2.400 | ✅ Implementado |
 
 ---
 
@@ -100,9 +101,9 @@ Ferramentas que precisariam de API ou processamento server-side.
 |---|---|---|
 | T1 (implementado) | 4 | ~34.800 |
 | T2 (implementado) | 6 | ~38.400 |
-| T3 (parcial) | 4/5 | ~13.300 |
+| T3 (implementado) | 5/5 | ~15.700 |
 | T4 (backend) | 5 | ~26.100 |
-| **Total** | **20** | **~112.600** |
+| **Total** | **20** | **~115.000** |
 
 ---
 
@@ -159,7 +160,6 @@ src/lib/<categoria>/
 
 ## Próximos passos
 
-1. **Tier 3** — Implementar Assinatura de Email (última pendente do Tier 3)
-2. **Tier 4** — Avaliar quais podem ser frontend-only antes de implementar
-3. **Padronização** — Continuar migrando ferramentas existentes para os padrões atuais
-4. **Monitoramento** — Registrar no Google Search Console e acompanhar impressões/cliques por página
+1. **Tier 4** — Avaliar quais ferramentas podem ser frontend-only antes de implementar
+2. **Padronização** — Continuar migrando ferramentas existentes para os padrões atuais
+3. **Monitoramento** — Registrar no Google Search Console e acompanhar impressões/cliques por página

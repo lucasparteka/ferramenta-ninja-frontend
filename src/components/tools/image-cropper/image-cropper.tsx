@@ -4,9 +4,9 @@ import { Download, RotateCcw, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import "react-image-crop/dist/ReactCrop.css";
 import ReactCrop, {
+	type Crop,
 	centerCrop,
 	makeAspectCrop,
-	type Crop,
 	type PixelCrop,
 } from "react-image-crop";
 import { Button } from "@/components/ui/button";
@@ -20,11 +20,7 @@ const ASPECT_RATIOS: Record<string, number | undefined> = {
 	"3:2": 3 / 2,
 };
 
-function buildCenterAspectCrop(
-	width: number,
-	height: number,
-	aspect: number,
-) {
+function buildCenterAspectCrop(width: number, height: number, aspect: number) {
 	return centerCrop(
 		makeAspectCrop({ unit: "%", width: 90 }, aspect, width, height),
 		width,
@@ -81,9 +77,7 @@ export function ImageCropper() {
 		if (!imgRef.current || !completedCrop) return;
 		setIsProcessing(true);
 		try {
-			const fileType = imgSrc.startsWith("blob:")
-				? "image/png"
-				: "image/jpeg";
+			const fileType = imgSrc.startsWith("blob:") ? "image/png" : "image/jpeg";
 			const blob = await getCroppedImgFromElement(
 				imgRef.current,
 				completedCrop,
@@ -198,25 +192,29 @@ export function ImageCropper() {
 							<p className="mb-2 text-center text-xs text-muted-foreground">
 								Arraste as bordas ou o centro da área de corte para ajustar.
 							</p>
-						<div className="flex justify-center overflow-hidden rounded-md border border-border bg-zinc-900">
-							<ReactCrop
-								crop={crop}
-								onChange={(_, percentCrop) => setCrop(percentCrop)}
-								onComplete={(c) => setCompletedCrop(c)}
-								aspect={aspect}
-								minWidth={50}
-								minHeight={50}
-							>
-								{/* biome-ignore lint/performance/noImgElement: object URL */}
-								<img
-									ref={imgRef}
-									alt="Imagem para recortar"
-									src={imgSrc}
-									onLoad={onImageLoad}
-									style={{ maxWidth: "100%", maxHeight: "60vh", display: "block" }}
-								/>
-							</ReactCrop>
-						</div>
+							<div className="flex justify-center overflow-hidden rounded-md border border-border bg-zinc-900">
+								<ReactCrop
+									crop={crop}
+									onChange={(_, percentCrop) => setCrop(percentCrop)}
+									onComplete={(c) => setCompletedCrop(c)}
+									aspect={aspect}
+									minWidth={50}
+									minHeight={50}
+								>
+									{/* biome-ignore lint/performance/noImgElement: object URL */}
+									<img
+										ref={imgRef}
+										alt="Imagem para recortar"
+										src={imgSrc}
+										onLoad={onImageLoad}
+										style={{
+											maxWidth: "100%",
+											maxHeight: "60vh",
+											display: "block",
+										}}
+									/>
+								</ReactCrop>
+							</div>
 						</div>
 
 						<div className="flex flex-wrap gap-2">

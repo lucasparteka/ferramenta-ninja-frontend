@@ -30,6 +30,7 @@ import {
 	LayoutList,
 	LineDotRightHorizontal,
 	type LucideProps,
+	Mail,
 	MapPin,
 	Maximize2,
 	Merge,
@@ -418,6 +419,16 @@ export const categories: ToolCategory[] = [
 				tags: ["seo", "documento"],
 				intent: "analyze",
 			},
+			{
+				name: "Assinatura de Email",
+				href: "/ferramentas/assinatura-de-email",
+				description:
+					"Crie assinaturas de email profissionais com templates e exportação HTML",
+				icon: Mail,
+				tags: ["email", "assinatura", "profissional", "documento"],
+				intent: "generate",
+				weight: 2,
+			},
 		],
 	},
 	{
@@ -789,7 +800,8 @@ export const categories: ToolCategory[] = [
 			{
 				name: "Paleta de Cores",
 				href: "/ferramentas/paleta-de-cores",
-				description: "Gere paletas de cores harmônicas a partir de uma cor base",
+				description:
+					"Gere paletas de cores harmônicas a partir de uma cor base",
 				icon: Palette,
 				tags: ["design", "cores", "css"],
 				intent: "generate",

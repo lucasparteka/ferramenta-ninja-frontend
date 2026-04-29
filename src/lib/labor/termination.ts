@@ -59,7 +59,10 @@ export type TerminationResult = {
 
 const DAY_MS = 86_400_000;
 
-function diffYearsMonths(from: Date, to: Date): {
+function diffYearsMonths(
+	from: Date,
+	to: Date,
+): {
 	years: number;
 	months: number;
 	totalDays: number;
@@ -67,7 +70,7 @@ function diffYearsMonths(from: Date, to: Date): {
 } {
 	let years = to.getUTCFullYear() - from.getUTCFullYear();
 	let months = to.getUTCMonth() - from.getUTCMonth();
-	let days = to.getUTCDate() - from.getUTCDate();
+	const days = to.getUTCDate() - from.getUTCDate();
 
 	if (days < 0) {
 		months -= 1;
@@ -86,13 +89,20 @@ export function noticeDaysFor(yearsAtCompany: number): number {
 	return Math.min(90, 30 + extra);
 }
 
-function avosFromDay(date: Date, fullMonths: number, totalDays: number): number {
+function avosFromDay(
+	date: Date,
+	fullMonths: number,
+	totalDays: number,
+): number {
 	const dayOfMonth = date.getUTCDate();
-	const lastFullMonths = totalDays >= 14 ? fullMonths + (dayOfMonth >= 15 ? 1 : 0) : fullMonths;
+	const lastFullMonths =
+		totalDays >= 14 ? fullMonths + (dayOfMonth >= 15 ? 1 : 0) : fullMonths;
 	return Math.min(12, lastFullMonths);
 }
 
-export function calculateTermination(input: TerminationInput): TerminationResult {
+export function calculateTermination(
+	input: TerminationInput,
+): TerminationResult {
 	const salary = input.monthlySalary;
 	const { years, totalDays, monthsTotal } = diffYearsMonths(
 		input.admissionDate,
@@ -105,7 +115,9 @@ export function calculateTermination(input: TerminationInput): TerminationResult
 
 	const noticeDays = noticeDaysFor(years);
 	const noticeIndemnified =
-		input.noticePolicy === "indemnified" ? round2(salary + (noticeDays - 30) * dailyRate) : 0;
+		input.noticePolicy === "indemnified"
+			? round2(salary + (noticeDays - 30) * dailyRate)
+			: 0;
 
 	const avos13th = avosFromDay(
 		input.terminationDate,
@@ -114,10 +126,16 @@ export function calculateTermination(input: TerminationInput): TerminationResult
 	);
 	const avosVacation = Math.min(12, monthsTotal % 12);
 
-	const showProportional13 = ["no-cause", "resignation", "agreement", "contract-end"].includes(input.type);
+	const showProportional13 = [
+		"no-cause",
+		"resignation",
+		"agreement",
+		"contract-end",
+	].includes(input.type);
 	const showProportionalVac = showProportional13;
 	const showExpiredVac = input.hasExpiredVacation === true;
-	const showNoticeIndem = input.type === "no-cause" || input.type === "agreement";
+	const showNoticeIndem =
+		input.type === "no-cause" || input.type === "agreement";
 
 	const thirteenthProportional = showProportional13
 		? round2((salary * avos13th) / 12)

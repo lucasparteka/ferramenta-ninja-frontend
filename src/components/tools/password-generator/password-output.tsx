@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 type PasswordOutputProps = {
 	password: string;
@@ -20,13 +21,13 @@ export function PasswordOutput({
 				Senha gerada
 			</label>
 			<div className="flex gap-2">
-				<input
+				<Input
 					id="password-output"
 					type="text"
 					readOnly
 					value={password}
 					placeholder='Clique em "Gerar senha"'
-					className="flex-1 rounded-lg border border-border bg-input px-4 py-2 font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+					className="flex-1 font-mono text-foreground"
 				/>
 				<Button
 					variant="outline"

@@ -2,15 +2,11 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/select-native";
 import type { PixKeyType } from "@/lib/pix/generate";
 import { generatePixPayload } from "@/lib/pix/generate";
 import { generateQRCode } from "@/lib/qrcode/generate";
-
-const inputClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
-
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
 
 const KEY_PLACEHOLDERS: Record<PixKeyType, string> = {
 	cpf: "000.000.000-00",
@@ -96,7 +92,7 @@ export function PixQR() {
 					>
 						Tipo de chave
 					</label>
-					<select
+					<NativeSelect
 						id="pix-key-type"
 						value={keyType}
 						onChange={(e) => {
@@ -104,14 +100,14 @@ export function PixQR() {
 							setKey("");
 							resetQR();
 						}}
-						className={selectClass}
+						className="text-foreground"
 					>
 						<option value="cpf">CPF</option>
 						<option value="cnpj">CNPJ</option>
 						<option value="phone">Telefone</option>
 						<option value="email">E-mail</option>
 						<option value="evp">Chave aleatória (EVP)</option>
-					</select>
+					</NativeSelect>
 				</div>
 
 				<div className="space-y-1">
@@ -121,7 +117,7 @@ export function PixQR() {
 					>
 						Chave Pix
 					</label>
-					<input
+					<Input
 						id="pix-key"
 						type="text"
 						placeholder={KEY_PLACEHOLDERS[keyType]}
@@ -130,7 +126,7 @@ export function PixQR() {
 							setKey(e.target.value);
 							resetQR();
 						}}
-						className={inputClass}
+						className="text-foreground"
 					/>
 				</div>
 
@@ -141,7 +137,7 @@ export function PixQR() {
 					>
 						Nome do beneficiário
 					</label>
-					<input
+					<Input
 						id="pix-name"
 						type="text"
 						placeholder="Nome completo ou razão social"
@@ -151,7 +147,7 @@ export function PixQR() {
 							setName(e.target.value);
 							resetQR();
 						}}
-						className={inputClass}
+						className="text-foreground"
 					/>
 				</div>
 
@@ -162,7 +158,7 @@ export function PixQR() {
 					>
 						Cidade
 					</label>
-					<input
+					<Input
 						id="pix-city"
 						type="text"
 						placeholder="São Paulo"
@@ -172,7 +168,7 @@ export function PixQR() {
 							setCity(e.target.value);
 							resetQR();
 						}}
-						className={inputClass}
+						className="text-foreground"
 					/>
 				</div>
 
@@ -183,7 +179,7 @@ export function PixQR() {
 					>
 						Valor (opcional)
 					</label>
-					<input
+					<Input
 						id="pix-amount"
 						type="text"
 						placeholder="0.00"
@@ -192,7 +188,7 @@ export function PixQR() {
 							setAmount(e.target.value);
 							resetQR();
 						}}
-						className={inputClass}
+						className="text-foreground"
 					/>
 				</div>
 
@@ -203,7 +199,7 @@ export function PixQR() {
 					>
 						Descrição (opcional)
 					</label>
-					<input
+					<Input
 						id="pix-desc"
 						type="text"
 						placeholder="Ex: Pagamento do pedido"
@@ -213,7 +209,7 @@ export function PixQR() {
 							setDescription(e.target.value);
 							resetQR();
 						}}
-						className={inputClass}
+						className="text-foreground"
 					/>
 				</div>
 

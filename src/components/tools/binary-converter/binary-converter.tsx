@@ -2,16 +2,9 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { NativeSelect } from "@/components/ui/select-native";
+import { Textarea } from "@/components/ui/textarea";
 import { binaryToText, textToBinary } from "@/lib/encoding/binary";
-
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
-
-const textareaClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none";
-
-const outputClass =
-	"w-full rounded-lg border border-border bg-secondary px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none";
 
 export function BinaryConverter() {
 	const [input, setInput] = useState("");
@@ -74,7 +67,7 @@ export function BinaryConverter() {
 					>
 						Texto de entrada
 					</label>
-					<textarea
+					<Textarea
 						id="bin-input"
 						rows={8}
 						placeholder="Digite o texto ou cole o código binário aqui..."
@@ -83,7 +76,7 @@ export function BinaryConverter() {
 							setInput(e.target.value);
 							resetOutput();
 						}}
-						className={textareaClass}
+						className="bg-input text-foreground resize-none"
 					/>
 				</div>
 
@@ -94,18 +87,18 @@ export function BinaryConverter() {
 					>
 						Separador (texto → binário)
 					</label>
-					<select
+					<NativeSelect
 						id="bin-separator"
 						value={separator}
 						onChange={(e) => {
 							setSeparator(e.target.value);
 							resetOutput();
 						}}
-						className={selectClass}
+						className="bg-input text-foreground"
 					>
 						<option value=" ">Com espaços — 01001000 01100101</option>
 						<option value="">Sem espaços — 0100100001100101</option>
-					</select>
+					</NativeSelect>
 				</div>
 
 				{error && <p className="text-sm text-destructive">{error}</p>}
@@ -137,12 +130,12 @@ export function BinaryConverter() {
 						</Button>
 					)}
 				</div>
-				<textarea
+				<Textarea
 					rows={8}
 					readOnly
 					value={output}
 					placeholder="O resultado aparecerá aqui..."
-					className={outputClass}
+					className="bg-secondary text-foreground resize-none"
 				/>
 			</div>
 		</div>

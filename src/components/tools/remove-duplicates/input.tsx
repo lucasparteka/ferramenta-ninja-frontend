@@ -1,3 +1,5 @@
+import { Textarea } from "@/components/ui/textarea";
+
 type RemoveDuplicatesInputProps = {
 	value: string;
 	onChange: (value: string) => void;
@@ -15,13 +17,13 @@ export function RemoveDuplicatesInput({
 			>
 				Lista Original
 			</label>
-			<textarea
+			<Textarea
 				id="duplicates-input"
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
 				placeholder="Cole a lista aqui, um item por linha..."
 				rows={12}
-				className="w-full resize-y rounded-lg border border-border bg-input p-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+				className="resize-y p-4 text-foreground"
 			/>
 		</div>
 	);

@@ -20,9 +20,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					SAC × Price
-				</h2>
+				<h2 className="mb-4 text-xl font-bold text-foreground">SAC × Price</h2>
 				<p>
 					O Sistema de Amortização Constante (SAC) mantém a parcela de
 					amortização fixa, com juros decrescentes, gerando parcelas que
@@ -30,9 +28,9 @@ function SeoContent() {
 					Caixa.
 				</p>
 				<p className="mt-3">
-					A Tabela Price mantém a parcela total fixa, calculada pela fórmula
-					PMT = P × i / (1 − (1 + i)<sup>−n</sup>). É comum em financiamento
-					de veículos e crédito consignado.
+					A Tabela Price mantém a parcela total fixa, calculada pela fórmula PMT
+					= P × i / (1 − (1 + i)<sup>−n</sup>). É comum em financiamento de
+					veículos e crédito consignado.
 				</p>
 				<p className="mt-3">
 					Para o mesmo principal, taxa e prazo, o SAC paga menos juros totais,
@@ -51,8 +49,8 @@ function SeoContent() {
 						cálculo de comprometimento de renda (geralmente 30%).
 					</li>
 					<li>
-						<strong>Última parcela:</strong> mostra o decrescimento (SAC) ou
-						a constância (Price).
+						<strong>Última parcela:</strong> mostra o decrescimento (SAC) ou a
+						constância (Price).
 					</li>
 					<li>
 						<strong>Total em juros:</strong> custo financeiro total do

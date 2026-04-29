@@ -3,6 +3,8 @@
 import JsBarcode from "jsbarcode";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/select-native";
 
 type BarcodeFormat = "EAN13" | "UPC" | "EAN8" | "CODE128" | "CODE39" | "ITF14";
 
@@ -38,12 +40,6 @@ const FORMATS: { value: BarcodeFormat; label: string; hint: string }[] = [
 		hint: "Digite 13 dígitos. O 14º (verificador) é calculado automaticamente.",
 	},
 ];
-
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
-
-const inputClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
 
 export function BarcodeGenerator() {
 	const [format, setFormat] = useState<BarcodeFormat>("EAN13");
@@ -104,7 +100,7 @@ export function BarcodeGenerator() {
 					>
 						Formato
 					</label>
-					<select
+					<NativeSelect
 						id="bc-format"
 						value={format}
 						onChange={(e) => {
@@ -112,14 +108,14 @@ export function BarcodeGenerator() {
 							setGenerated(false);
 							setError("");
 						}}
-						className={selectClass}
+						className="text-foreground"
 					>
 						{FORMATS.map((f) => (
 							<option key={f.value} value={f.value}>
 								{f.label}
 							</option>
 						))}
-					</select>
+					</NativeSelect>
 					<p className="text-xs text-muted-foreground">
 						{currentFormat?.hint || ""}
 					</p>
@@ -132,7 +128,7 @@ export function BarcodeGenerator() {
 					>
 						Valor
 					</label>
-					<input
+					<Input
 						id="bc-value"
 						type="text"
 						placeholder="Digite o valor..."
@@ -142,7 +138,7 @@ export function BarcodeGenerator() {
 							setGenerated(false);
 							setError("");
 						}}
-						className={inputClass}
+						className="text-foreground"
 					/>
 				</div>
 

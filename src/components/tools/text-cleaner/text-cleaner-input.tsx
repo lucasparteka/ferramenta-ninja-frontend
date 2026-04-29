@@ -87,7 +87,7 @@ export function TextCleanerInput({ value, onChange }: Props) {
 					value={value}
 					onChange={(e) => onChange(e.target.value)}
 					placeholder="Cole seu texto aqui ou arraste um arquivo..."
-					className="min-h-48 resize-y border-0 font-mono text-sm"
+					className="min-h-48 resize-y border-0 font-mono"
 				/>
 			</section>
 		</div>

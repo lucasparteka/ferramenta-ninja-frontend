@@ -1,3 +1,6 @@
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/select-native";
+
 type GeneratorType = "lorem" | "random";
 type UnitType = "words" | "sentences" | "paragraphs";
 
@@ -12,9 +15,6 @@ type GeneratorControlsProps = {
 	options: GeneratorOptions;
 	onChange: (options: GeneratorOptions) => void;
 };
-
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
 
 export function GeneratorControls({
 	options,
@@ -43,15 +43,15 @@ export function GeneratorControls({
 				>
 					Tipo de texto
 				</label>
-				<select
+				<NativeSelect
 					id="generator-type"
 					value={options.type}
 					onChange={(e) => set("type", e.target.value as GeneratorType)}
-					className={selectClass}
+					className="text-foreground"
 				>
 					<option value="lorem">Lorem Ipsum</option>
 					<option value="random">Texto aleatório</option>
-				</select>
+				</NativeSelect>
 			</div>
 
 			<div className="space-y-2">
@@ -61,14 +61,14 @@ export function GeneratorControls({
 				>
 					Quantidade
 				</label>
-				<input
+				<Input
 					id="generator-quantity"
 					type="number"
 					min={1}
 					max={100}
 					value={options.quantity}
 					onChange={(e) => handleQuantity(e.target.value)}
-					className={selectClass}
+					className="text-foreground"
 				/>
 			</div>
 
@@ -79,16 +79,16 @@ export function GeneratorControls({
 				>
 					Formato
 				</label>
-				<select
+				<NativeSelect
 					id="generator-unit"
 					value={options.unit}
 					onChange={(e) => set("unit", e.target.value as UnitType)}
-					className={selectClass}
+					className="text-foreground"
 				>
 					<option value="words">Palavras</option>
 					<option value="sentences">Frases</option>
 					<option value="paragraphs">Parágrafos</option>
-				</select>
+				</NativeSelect>
 			</div>
 
 			{options.type === "lorem" && (

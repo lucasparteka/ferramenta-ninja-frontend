@@ -9,9 +9,9 @@ export function SalaryContent() {
 	const [result, setResult] = useState<CalculateResult | null>(null);
 
 	return (
-		<div className="flex flex-col lg:flex-row gap-6">
+		<div className="space-y-6">
 			<SalaryCalculatorForm onCalculate={setResult} />
-			<SalaryResultCard result={result} />
+			{result && <SalaryResultCard result={result} />}
 		</div>
 	);
 }

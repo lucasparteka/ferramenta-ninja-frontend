@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { validateCPF } from "@/lib/cpf/validate";
 
 export function CpfValidator() {
@@ -26,14 +27,14 @@ export function CpfValidator() {
 				>
 					Digite um CPF para validar
 				</label>
-				<input
+				<Input
 					id="cpf-validate-input"
 					type="text"
 					value={input}
 					onChange={(e) => handleInput(e.target.value)}
 					placeholder="000.000.000-00"
 					maxLength={14}
-					className="w-full max-w-xs rounded-lg border border-border bg-input px-3 py-2 font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+					className="max-w-xs font-mono text-foreground"
 				/>
 			</div>
 

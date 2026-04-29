@@ -45,6 +45,48 @@ export async function getCroppedImg(
 	});
 }
 
+export async function getCroppedImgFromElement(
+	image: HTMLImageElement,
+	pixelCrop: PixelCrop,
+	outputFormat: "image/png" | "image/jpeg" = "image/png",
+): Promise<Blob> {
+	const scaleX = image.naturalWidth / image.width;
+	const scaleY = image.naturalHeight / image.height;
+
+	const canvas = document.createElement("canvas");
+	canvas.width = Math.floor(pixelCrop.width * scaleX);
+	canvas.height = Math.floor(pixelCrop.height * scaleY);
+	const ctx = canvas.getContext("2d");
+
+	if (!ctx) throw new Error("Cannot get canvas context");
+
+	ctx.drawImage(
+		image,
+		pixelCrop.x * scaleX,
+		pixelCrop.y * scaleY,
+		pixelCrop.width * scaleX,
+		pixelCrop.height * scaleY,
+		0,
+		0,
+		canvas.width,
+		canvas.height,
+	);
+
+	return new Promise((resolve, reject) => {
+		canvas.toBlob(
+			(blob) => {
+				if (!blob) {
+					reject(new Error("Canvas is empty"));
+					return;
+				}
+				resolve(blob);
+			},
+			outputFormat,
+			1,
+		);
+	});
+}
+
 function createImage(url: string): Promise<HTMLImageElement> {
 	return new Promise((resolve, reject) => {
 		const img = new Image();

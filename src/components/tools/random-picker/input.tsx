@@ -1,3 +1,5 @@
+import { Textarea } from "@/components/ui/textarea";
+
 type RandomPickerInputProps = {
 	value: string;
 	onChange: (value: string) => void;
@@ -24,13 +26,13 @@ export function RandomPickerInput({
 					</span>
 				)}
 			</div>
-			<textarea
+			<Textarea
 				id="picker-input"
 				value={value}
 				onChange={(e) => onChange(e.target.value)}
 				placeholder={"Ana\nBruno\nCarla\nDaniel"}
 				rows={10}
-				className="w-full resize-y rounded-lg border border-border bg-input p-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+				className="resize-y p-4 text-foreground"
 			/>
 		</div>
 	);

@@ -2,13 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { morseToText, textToMorse } from "@/lib/encoding/morse";
-
-const textareaClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none";
-
-const outputClass =
-	"w-full rounded-lg border border-border bg-secondary px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none";
 
 export function MorseConverter() {
 	const [input, setInput] = useState("");
@@ -70,7 +65,7 @@ export function MorseConverter() {
 					>
 						Texto de entrada
 					</label>
-					<textarea
+					<Textarea
 						id="morse-input"
 						rows={8}
 						placeholder="Digite o texto ou cole o código Morse aqui..."
@@ -79,7 +74,7 @@ export function MorseConverter() {
 							setInput(e.target.value);
 							resetOutput();
 						}}
-						className={textareaClass}
+						className="bg-input text-foreground resize-none"
 					/>
 				</div>
 
@@ -120,12 +115,12 @@ export function MorseConverter() {
 						</Button>
 					)}
 				</div>
-				<textarea
+				<Textarea
 					rows={8}
 					readOnly
 					value={output}
 					placeholder="O resultado aparecerá aqui..."
-					className={outputClass}
+					className="bg-secondary text-foreground resize-none"
 				/>
 			</div>
 		</div>

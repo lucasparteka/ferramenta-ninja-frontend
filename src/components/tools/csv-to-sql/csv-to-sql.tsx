@@ -3,6 +3,8 @@
 import { Check, Copy, Download, Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 type Dialect = "mysql" | "postgresql" | "sqlite" | "oracle" | "sqlserver";
 type ToolState = "idle" | "converting" | "done" | "error";
@@ -350,7 +352,7 @@ export function CsvToSql() {
 					>
 						Nome da tabela
 					</label>
-					<input
+					<Input
 						id="table-name"
 						type="text"
 						value={tableName}
@@ -367,7 +369,7 @@ export function CsvToSql() {
 								);
 							}
 						}}
-						className="w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+						className="bg-card text-foreground"
 					/>
 				</div>
 
@@ -505,7 +507,7 @@ export function CsvToSql() {
 				aria-hidden="true"
 			/>
 
-			<textarea
+			<Textarea
 				value={pasteText}
 				onChange={(e) => {
 					setPasteText(e.target.value);
@@ -520,7 +522,7 @@ export function CsvToSql() {
 				placeholder="Ou cole o CSV aqui..."
 				rows={5}
 				aria-label="Cole o conteúdo CSV aqui"
-				className="w-full resize-y rounded-lg border border-border bg-card px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+				className="resize-y bg-card font-mono text-foreground"
 			/>
 
 			{state === "error" && (
@@ -580,12 +582,12 @@ export function CsvToSql() {
 						</div>
 					</div>
 
-					<textarea
+					<Textarea
 						readOnly
 						value={sql}
 						aria-label="SQL gerado"
 						rows={16}
-						className="w-full resize-y rounded-lg border border-border bg-secondary px-4 py-3 font-mono text-xs text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+						className="resize-y bg-secondary font-mono text-xs text-foreground"
 					/>
 
 					<Button

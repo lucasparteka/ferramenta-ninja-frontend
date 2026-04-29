@@ -20,7 +20,8 @@
   "prettier.enable": false,
   "eslint.format.enable": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
   "js/ts.preferences.importModuleSpecifier": "non-relative",
 }

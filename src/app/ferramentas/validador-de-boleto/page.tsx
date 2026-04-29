@@ -45,10 +45,14 @@ function SeoContent() {
 				<ul className="list-disc space-y-2 pl-6">
 					<li>Banco emissor (3 primeiros dígitos do boleto bancário).</li>
 					<li>Valor exato do documento.</li>
-					<li>Data de vencimento (calculada a partir do fator de vencimento).</li>
+					<li>
+						Data de vencimento (calculada a partir do fator de vencimento).
+					</li>
 					<li>Código de barras de 44 dígitos reconstruído.</li>
 					<li>Validação dos dígitos verificadores de cada campo.</li>
-					<li>Segmento da arrecadação (energia, saneamento, prefeitura etc.).</li>
+					<li>
+						Segmento da arrecadação (energia, saneamento, prefeitura etc.).
+					</li>
 				</ul>
 			</section>
 
@@ -62,9 +66,9 @@ function SeoContent() {
 							A validação garante que o boleto será pago?
 						</h3>
 						<p>
-							Não. A ferramenta confere apenas a integridade matemática da
-							linha digitável. O status de pagamento, registro e baixa só pode
-							ser obtido junto ao banco emissor.
+							Não. A ferramenta confere apenas a integridade matemática da linha
+							digitável. O status de pagamento, registro e baixa só pode ser
+							obtido junto ao banco emissor.
 						</p>
 					</div>
 					<div>

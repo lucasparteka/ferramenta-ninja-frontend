@@ -24,16 +24,21 @@ function SeoContent() {
 					O que são juros compostos
 				</h2>
 				<p>
-					Juros compostos são juros calculados sobre o saldo acumulado, ou
-					seja, juros que rendem juros. A fórmula básica é{" "}
-					<strong>M = P × (1 + i)<sup>n</sup></strong>, onde M é o montante,
-					P o capital inicial, i a taxa do período e n o número de períodos.
+					Juros compostos são juros calculados sobre o saldo acumulado, ou seja,
+					juros que rendem juros. A fórmula básica é{" "}
+					<strong>
+						M = P × (1 + i)<sup>n</sup>
+					</strong>
+					, onde M é o montante, P o capital inicial, i a taxa do período e n o
+					número de períodos.
 				</p>
 				<p className="mt-3">
 					Quando há aportes mensais, soma-se o termo{" "}
-					<strong>PMT × [((1 + i)<sup>n</sup> − 1) / i]</strong>. Esta
-					calculadora gera a evolução mês a mês, distinguindo aportes feitos no
-					início (annuity-due) ou no fim do período (annuity-end).
+					<strong>
+						PMT × [((1 + i)<sup>n</sup> − 1) / i]
+					</strong>
+					. Esta calculadora gera a evolução mês a mês, distinguindo aportes
+					feitos no início (annuity-due) ou no fim do período (annuity-end).
 				</p>
 			</section>
 
@@ -59,9 +64,8 @@ function SeoContent() {
 							A taxa informada é nominal ou efetiva?
 						</h3>
 						<p>
-							A taxa anual é convertida em mensal equivalente pela fórmula{" "}
-							(1 + i<sub>a</sub>)<sup>1/12</sup> − 1, considerada a taxa
-							efetiva.
+							A taxa anual é convertida em mensal equivalente pela fórmula (1 +
+							i<sub>a</sub>)<sup>1/12</sup> − 1, considerada a taxa efetiva.
 						</p>
 					</div>
 					<div>
@@ -69,8 +73,8 @@ function SeoContent() {
 							A simulação considera impostos?
 						</h3>
 						<p>
-							Não. Para simular impostos sobre renda fixa, use a calculadora
-							de rendimento CDI/Selic.
+							Não. Para simular impostos sobre renda fixa, use a calculadora de
+							rendimento CDI/Selic.
 						</p>
 					</div>
 					<div>

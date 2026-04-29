@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { NativeSelect } from "@/components/ui/select-native";
 
 type OcrLanguage = "por" | "eng" | "spa";
 
@@ -32,19 +33,19 @@ export function OcrControls({
 				>
 					Idioma do texto
 				</label>
-				<select
+				<NativeSelect
 					id="ocr-language"
 					value={language}
 					onChange={(e) => onLanguageChange(e.target.value as OcrLanguage)}
 					disabled={disabled}
-					className="w-full rounded-lg border border-input bg-secondary px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+					className="bg-secondary text-foreground disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					{LANGUAGE_OPTIONS.map((option) => (
 						<option key={option.value} value={option.value}>
 							{option.label}
 						</option>
 					))}
-				</select>
+				</NativeSelect>
 			</div>
 			<Button className="w-full" disabled={disabled} onClick={onExtract}>
 				Extrair texto

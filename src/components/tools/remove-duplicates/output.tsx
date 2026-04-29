@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 type RemoveDuplicatesOutputProps = {
 	value: string;
@@ -24,13 +25,13 @@ export function RemoveDuplicatesOutput({
 					{copied ? "Copiado!" : "Copiar"}
 				</Button>
 			</div>
-			<textarea
+			<Textarea
 				id="duplicates-output"
 				readOnly
 				value={value}
 				placeholder='Clique em "Remover duplicatas" para ver o resultado...'
 				rows={12}
-				className="w-full resize-y rounded-lg border border-border bg-input p-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+				className="resize-y p-4 text-foreground"
 			/>
 			{copied && <p className="text-sm text-success">Texto copiado!</p>}
 		</div>

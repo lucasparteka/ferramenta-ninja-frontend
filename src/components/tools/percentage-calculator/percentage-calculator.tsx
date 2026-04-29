@@ -1,6 +1,7 @@
 "use client";
 
 import { type ReactNode, useState } from "react";
+import { Input } from "@/components/ui/input";
 import {
 	decreaseByPercent,
 	increaseByPercent,
@@ -9,8 +10,7 @@ import {
 	whatPercent,
 } from "@/lib/math/percentage";
 
-const INPUT_CLASS =
-	"w-28 rounded-lg border border-border bg-input px-2 py-1.5 text-center text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
+const INPUT_CLASS = "w-28 px-2 py-1.5 text-center text-foreground";
 
 function toNum(value: string): number | null {
 	const n = Number(value);
@@ -124,7 +124,7 @@ export function PercentageCalculator() {
 				sentence={
 					<>
 						<span>Quanto é</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c1p}
@@ -133,7 +133,7 @@ export function PercentageCalculator() {
 							aria-label="Porcentagem"
 						/>
 						<span>% de</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c1v}
@@ -152,7 +152,7 @@ export function PercentageCalculator() {
 				sentence={
 					<>
 						<span>O valor</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c2p}
@@ -161,7 +161,7 @@ export function PercentageCalculator() {
 							aria-label="Valor parcial"
 						/>
 						<span>é qual porcentagem de</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c2t}
@@ -180,7 +180,7 @@ export function PercentageCalculator() {
 				sentence={
 					<>
 						<span>Eu tenho um valor de</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c3f}
@@ -189,7 +189,7 @@ export function PercentageCalculator() {
 							aria-label="Valor original"
 						/>
 						<span>que mudou para</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c3t}
@@ -208,7 +208,7 @@ export function PercentageCalculator() {
 				sentence={
 					<>
 						<span>Eu tenho um valor de</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c4v}
@@ -218,7 +218,7 @@ export function PercentageCalculator() {
 						/>
 						<span>e quero</span>
 						<span className="font-semibold text-success">AUMENTAR</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c4p}
@@ -237,7 +237,7 @@ export function PercentageCalculator() {
 				sentence={
 					<>
 						<span>Eu tenho um valor de</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c5v}
@@ -247,7 +247,7 @@ export function PercentageCalculator() {
 						/>
 						<span>e quero</span>
 						<span className="font-semibold text-destructive">DIMINUIR</span>
-						<input
+						<Input
 							className={INPUT_CLASS}
 							type="number"
 							value={c5p}

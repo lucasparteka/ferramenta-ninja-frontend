@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import {
 	decodePixBrCode,
 	formatBRL,
@@ -40,13 +41,13 @@ export function DecodificadorPixClient() {
 				>
 					Insira o PIX Copia e Cola
 				</label>
-				<textarea
+				<Textarea
 					id="pix-input"
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
 					placeholder="00020126..."
 					rows={6}
-					className="w-full rounded-lg border bg-input border-border px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring font-mono"
+					className="text-foreground font-mono"
 				/>
 			</div>
 

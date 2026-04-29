@@ -77,150 +77,149 @@ export function SalaryCalculatorForm(props: SalaryCalculatorFormProps) {
 	}
 
 	return (
-		<div className="w-full md:max-w-2xl border border-zinc-200 rounded-md p-6">
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-					<FormField
-						control={form.control}
-						name="grossSalary"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Salário Bruto*</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-gray-500">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Valor total do salário antes dos descontos de INSS, IRRF e
-											outros. É o valor do salário assinado em carteira.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<CurrencyInput
-										onChangeValue={(_, numberValue, maskedValue) =>
-											handleCurrencyInputChange(
-												"grossSalary",
-												numberValue as number,
-												maskedValue as string,
-											)
-										}
-										value={form.getValues("grossSalary")}
-										InputElement={
-											<Input type="text" placeholder="R$" {...field} />
-										}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+		<Form {...form}>
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="space-y-6 max-w-2xl"
+			>
+				<FormField
+					control={form.control}
+					name="grossSalary"
+					render={({ field }) => (
+						<FormItem>
+							<div className="flex items-center justify-between">
+								<FormLabel>Salário Bruto*</FormLabel>
+								<Popover>
+									<PopoverTrigger className="text-gray-500">
+										<Info size={16} />
+									</PopoverTrigger>
+									<PopoverContent className="w-60 text-sm">
+										Valor total do salário antes dos descontos de INSS, IRRF e
+										outros. É o valor do salário assinado em carteira.
+									</PopoverContent>
+								</Popover>
+							</div>
+							<FormControl>
+								<CurrencyInput
+									onChangeValue={(_, numberValue, maskedValue) =>
+										handleCurrencyInputChange(
+											"grossSalary",
+											numberValue as number,
+											maskedValue as string,
+										)
+									}
+									value={form.getValues("grossSalary")}
+									InputElement={
+										<Input type="text" placeholder="R$" {...field} />
+									}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
-					<FormField
-						control={form.control}
-						name="dependents"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Número de dependentes</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-gray-500">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Dependentes legais do trabalhador. Usados para cálculo de
-											benefícios do imposto de renda.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<Input type="number" min={0} placeholder="0" {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+				<FormField
+					control={form.control}
+					name="dependents"
+					render={({ field }) => (
+						<FormItem>
+							<div className="flex items-center justify-between">
+								<FormLabel>Número de dependentes</FormLabel>
+								<Popover>
+									<PopoverTrigger className="text-gray-500">
+										<Info size={16} />
+									</PopoverTrigger>
+									<PopoverContent className="w-60 text-sm">
+										Dependentes legais do trabalhador. Usados para cálculo de
+										benefícios do imposto de renda.
+									</PopoverContent>
+								</Popover>
+							</div>
+							<FormControl>
+								<Input type="number" min={0} placeholder="0" {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
-					<FormField
-						control={form.control}
-						name="otherDiscounts"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Outros descontos</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-gray-500">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Informe valores como vale-transporte, empréstimos, pensões
-											ou contribuições adicionais.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<CurrencyInput
-										onChangeValue={(_, numberValue, maskedValue) =>
-											handleCurrencyInputChange(
-												"otherDiscounts",
-												numberValue as number,
-												maskedValue as string,
-											)
-										}
-										value={form.getValues("otherDiscounts")}
-										InputElement={
-											<Input type="text" placeholder="R$" {...field} />
-										}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+				<FormField
+					control={form.control}
+					name="otherDiscounts"
+					render={({ field }) => (
+						<FormItem>
+							<div className="flex items-center justify-between">
+								<FormLabel>Outros descontos</FormLabel>
+								<Popover>
+									<PopoverTrigger className="text-gray-500">
+										<Info size={16} />
+									</PopoverTrigger>
+									<PopoverContent className="w-60 text-sm">
+										Informe valores como vale-transporte, empréstimos, pensões
+										ou contribuições adicionais.
+									</PopoverContent>
+								</Popover>
+							</div>
+							<FormControl>
+								<CurrencyInput
+									onChangeValue={(_, numberValue, maskedValue) =>
+										handleCurrencyInputChange(
+											"otherDiscounts",
+											numberValue as number,
+											maskedValue as string,
+										)
+									}
+									value={form.getValues("otherDiscounts")}
+									InputElement={
+										<Input type="text" placeholder="R$" {...field} />
+									}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
-					<FormField
-						control={form.control}
-						name="benefits"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Benefícios</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-gray-500">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Inclua valores extras além do salário bruto, como
-											vale-alimentação, bônus, ajudas de custo entre outros.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<CurrencyInput
-										onChangeValue={(_, numberValue, maskedValue) =>
-											handleCurrencyInputChange(
-												"benefits",
-												numberValue as number,
-												maskedValue as string,
-											)
-										}
-										value={form.getValues("benefits")}
-										InputElement={
-											<Input type="text" placeholder="R$" {...field} />
-										}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+				<FormField
+					control={form.control}
+					name="benefits"
+					render={({ field }) => (
+						<FormItem>
+							<div className="flex items-center justify-between">
+								<FormLabel>Benefícios</FormLabel>
+								<Popover>
+									<PopoverTrigger className="text-gray-500">
+										<Info size={16} />
+									</PopoverTrigger>
+									<PopoverContent className="w-60 text-sm">
+										Inclua valores extras além do salário bruto, como
+										vale-alimentação, bônus, ajudas de custo entre outros.
+									</PopoverContent>
+								</Popover>
+							</div>
+							<FormControl>
+								<CurrencyInput
+									onChangeValue={(_, numberValue, maskedValue) =>
+										handleCurrencyInputChange(
+											"benefits",
+											numberValue as number,
+											maskedValue as string,
+										)
+									}
+									value={form.getValues("benefits")}
+									InputElement={
+										<Input type="text" placeholder="R$" {...field} />
+									}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 
-					<Button type="submit" className="w-full md:w-auto">
-						Calcular salário líquido
-					</Button>
-				</form>
-			</Form>
-		</div>
+				<Button type="submit">Calcular salário líquido</Button>
+			</form>
+		</Form>
 	);
 }

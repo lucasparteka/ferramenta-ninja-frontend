@@ -135,7 +135,9 @@ export function DateInput({
 								if (maxDate && d > maxDate) return true;
 								return false;
 							}}
-							defaultMonth={selected && isValid(selected) ? selected : undefined}
+							defaultMonth={
+								selected && isValid(selected) ? selected : undefined
+							}
 							locale={ptBR as never}
 						/>
 					</PopoverContent>

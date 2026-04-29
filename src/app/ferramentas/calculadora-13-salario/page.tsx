@@ -45,16 +45,14 @@ function SeoContent() {
 					com as férias do mesmo ano.
 				</p>
 				<p className="mt-3">
-					O valor da 1ª parcela permanece o mesmo (50% do bruto). Apenas a
-					data de pagamento muda — em vez de ser paga até 30 de novembro,
-					antecipa-se para a ocasião das férias.
+					O valor da 1ª parcela permanece o mesmo (50% do bruto). Apenas a data
+					de pagamento muda — em vez de ser paga até 30 de novembro, antecipa-se
+					para a ocasião das férias.
 				</p>
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Descontos
-				</h2>
+				<h2 className="mb-4 text-xl font-bold text-foreground">Descontos</h2>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>
 						<strong>INSS:</strong> calculado sobre o 13º total, conforme tabela

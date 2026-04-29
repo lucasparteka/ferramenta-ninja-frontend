@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+
 type PasswordConfig = {
 	length: number;
 	uppercase: boolean;
@@ -43,13 +45,13 @@ export function PasswordOptions({ config, onChange }: PasswordOptionsProps) {
 					>
 						Tamanho da senha
 					</label>
-					<input
+					<Input
 						type="number"
 						value={config.length}
 						min={4}
 						max={64}
 						onChange={(e) => handleLength(Number(e.target.value))}
-						className="w-16 rounded-lg border border-border bg-input px-2 py-1 text-center text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+						className="w-16 text-center text-foreground"
 						aria-label="Tamanho da senha em caracteres"
 					/>
 				</div>

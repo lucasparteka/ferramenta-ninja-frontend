@@ -57,8 +57,14 @@ describe("calculateCompoundInterest", () => {
 			annualRate: 0.12,
 			months: 12,
 		};
-		const begin = calculateCompoundInterest({ ...base, contributionTiming: "begin" });
-		const end = calculateCompoundInterest({ ...base, contributionTiming: "end" });
+		const begin = calculateCompoundInterest({
+			...base,
+			contributionTiming: "begin",
+		});
+		const end = calculateCompoundInterest({
+			...base,
+			contributionTiming: "end",
+		});
 		expect(begin.finalBalance).toBeGreaterThan(end.finalBalance);
 	});
 });

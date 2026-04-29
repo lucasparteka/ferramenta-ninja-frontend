@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
 	calculateVacation,
 	entitledVacationDays,
-	maxAbonoDays,
 	MIN_VACATION_PERIOD_DAYS,
+	maxAbonoDays,
 } from "./vacation";
 
 describe("entitledVacationDays", () => {

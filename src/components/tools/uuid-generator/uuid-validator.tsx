@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { validateUuid } from "@/lib/uuid/validate";
 
@@ -40,14 +41,14 @@ export function UuidValidator() {
 		<div className="space-y-4">
 			<div className="space-y-1">
 				<Label htmlFor="uuid-validate-input">UUID para validar</Label>
-				<input
+				<Input
 					id="uuid-validate-input"
 					type="text"
 					value={input}
 					onChange={(e) => handleInput(e.target.value)}
 					onKeyDown={handleKeyDown}
 					placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-					className="w-full max-w-lg rounded-lg border border-border bg-input px-3 py-2 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+					className="max-w-lg font-mono text-foreground"
 				/>
 			</div>
 

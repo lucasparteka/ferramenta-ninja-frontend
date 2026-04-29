@@ -70,7 +70,7 @@ export function DiffInputs({
 					value={leftText}
 					onChange={(e) => onLeftChange(e.target.value)}
 					placeholder="Cole o texto original aqui..."
-					className="min-h-48 resize-y font-mono text-sm"
+					className="min-h-48 resize-y font-mono"
 				/>
 			</div>
 
@@ -84,7 +84,7 @@ export function DiffInputs({
 					value={rightText}
 					onChange={(e) => onRightChange(e.target.value)}
 					placeholder="Cole o texto modificado aqui..."
-					className="min-h-48 resize-y font-mono text-sm"
+					className="min-h-48 resize-y font-mono"
 				/>
 			</div>
 		</div>

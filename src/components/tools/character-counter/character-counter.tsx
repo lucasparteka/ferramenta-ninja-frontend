@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { CharacterCounterStats } from "./character-counter-stats";
 
 type CounterResult = {
@@ -50,13 +51,13 @@ export function CharacterCounter() {
 				<label htmlFor="text-input" className="sr-only">
 					Texto para análise
 				</label>
-				<textarea
+				<Textarea
 					id="text-input"
 					value={text}
 					onChange={(e) => setText(e.target.value)}
 					placeholder="Digite ou cole seu texto aqui"
 					rows={10}
-					className="w-full resize-y rounded-lg border border-border bg-input p-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+					className="resize-y p-4 text-foreground"
 				/>
 			</div>
 

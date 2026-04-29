@@ -103,267 +103,265 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 	}
 
 	return (
-		<div className="w-full md:max-w-2xl border border-zinc-200 rounded-md p-6">
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-					<div className="space-y-4">
-						<h3 className="text-lg font-semibold">Dados do Funcionário</h3>
+		<Form {...form}>
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="space-y-6 max-w-2xl"
+			>
+				<div className="space-y-4">
+					<h3 className="text-lg font-semibold">Dados do Funcionário</h3>
 
-						<FormField
-							control={form.control}
-							name="grossSalary"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Salário Bruto*</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Valor total do salário antes de quaisquer descontos. É o
-												valor do salário registrado em carteira.
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<CurrencyInput
-											onChangeValue={(_, numberValue, maskedValue) =>
-												handleCurrencyInputChange(
-													"grossSalary",
-													numberValue as number,
-													maskedValue as string,
-												)
-											}
-											value={form.getValues("grossSalary")}
-											InputElement={
-												<Input type="text" placeholder="R$" {...field} />
-											}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name="grossSalary"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Salário Bruto*</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Valor total do salário antes de quaisquer descontos. É o
+											valor do salário registrado em carteira.
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<CurrencyInput
+										onChangeValue={(_, numberValue, maskedValue) =>
+											handleCurrencyInputChange(
+												"grossSalary",
+												numberValue as number,
+												maskedValue as string,
+											)
+										}
+										value={form.getValues("grossSalary")}
+										InputElement={
+											<Input type="text" placeholder="R$" {...field} />
+										}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name="contractualHours"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Horas Contratuais*</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Total de horas mensais contratadas. O padrão é 220 horas
-												por mês (8h por dia, 44h por semana).
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<Input type="tel" min={1} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name="contractualHours"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Horas Contratuais*</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Total de horas mensais contratadas. O padrão é 220 horas
+											por mês (8h por dia, 44h por semana).
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<Input type="tel" min={1} {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name="isNighttimeWork"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Tipo de Hora*</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Selecione se as horas informadas já são noturnas ou se
-												são diurnas que precisam ser convertidas.
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<NativeSelect
-											value={field.value}
-											onChange={(e) => field.onChange(e.target.value)}
-										>
-											<option value="no">Diurnas</option>
-											<option value="yes">Noturnas</option>
-										</NativeSelect>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name="isNighttimeWork"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Tipo de Hora*</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Selecione se as horas informadas já são noturnas ou se são
+											diurnas que precisam ser convertidas.
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<NativeSelect
+										value={field.value}
+										onChange={(e) => field.onChange(e.target.value)}
+									>
+										<option value="no">Diurnas</option>
+										<option value="yes">Noturnas</option>
+									</NativeSelect>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name="workedHours"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Horas Trabalhadas*</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Total de horas trabalhadas no período a ser convertido
-												em horas noturnas, se aplicável.
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<Input type="tel" min={0} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name="workedHours"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Horas Trabalhadas*</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Total de horas trabalhadas no período a ser convertido em
+											horas noturnas, se aplicável.
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<Input type="tel" min={0} {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name="minutes"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Minutos</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Minutos adicionais para complementar as horas
-												trabalhadas.
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<Input type="tel" min={0} max={59} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name="minutes"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Minutos</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Minutos adicionais para complementar as horas trabalhadas.
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<Input type="tel" min={0} max={59} {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name="usefulDays"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Dias Úteis no Mês*</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Total de dias úteis no mês, excluindo fins de semana e
-												feriados.
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<Input type="tel" min={1} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name="usefulDays"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Dias Úteis no Mês*</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Total de dias úteis no mês, excluindo fins de semana e
+											feriados.
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<Input type="tel" min={1} {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name="holidaysAndSundays"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Domingos e Feriados no Mês</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Quantidade de domingos e feriados no mês para cálculo de
-												RSR/DSR.
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<Input type="tel" min={0} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name="holidaysAndSundays"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Domingos e Feriados no Mês</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Quantidade de domingos e feriados no mês para cálculo de
+											RSR/DSR.
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<Input type="tel" min={0} {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name="isRural"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Trabalhador Rural*</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Trabalhadores rurais têm direito a adicional noturno de
-												25%. Urbanos recebem 20%. Selecione conforme o caso.
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<NativeSelect
-											value={field.value}
-											onChange={(e) => field.onChange(e.target.value)}
-										>
-											<option value="no">Não</option>
-											<option value="yes">Sim</option>
-										</NativeSelect>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+					<FormField
+						control={form.control}
+						name="isRural"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Trabalhador Rural*</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Trabalhadores rurais têm direito a adicional noturno de
+											25%. Urbanos recebem 20%. Selecione conforme o caso.
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<NativeSelect
+										value={field.value}
+										onChange={(e) => field.onChange(e.target.value)}
+									>
+										<option value="no">Não</option>
+										<option value="yes">Sim</option>
+									</NativeSelect>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-						<FormField
-							control={form.control}
-							name="percentageAllowance"
-							render={({ field }) => (
-								<FormItem>
-									<div className="flex items-center justify-between">
-										<FormLabel>Percentual do Adicional Noturno*</FormLabel>
-										<Popover>
-											<PopoverTrigger className="text-gray-500">
-												<Info size={16} />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Percentual do adicional noturno. Urbano: 20%, Rural:
-												25%. Esse valor será aplicado sobre o valor da hora.
-											</PopoverContent>
-										</Popover>
-									</div>
-									<FormControl>
-										<Input type="tel" min={0} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
+					<FormField
+						control={form.control}
+						name="percentageAllowance"
+						render={({ field }) => (
+							<FormItem>
+								<div className="flex items-center justify-between">
+									<FormLabel>Percentual do Adicional Noturno*</FormLabel>
+									<Popover>
+										<PopoverTrigger className="text-gray-500">
+											<Info size={16} />
+										</PopoverTrigger>
+										<PopoverContent className="w-60 text-sm">
+											Percentual do adicional noturno. Urbano: 20%, Rural: 25%.
+											Esse valor será aplicado sobre o valor da hora.
+										</PopoverContent>
+									</Popover>
+								</div>
+								<FormControl>
+									<Input type="tel" min={0} {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
 
-					<Button type="submit" className="w-full md:w-auto">
-						Calcular Adicional Noturno
-					</Button>
-				</form>
-			</Form>
-		</div>
+				<Button type="submit">Calcular Adicional Noturno</Button>
+			</form>
+		</Form>
 	);
 }

@@ -26,13 +26,13 @@ function SeoContent() {
 				<p>
 					O direito a férias é garantido pela CLT (arts. 129 a 153). Após cada
 					período aquisitivo de 12 meses, o trabalhador adquire 30 dias de
-					descanso remunerado, acrescidos do 1/3 constitucional previsto no
-					art. 7º XVII da Constituição.
+					descanso remunerado, acrescidos do 1/3 constitucional previsto no art.
+					7º XVII da Constituição.
 				</p>
 				<p className="mt-3">
-					O empregado pode converter 10 dias em abono pecuniário (CLT art.
-					143), recebendo o equivalente em dinheiro e tirando 20 dias de
-					descanso. O abono também recebe 1/3 e é isento de INSS e IRRF.
+					O empregado pode converter 10 dias em abono pecuniário (CLT art. 143),
+					recebendo o equivalente em dinheiro e tirando 20 dias de descanso. O
+					abono também recebe 1/3 e é isento de INSS e IRRF.
 				</p>
 			</section>
 
@@ -73,9 +73,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Descontos
-				</h2>
+				<h2 className="mb-4 text-xl font-bold text-foreground">Descontos</h2>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>
 						<strong>INSS:</strong> incide sobre férias + 1/3 (tabela 2026).
@@ -119,8 +117,8 @@ function SeoContent() {
 							Férias proporcionais na rescisão são tributadas?
 						</h3>
 						<p>
-							Férias indenizadas pagas em rescisão não sofrem incidência de
-							IRRF nem INSS, conforme IN RFB 1500/2014.
+							Férias indenizadas pagas em rescisão não sofrem incidência de IRRF
+							nem INSS, conforme IN RFB 1500/2014.
 						</p>
 					</div>
 				</div>

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { generateCsvPdf } from "@/lib/pdf/csv-to-pdf";
 import { downloadPDF } from "@/lib/pdf/merge";
 
@@ -363,7 +364,7 @@ export function CsvToPdf() {
 				aria-hidden="true"
 			/>
 
-			<textarea
+			<Textarea
 				value={pasteText}
 				onChange={(e) => {
 					setPasteText(e.target.value);
@@ -377,7 +378,7 @@ export function CsvToPdf() {
 				placeholder="Ou cole o CSV aqui..."
 				rows={5}
 				aria-label="Cole o conteúdo CSV aqui"
-				className="w-full resize-y rounded-lg border border-border bg-card px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+				className="resize-y bg-card font-mono text-foreground"
 			/>
 
 			{state === "error" && (

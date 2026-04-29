@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/select-native";
+import { Textarea } from "@/components/ui/textarea";
 import type { Algorithm } from "@/lib/crypto/cipher";
 import {
 	decodeBase64,
@@ -10,18 +13,6 @@ import {
 	encryptAES,
 	rot13,
 } from "@/lib/crypto/cipher";
-
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
-
-const textareaClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none";
-
-const outputClass =
-	"w-full rounded-lg border border-border bg-secondary px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none";
-
-const inputClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
 
 export function TextCipher() {
 	const [algorithm, setAlgorithm] = useState<Algorithm>("aes-gcm");
@@ -100,7 +91,7 @@ export function TextCipher() {
 					>
 						Texto de entrada
 					</label>
-					<textarea
+					<Textarea
 						id="cipher-input"
 						rows={8}
 						placeholder="Digite ou cole o texto aqui..."
@@ -109,7 +100,7 @@ export function TextCipher() {
 							setInput(e.target.value);
 							resetOutput();
 						}}
-						className={textareaClass}
+						className="resize-none text-foreground"
 					/>
 				</div>
 
@@ -120,21 +111,21 @@ export function TextCipher() {
 					>
 						Algoritmo
 					</label>
-					<select
+					<NativeSelect
 						id="cipher-algorithm"
 						value={algorithm}
 						onChange={(e) => {
 							setAlgorithm(e.target.value as Algorithm);
 							resetOutput();
 						}}
-						className={selectClass}
+						className="text-foreground"
 					>
 						<option value="aes-gcm">
 							AES-256-GCM — criptografia com senha
 						</option>
 						<option value="base64">Base64 — codificação</option>
 						<option value="rot13">ROT13 — cifra de substituição</option>
-					</select>
+					</NativeSelect>
 				</div>
 
 				{algorithm === "aes-gcm" && (
@@ -145,7 +136,7 @@ export function TextCipher() {
 						>
 							Senha
 						</label>
-						<input
+						<Input
 							id="cipher-password"
 							type="password"
 							placeholder="Digite a senha..."
@@ -154,7 +145,7 @@ export function TextCipher() {
 								setPassword(e.target.value);
 								resetOutput();
 							}}
-							className={inputClass}
+							className="text-foreground"
 						/>
 					</div>
 				)}
@@ -182,12 +173,12 @@ export function TextCipher() {
 						</Button>
 					)}
 				</div>
-				<textarea
+				<Textarea
 					rows={8}
 					readOnly
 					value={output}
 					placeholder="O resultado aparecerá aqui..."
-					className={outputClass}
+					className="resize-none bg-secondary text-foreground"
 				/>
 			</div>
 		</div>

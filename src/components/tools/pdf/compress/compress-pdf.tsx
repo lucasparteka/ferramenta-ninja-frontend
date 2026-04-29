@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { NativeSelect } from "@/components/ui/select-native";
 import {
 	type CompressionLevel,
 	compressPDF,
@@ -178,19 +179,19 @@ export function CompressPDF() {
 				>
 					Nível de compressão
 				</label>
-				<select
+				<NativeSelect
 					id="compression-level"
 					value={level}
 					onChange={(e) => setLevel(e.target.value as CompressionLevel)}
 					disabled={state === "processing"}
-					className="w-full rounded-lg border border-input bg-secondary px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+					className="bg-secondary text-foreground disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					{COMPRESSION_LEVELS.map((option) => (
 						<option key={option.value} value={option.value}>
 							{option.label}
 						</option>
 					))}
-				</select>
+				</NativeSelect>
 				<p className="text-xs text-muted-foreground">
 					A compressão no navegador remove objetos não utilizados e otimiza a
 					estrutura do arquivo. Para PDFs com muitas imagens, a redução pode ser

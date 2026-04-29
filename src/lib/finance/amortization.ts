@@ -84,7 +84,8 @@ function buildPrice(
 	i: number,
 	n: number,
 ): AmortizationEntry[] {
-	const payment = i === 0 ? principal / n : (principal * i) / (1 - (1 + i) ** -n);
+	const payment =
+		i === 0 ? principal / n : (principal * i) / (1 - (1 + i) ** -n);
 	let balance = principal;
 	const out: AmortizationEntry[] = [];
 	for (let m = 1; m <= n; m++) {

@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+
 type PickerOptions = {
 	winnersCount: number;
 	allowRepeat: boolean;
@@ -35,14 +37,14 @@ export function RandomPickerOptions({
 				>
 					Quantidade de vencedores
 				</label>
-				<input
+				<Input
 					id="winners-count"
 					type="number"
 					min={1}
 					max={maxWinners}
 					value={options.winnersCount}
 					onChange={(e) => handleWinnersCount(e.target.value)}
-					className="w-24 rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+					className="w-24 text-foreground"
 				/>
 			</div>
 

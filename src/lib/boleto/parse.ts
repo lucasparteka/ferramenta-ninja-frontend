@@ -101,7 +101,8 @@ export function parseBoleto(raw: string): BoletoResult {
 		return {
 			kind: "unknown",
 			valid: false,
-			reason: "Linha digitável deve ter 47 (boleto bancário) ou 48 dígitos (arrecadação)",
+			reason:
+				"Linha digitável deve ter 47 (boleto bancário) ou 48 dígitos (arrecadação)",
 		};
 	}
 	if (kind === "banking") return parseBanking(digits);
@@ -146,7 +147,8 @@ function parseBanking(line: string): BoletoBankingResult {
 
 	return {
 		kind: "banking",
-		valid: checks.field1 && checks.field2 && checks.field3 && checks.generalDigit,
+		valid:
+			checks.field1 && checks.field2 && checks.field3 && checks.generalDigit,
 		digitableLine: line,
 		barcode,
 		bankCode: line.slice(0, 3),

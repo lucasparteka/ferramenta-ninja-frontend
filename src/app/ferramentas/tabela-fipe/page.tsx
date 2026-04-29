@@ -63,8 +63,8 @@ function SeoContent() {
 							O preço FIPE é o de venda?
 						</h3>
 						<p>
-							Não. É um preço médio de mercado. O valor real pode variar conforme
-							estado de conservação, quilometragem, opcionais e região.
+							Não. É um preço médio de mercado. O valor real pode variar
+							conforme estado de conservação, quilometragem, opcionais e região.
 						</p>
 					</div>
 					<div>

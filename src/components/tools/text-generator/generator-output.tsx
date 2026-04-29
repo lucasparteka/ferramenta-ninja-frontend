@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 type GeneratorOutputProps = {
 	value: string;
@@ -24,13 +25,13 @@ export function GeneratorOutput({
 					{copied ? "Copiado!" : "Copiar"}
 				</Button>
 			</div>
-			<textarea
+			<Textarea
 				id="generator-output"
 				readOnly
 				value={value}
 				placeholder='Clique em "Gerar texto" para começar...'
 				rows={12}
-				className="w-full resize-y rounded-lg border border-border bg-input p-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+				className="resize-y text-foreground"
 			/>
 			{copied && <p className="text-sm text-success">Texto copiado!</p>}
 		</div>

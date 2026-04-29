@@ -2,15 +2,11 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/select-native";
 import { generateQRCode } from "@/lib/qrcode/generate";
 import type { WifiSecurity } from "@/lib/wifi/generate";
 import { generateWifiString } from "@/lib/wifi/generate";
-
-const inputClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
-
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
 
 export function WifiQR() {
 	const [ssid, setSsid] = useState("");
@@ -69,7 +65,7 @@ export function WifiQR() {
 					>
 						Nome da rede (SSID)
 					</label>
-					<input
+					<Input
 						id="wifi-ssid"
 						type="text"
 						placeholder="Nome da rede Wi-Fi"
@@ -78,7 +74,7 @@ export function WifiQR() {
 							setSsid(e.target.value);
 							setDataUrl("");
 						}}
-						className={inputClass}
+						className="text-foreground"
 					/>
 				</div>
 
@@ -89,19 +85,19 @@ export function WifiQR() {
 					>
 						Segurança
 					</label>
-					<select
+					<NativeSelect
 						id="wifi-security"
 						value={security}
 						onChange={(e) => {
 							setSecurity(e.target.value as WifiSecurity);
 							setDataUrl("");
 						}}
-						className={selectClass}
+						className="text-foreground"
 					>
 						<option value="WPA">WPA / WPA2 / WPA3</option>
 						<option value="WEP">WEP</option>
 						<option value="nopass">Sem senha</option>
-					</select>
+					</NativeSelect>
 				</div>
 
 				{security !== "nopass" && (
@@ -113,7 +109,7 @@ export function WifiQR() {
 							Senha
 						</label>
 						<div className="flex gap-2">
-							<input
+							<Input
 								id="wifi-password"
 								type={showPassword ? "text" : "password"}
 								placeholder="Senha da rede"
@@ -122,7 +118,7 @@ export function WifiQR() {
 									setPassword(e.target.value);
 									setDataUrl("");
 								}}
-								className={inputClass}
+								className="text-foreground"
 							/>
 							<button
 								type="button"

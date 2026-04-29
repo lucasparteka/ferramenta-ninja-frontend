@@ -15,7 +15,10 @@ export function monthlyHoursForWeekly(weekly: WeeklyHours): number {
 	return MONTHLY_HOURS_30H;
 }
 
-export function hourlyRate(monthlySalary: number, monthlyHours: number): number {
+export function hourlyRate(
+	monthlySalary: number,
+	monthlyHours: number,
+): number {
 	if (monthlyHours <= 0) return 0;
 	return monthlySalary / monthlyHours;
 }

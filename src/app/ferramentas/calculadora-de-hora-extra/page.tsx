@@ -30,17 +30,15 @@ function SeoContent() {
 					(CLT art. 7º XVI) e de 100% em domingos e feriados.
 				</p>
 				<p className="mt-3">
-					A Súmula 172 do TST garante que horas extras habituais geram reflexo no
-					Descanso Semanal Remunerado (DSR). O reflexo é calculado dividindo o
-					total de horas extras pelos dias úteis e multiplicando pelos domingos e
-					feriados do mês.
+					A Súmula 172 do TST garante que horas extras habituais geram reflexo
+					no Descanso Semanal Remunerado (DSR). O reflexo é calculado dividindo
+					o total de horas extras pelos dias úteis e multiplicando pelos
+					domingos e feriados do mês.
 				</p>
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Fórmulas
-				</h2>
+				<h2 className="mb-4 text-xl font-bold text-foreground">Fórmulas</h2>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>
 						<strong>Hora normal:</strong> salário ÷ horas mensais (220 ou 200).
@@ -68,8 +66,8 @@ function SeoContent() {
 						</h3>
 						<p>
 							Sim. A CLT define o mínimo, mas convenções coletivas, acordos
-							sindicais ou contratos podem estabelecer adicionais maiores
-							(60%, 70%, 100%).
+							sindicais ou contratos podem estabelecer adicionais maiores (60%,
+							70%, 100%).
 						</p>
 					</div>
 					<div>

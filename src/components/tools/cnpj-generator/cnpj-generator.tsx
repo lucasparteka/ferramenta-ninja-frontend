@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { generateMultipleCNPJ } from "@/lib/cnpj/generate";
 import { CnpjList } from "./cnpj-list";
 
@@ -39,14 +40,14 @@ export function CnpjGenerator() {
 					>
 						Quantidade de CNPJs
 					</label>
-					<input
+					<Input
 						id="cnpj-quantity"
 						type="number"
 						min={1}
 						max={100}
 						value={quantity}
 						onChange={(e) => handleQuantity(e.target.value)}
-						className="w-24 rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+						className="w-24 text-foreground"
 					/>
 				</div>
 

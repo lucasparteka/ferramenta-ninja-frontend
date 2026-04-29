@@ -54,8 +54,8 @@ export function calculateFixedIncome(
 ): FixedIncomeResult {
 	const annualEffective =
 		input.indexType === "prefixed"
-			? input.prefixedAnnualRate ?? 0
-			: input.annualIndexRate * (input.indexPercentage ?? 100) / 100;
+			? (input.prefixedAnnualRate ?? 0)
+			: (input.annualIndexRate * (input.indexPercentage ?? 100)) / 100;
 
 	const dailyRate = (1 + annualEffective) ** (1 / 252) - 1;
 	const businessDays = Math.round(input.days * (252 / 365));

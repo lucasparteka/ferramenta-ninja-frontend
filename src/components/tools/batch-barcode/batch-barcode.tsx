@@ -3,6 +3,8 @@
 import JsBarcode from "jsbarcode";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { NativeSelect } from "@/components/ui/select-native";
+import { Textarea } from "@/components/ui/textarea";
 
 type BarcodeFormat = "EAN13" | "UPC" | "EAN8" | "CODE128" | "CODE39" | "ITF14";
 
@@ -83,12 +85,6 @@ function BarcodeItem({ value, format, displayValue }: BarcodeEntry) {
 	);
 }
 
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
-
-const textareaClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none";
-
 export function BatchBarcode() {
 	const [format, setFormat] = useState<BarcodeFormat>("CODE128");
 	const [displayValue, setDisplayValue] = useState(true);
@@ -118,18 +114,18 @@ export function BatchBarcode() {
 					>
 						Formato
 					</label>
-					<select
+					<NativeSelect
 						id="batch-format"
 						value={format}
 						onChange={(e) => setFormat(e.target.value as BarcodeFormat)}
-						className={selectClass}
+						className="text-foreground"
 					>
 						{FORMATS.map((f) => (
 							<option key={f.value} value={f.value}>
 								{f.label}
 							</option>
 						))}
-					</select>
+					</NativeSelect>
 				</div>
 
 				<div className="space-y-2">
@@ -154,13 +150,13 @@ export function BatchBarcode() {
 					>
 						Valores (um por linha)
 					</label>
-					<textarea
+					<Textarea
 						id="batch-values"
 						rows={12}
 						placeholder={"7891234560012\n7891234560029\n7891234560036"}
 						value={rawInput}
 						onChange={(e) => setRawInput(e.target.value)}
-						className={textareaClass}
+						className="resize-none text-foreground"
 					/>
 					<p className="text-xs text-muted-foreground">
 						{lineCount} {lineCount === 1 ? "item" : "itens"}

@@ -39,15 +39,13 @@ function SeoContent() {
 				</p>
 				<p className="mt-3">
 					LCI e LCA são <strong>isentos de IR e IOF</strong> para pessoa física
-					(Lei 11.033/2004 art. 1º §1º), o que pode tornar uma LCI a 90% do
-					CDI mais rentável que um CDB a 100% do CDI.
+					(Lei 11.033/2004 art. 1º §1º), o que pode tornar uma LCI a 90% do CDI
+					mais rentável que um CDB a 100% do CDI.
 				</p>
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Como simular
-				</h2>
+				<h2 className="mb-4 text-xl font-bold text-foreground">Como simular</h2>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>Informe o valor aplicado e o prazo em dias corridos.</li>
 					<li>
@@ -75,9 +73,9 @@ function SeoContent() {
 							A taxa do CDI é a mesma da Selic?
 						</h3>
 						<p>
-							São próximas, mas não idênticas. O CDI segue de perto a Selic
-							meta com pequena diferença diária. Para simulações, usar a taxa
-							anual divulgada do CDI é o padrão.
+							São próximas, mas não idênticas. O CDI segue de perto a Selic meta
+							com pequena diferença diária. Para simulações, usar a taxa anual
+							divulgada do CDI é o padrão.
 						</p>
 					</div>
 					<div>
@@ -86,8 +84,8 @@ function SeoContent() {
 						</h3>
 						<p>
 							Não. Considera apenas o rendimento até o vencimento. Tesouro
-							prefixado e IPCA+ podem oscilar antes do vencimento, mas o
-							resgate na data informada usa a taxa contratada.
+							prefixado e IPCA+ podem oscilar antes do vencimento, mas o resgate
+							na data informada usa a taxa contratada.
 						</p>
 					</div>
 					<div>

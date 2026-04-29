@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { NativeSelect } from "@/components/ui/select-native";
+import { Textarea } from "@/components/ui/textarea";
 import type { ErrorCorrectionLevel } from "@/lib/qrcode/generate";
 import { generateQRCode } from "@/lib/qrcode/generate";
 
@@ -16,12 +18,6 @@ const DEFAULT_STATE: QRState = {
 	size: 300,
 	errorCorrectionLevel: "M",
 };
-
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
-
-const textareaClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none";
 
 export function QRGenerator() {
 	const [state, setState] = useState<QRState>(DEFAULT_STATE);
@@ -65,13 +61,13 @@ export function QRGenerator() {
 					>
 						Texto ou URL
 					</label>
-					<textarea
+					<Textarea
 						id="qr-text"
 						rows={4}
 						placeholder="Digite o texto ou cole uma URL..."
 						value={state.text}
 						onChange={(e) => set("text", e.target.value)}
-						className={textareaClass}
+						className="resize-none text-foreground"
 					/>
 				</div>
 
@@ -82,17 +78,17 @@ export function QRGenerator() {
 					>
 						Tamanho
 					</label>
-					<select
+					<NativeSelect
 						id="qr-size"
 						value={state.size}
 						onChange={(e) => set("size", Number(e.target.value))}
-						className={selectClass}
+						className="text-foreground"
 					>
 						<option value={200}>200 × 200 px</option>
 						<option value={300}>300 × 300 px</option>
 						<option value={400}>400 × 400 px</option>
 						<option value={500}>500 × 500 px</option>
-					</select>
+					</NativeSelect>
 				</div>
 
 				<div className="space-y-1">
@@ -102,7 +98,7 @@ export function QRGenerator() {
 					>
 						Correção de erro
 					</label>
-					<select
+					<NativeSelect
 						id="qr-ecl"
 						value={state.errorCorrectionLevel}
 						onChange={(e) =>
@@ -111,13 +107,13 @@ export function QRGenerator() {
 								e.target.value as ErrorCorrectionLevel,
 							)
 						}
-						className={selectClass}
+						className="text-foreground"
 					>
 						<option value="L">Baixa (L) — 7%</option>
 						<option value="M">Média (M) — 15%</option>
 						<option value="Q">Alta (Q) — 25%</option>
 						<option value="H">Máxima (H) — 30%</option>
-					</select>
+					</NativeSelect>
 				</div>
 			</div>
 

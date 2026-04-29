@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 type OcrState = "idle" | "loading" | "success" | "error";
 
@@ -67,12 +68,12 @@ export function OcrOutput({
 					<p className="p-4 text-sm text-destructive">{errorMsg}</p>
 				)}
 				{state === "success" && (
-					<textarea
+					<Textarea
 						id="ocr-result"
 						value={result}
 						onChange={(e) => onChange(e.target.value)}
 						aria-label="Texto extraído da imagem"
-						className="flex-1 resize-none rounded-lg bg-transparent p-4 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+						className="flex-1 resize-none border-0 bg-transparent p-4 text-foreground"
 						rows={10}
 					/>
 				)}

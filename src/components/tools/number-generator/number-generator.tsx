@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/select-native";
 import { generateNumbers } from "@/lib/random/numbers";
 
 type Order = "random" | "asc" | "desc";
@@ -34,12 +36,6 @@ const COLS_CLASS: Record<number, string> = {
 	8: "grid-cols-8",
 	10: "grid-cols-10",
 };
-
-const inputClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
-
-const selectClass =
-	"w-full rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring";
 
 export function NumberGenerator() {
 	const [options, setOptions] =
@@ -86,14 +82,14 @@ export function NumberGenerator() {
 						>
 							Números
 						</label>
-						<input
+						<Input
 							id="num-count"
 							type="number"
 							min={1}
 							max={1000}
 							value={options.count}
 							onChange={(e) => handleInt("count", e.target.value)}
-							className={inputClass}
+							className="text-foreground"
 						/>
 					</div>
 
@@ -102,19 +98,19 @@ export function NumberGenerator() {
 							Entre
 						</label>
 						<div className="flex items-center gap-2">
-							<input
+							<Input
 								type="number"
 								value={options.min}
 								onChange={(e) => handleInt("min", e.target.value)}
-								className={inputClass}
+								className="text-foreground"
 								aria-label="Valor mínimo"
 							/>
 							<span className="shrink-0 text-sm text-muted-foreground">e</span>
-							<input
+							<Input
 								type="number"
 								value={options.max}
 								onChange={(e) => handleInt("max", e.target.value)}
-								className={inputClass}
+								className="text-foreground"
 								aria-label="Valor máximo"
 							/>
 						</div>
@@ -127,18 +123,18 @@ export function NumberGenerator() {
 						>
 							Colunas
 						</label>
-						<select
+						<NativeSelect
 							id="num-columns"
 							value={options.columns}
 							onChange={(e) => set("columns", Number(e.target.value))}
-							className={selectClass}
+							className="text-foreground"
 						>
 							{[1, 2, 3, 4, 5, 6, 8, 10].map((n) => (
 								<option key={n} value={n}>
 									{n}
 								</option>
 							))}
-						</select>
+						</NativeSelect>
 					</div>
 
 					<div className="space-y-1">
@@ -148,16 +144,16 @@ export function NumberGenerator() {
 						>
 							Ordem
 						</label>
-						<select
+						<NativeSelect
 							id="num-order"
 							value={options.order}
 							onChange={(e) => set("order", e.target.value as Order)}
-							className={selectClass}
+							className="text-foreground"
 						>
 							<option value="random">Aleatória</option>
 							<option value="asc">Crescente</option>
 							<option value="desc">Decrescente</option>
-						</select>
+						</NativeSelect>
 					</div>
 
 					<div className="space-y-2">

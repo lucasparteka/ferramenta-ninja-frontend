@@ -31,8 +31,10 @@ export function calculateChristmasBonus(
 	input: ChristmasBonusInput,
 ): ChristmasBonusResult {
 	const months = clamp(Math.floor(input.monthsWorked ?? 0), 0, 12);
-	const baseSalary = (input.monthlySalary ?? 0) + (input.averageAdditional ?? 0);
-	const timing: FirstInstallmentTiming = input.firstInstallmentTiming ?? "november";
+	const baseSalary =
+		(input.monthlySalary ?? 0) + (input.averageAdditional ?? 0);
+	const timing: FirstInstallmentTiming =
+		input.firstInstallmentTiming ?? "november";
 	const dueLabel = dueLabelFor(timing);
 
 	if (months === 0 || baseSalary <= 0) {

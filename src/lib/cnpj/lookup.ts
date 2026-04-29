@@ -88,14 +88,20 @@ export async function lookupCnpj(raw: string): Promise<CnpjLookupResult> {
 		return { status: "invalid", message: "CNPJ deve conter 14 dígitos" };
 	}
 	if (!validateCNPJ(cnpj)) {
-		return { status: "invalid", message: "CNPJ inválido (dígitos verificadores não conferem)" };
+		return {
+			status: "invalid",
+			message: "CNPJ inválido (dígitos verificadores não conferem)",
+		};
 	}
 	try {
 		const response = await fetch(
 			`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`,
 		);
 		if (response.status === 404) {
-			return { status: "not-found", message: "CNPJ não encontrado na Receita Federal" };
+			return {
+				status: "not-found",
+				message: "CNPJ não encontrado na Receita Federal",
+			};
 		}
 		if (response.status === 429) {
 			return {

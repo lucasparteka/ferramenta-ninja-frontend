@@ -11,9 +11,9 @@ export function NightAllowanceContent() {
 	);
 
 	return (
-		<div className="flex flex-col lg:flex-row gap-6">
+		<div className="space-y-6">
 			<NightAllowanceCalculatorForm onCalculate={setResult} />
-			<NightAllowanceResultCard result={result} />
+			{result && <NightAllowanceResultCard result={result} />}
 		</div>
 	);
 }

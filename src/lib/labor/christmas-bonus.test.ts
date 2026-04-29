@@ -32,9 +32,9 @@ describe("calculateChristmasBonus", () => {
 			monthlySalary: 4000,
 			monthsWorked: 12,
 		});
-		expect(round2(r.firstInstallment + r.secondInstallment + r.inss + r.irrf)).toBe(
-			r.grossBonus,
-		);
+		expect(
+			round2(r.firstInstallment + r.secondInstallment + r.inss + r.irrf),
+		).toBe(r.grossBonus);
 	});
 
 	it("R$ 2.000 isento de IRRF", () => {

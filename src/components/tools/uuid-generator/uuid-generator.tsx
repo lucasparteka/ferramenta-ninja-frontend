@@ -4,6 +4,7 @@ import { Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
 	generateMultipleUuids,
@@ -138,26 +139,26 @@ export function UuidGenerator() {
 						{namespaceType === "custom" && (
 							<div className="space-y-1">
 								<Label htmlFor="uuid-namespace">UUID do namespace</Label>
-								<input
+								<Input
 									id="uuid-namespace"
 									type="text"
 									value={customNamespace}
 									onChange={(e) => setCustomNamespace(e.target.value)}
 									placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-									className="w-full rounded-lg border border-border bg-input px-3 py-2 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+									className="font-mono text-foreground"
 								/>
 							</div>
 						)}
 
 						<div className="space-y-1">
 							<Label htmlFor="uuid-name">Nome</Label>
-							<input
+							<Input
 								id="uuid-name"
 								type="text"
 								value={name}
 								onChange={(e) => setName(e.target.value)}
 								placeholder="Digite o nome para gerar o UUID"
-								className="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+								className="text-foreground"
 							/>
 						</div>
 					</div>
@@ -166,14 +167,14 @@ export function UuidGenerator() {
 				{!needsNameInput && (
 					<div className="space-y-1">
 						<Label htmlFor="uuid-quantity">Quantidade</Label>
-						<input
+						<Input
 							id="uuid-quantity"
 							type="number"
 							min={1}
 							max={100}
 							value={quantity}
 							onChange={(e) => handleQuantity(e.target.value)}
-							className="w-24 rounded-lg border border-border bg-input px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+							className="w-24 text-foreground"
 						/>
 						<p className="text-xs text-muted-foreground">
 							Máximo de 100 UUIDs por vez

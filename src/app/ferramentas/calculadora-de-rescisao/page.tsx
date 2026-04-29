@@ -24,10 +24,10 @@ function SeoContent() {
 					Como funcionam as verbas rescisórias
 				</h2>
 				<p>
-					A rescisão do contrato de trabalho é regida pelos arts. 477 a 484-A
-					da CLT. As verbas devidas variam conforme o motivo: dispensa sem
-					justa causa, pedido de demissão, justa causa, acordo (Lei
-					13.467/2017) ou fim de contrato determinado.
+					A rescisão do contrato de trabalho é regida pelos arts. 477 a 484-A da
+					CLT. As verbas devidas variam conforme o motivo: dispensa sem justa
+					causa, pedido de demissão, justa causa, acordo (Lei 13.467/2017) ou
+					fim de contrato determinado.
 				</p>
 				<p className="mt-3">
 					O prazo para pagamento é de 10 dias corridos a partir do término do
@@ -43,17 +43,17 @@ function SeoContent() {
 				<ul className="list-disc space-y-2 pl-6">
 					<li>
 						<strong>Sem justa causa:</strong> saldo de salário, aviso prévio
-						indenizado, 13º proporcional, férias proporcionais + 1/3, multa
-						FGTS de 40% e saque integral.
+						indenizado, 13º proporcional, férias proporcionais + 1/3, multa FGTS
+						de 40% e saque integral.
 					</li>
 					<li>
 						<strong>Pedido de demissão:</strong> saldo de salário, 13º
-						proporcional, férias proporcionais + 1/3. Sem multa FGTS, sem
-						saque, sem seguro-desemprego.
+						proporcional, férias proporcionais + 1/3. Sem multa FGTS, sem saque,
+						sem seguro-desemprego.
 					</li>
 					<li>
-						<strong>Acordo (CLT 484-A):</strong> metade do aviso prévio,
-						multa FGTS de 20%, saque de 80% do FGTS. Sem seguro-desemprego.
+						<strong>Acordo (CLT 484-A):</strong> metade do aviso prévio, multa
+						FGTS de 20%, saque de 80% do FGTS. Sem seguro-desemprego.
 					</li>
 					<li>
 						<strong>Justa causa:</strong> apenas saldo de salário e férias
@@ -76,9 +76,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Tributação
-				</h2>
+				<h2 className="mb-4 text-xl font-bold text-foreground">Tributação</h2>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>
 						<strong>INSS:</strong> incide sobre saldo de salário e 13º

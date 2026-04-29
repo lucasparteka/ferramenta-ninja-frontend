@@ -1,0 +1,31 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"mcp": {
+		"jcodemunch": {
+			"enabled": true,
+			"type": "local",
+			"command": "jcodemunch-mcp",
+			"args": []
+		},
+		"context7": {
+			"type": "remote",
+			"url": "https://mcp.context7.com/mcp",
+			"enabled": true,
+			"headers": {
+				"CONTEXT7_API_KEY": "ctx7sk-cf5007fb-7461-4db1-af83-c0e8e65134d9"
+			}
+		}
+	},
+	"permission": {
+		"lsp": "allow"
+	},
+	"lsp": {
+		"typescript": {
+			"initialization": {
+				"preferences": {
+					"importModuleSpecifierPreference": "non-relative"
+				}
+			}
+		}
+	}
+}

@@ -37,11 +37,16 @@ export function diffYearsMonthsDays(
 	return { years, months, days };
 }
 
-export function calculateAge(birth: Date, reference: Date = new Date()): AgeBreakdown {
+export function calculateAge(
+	birth: Date,
+	reference: Date = new Date(),
+): AgeBreakdown {
 	const from = startOfDay(birth);
 	const to = startOfDay(reference);
 	if (from.getTime() > to.getTime()) {
-		throw new Error("Data de nascimento deve ser anterior à data de referência");
+		throw new Error(
+			"Data de nascimento deve ser anterior à data de referência",
+		);
 	}
 
 	const { years, months, days } = diffYearsMonthsDays(from, to);
@@ -49,11 +54,7 @@ export function calculateAge(birth: Date, reference: Date = new Date()): AgeBrea
 	const totalDays = Math.floor(totalMs / MS_PER_DAY);
 
 	let nextBirthday: AgeBreakdown["nextBirthday"] = null;
-	const thisYear = new Date(
-		to.getFullYear(),
-		from.getMonth(),
-		from.getDate(),
-	);
+	const thisYear = new Date(to.getFullYear(), from.getMonth(), from.getDate());
 	const nextDate =
 		thisYear.getTime() >= to.getTime()
 			? thisYear

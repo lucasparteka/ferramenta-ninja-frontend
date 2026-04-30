@@ -290,14 +290,14 @@ export function OrdemServicoEditor() {
 											alt="Logo"
 											className="h-12 w-auto max-w-[120px] rounded border border-border bg-muted object-contain"
 										/>
-									<Button
-										type="button"
-										variant="secondary"
-										onClick={() => updatePrestador({ logo: "" })}
-									>
-										<Trash className="size-4" />
-										Remover
-									</Button>
+										<Button
+											type="button"
+											variant="secondary"
+											onClick={() => updatePrestador({ logo: "" })}
+										>
+											<Trash className="size-4" />
+											Remover
+										</Button>
 									</div>
 								) : (
 									<label className="cursor-pointer">

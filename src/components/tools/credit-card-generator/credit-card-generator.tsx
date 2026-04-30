@@ -1,8 +1,9 @@
 "use client";
 
-import { Check, Copy, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import {
 	CARD_BRANDS,
@@ -12,25 +13,15 @@ import {
 } from "@/lib/credit-card/generate";
 import { CardPreview } from "./card-preview";
 
-type CopiedField = "number" | "expiry" | "cvv" | null;
-
 const BRAND_KEYS = Object.keys(CARD_BRANDS) as Array<keyof typeof CARD_BRANDS>;
 
 export function CreditCardGenerator() {
 	const [selectedBrand, setSelectedBrand] =
 		useState<keyof typeof CARD_BRANDS>("visa");
 	const [card, setCard] = useState<GeneratedCard | null>(null);
-	const [copied, setCopied] = useState<CopiedField>(null);
 
 	function handleGenerate() {
 		setCard(generateCreditCard(selectedBrand));
-		setCopied(null);
-	}
-
-	function handleCopy(field: CopiedField, value: string) {
-		navigator.clipboard.writeText(value);
-		setCopied(field);
-		setTimeout(() => setCopied(null), 2000);
 	}
 
 	return (
@@ -76,26 +67,23 @@ export function CreditCardGenerator() {
 						<ul className="space-y-2">
 							{[
 								{
-									field: "number" as CopiedField,
 									label: "Número",
 									value: formatCardNumber(card.number, card.brand),
 									raw: card.number,
 								},
 								{
-									field: "expiry" as CopiedField,
 									label: "Validade",
 									value: card.expiry,
 									raw: card.expiry,
 								},
 								{
-									field: "cvv" as CopiedField,
 									label: "CVV",
 									value: card.cvv,
 									raw: card.cvv,
 								},
-							].map(({ field, label, value, raw }) => (
+							].map(({ label, value, raw }) => (
 								<li
-									key={field}
+									key={label}
 									className="flex items-center justify-between gap-3 rounded-lg border border-border bg-secondary px-4 py-3"
 								>
 									<div>
@@ -104,18 +92,7 @@ export function CreditCardGenerator() {
 										</span>
 										<p className="font-mono text-sm text-foreground">{value}</p>
 									</div>
-									<button
-										type="button"
-										onClick={() => handleCopy(field, raw)}
-										aria-label={`Copiar ${label}`}
-										className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-background hover:text-foreground"
-									>
-										{copied === field ? (
-											<Check className="size-4 text-green-500" />
-										) : (
-											<Copy className="size-4" />
-										)}
-									</button>
+									<CopyButton text={raw} iconOnly size="icon-sm" />
 								</li>
 							))}
 						</ul>

@@ -154,14 +154,14 @@ export function GradientGenerator() {
 								/>
 							</div>
 							{stops.length > 2 && (
-							<Button
-								variant="secondary"
-								onClick={() => removeStop(i)}
-								className="shrink-0"
-							>
-								<Trash />
-								Remover
-							</Button>
+								<Button
+									variant="secondary"
+									onClick={() => removeStop(i)}
+									className="shrink-0"
+								>
+									<Trash />
+									Remover
+								</Button>
 							)}
 						</div>
 					))}

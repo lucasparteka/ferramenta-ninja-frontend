@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Trash } from "lucide-react";
+import { useState } from "react";
 import {
 	ResultBox,
 	ResultGrid,

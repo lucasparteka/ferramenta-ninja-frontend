@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -121,14 +122,7 @@ function CepResult({ data }: { data: CepAddress }) {
 					))}
 			</dl>
 			<div className="flex flex-wrap gap-3">
-				<Button
-					variant="outline"
-					onClick={() => {
-						navigator.clipboard.writeText(fullAddress);
-					}}
-				>
-					Copiar endereço
-				</Button>
+				<CopyButton text={fullAddress} label="Copiar endereço" />
 				<a
 					href={mapsUrl}
 					target="_blank"

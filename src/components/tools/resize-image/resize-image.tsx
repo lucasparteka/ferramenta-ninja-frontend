@@ -232,9 +232,9 @@ export function ResizeImage() {
 				<div className="flex flex-col gap-6 sm:flex-row">
 					<div className="w-full space-y-5 sm:w-72 sm:shrink-0">
 						<div className="space-y-2">
-							<label className="block text-sm font-medium text-foreground">
+							<div className="block text-sm font-medium text-foreground">
 								Presets
-							</label>
+							</div>
 							<div className="grid grid-cols-2 gap-1.5">
 								{SIZE_PRESETS.map((preset, i) => (
 									<button
@@ -326,7 +326,6 @@ export function ResizeImage() {
 								type="number"
 								value={targetWidth || ""}
 								onChange={(e) => handleWidthChange(Number(e.target.value) || 0)}
-								
 							/>
 						</div>
 
@@ -344,7 +343,6 @@ export function ResizeImage() {
 								onChange={(e) =>
 									handleHeightChange(Number(e.target.value) || 0)
 								}
-								
 							/>
 						</div>
 

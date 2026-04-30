@@ -477,14 +477,14 @@ export function EmailSignature() {
 									className="cursor-pointer"
 								/>
 								{watch("photoUrl") && (
-								<Button
-									type="button"
-									variant="secondary"
-									onClick={() => setValue("photoUrl", "")}
-								>
-									<Trash />
-									Remover
-								</Button>
+									<Button
+										type="button"
+										variant="secondary"
+										onClick={() => setValue("photoUrl", "")}
+									>
+										<Trash />
+										Remover
+									</Button>
 								)}
 							</div>
 							{watch("photoUrl") && (
@@ -506,14 +506,14 @@ export function EmailSignature() {
 									className="cursor-pointer"
 								/>
 								{watch("logoUrl") && (
-								<Button
-									type="button"
-									variant="secondary"
-									onClick={() => setValue("logoUrl", "")}
-								>
-									<Trash />
-									Remover
-								</Button>
+									<Button
+										type="button"
+										variant="secondary"
+										onClick={() => setValue("logoUrl", "")}
+									>
+										<Trash />
+										Remover
+									</Button>
 								)}
 							</div>
 							{watch("logoUrl") && (
@@ -535,14 +535,14 @@ export function EmailSignature() {
 									className="cursor-pointer"
 								/>
 								{watch("bannerUrl") && (
-								<Button
-									type="button"
-									variant="secondary"
-									onClick={() => setValue("bannerUrl", "")}
-								>
-									<Trash />
-									Remover
-								</Button>
+									<Button
+										type="button"
+										variant="secondary"
+										onClick={() => setValue("bannerUrl", "")}
+									>
+										<Trash />
+										Remover
+									</Button>
 								)}
 							</div>
 							{watch("bannerUrl") && (

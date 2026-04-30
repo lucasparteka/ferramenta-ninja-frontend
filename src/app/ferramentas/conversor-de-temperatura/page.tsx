@@ -30,8 +30,7 @@ const faq = [
 	},
 	{
 		question: "Qual é a fórmula de Celsius para Kelvin?",
-		answer:
-			"K = °C + 273.15. O zero absoluto é 0K, equivalente a −273,15°C.",
+		answer: "K = °C + 273.15. O zero absoluto é 0K, equivalente a −273,15°C.",
 	},
 	{
 		question: "A conversão é precisa?",
@@ -60,7 +59,9 @@ function SeoContent() {
 					Fórmulas de conversão
 				</h2>
 				<div className="space-y-3">
-					<p>As fórmulas utilizadas seguem os padrões científicos internacionais:</p>
+					<p>
+						As fórmulas utilizadas seguem os padrões científicos internacionais:
+					</p>
 					<ul className="list-disc space-y-2 pl-6">
 						<li>
 							<strong>Celsius → Fahrenheit:</strong> °F = (°C × 9/5) + 32

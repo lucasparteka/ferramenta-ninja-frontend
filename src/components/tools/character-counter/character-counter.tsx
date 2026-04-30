@@ -2,6 +2,7 @@
 
 import { Trash } from "lucide-react";
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { CharacterCounterStats } from "./character-counter-stats";
@@ -42,10 +43,6 @@ export function CharacterCounter() {
 
 	const stats = calculateStats(text);
 
-	function handleCopy() {
-		navigator.clipboard.writeText(text);
-	}
-
 	return (
 		<div className="space-y-6">
 			<div>
@@ -73,9 +70,7 @@ export function CharacterCounter() {
 					<Trash />
 					Limpar
 				</Button>
-				<Button variant="outline" onClick={handleCopy} disabled={text === ""}>
-					Copiar texto
-				</Button>
+				<CopyButton text={text} label="Copiar texto" disabled={text === ""} />
 			</div>
 		</div>
 	);

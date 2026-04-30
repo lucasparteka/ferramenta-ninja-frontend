@@ -176,7 +176,6 @@ export function CompressImage() {
 								value={maxWidth || ""}
 								onChange={(e) => setMaxWidth(Number(e.target.value) || 0)}
 								placeholder="Original"
-								
 							/>
 						</div>
 
@@ -193,7 +192,6 @@ export function CompressImage() {
 								value={maxHeight || ""}
 								onChange={(e) => setMaxHeight(Number(e.target.value) || 0)}
 								placeholder="Original"
-								
 							/>
 						</div>
 

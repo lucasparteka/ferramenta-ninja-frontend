@@ -1,7 +1,6 @@
 "use client";
 
-import { Copy } from "lucide-react";
-import { toast } from "sonner";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 
 type Props = {
@@ -24,11 +23,6 @@ function countStats(text: string) {
 }
 
 export function TextCleanerResult({ output }: Props) {
-	function handleCopy() {
-		navigator.clipboard.writeText(output);
-		toast.success("Texto copiado!");
-	}
-
 	const stats = countStats(output);
 	const analysis = analyze(output);
 
@@ -39,10 +33,7 @@ export function TextCleanerResult({ output }: Props) {
 					Resultado
 				</span>
 
-				<Button onClick={handleCopy} className="gap-1.5">
-					<Copy className="size-4" />
-					Copiar
-				</Button>
+				<CopyButton text={output} />
 			</div>
 
 			<div className="flex flex-wrap gap-4 text-xs text-muted-foreground">

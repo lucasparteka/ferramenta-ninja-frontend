@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { Trash } from "lucide-react";
+import { marked } from "marked";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
- const SAMPLE_MARKDOWN = `# Título Principal
+const SAMPLE_MARKDOWN = `# Título Principal
 
 Este é um parágrafo com **negrito**, *itálico* e ~~tachado~~.
 
@@ -36,7 +36,7 @@ function hello(name: string): string {
 [Visite o Ferramenta Ninja](https://ferramenta.ninja)
 `;
 
- const BASIC_CSS = `<style>
+const BASIC_CSS = `<style>
   body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #1f2937; }
   h1, h2, h3, h4 { color: #111827; margin-top: 1.5em; margin-bottom: 0.5em; }
   code { background: #f3f4f6; padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.9em; }
@@ -50,134 +50,137 @@ function hello(name: string): string {
   a { color: #7c3aed; }
 </style>`;
 
- function SanitizedHtml({ html, className }: { html: string; className?: string }) {
-	 const ref = useRef<HTMLDivElement>(null);
-	 useEffect(() => {
-		 if (ref.current) {
-			 ref.current.innerHTML = html;
-		 }
-	 }, [html]);
-	 return <div ref={ref} className={className} />;
- }
+function SanitizedHtml({
+	html,
+	className,
+}: {
+	html: string;
+	className?: string;
+}) {
+	const ref = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		if (ref.current) {
+			ref.current.innerHTML = html;
+		}
+	}, [html]);
+	return <div ref={ref} className={className} />;
+}
 
- export function MarkdownToHtml() {
-	 const [markdown, setMarkdown] = useState(SAMPLE_MARKDOWN);
-	 const [includeCss, setIncludeCss] = useState(true);
-	 const [copied, setCopied] = useState(false);
+export function MarkdownToHtml() {
+	const [markdown, setMarkdown] = useState(SAMPLE_MARKDOWN);
+	const [includeCss, setIncludeCss] = useState(true);
+	const [copied, setCopied] = useState(false);
 
-	 const html = useMemo(() => {
-		 if (!markdown.trim()) return "";
-		 const raw = marked.parse(markdown, {
-			 async: false,
-			 gfm: true,
-			 breaks: true,
-		 });
-		 return DOMPurify.sanitize(raw as string);
-	 }, [markdown]);
+	const html = useMemo(() => {
+		if (!markdown.trim()) return "";
+		const raw = marked.parse(markdown, {
+			async: false,
+			gfm: true,
+			breaks: true,
+		});
+		return DOMPurify.sanitize(raw as string);
+	}, [markdown]);
 
-	 const fullHtml = useMemo(() => {
-		 const css = includeCss ? BASIC_CSS : "";
-		 return `<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Documento Markdown</title>\n${css}\n</head>\n<body>\n${html}\n</body>\n</html>`;
-	 }, [html, includeCss]);
+	const fullHtml = useMemo(() => {
+		const css = includeCss ? BASIC_CSS : "";
+		return `<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Documento Markdown</title>\n${css}\n</head>\n<body>\n${html}\n</body>\n</html>`;
+	}, [html, includeCss]);
 
-	 async function handleCopy() {
-		 try {
-			 await navigator.clipboard.writeText(fullHtml);
-			 setCopied(true);
-			 setTimeout(() => setCopied(false), 2000);
-		 } catch {
-			 // fallback
-		 }
-	 }
+	async function handleCopy() {
+		try {
+			await navigator.clipboard.writeText(fullHtml);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		} catch {
+			// fallback
+		}
+	}
 
-	 function handleDownload() {
-		 const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
-		 const url = URL.createObjectURL(blob);
-		 const a = document.createElement("a");
-		 a.href = url;
-		 a.download = "documento.html";
-		 document.body.appendChild(a);
-		 a.click();
-		 document.body.removeChild(a);
-		 URL.revokeObjectURL(url);
-	 }
+	function handleDownload() {
+		const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = "documento.html";
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+	}
 
-	 return (
-		 <div className="space-y-4">
-			 {/* Split screen */}
-			 <div className="grid gap-4 lg:grid-cols-2">
-				 {/* Editor */}
-				 <div className="space-y-2">
-					 <div className="flex items-center justify-between">
-						 <label
-							 htmlFor="md-input"
-							 className="text-sm font-medium text-foreground"
-						 >
-							 Markdown
-						 </label>
-						 <Button
-							 type="button"
-							 variant="secondary"
-							 size="sm"
-							 onClick={() => setMarkdown("")}
-						 >
-							 <Trash />
-							 Limpar
-						 </Button>
-					 </div>
-					 <Textarea
-						 id="md-input"
-						 value={markdown}
-						 onChange={(e) => setMarkdown(e.target.value)}
-						 placeholder="Digite seu Markdown aqui..."
-						 className="min-h-[400px] font-mono text-sm"
-					 />
-				 </div>
+	return (
+		<div className="space-y-4">
+			{/* Split screen */}
+			<div className="grid gap-4 lg:grid-cols-2">
+				{/* Editor */}
+				<div className="space-y-2">
+					<div className="flex items-center justify-between">
+						<label
+							htmlFor="md-input"
+							className="text-sm font-medium text-foreground"
+						>
+							Markdown
+						</label>
+						<Button
+							type="button"
+							variant="secondary"
+							size="sm"
+							onClick={() => setMarkdown("")}
+						>
+							<Trash />
+							Limpar
+						</Button>
+					</div>
+					<Textarea
+						id="md-input"
+						value={markdown}
+						onChange={(e) => setMarkdown(e.target.value)}
+						placeholder="Digite seu Markdown aqui..."
+						className="min-h-[400px] font-mono text-sm"
+					/>
+				</div>
 
-				 {/* Preview */}
-				 <div className="space-y-2">
-					 <span className="block text-sm font-medium text-foreground">
-						 Preview
-					 </span>
-					 <div className="min-h-[400px] max-h-[600px] overflow-auto rounded-lg border border-border bg-card p-4">
-						 {html ? (
-							 <SanitizedHtml
-								 html={html}
-								 className="markdown-preview"
-							 />
-						 ) : (
-							 <p className="text-sm text-muted-foreground">
-								 O preview aparecerá aqui...
-							 </p>
-						 )}
-					 </div>
-				 </div>
-			 </div>
+				{/* Preview */}
+				<div className="space-y-2">
+					<span className="block text-sm font-medium text-foreground">
+						Preview
+					</span>
+					<div className="min-h-[400px] max-h-[600px] overflow-auto rounded-lg border border-border bg-card p-4">
+						{html ? (
+							<SanitizedHtml html={html} className="markdown-preview" />
+						) : (
+							<p className="text-sm text-muted-foreground">
+								O preview aparecerá aqui...
+							</p>
+						)}
+					</div>
+				</div>
+			</div>
 
-			 {/* Toolbar below preview */}
-			 <div className="flex flex-wrap items-center gap-3">
-				 <Button variant="outline" size="sm" onClick={handleCopy}>
-					 {copied ? "Copiado!" : "Copiar HTML"}
-				 </Button>
-				 <Button variant="outline" size="sm" onClick={handleDownload}>
-					 Baixar HTML
-				 </Button>
-				 <div className="flex items-center gap-2">
-					 <input
-						 id="md-css"
-						 type="checkbox"
-						 checked={includeCss}
-						 onChange={(e) => setIncludeCss(e.target.checked)}
-						 className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
-					 />
-					 <label htmlFor="md-css" className="text-sm text-foreground">
-						 Incluir CSS básico no download
-					 </label>
-				 </div>
-			 </div>
+			{/* Toolbar below preview */}
+			<div className="flex flex-wrap items-center gap-3">
+				<Button variant="outline" size="sm" onClick={handleCopy}>
+					{copied ? "Copiado!" : "Copiar HTML"}
+				</Button>
+				<Button variant="outline" size="sm" onClick={handleDownload}>
+					Baixar HTML
+				</Button>
+				<div className="flex items-center gap-2">
+					<input
+						id="md-css"
+						type="checkbox"
+						checked={includeCss}
+						onChange={(e) => setIncludeCss(e.target.checked)}
+						className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+					/>
+					<label htmlFor="md-css" className="text-sm text-foreground">
+						Incluir CSS básico no download
+					</label>
+				</div>
+			</div>
 
-			 {/* Scoped CSS for markdown preview */}
-			 <style>{`
+			{/* Scoped CSS for markdown preview */}
+			<style>{`
 				 .markdown-preview h1 {
 					 font-size: 1.875rem;
 					 font-weight: 700;
@@ -286,6 +289,6 @@ function hello(name: string): string {
 					 margin: 1.5em 0;
 				 }
 			 `}</style>
-		 </div>
-	 );
- }
+		</div>
+	);
+}

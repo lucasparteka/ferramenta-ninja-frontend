@@ -1,13 +1,14 @@
 "use client";
 
-import { ArrowLeftRight, Copy, GitCompare, Trash } from "lucide-react";
+import { ArrowLeftRight, GitCompare, Trash } from "lucide-react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 
 type DiffControlsProps = {
 	onCompare: () => void;
 	onClear: () => void;
 	onSwap: () => void;
-	onCopy: () => void;
+	resultText: string;
 	hasResult: boolean;
 };
 
@@ -15,7 +16,7 @@ export function DiffControls({
 	onCompare,
 	onClear,
 	onSwap,
-	onCopy,
+	resultText,
 	hasResult,
 }: DiffControlsProps) {
 	return (
@@ -45,17 +46,7 @@ export function DiffControls({
 				Limpar
 			</Button>
 
-			{hasResult && (
-				<Button
-					type="button"
-					variant="outline"
-					onClick={onCopy}
-					className="gap-1.5"
-				>
-					<Copy className="size-4" />
-					Copiar resultado
-				</Button>
-			)}
+			{hasResult && <CopyButton text={resultText} label="Copiar resultado" />}
 		</div>
 	);
 }

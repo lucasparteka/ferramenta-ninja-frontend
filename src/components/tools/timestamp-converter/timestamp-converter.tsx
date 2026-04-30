@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Trash } from "lucide-react";
+import { useState } from "react";
 import { ResultGrid, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { DateInput } from "@/components/ui/date-input";
@@ -121,8 +121,8 @@ export function TimestampConverter() {
 						type="text"
 						value={timestampInput}
 						onChange={(e) => setTimestampInput(e.target.value)}
-					placeholder="Ex: 1700000000"
-					className="font-mono"
+						placeholder="Ex: 1700000000"
+						className="font-mono"
 					/>
 					<Button
 						onClick={handleTimestampToDate}
@@ -156,7 +156,7 @@ export function TimestampConverter() {
 								id="time-input"
 								type="time"
 								value={timeInput}
-						onChange={(e) => setTimeInput(e.target.value)}
+								onChange={(e) => setTimeInput(e.target.value)}
 							/>
 						</div>
 						<div className="flex items-end">

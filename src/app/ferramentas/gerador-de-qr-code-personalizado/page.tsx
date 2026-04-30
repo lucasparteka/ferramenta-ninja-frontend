@@ -62,12 +62,12 @@ function SeoContent() {
 				</h2>
 				<ul className="list-disc space-y-2 pl-6">
 					<li>
-						<strong>URL / Texto:</strong> Redireciona para um site ou exibe
-						um texto.
+						<strong>URL / Texto:</strong> Redireciona para um site ou exibe um
+						texto.
 					</li>
 					<li>
-						<strong>Wi-Fi:</strong> Permite conexão automática à rede
-						sem digitar senha.
+						<strong>Wi-Fi:</strong> Permite conexão automática à rede sem
+						digitar senha.
 					</li>
 					<li>
 						<strong>E-mail:</strong> Abre o app de e-mail com destinatário,
@@ -78,8 +78,8 @@ function SeoContent() {
 						informado.
 					</li>
 					<li>
-						<strong>PIX:</strong> Gera um código de pagamento instantâneo
-						com chave, valor e descrição.
+						<strong>PIX:</strong> Gera um código de pagamento instantâneo com
+						chave, valor e descrição.
 					</li>
 				</ul>
 			</section>

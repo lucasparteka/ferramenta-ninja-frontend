@@ -10,7 +10,6 @@ export function CnpjGenerator() {
 	const [quantity, setQuantity] = useState(1);
 	const [formatted, setFormatted] = useState(true);
 	const [cnpjs, setCnpjs] = useState<string[]>([]);
-	const [copiedAll, setCopiedAll] = useState(false);
 
 	function handleQuantity(raw: string) {
 		const value = Number(raw);
@@ -21,13 +20,6 @@ export function CnpjGenerator() {
 
 	function handleGenerate() {
 		setCnpjs(generateMultipleCNPJ(quantity, formatted));
-		setCopiedAll(false);
-	}
-
-	function handleCopyAll() {
-		navigator.clipboard.writeText(cnpjs.join("\n"));
-		setCopiedAll(true);
-		setTimeout(() => setCopiedAll(false), 2000);
 	}
 
 	return (
@@ -66,13 +58,7 @@ export function CnpjGenerator() {
 
 			<Button onClick={handleGenerate}>Gerar CNPJ</Button>
 
-			{cnpjs.length > 0 && (
-				<CnpjList
-					cnpjs={cnpjs}
-					onCopyAll={handleCopyAll}
-					copiedAll={copiedAll}
-				/>
-			)}
+			{cnpjs.length > 0 && <CnpjList cnpjs={cnpjs} />}
 		</div>
 	);
 }

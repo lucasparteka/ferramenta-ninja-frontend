@@ -88,7 +88,7 @@ export function NumberGenerator() {
 							min={1}
 							max={1000}
 							value={options.count}
-						onChange={(e) => handleInt("count", e.target.value)}
+							onChange={(e) => handleInt("count", e.target.value)}
 						/>
 					</div>
 
@@ -101,14 +101,14 @@ export function NumberGenerator() {
 								type="number"
 								value={options.min}
 								onChange={(e) => handleInt("min", e.target.value)}
-						aria-label="Valor mínimo"
+								aria-label="Valor mínimo"
 							/>
 							<span className="shrink-0 text-sm text-muted-foreground">e</span>
 							<Input
 								type="number"
 								value={options.max}
 								onChange={(e) => handleInt("max", e.target.value)}
-						aria-label="Valor máximo"
+								aria-label="Valor máximo"
 							/>
 						</div>
 					</div>
@@ -123,7 +123,7 @@ export function NumberGenerator() {
 						<NativeSelect
 							id="num-columns"
 							value={options.columns}
-						onChange={(e) => set("columns", Number(e.target.value))}
+							onChange={(e) => set("columns", Number(e.target.value))}
 						>
 							{[1, 2, 3, 4, 5, 6, 8, 10].map((n) => (
 								<option key={n} value={n}>
@@ -143,7 +143,7 @@ export function NumberGenerator() {
 						<NativeSelect
 							id="num-order"
 							value={options.order}
-						onChange={(e) => set("order", e.target.value as Order)}
+							onChange={(e) => set("order", e.target.value as Order)}
 						>
 							<option value="random">Aleatória</option>
 							<option value="asc">Crescente</option>

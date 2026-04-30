@@ -66,7 +66,7 @@ export function WifiQR() {
 						Nome da rede (SSID)
 					</label>
 					<Input
-					id="wifi-ssid"
+						id="wifi-ssid"
 						type="text"
 						placeholder="Nome da rede"
 						value={ssid}
@@ -109,14 +109,14 @@ export function WifiQR() {
 						</label>
 						<div className="flex gap-2">
 							<Input
-						id="wifi-password"
-						type={showPassword ? "text" : "password"}
-						placeholder="Senha da rede"
-						value={password}
-						onChange={(e) => {
-							setPassword(e.target.value);
-							setDataUrl("");
-						}}
+								id="wifi-password"
+								type={showPassword ? "text" : "password"}
+								placeholder="Senha da rede"
+								value={password}
+								onChange={(e) => {
+									setPassword(e.target.value);
+									setDataUrl("");
+								}}
 							/>
 							<button
 								type="button"

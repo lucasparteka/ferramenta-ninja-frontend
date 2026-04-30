@@ -7,9 +7,9 @@ import {
 	faqSchema,
 	webApplicationSchema,
 } from "@/lib/seo/jsonld";
-import { CategoryToolsSection } from "./category-tools-section";
 import { Separator } from "../ui/separator";
 import { Breadcrumb } from "./breadcrumb";
+import { CategoryToolsSection } from "./category-tools-section";
 
 type PageLayoutProps = {
 	title: string;

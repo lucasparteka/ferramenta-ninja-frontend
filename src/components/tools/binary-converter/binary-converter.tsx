@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,7 +12,6 @@ export function BinaryConverter() {
 	const [separator, setSeparator] = useState(" ");
 	const [output, setOutput] = useState("");
 	const [error, setError] = useState("");
-	const [copied, setCopied] = useState(false);
 
 	function resetOutput() {
 		setOutput("");
@@ -48,13 +48,6 @@ export function BinaryConverter() {
 				e instanceof Error ? e.message : "Erro ao converter para texto.",
 			);
 		}
-	}
-
-	function handleCopy() {
-		if (!output) return;
-		navigator.clipboard.writeText(output);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
 	}
 
 	return (
@@ -119,16 +112,7 @@ export function BinaryConverter() {
 					>
 						Resultado
 					</label>
-					{output && (
-						<Button
-							id="copy-result"
-							variant="outline"
-							size="sm"
-							onClick={handleCopy}
-						>
-							{copied ? "Copiado!" : "Copiar"}
-						</Button>
-					)}
+					{output && <CopyButton text={output} size="sm" />}
 				</div>
 				<Textarea
 					rows={8}

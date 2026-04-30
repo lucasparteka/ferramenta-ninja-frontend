@@ -264,16 +264,16 @@ export function InventarioEditor() {
 												placeholder="Preencher"
 											/>
 										</div>
-									<Button
-										type="button"
-										variant="secondary"
-										onClick={() => removeHeaderField(field.id)}
-										aria-label="Remover campo"
-										className="shrink-0"
-									>
-										<Trash className="size-4" />
-										Remover
-									</Button>
+										<Button
+											type="button"
+											variant="secondary"
+											onClick={() => removeHeaderField(field.id)}
+											aria-label="Remover campo"
+											className="shrink-0"
+										>
+											<Trash className="size-4" />
+											Remover
+										</Button>
 									</div>
 								))}
 							</div>
@@ -333,16 +333,16 @@ export function InventarioEditor() {
 												))}
 											</NativeSelect>
 										</div>
-									<Button
-										type="button"
-										variant="secondary"
-										onClick={() => removeColumn(col.id)}
-										aria-label="Remover coluna"
-										className="shrink-0"
-									>
-										<Trash className="size-4" />
-										Remover
-									</Button>
+										<Button
+											type="button"
+											variant="secondary"
+											onClick={() => removeColumn(col.id)}
+											aria-label="Remover coluna"
+											className="shrink-0"
+										>
+											<Trash className="size-4" />
+											Remover
+										</Button>
 									</div>
 								))}
 							</div>

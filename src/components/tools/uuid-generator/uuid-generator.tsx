@@ -1,8 +1,9 @@
 "use client";
 
-import { Copy, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -63,16 +64,6 @@ export function UuidGenerator() {
 			namespace,
 		});
 		setUuids(generated);
-	}
-
-	function handleCopyAll() {
-		navigator.clipboard.writeText(uuids.join("\n"));
-		toast.success("Todos os UUIDs copiados!");
-	}
-
-	function handleCopy(uuid: string) {
-		navigator.clipboard.writeText(uuid);
-		toast.success("UUID copiado!");
 	}
 
 	function handleQuantity(raw: string) {
@@ -144,8 +135,8 @@ export function UuidGenerator() {
 									type="text"
 									value={customNamespace}
 									onChange={(e) => setCustomNamespace(e.target.value)}
-						placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-						className="font-mono"
+									placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+									className="font-mono"
 								/>
 							</div>
 						)}
@@ -156,8 +147,8 @@ export function UuidGenerator() {
 								id="uuid-name"
 								type="text"
 								value={name}
-						onChange={(e) => setName(e.target.value)}
-							placeholder="Digite o nome para gerar o UUID"
+								onChange={(e) => setName(e.target.value)}
+								placeholder="Digite o nome para gerar o UUID"
 							/>
 						</div>
 					</div>
@@ -194,34 +185,23 @@ export function UuidGenerator() {
 							<span className="text-sm text-muted-foreground">
 								{uuids.length} UUIDs gerados
 							</span>
-							<Button
-								variant="outline"
+							<CopyButton
+								text={uuids.join("\n")}
+								label="Copiar todos"
 								size="sm"
-								onClick={handleCopyAll}
-								className="gap-1.5"
-							>
-								<Copy className="size-3.5" />
-								Copiar todos
-							</Button>
+							/>
 						</div>
 					)}
 					<ul className="space-y-2">
-						{uuids.map((uuid, index) => (
+						{uuids.map((uuid) => (
 							<li
-								key={index}
+								key={uuid}
 								className="flex items-center justify-between gap-3 rounded-lg border border-border bg-secondary/40 px-4 py-2.5"
 							>
 								<span className="font-mono text-sm text-foreground">
 									{uuid}
 								</span>
-								<button
-									type="button"
-									onClick={() => handleCopy(uuid)}
-									className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
-									aria-label="Copiar UUID"
-								>
-									<Copy className="size-4" />
-								</button>
+								<CopyButton text={uuid} iconOnly size="icon-sm" />
 							</li>
 						))}
 					</ul>

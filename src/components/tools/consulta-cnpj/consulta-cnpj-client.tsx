@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -181,16 +182,10 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 			)}
 
 			<div className="flex flex-wrap gap-3 pt-2">
-				<Button
-					variant="outline"
-					onClick={() => {
-						navigator.clipboard.writeText(
-							`${data.corporateName}\n${data.cnpj}\n${fullAddress}`.trim(),
-						);
-					}}
-				>
-					Copiar dados
-				</Button>
+				<CopyButton
+					text={`${data.corporateName}\n${data.cnpj}\n${fullAddress}`.trim()}
+					label="Copiar dados"
+				/>
 			</div>
 		</ResultBox>
 	);

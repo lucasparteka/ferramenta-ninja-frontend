@@ -145,7 +145,6 @@ export function TextCipher() {
 								setPassword(e.target.value);
 								resetOutput();
 							}}
-
 						/>
 					</div>
 				)}

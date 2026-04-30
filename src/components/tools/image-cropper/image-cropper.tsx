@@ -232,10 +232,10 @@ export function ImageCropper() {
 								<Download className="mr-2 h-4 w-4" />
 								Baixar
 							</Button>
-						<Button variant="secondary" onClick={handleClear}>
-							<Trash />
-							Reiniciar
-						</Button>
+							<Button variant="secondary" onClick={handleClear}>
+								<Trash />
+								Reiniciar
+							</Button>
 						</div>
 					</>
 				)}

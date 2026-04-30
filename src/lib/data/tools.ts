@@ -240,7 +240,8 @@ export const categories: ToolCategory[] = [
 			{
 				name: "Conversor de Temperatura",
 				href: "/ferramentas/conversor-de-temperatura",
-				description: "Converta entre Celsius, Fahrenheit e Kelvin instantaneamente",
+				description:
+					"Converta entre Celsius, Fahrenheit e Kelvin instantaneamente",
 				icon: Thermometer,
 				tags: ["conversor", "temperatura", "celsius", "fahrenheit", "kelvin"],
 				intent: "convert",

@@ -1,6 +1,5 @@
 "use client";
 
-import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 import { DiffControls } from "./diff-controls";
 import { DiffInputs } from "./diff-inputs";
@@ -21,13 +20,9 @@ export function TextDiff() {
 		computeDiff,
 		clearAll,
 		swapTexts,
-		copyResult,
 	} = useDiff();
 
-	function handleCopy() {
-		copyResult();
-		toast.success("Resultado copiado!");
-	}
+	const resultText = diffResult.map(([, text]) => text).join("");
 
 	return (
 		<div className="flex flex-col gap-6">
@@ -43,7 +38,7 @@ export function TextDiff() {
 					onCompare={computeDiff}
 					onClear={clearAll}
 					onSwap={swapTexts}
-					onCopy={handleCopy}
+					resultText={resultText}
 					hasResult={hasCompared}
 				/>
 

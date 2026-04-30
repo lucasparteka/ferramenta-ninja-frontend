@@ -10,7 +10,6 @@ export function CpfGenerator() {
 	const [quantity, setQuantity] = useState(1);
 	const [formatted, setFormatted] = useState(true);
 	const [cpfs, setCpfs] = useState<string[]>([]);
-	const [copiedAll, setCopiedAll] = useState(false);
 
 	function handleQuantity(raw: string) {
 		const value = Number(raw);
@@ -21,13 +20,6 @@ export function CpfGenerator() {
 
 	function handleGenerate() {
 		setCpfs(generateMultipleCPF(quantity, formatted));
-		setCopiedAll(false);
-	}
-
-	function handleCopyAll() {
-		navigator.clipboard.writeText(cpfs.join("\n"));
-		setCopiedAll(true);
-		setTimeout(() => setCopiedAll(false), 2000);
 	}
 
 	return (
@@ -66,9 +58,7 @@ export function CpfGenerator() {
 
 			<Button onClick={handleGenerate}>Gerar CPF</Button>
 
-			{cpfs.length > 0 && (
-				<CpfList cpfs={cpfs} onCopyAll={handleCopyAll} copiedAll={copiedAll} />
-			)}
+			{cpfs.length > 0 && <CpfList cpfs={cpfs} />}
 		</div>
 	);
 }

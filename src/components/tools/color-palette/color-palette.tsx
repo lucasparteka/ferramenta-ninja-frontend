@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
@@ -28,16 +29,9 @@ export function ColorPalette() {
 	const [baseColor, setBaseColor] = useState("#3b82f6");
 	const [type, setType] =
 		useState<(typeof PALETTE_TYPES)[number]["value"]>("complementary");
-	const [copied, setCopied] = useState<string | null>(null);
 	const hsl = hexToHsl(baseColor);
 
 	const palette = generatePalette(type, baseColor);
-
-	const handleCopy = useCallback((label: string, text: string) => {
-		navigator.clipboard.writeText(text);
-		setCopied(label);
-		setTimeout(() => setCopied(null), 1500);
-	}, []);
 
 	return (
 		<div className="space-y-6">
@@ -113,36 +107,19 @@ export function ColorPalette() {
 										{hexUpper}
 									</p>
 									<div className="flex flex-col gap-1">
-										<Button
-											variant="ghost"
-											size="sm"
-											className="h-7 text-xs"
-											onClick={() => handleCopy(`hex-${hex}`, hexUpper)}
-										>
-											{copied === `hex-${hex}` ? "Copiado!" : "Copiar HEX"}
-										</Button>
+										<CopyButton text={hexUpper} label="Copiar HEX" size="xs" />
 										{rgb && (
-											<Button
-												variant="ghost"
-												size="sm"
-												className="h-7 text-xs"
-												onClick={() =>
-													handleCopy(`rgb-${hex}`, `rgb(${rgbString(rgb)})`)
-												}
-											>
-												{copied === `rgb-${hex}` ? "Copiado!" : "Copiar RGB"}
-											</Button>
+											<CopyButton
+												text={`rgb(${rgbString(rgb)})`}
+												label="Copiar RGB"
+												size="xs"
+											/>
 										)}
-										<Button
-											variant="ghost"
-											size="sm"
-											className="h-7 text-xs"
-											onClick={() =>
-												handleCopy(`hsl-${hex}`, `hsl(${hslString(hex)})`)
-											}
-										>
-											{copied === `hsl-${hex}` ? "Copiado!" : "Copiar HSL"}
-										</Button>
+										<CopyButton
+											text={`hsl(${hslString(hex)})`}
+											label="Copiar HSL"
+											size="xs"
+										/>
 									</div>
 								</div>
 							</div>

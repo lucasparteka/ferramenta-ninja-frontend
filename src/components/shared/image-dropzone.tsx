@@ -87,10 +87,10 @@ export function ImageDropzone({
 				className="hidden"
 			/>
 			{preview && (
-			<Button variant="secondary" className="mt-3 w-full" onClick={onClear}>
-				<Trash />
-				Limpar
-			</Button>
+				<Button variant="secondary" className="mt-3 w-full" onClick={onClear}>
+					<Trash />
+					Limpar
+				</Button>
 			)}
 		</div>
 	);

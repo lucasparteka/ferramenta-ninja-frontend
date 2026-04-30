@@ -17,7 +17,11 @@ export const FIXED_HOLIDAYS: Holiday[] = [
 	{ date: "10-12", name: "Nossa Senhora Aparecida", fixed: true },
 	{ date: "11-02", name: "Finados", fixed: true },
 	{ date: "11-15", name: "Proclamação da República", fixed: true },
-	{ date: "11-20", name: "Dia Nacional de Zumbi e da Consciência Negra", fixed: true },
+	{
+		date: "11-20",
+		name: "Dia Nacional de Zumbi e da Consciência Negra",
+		fixed: true,
+	},
 	{ date: "12-25", name: "Natal", fixed: true },
 ];
 
@@ -308,4 +312,4 @@ export function addBusinessDays(
 	};
 }
 
-export { formatFullDate, toDateInputString, parseDateInput };
+export { formatFullDate, parseDateInput, toDateInputString };

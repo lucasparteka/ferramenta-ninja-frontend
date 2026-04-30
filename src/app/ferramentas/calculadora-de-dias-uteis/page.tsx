@@ -48,9 +48,9 @@ function SeoContent() {
 					Como funciona a calculadora de dias úteis
 				</h2>
 				<p>
-					Esta ferramenta calcula a quantidade de dias úteis entre duas datas
-					ou encontra a data resultante ao adicionar um número de dias úteis.
-					O cálculo desconta automaticamente sábados, domingos e feriados
+					Esta ferramenta calcula a quantidade de dias úteis entre duas datas ou
+					encontra a data resultante ao adicionar um número de dias úteis. O
+					cálculo desconta automaticamente sábados, domingos e feriados
 					nacionais brasileiros conforme a legislação vigente.
 				</p>
 			</section>

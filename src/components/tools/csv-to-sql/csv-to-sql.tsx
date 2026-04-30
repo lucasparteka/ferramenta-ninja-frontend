@@ -1,7 +1,8 @@
 "use client";
 
-import { Check, Copy, Download, Trash, Upload, X } from "lucide-react";
+import { Download, Trash, Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -203,7 +204,6 @@ export function CsvToSql() {
 	const [errorMsg, setErrorMsg] = useState("");
 	const [sql, setSql] = useState("");
 	const [rowCount, setRowCount] = useState(0);
-	const [copied, setCopied] = useState(false);
 
 	const [tableName, setTableName] = useState("my_table");
 	const [dialect, setDialect] = useState<Dialect>("mysql");
@@ -310,13 +310,6 @@ export function CsvToSql() {
 		);
 	}
 
-	function handleCopy() {
-		navigator.clipboard.writeText(sql).then(() => {
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		});
-	}
-
 	function handleDownload() {
 		const safeTableName = tableName.trim() || "my_table";
 		const blob = new Blob([sql], { type: "text/plain" });
@@ -369,7 +362,6 @@ export function CsvToSql() {
 								);
 							}
 						}}
-
 					/>
 				</div>
 
@@ -552,24 +544,7 @@ export function CsvToSql() {
 							</span>
 						</p>
 						<div className="flex gap-2">
-							<Button
-								variant="outline"
-								size="sm"
-								onClick={handleCopy}
-								className="gap-2"
-							>
-								{copied ? (
-									<>
-										<Check className="h-4 w-4 text-green-600" />
-										Copiado
-									</>
-								) : (
-									<>
-										<Copy className="h-4 w-4" />
-										Copiar SQL
-									</>
-								)}
-							</Button>
+							<CopyButton text={sql} label="Copiar SQL" size="sm" />
 							<Button
 								variant="outline"
 								size="sm"

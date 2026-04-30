@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { Trash } from "lucide-react";
+import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { ResultGrid, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,12 +18,10 @@ export function Base64Tool() {
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState("");
 	const [error, setError] = useState<string | null>(null);
-	const [copied, setCopied] = useState(false);
 	const [stats, setStats] = useState({ inputChars: 0, outputChars: 0 });
 
 	function handleConvert() {
 		setError(null);
-		setCopied(false);
 		if (!input) {
 			setOutput("");
 			setStats({ inputChars: 0, outputChars: 0 });
@@ -40,18 +39,10 @@ export function Base64Tool() {
 		}
 	}
 
-	function handleCopy() {
-		if (!output) return;
-		navigator.clipboard.writeText(output);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
-
 	function handleClear() {
 		setInput("");
 		setOutput("");
 		setError(null);
-		setCopied(false);
 		setStats({ inputChars: 0, outputChars: 0 });
 	}
 
@@ -59,7 +50,6 @@ export function Base64Tool() {
 		setMode(newMode);
 		setOutput("");
 		setError(null);
-		setCopied(false);
 	}
 
 	return (
@@ -107,17 +97,19 @@ export function Base64Tool() {
 					<Button onClick={handleConvert} disabled={!input.trim()}>
 						{mode === "encode" ? "Codificar" : "Decodificar"}
 					</Button>
-					<Button onClick={handleCopy} disabled={!output} variant="outline">
-						{copied ? "Copiado!" : "Copiar resultado"}
+					<CopyButton
+						text={output}
+						label="Copiar resultado"
+						disabled={!output}
+					/>
+					<Button
+						onClick={handleClear}
+						disabled={!input && !output}
+						variant="secondary"
+					>
+						<Trash />
+						Limpar
 					</Button>
-				<Button
-					onClick={handleClear}
-					disabled={!input && !output}
-					variant="secondary"
-				>
-					<Trash />
-					Limpar
-				</Button>
 				</div>
 			</div>
 

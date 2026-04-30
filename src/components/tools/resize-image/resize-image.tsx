@@ -326,7 +326,7 @@ export function ResizeImage() {
 								type="number"
 								value={targetWidth || ""}
 								onChange={(e) => handleWidthChange(Number(e.target.value) || 0)}
-								className="text-foreground"
+								
 							/>
 						</div>
 
@@ -344,7 +344,7 @@ export function ResizeImage() {
 								onChange={(e) =>
 									handleHeightChange(Number(e.target.value) || 0)
 								}
-								className="text-foreground"
+								
 							/>
 						</div>
 

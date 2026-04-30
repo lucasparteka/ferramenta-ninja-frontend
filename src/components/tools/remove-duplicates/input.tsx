@@ -23,7 +23,7 @@ export function RemoveDuplicatesInput({
 				onChange={(e) => onChange(e.target.value)}
 				placeholder="Cole a lista aqui, um item por linha..."
 				rows={12}
-				className="resize-y p-4 text-foreground"
+				className="resize-y"
 			/>
 		</div>
 	);

@@ -32,7 +32,7 @@ export function RandomPickerInput({
 				onChange={(e) => onChange(e.target.value)}
 				placeholder={"Ana\nBruno\nCarla\nDaniel"}
 				rows={10}
-				className="resize-y p-4 text-foreground"
+				className="resize-y"
 			/>
 		</div>
 	);

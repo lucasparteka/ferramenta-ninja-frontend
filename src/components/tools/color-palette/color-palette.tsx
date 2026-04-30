@@ -61,7 +61,7 @@ export function ColorPalette() {
 							type="text"
 							value={baseColor.toUpperCase()}
 							onChange={(e) => setBaseColor(e.target.value)}
-							className="font-mono text-foreground uppercase"
+							className="font-mono uppercase"
 							maxLength={7}
 						/>
 					</div>

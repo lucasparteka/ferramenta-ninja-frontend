@@ -47,7 +47,7 @@ export function CnpjGenerator() {
 						max={100}
 						value={quantity}
 						onChange={(e) => handleQuantity(e.target.value)}
-						className="w-24 text-foreground"
+						className="w-24"
 					/>
 				</div>
 

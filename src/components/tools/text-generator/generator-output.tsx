@@ -31,7 +31,7 @@ export function GeneratorOutput({
 				value={value}
 				placeholder='Clique em "Gerar texto" para começar...'
 				rows={12}
-				className="resize-y text-foreground"
+				className="resize-y"
 			/>
 			{copied && <p className="text-sm text-success">Texto copiado!</p>}
 		</div>

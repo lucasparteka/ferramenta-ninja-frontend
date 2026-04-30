@@ -134,12 +134,11 @@ export function BarcodeGenerator() {
 						placeholder="Digite o valor..."
 						value={value}
 						onChange={(e) => {
-							setValue(e.target.value);
-							setGenerated(false);
-							setError("");
-						}}
-						className="text-foreground"
-					/>
+						setValue(e.target.value);
+						setGenerated(false);
+						setError("");
+					}}
+				/>
 				</div>
 
 				<div className="space-y-2">

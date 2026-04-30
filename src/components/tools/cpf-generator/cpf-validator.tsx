@@ -34,7 +34,7 @@ export function CpfValidator() {
 					onChange={(e) => handleInput(e.target.value)}
 					placeholder="000.000.000-00"
 					maxLength={14}
-					className="max-w-xs font-mono text-foreground"
+					className="max-w-xs font-mono"
 				/>
 			</div>
 

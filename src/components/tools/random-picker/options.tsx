@@ -44,7 +44,7 @@ export function RandomPickerOptions({
 					max={maxWinners}
 					value={options.winnersCount}
 					onChange={(e) => handleWinnersCount(e.target.value)}
-					className="w-24 text-foreground"
+					className="w-24"
 				/>
 			</div>
 

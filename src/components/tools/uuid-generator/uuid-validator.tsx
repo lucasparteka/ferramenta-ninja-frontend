@@ -48,7 +48,7 @@ export function UuidValidator() {
 					onChange={(e) => handleInput(e.target.value)}
 					onKeyDown={handleKeyDown}
 					placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-					className="max-w-lg font-mono text-foreground"
+					className="max-w-lg font-mono"
 				/>
 			</div>
 

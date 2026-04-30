@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/layout/footer";
@@ -7,18 +6,6 @@ import { Header } from "@/components/layout/header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
 import "./globals.css";
-
-const inter = Inter({
-	subsets: ["latin"],
-	variable: "--font-inter",
-	display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-	subsets: ["latin"],
-	variable: "--font-space-grotesk",
-	display: "swap",
-});
 
 export const metadata: Metadata = {
 	metadataBase: new URL("https://ferramenta.ninja"),
@@ -56,17 +43,14 @@ export default async function RootLayout({
 
 	if (isPdfRender) {
 		return (
-			<html
-				lang="pt-BR"
-				className={`${inter.variable} ${spaceGrotesk.variable} bg-white`}
-			>
+			<html lang="pt-BR" className={`antialiased bg-white`}>
 				<body className="bg-white">{children}</body>
 			</html>
 		);
 	}
 
 	return (
-		<html lang="pt-BR" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+		<html lang="pt-BR" className={`antialiased`}>
 			<head>
 				<JsonLd data={organizationSchema()} />
 				<JsonLd data={websiteSchema()} />

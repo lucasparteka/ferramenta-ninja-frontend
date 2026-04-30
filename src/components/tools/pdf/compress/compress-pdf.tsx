@@ -184,7 +184,7 @@ export function CompressPDF() {
 					value={level}
 					onChange={(e) => setLevel(e.target.value as CompressionLevel)}
 					disabled={state === "processing"}
-					className="bg-secondary text-foreground disabled:cursor-not-allowed disabled:opacity-50"
+					className="disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					{COMPRESSION_LEVELS.map((option) => (
 						<option key={option.value} value={option.value}>

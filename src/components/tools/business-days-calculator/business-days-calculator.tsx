@@ -220,7 +220,7 @@ import {
 								 value={daysToAdd}
 								 onChange={(e) => setDaysToAdd(e.target.value)}
 								 placeholder="Ex: 10"
-								 className="text-foreground"
+		
 							 />
 						 </div>
 					 )}

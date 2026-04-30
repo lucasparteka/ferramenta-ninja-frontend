@@ -47,14 +47,11 @@ export function Header() {
 					{/* Logo */}
 					<Link href="/" className="flex items-center">
 						<span className="text-xl font-bold text-primary">ferramenta</span>
-						<span className="text-xl font-bold text-accent">.ninja</span>
+						<span className="text-xl font-bold text-foreground">.ninja</span>
 					</Link>
 
 					{/* Desktop navigation */}
-					<nav
-						aria-label="Navegação principal"
-						className="hidden md:block"
-					>
+					<nav aria-label="Navegação principal" className="hidden md:block">
 						<ul className="flex items-center gap-6 text-sm font-medium text-muted-foreground">
 							<li>
 								<Link
@@ -104,9 +101,7 @@ export function Header() {
 															className="block rounded-sm px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted"
 															onClick={() => setCategoriesOpen(false)}
 														>
-															<span className="font-medium">
-																{cat.name}
-															</span>
+															<span className="font-medium">{cat.name}</span>
 															<span className="block text-xs text-muted-foreground">
 																{cat.tools.length}{" "}
 																{cat.tools.length === 1
@@ -118,109 +113,102 @@ export function Header() {
 												))}
 											</ul>
 										</div>
-										)}
-									</div>
+									)}
+								</div>
+							</li>
+						</ul>
+					</nav>
+
+					{/* Mobile hamburger button */}
+					<button
+						type="button"
+						onClick={() => setMobileOpen(true)}
+						className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
+						aria-label="Abrir menu"
+						aria-expanded={mobileOpen}
+					>
+						<Menu className="size-6" />
+					</button>
+				</div>
+			</header>
+
+			{/* Mobile drawer — rendered OUTSIDE header to avoid stacking context issues */}
+			{mobileOpen && (
+				<div className="fixed inset-0 z-[100] md:hidden">
+					{/* Backdrop */}
+					<div
+						className="absolute inset-0 bg-black/50"
+						onClick={() => setMobileOpen(false)}
+						aria-hidden="true"
+					/>
+					{/* Panel */}
+					<div className="absolute right-0 top-0 min-h-[110dvh] w-80 max-w-[85vw] overflow-y-auto bg-card shadow-xl">
+						<div className="flex h-16 items-center justify-between border-b border-border px-4">
+							<span className="text-lg font-bold text-foreground">Menu</span>
+							<button
+								type="button"
+								onClick={() => setMobileOpen(false)}
+								className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+								aria-label="Fechar menu"
+							>
+								<X className="size-5" />
+							</button>
+						</div>
+						<nav aria-label="Navegação mobile" className="p-4">
+							<ul className="flex flex-col gap-2">
+								<li>
+									<Link
+										href="/"
+										className="block rounded-md px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+										onClick={() => setMobileOpen(false)}
+									>
+										Início
+									</Link>
+								</li>
+								<li>
+									<Link
+										href="/ferramentas"
+										className="block rounded-md px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+										onClick={() => setMobileOpen(false)}
+									>
+										Ferramentas
+									</Link>
+								</li>
+								<li>
+									<Link
+										href="/blog"
+										className="block rounded-md px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+										onClick={() => setMobileOpen(false)}
+									>
+										Blog
+									</Link>
+								</li>
+								<li className="border-t border-border pt-2">
+									<span className="block px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+										Categorias
+									</span>
+									<ul className="mt-1 flex flex-col gap-0.5">
+										{categories.map((cat) => (
+											<li key={cat.id}>
+												<Link
+													href={`/categorias/${cat.id}`}
+													className="block rounded-md px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent"
+													onClick={() => setMobileOpen(false)}
+												>
+													<span className="font-medium">{cat.name}</span>
+													<span className="ml-1 text-xs text-muted-foreground">
+														({cat.tools.length})
+													</span>
+												</Link>
+											</li>
+										))}
+									</ul>
 								</li>
 							</ul>
 						</nav>
-
-						{/* Mobile hamburger button */}
-						<button
-							type="button"
-							onClick={() => setMobileOpen(true)}
-							className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground md:hidden"
-							aria-label="Abrir menu"
-							aria-expanded={mobileOpen}
-						>
-							<Menu className="size-6" />
-						</button>
 					</div>
-				</header>
-
-				{/* Mobile drawer — rendered OUTSIDE header to avoid stacking context issues */}
-				{mobileOpen && (
-					<div className="fixed inset-0 z-[100] md:hidden">
-						{/* Backdrop */}
-						<div
-							className="absolute inset-0 bg-black/50"
-							onClick={() => setMobileOpen(false)}
-							aria-hidden="true"
-						/>
-						{/* Panel */}
-						<div className="absolute right-0 top-0 min-h-[110dvh] w-80 max-w-[85vw] overflow-y-auto bg-card shadow-xl">
-							<div className="flex h-16 items-center justify-between border-b border-border px-4">
-								<span className="text-lg font-bold text-foreground">
-									Menu
-								</span>
-								<button
-									type="button"
-									onClick={() => setMobileOpen(false)}
-									className="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-									aria-label="Fechar menu"
-								>
-									<X className="size-5" />
-								</button>
-							</div>
-							<nav
-								aria-label="Navegação mobile"
-								className="p-4"
-							>
-								<ul className="flex flex-col gap-2">
-									<li>
-										<Link
-											href="/"
-											className="block rounded-md px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-											onClick={() => setMobileOpen(false)}
-										>
-											Início
-										</Link>
-									</li>
-									<li>
-										<Link
-											href="/ferramentas"
-											className="block rounded-md px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-											onClick={() => setMobileOpen(false)}
-										>
-											Ferramentas
-										</Link>
-									</li>
-									<li>
-										<Link
-											href="/blog"
-											className="block rounded-md px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-											onClick={() => setMobileOpen(false)}
-										>
-											Blog
-										</Link>
-									</li>
-									<li className="border-t border-border pt-2">
-										<span className="block px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-											Categorias
-										</span>
-										<ul className="mt-1 flex flex-col gap-0.5">
-											{categories.map((cat) => (
-												<li key={cat.id}>
-													<Link
-														href={`/categorias/${cat.id}`}
-														className="block rounded-md px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent"
-														onClick={() => setMobileOpen(false)}
-													>
-														<span className="font-medium">
-															{cat.name}
-														</span>
-														<span className="ml-1 text-xs text-muted-foreground">
-															({cat.tools.length})
-														</span>
-													</Link>
-												</li>
-											))}
-										</ul>
-									</li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-				)}
-			</>
-		);
-	}
+				</div>
+			)}
+		</>
+	);
+}

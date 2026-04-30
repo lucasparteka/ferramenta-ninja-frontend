@@ -20,7 +20,7 @@ export function TextInput({ value, onChange }: TextInputProps) {
 				onChange={(e) => onChange(e.target.value)}
 				placeholder="Cole ou digite o texto que deseja converter..."
 				rows={8}
-				className="resize-y p-4 text-foreground"
+				className="resize-y"
 			/>
 		</div>
 	);

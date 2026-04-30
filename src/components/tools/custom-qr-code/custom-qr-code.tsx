@@ -340,7 +340,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 									 value={urlText}
 									 onChange={(e) => setUrlText(e.target.value)}
 									 placeholder="https://..."
-									 className="text-foreground"
+									 
 								 />
 							 </div>
 						 )}
@@ -359,7 +359,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 										 value={wifiSsid}
 										 onChange={(e) => setWifiSsid(e.target.value)}
 										 placeholder="MinhaRedeWiFi"
-										 className="text-foreground"
+										 
 									 />
 								 </div>
 								 <div className="space-y-2">
@@ -375,7 +375,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 										 value={wifiPassword}
 										 onChange={(e) => setWifiPassword(e.target.value)}
 										 placeholder="Senha da rede"
-										 className="text-foreground"
+										 
 									 />
 								 </div>
 								 <div className="grid gap-4 sm:grid-cols-2">
@@ -436,7 +436,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 										 value={emailTo}
 										 onChange={(e) => setEmailTo(e.target.value)}
 										 placeholder="exemplo@email.com"
-										 className="text-foreground"
+										 
 									 />
 								 </div>
 								 <div className="space-y-2">
@@ -451,7 +451,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 										 value={emailSubject}
 										 onChange={(e) => setEmailSubject(e.target.value)}
 										 placeholder="Assunto do e-mail"
-										 className="text-foreground"
+										 
 									 />
 								 </div>
 								 <div className="space-y-2">
@@ -488,7 +488,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 										 setPhoneNumber(formatPhoneBR(e.target.value))
 									 }
 									 placeholder="(11) 91234-5678"
-									 className="text-foreground"
+									 
 								 />
 							 </div>
 						 )}
@@ -529,7 +529,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 											 value={pixKey}
 											 onChange={(e) => setPixKey(e.target.value)}
 											 placeholder="Chave Pix"
-											 className="text-foreground"
+											 
 										 />
 									 </div>
 								 </div>
@@ -546,7 +546,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 											 value={pixName}
 											 onChange={(e) => setPixName(e.target.value)}
 											 placeholder="Nome completo"
-											 className="text-foreground"
+											 
 										 />
 									 </div>
 									 <div className="space-y-2">
@@ -561,7 +561,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 											 value={pixCity}
 											 onChange={(e) => setPixCity(e.target.value)}
 											 placeholder="Cidade"
-											 className="text-foreground"
+											 
 										 />
 									 </div>
 								 </div>
@@ -578,7 +578,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 											 value={pixAmount}
 											 onChange={(e) => setPixAmount(e.target.value)}
 											 placeholder="0,00"
-											 className="text-foreground"
+											 
 										 />
 									 </div>
 									 <div className="space-y-2">
@@ -595,7 +595,7 @@ import { generateWifiString } from "@/lib/wifi/generate";
 												 setPixDescription(e.target.value)
 											 }
 											 placeholder="Descrição"
-											 className="text-foreground"
+											 
 										 />
 									 </div>
 								 </div>

@@ -82,7 +82,6 @@ export function QRGenerator() {
 						id="qr-size"
 						value={state.size}
 						onChange={(e) => set("size", Number(e.target.value))}
-						className="text-foreground"
 					>
 						<option value={200}>200 × 200 px</option>
 						<option value={300}>300 × 300 px</option>

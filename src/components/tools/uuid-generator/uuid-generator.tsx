@@ -144,8 +144,8 @@ export function UuidGenerator() {
 									type="text"
 									value={customNamespace}
 									onChange={(e) => setCustomNamespace(e.target.value)}
-									placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-									className="font-mono text-foreground"
+						placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+						className="font-mono"
 								/>
 							</div>
 						)}
@@ -156,9 +156,8 @@ export function UuidGenerator() {
 								id="uuid-name"
 								type="text"
 								value={name}
-								onChange={(e) => setName(e.target.value)}
-								placeholder="Digite o nome para gerar o UUID"
-								className="text-foreground"
+						onChange={(e) => setName(e.target.value)}
+							placeholder="Digite o nome para gerar o UUID"
 							/>
 						</div>
 					</div>
@@ -174,7 +173,7 @@ export function UuidGenerator() {
 							max={100}
 							value={quantity}
 							onChange={(e) => handleQuantity(e.target.value)}
-							className="w-24 text-foreground"
+							className="w-24"
 						/>
 						<p className="text-xs text-muted-foreground">
 							Máximo de 100 UUIDs por vez

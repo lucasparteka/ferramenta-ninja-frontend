@@ -29,7 +29,7 @@ export function CharacterCounterStats({ stats }: CharacterCounterStatsProps) {
 			{items.map((item) => (
 				<div
 					key={item.label}
-					className="rounded-lg border border-border bg-secondary p-4 text-center"
+					className="rounded-lg border border-border bg-card p-4 text-center"
 				>
 					<p className="text-2xl font-bold text-primary">{item.value}</p>
 					<p className="mt-1 text-xs text-muted-foreground">{item.label}</p>

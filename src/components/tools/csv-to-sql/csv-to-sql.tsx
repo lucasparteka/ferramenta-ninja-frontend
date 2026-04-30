@@ -369,7 +369,7 @@ export function CsvToSql() {
 								);
 							}
 						}}
-						className="bg-card text-foreground"
+
 					/>
 				</div>
 
@@ -522,7 +522,7 @@ export function CsvToSql() {
 				placeholder="Ou cole o CSV aqui..."
 				rows={5}
 				aria-label="Cole o conteúdo CSV aqui"
-				className="resize-y bg-card font-mono text-foreground"
+				className="resize-y font-mono"
 			/>
 
 			{state === "error" && (
@@ -587,7 +587,7 @@ export function CsvToSql() {
 						value={sql}
 						aria-label="SQL gerado"
 						rows={16}
-						className="resize-y bg-secondary font-mono text-xs text-foreground"
+						className="resize-y font-mono text-xs"
 					/>
 
 					<Button

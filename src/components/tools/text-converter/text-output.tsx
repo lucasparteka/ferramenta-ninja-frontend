@@ -33,7 +33,7 @@ export function TextOutput({
 				onChange={(e) => onChange(e.target.value)}
 				placeholder="O resultado aparecerá aqui..."
 				rows={8}
-				className="resize-y p-4 text-foreground"
+				className="resize-y"
 			/>
 			{copied && <p className="text-sm text-success">Texto copiado!</p>}
 		</div>

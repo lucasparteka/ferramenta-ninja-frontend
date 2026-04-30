@@ -55,7 +55,7 @@ export function MetaTagGenerator() {
 						value={title}
 						onChange={(e) => setTitle(e.target.value)}
 						placeholder="Meu Site Incrível"
-						className="text-foreground"
+						
 						maxLength={60}
 					/>
 					<p className="text-xs text-muted-foreground">
@@ -75,7 +75,7 @@ export function MetaTagGenerator() {
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 						placeholder="Descrição breve do conteúdo da página..."
-						className="min-h-[80px] text-foreground"
+						className="min-h-[80px]"
 						maxLength={160}
 					/>
 					<p className="text-xs text-muted-foreground">
@@ -96,7 +96,7 @@ export function MetaTagGenerator() {
 						value={url}
 						onChange={(e) => setUrl(e.target.value)}
 						placeholder="https://www.exemplo.com.br/pagina"
-						className="text-foreground"
+						
 					/>
 				</div>
 
@@ -113,7 +113,7 @@ export function MetaTagGenerator() {
 						value={image}
 						onChange={(e) => setImage(e.target.value)}
 						placeholder="https://www.exemplo.com.br/imagem.jpg"
-						className="text-foreground"
+						
 					/>
 				</div>
 
@@ -149,7 +149,7 @@ export function MetaTagGenerator() {
 						value={author}
 						onChange={(e) => setAuthor(e.target.value)}
 						placeholder="Nome do autor"
-						className="text-foreground"
+						
 					/>
 				</div>
 
@@ -165,7 +165,7 @@ export function MetaTagGenerator() {
 						value={keywords}
 						onChange={(e) => setKeywords(e.target.value)}
 						placeholder="palavra1, palavra2, palavra3"
-						className="text-foreground"
+						
 					/>
 				</div>
 			</div>

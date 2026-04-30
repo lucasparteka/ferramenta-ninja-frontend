@@ -126,7 +126,7 @@ import { Input } from "@/components/ui/input";
 						 value={value}
 						 onChange={(e) => setValue(e.target.value)}
 						 placeholder={`Ex: ${fromScale === "fahrenheit" ? "32" : fromScale === "kelvin" ? "273.15" : "0"}`}
-						 className="text-foreground"
+	
 					 />
 				 </div>
 

@@ -126,7 +126,6 @@ export function PixQR() {
 							setKey(e.target.value);
 							resetQR();
 						}}
-						className="text-foreground"
 					/>
 				</div>
 
@@ -147,7 +146,6 @@ export function PixQR() {
 							setName(e.target.value);
 							resetQR();
 						}}
-						className="text-foreground"
 					/>
 				</div>
 
@@ -168,7 +166,6 @@ export function PixQR() {
 							setCity(e.target.value);
 							resetQR();
 						}}
-						className="text-foreground"
 					/>
 				</div>
 
@@ -188,7 +185,6 @@ export function PixQR() {
 							setAmount(e.target.value);
 							resetQR();
 						}}
-						className="text-foreground"
 					/>
 				</div>
 
@@ -209,7 +205,6 @@ export function PixQR() {
 							setDescription(e.target.value);
 							resetQR();
 						}}
-						className="text-foreground"
 					/>
 				</div>
 

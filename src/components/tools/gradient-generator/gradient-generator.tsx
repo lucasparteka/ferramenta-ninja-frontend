@@ -103,7 +103,7 @@ export function GradientGenerator() {
 										if (!Number.isNaN(val))
 											setAngle(Math.min(360, Math.max(0, val)));
 									}}
-									className="h-8 w-20 text-right font-mono text-sm text-foreground"
+									className="h-8 w-20 text-right font-mono"
 									min={0}
 									max={360}
 								/>
@@ -135,7 +135,7 @@ export function GradientGenerator() {
 								type="text"
 								value={stop.color.toUpperCase()}
 								onChange={(e) => updateStop(i, { color: e.target.value })}
-								className="w-28 font-mono text-foreground uppercase"
+								className="w-28 font-mono uppercase"
 								maxLength={7}
 							/>
 							<div className="flex-1 space-y-1">

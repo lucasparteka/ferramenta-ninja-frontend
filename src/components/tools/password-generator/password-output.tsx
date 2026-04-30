@@ -27,7 +27,7 @@ export function PasswordOutput({
 					readOnly
 					value={password}
 					placeholder='Clique em "Gerar senha"'
-					className="flex-1 font-mono text-foreground"
+					className="flex-1 font-mono"
 				/>
 				<Button
 					variant="outline"

@@ -10,7 +10,7 @@ import {
 	whatPercent,
 } from "@/lib/math/percentage";
 
-const INPUT_CLASS = "w-28 px-2 py-1.5 text-center text-foreground";
+const INPUT_CLASS = "w-28 text-center";
 
 function toNum(value: string): number | null {
 	const n = Number(value);

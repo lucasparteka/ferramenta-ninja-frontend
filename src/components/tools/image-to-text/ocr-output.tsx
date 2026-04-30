@@ -73,7 +73,7 @@ export function OcrOutput({
 						value={result}
 						onChange={(e) => onChange(e.target.value)}
 						aria-label="Texto extraído da imagem"
-						className="flex-1 resize-none border-0 bg-transparent p-4 text-foreground"
+						className="flex-1 resize-none border-0 bg-transparent p-4"
 						rows={10}
 					/>
 				)}

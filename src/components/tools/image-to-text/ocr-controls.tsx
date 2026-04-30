@@ -38,7 +38,7 @@ export function OcrControls({
 					value={language}
 					onChange={(e) => onLanguageChange(e.target.value as OcrLanguage)}
 					disabled={disabled}
-					className="bg-secondary text-foreground disabled:cursor-not-allowed disabled:opacity-50"
+					className="disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					{LANGUAGE_OPTIONS.map((option) => (
 						<option key={option.value} value={option.value}>

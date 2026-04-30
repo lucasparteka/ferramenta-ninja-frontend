@@ -118,7 +118,6 @@ export function BatchBarcode() {
 						id="batch-format"
 						value={format}
 						onChange={(e) => setFormat(e.target.value as BarcodeFormat)}
-						className="text-foreground"
 					>
 						{FORMATS.map((f) => (
 							<option key={f.value} value={f.value}>
@@ -156,7 +155,7 @@ export function BatchBarcode() {
 						placeholder={"7891234560012\n7891234560029\n7891234560036"}
 						value={rawInput}
 						onChange={(e) => setRawInput(e.target.value)}
-						className="resize-none text-foreground"
+						className="resize-none"
 					/>
 					<p className="text-xs text-muted-foreground">
 						{lineCount} {lineCount === 1 ? "item" : "itens"}

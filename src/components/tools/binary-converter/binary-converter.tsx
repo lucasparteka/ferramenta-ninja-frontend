@@ -76,7 +76,7 @@ export function BinaryConverter() {
 							setInput(e.target.value);
 							resetOutput();
 						}}
-						className="bg-input text-foreground resize-none"
+						className="resize-none"
 					/>
 				</div>
 
@@ -135,7 +135,7 @@ export function BinaryConverter() {
 					readOnly
 					value={output}
 					placeholder="O resultado aparecerá aqui..."
-					className="bg-secondary text-foreground resize-none"
+					className="resize-none"
 				/>
 			</div>
 		</div>

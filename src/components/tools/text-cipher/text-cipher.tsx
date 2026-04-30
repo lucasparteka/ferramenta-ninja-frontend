@@ -145,7 +145,7 @@ export function TextCipher() {
 								setPassword(e.target.value);
 								resetOutput();
 							}}
-							className="text-foreground"
+
 						/>
 					</div>
 				)}
@@ -178,7 +178,7 @@ export function TextCipher() {
 					readOnly
 					value={output}
 					placeholder="O resultado aparecerá aqui..."
-					className="resize-none bg-secondary text-foreground"
+					className="resize-none"
 				/>
 			</div>
 		</div>

@@ -176,7 +176,7 @@ export function CompressImage() {
 								value={maxWidth || ""}
 								onChange={(e) => setMaxWidth(Number(e.target.value) || 0)}
 								placeholder="Original"
-								className="text-foreground"
+								
 							/>
 						</div>
 
@@ -193,7 +193,7 @@ export function CompressImage() {
 								value={maxHeight || ""}
 								onChange={(e) => setMaxHeight(Number(e.target.value) || 0)}
 								placeholder="Original"
-								className="text-foreground"
+								
 							/>
 						</div>
 

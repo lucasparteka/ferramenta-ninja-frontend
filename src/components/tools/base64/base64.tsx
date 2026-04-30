@@ -97,7 +97,7 @@ export function Base64Tool() {
 								? "Digite o texto aqui..."
 								: "Cole o Base64 aqui..."
 						}
-						className="min-h-[300px] font-mono text-foreground"
+						className="min-h-[300px] font-mono"
 						spellCheck={false}
 					/>
 				</div>

@@ -34,7 +34,7 @@ export function CnpjValidator() {
 					onChange={(e) => handleInput(e.target.value)}
 					placeholder="00.000.000/0000-00"
 					maxLength={18}
-					className="max-w-xs font-mono text-foreground"
+					className="max-w-xs font-mono"
 				/>
 			</div>
 

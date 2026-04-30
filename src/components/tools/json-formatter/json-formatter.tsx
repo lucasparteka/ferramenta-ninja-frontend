@@ -149,7 +149,7 @@ export function JsonFormatter() {
 					value={input}
 					onChange={(e) => handleInputChange(e.target.value)}
 					placeholder='{"exemplo": "cole seu JSON aqui"}'
-					className="min-h-70 font-mono text-foreground"
+					className="min-h-70 font-mono"
 					spellCheck={false}
 				/>
 			</div>

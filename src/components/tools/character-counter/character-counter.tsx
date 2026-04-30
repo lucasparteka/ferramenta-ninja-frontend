@@ -1,5 +1,6 @@
 "use client";
 
+import { Trash } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -57,7 +58,7 @@ export function CharacterCounter() {
 					onChange={(e) => setText(e.target.value)}
 					placeholder="Digite ou cole seu texto aqui"
 					rows={10}
-					className="resize-y p-4 text-foreground"
+					className="resize-y"
 				/>
 			</div>
 
@@ -65,19 +66,14 @@ export function CharacterCounter() {
 
 			<div className="flex gap-3">
 				<Button
-					variant="outline"
-					size="sm"
+					variant="secondary"
 					onClick={() => setText("")}
 					disabled={text === ""}
 				>
+					<Trash />
 					Limpar
 				</Button>
-				<Button
-					variant="outline"
-					size="sm"
-					onClick={handleCopy}
-					disabled={text === ""}
-				>
+				<Button variant="outline" onClick={handleCopy} disabled={text === ""}>
 					Copiar texto
 				</Button>
 			</div>

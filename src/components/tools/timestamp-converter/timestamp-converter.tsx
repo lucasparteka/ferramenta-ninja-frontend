@@ -120,8 +120,8 @@ export function TimestampConverter() {
 						type="text"
 						value={timestampInput}
 						onChange={(e) => setTimestampInput(e.target.value)}
-						placeholder="Ex: 1700000000"
-						className="font-mono text-foreground"
+					placeholder="Ex: 1700000000"
+					className="font-mono"
 					/>
 					<Button
 						onClick={handleTimestampToDate}
@@ -155,8 +155,7 @@ export function TimestampConverter() {
 								id="time-input"
 								type="time"
 								value={timeInput}
-								onChange={(e) => setTimeInput(e.target.value)}
-								className="text-foreground"
+						onChange={(e) => setTimeInput(e.target.value)}
 							/>
 						</div>
 						<div className="flex items-end">

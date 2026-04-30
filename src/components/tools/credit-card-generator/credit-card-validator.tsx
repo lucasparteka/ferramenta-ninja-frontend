@@ -40,7 +40,7 @@ export function CreditCardValidator() {
 					onChange={(e) => handleChange(e.target.value)}
 					maxLength={19}
 					placeholder="0000 0000 0000 0000"
-					className="max-w-xs font-mono text-foreground"
+					className="max-w-xs font-mono"
 				/>
 			</div>
 

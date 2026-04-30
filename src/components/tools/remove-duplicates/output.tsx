@@ -31,7 +31,7 @@ export function RemoveDuplicatesOutput({
 				value={value}
 				placeholder='Clique em "Remover duplicatas" para ver o resultado...'
 				rows={12}
-				className="resize-y p-4 text-foreground"
+				className="resize-y"
 			/>
 			{copied && <p className="text-sm text-success">Texto copiado!</p>}
 		</div>

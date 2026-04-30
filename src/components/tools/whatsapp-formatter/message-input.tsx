@@ -31,7 +31,7 @@ export function MessageInput({
 				onKeyUp={onSelectionChange}
 				placeholder="Escreva sua mensagem aqui..."
 				rows={8}
-				className="resize-y p-4 text-foreground"
+				className="resize-y"
 			/>
 		</div>
 	);

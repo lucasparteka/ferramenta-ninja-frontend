@@ -47,7 +47,7 @@ export function DecodificadorPixClient() {
 					onChange={(e) => setInput(e.target.value)}
 					placeholder="00020126..."
 					rows={6}
-					className="text-foreground font-mono"
+					className="font-mono"
 				/>
 			</div>
 

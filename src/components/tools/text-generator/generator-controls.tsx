@@ -47,7 +47,6 @@ export function GeneratorControls({
 					id="generator-type"
 					value={options.type}
 					onChange={(e) => set("type", e.target.value as GeneratorType)}
-					className="text-foreground"
 				>
 					<option value="lorem">Lorem Ipsum</option>
 					<option value="random">Texto aleatório</option>
@@ -68,7 +67,6 @@ export function GeneratorControls({
 					max={100}
 					value={options.quantity}
 					onChange={(e) => handleQuantity(e.target.value)}
-					className="text-foreground"
 				/>
 			</div>
 
@@ -83,7 +81,6 @@ export function GeneratorControls({
 					id="generator-unit"
 					value={options.unit}
 					onChange={(e) => set("unit", e.target.value as UnitType)}
-					className="text-foreground"
 				>
 					<option value="words">Palavras</option>
 					<option value="sentences">Frases</option>

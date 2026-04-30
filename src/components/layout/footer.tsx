@@ -26,7 +26,7 @@ export function Footer() {
 					<div>
 						<Link href="/" className="flex items-center">
 							<span className="text-lg font-bold text-primary">ferramenta</span>
-							<span className="text-lg font-bold text-accent">.ninja</span>
+							<span className="text-lg font-bold text-foreground">.ninja</span>
 						</Link>
 						<p className="mt-3 text-sm text-muted-foreground">
 							Ferramentas online gratuitas para todos.

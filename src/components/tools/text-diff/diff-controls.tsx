@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeftRight, Copy, GitCompare, Trash2 } from "lucide-react";
+import { ArrowLeftRight, Copy, GitCompare, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type DiffControlsProps = {
@@ -37,11 +37,11 @@ export function DiffControls({
 
 			<Button
 				type="button"
-				variant="outline"
+				variant="secondary"
 				onClick={onClear}
 				className="gap-1.5"
 			>
-				<Trash2 className="size-4" />
+				<Trash className="size-4" />
 				Limpar
 			</Button>
 

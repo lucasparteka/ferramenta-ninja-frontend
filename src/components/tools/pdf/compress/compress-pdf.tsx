@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
@@ -163,10 +164,11 @@ export function CompressPDF() {
 				/>
 				{file && (
 					<Button
-						variant="outline"
+						variant="secondary"
 						className="mt-3 w-full"
 						onClick={handleClear}
 					>
+						<Trash />
 						Limpar
 					</Button>
 				)}

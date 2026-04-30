@@ -1,6 +1,6 @@
 "use client";
 
-import { Download } from "lucide-react";
+import { Download, Trash } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import QRCodeStyling from "qr-code-styling";
 import { Button } from "@/components/ui/button";
@@ -773,13 +773,15 @@ import { generateWifiString } from "@/lib/wifi/generate";
 											 alt="Logo preview"
 											 className="h-8 w-8 rounded object-contain"
 										 />
-										 <button
+										 <Button
 											 type="button"
+											 variant="secondary"
+											 size="sm"
 											 onClick={() => setLogoUrl("")}
-											 className="text-xs text-destructive hover:underline"
 										 >
+											 <Trash />
 											 Remover
-										 </button>
+										 </Button>
 									 </div>
 									 <span className="block text-xs text-muted-foreground">
 										 Tamanho do logo

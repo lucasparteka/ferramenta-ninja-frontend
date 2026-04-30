@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, RotateCcw, Upload } from "lucide-react";
+import { Download, Trash, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import "react-image-crop/dist/ReactCrop.css";
 import ReactCrop, {
@@ -232,10 +232,10 @@ export function ImageCropper() {
 								<Download className="mr-2 h-4 w-4" />
 								Baixar
 							</Button>
-							<Button variant="ghost" onClick={handleClear}>
-								<RotateCcw className="mr-2 h-4 w-4" />
-								Reiniciar
-							</Button>
+						<Button variant="secondary" onClick={handleClear}>
+							<Trash />
+							Reiniciar
+						</Button>
 						</div>
 					</>
 				)}

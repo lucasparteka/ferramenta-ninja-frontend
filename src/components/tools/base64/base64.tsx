@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Trash } from "lucide-react";
 import { ResultGrid, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -109,13 +110,14 @@ export function Base64Tool() {
 					<Button onClick={handleCopy} disabled={!output} variant="outline">
 						{copied ? "Copiado!" : "Copiar resultado"}
 					</Button>
-					<Button
-						onClick={handleClear}
-						disabled={!input && !output}
-						variant="ghost"
-					>
-						Limpar
-					</Button>
+				<Button
+					onClick={handleClear}
+					disabled={!input && !output}
+					variant="secondary"
+				>
+					<Trash />
+					Limpar
+				</Button>
 				</div>
 			</div>
 

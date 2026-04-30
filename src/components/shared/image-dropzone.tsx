@@ -1,6 +1,6 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Trash } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -87,10 +87,10 @@ export function ImageDropzone({
 				className="hidden"
 			/>
 			{preview && (
-				<Button variant="outline" className="mt-3 w-full" onClick={onClear}>
-					<X className="mr-2 h-4 w-4" />
-					Limpar
-				</Button>
+			<Button variant="secondary" className="mt-3 w-full" onClick={onClear}>
+				<Trash />
+				Limpar
+			</Button>
 			)}
 		</div>
 	);

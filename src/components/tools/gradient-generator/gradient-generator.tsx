@@ -1,6 +1,6 @@
 "use client";
 
-import { Shuffle } from "lucide-react";
+import { Shuffle, Trash } from "lucide-react";
 import { useState } from "react";
 import { Slider } from "@/components/shared/slider";
 import { Button } from "@/components/ui/button";
@@ -154,14 +154,14 @@ export function GradientGenerator() {
 								/>
 							</div>
 							{stops.length > 2 && (
-								<Button
-									variant="ghost"
-									size="sm"
-									onClick={() => removeStop(i)}
-									className="shrink-0 text-destructive"
-								>
-									Remover
-								</Button>
+							<Button
+								variant="secondary"
+								onClick={() => removeStop(i)}
+								className="shrink-0"
+							>
+								<Trash />
+								Remover
+							</Button>
 							)}
 						</div>
 					))}

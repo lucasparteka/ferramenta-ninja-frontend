@@ -7,7 +7,7 @@ import {
 	ChevronUp,
 	GripVertical,
 	Plus,
-	Trash2,
+	Trash,
 } from "lucide-react";
 import { type ComponentProps, memo, useCallback, useState } from "react";
 import {
@@ -374,12 +374,12 @@ function ExperienceCard({
 
 			<Button
 				type="button"
-				variant="ghost"
-				size="icon"
-				className="h-7 w-7 shrink-0 text-muted-foreground/50 hover:text-destructive transition-colors"
+				variant="secondary"
+				className="shrink-0"
 				onClick={handleRemove}
 			>
-				<Trash2 size={15} />
+				<Trash />
+				Remover
 			</Button>
 		</div>
 	);

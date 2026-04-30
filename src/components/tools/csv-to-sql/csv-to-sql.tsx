@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, Download, Upload, X } from "lucide-react";
+import { Check, Copy, Download, Trash, Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -591,11 +591,11 @@ export function CsvToSql() {
 					/>
 
 					<Button
-						variant="outline"
-						size="sm"
+						variant="secondary"
 						onClick={handleClear}
 						className="w-full sm:w-auto"
 					>
+						<Trash />
 						Limpar e começar novamente
 					</Button>
 				</div>

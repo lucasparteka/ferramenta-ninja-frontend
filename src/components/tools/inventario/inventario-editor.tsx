@@ -1,6 +1,6 @@
 "use client";
 
-import { FileDown, Image, Plus, Trash2 } from "lucide-react";
+import { FileDown, Image, Plus, Trash } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -264,16 +264,16 @@ export function InventarioEditor() {
 												placeholder="Preencher"
 											/>
 										</div>
-										<Button
-											type="button"
-											variant="ghost"
-											size="icon"
-											onClick={() => removeHeaderField(field.id)}
-											aria-label="Remover campo"
-											className="shrink-0 text-muted-foreground hover:text-destructive"
-										>
-											<Trash2 className="size-4" />
-										</Button>
+									<Button
+										type="button"
+										variant="secondary"
+										onClick={() => removeHeaderField(field.id)}
+										aria-label="Remover campo"
+										className="shrink-0"
+									>
+										<Trash className="size-4" />
+										Remover
+									</Button>
 									</div>
 								))}
 							</div>
@@ -333,16 +333,16 @@ export function InventarioEditor() {
 												))}
 											</NativeSelect>
 										</div>
-										<Button
-											type="button"
-											variant="ghost"
-											size="icon"
-											onClick={() => removeColumn(col.id)}
-											aria-label="Remover coluna"
-											className="shrink-0 text-muted-foreground hover:text-destructive"
-										>
-											<Trash2 className="size-4" />
-										</Button>
+									<Button
+										type="button"
+										variant="secondary"
+										onClick={() => removeColumn(col.id)}
+										aria-label="Remover coluna"
+										className="shrink-0"
+									>
+										<Trash className="size-4" />
+										Remover
+									</Button>
 									</div>
 								))}
 							</div>

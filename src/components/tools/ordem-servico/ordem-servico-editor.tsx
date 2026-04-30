@@ -6,7 +6,7 @@ import {
 	FileDown,
 	Image,
 	Plus,
-	Trash2,
+	Trash,
 	Upload,
 	X,
 } from "lucide-react";
@@ -290,16 +290,14 @@ export function OrdemServicoEditor() {
 											alt="Logo"
 											className="h-12 w-auto max-w-[120px] rounded border border-border bg-muted object-contain"
 										/>
-										<Button
-											type="button"
-											variant="ghost"
-											size="sm"
-											onClick={() => updatePrestador({ logo: "" })}
-											className="text-muted-foreground"
-										>
-											<Trash2 className="size-4" />
-											Remover
-										</Button>
+									<Button
+										type="button"
+										variant="secondary"
+										onClick={() => updatePrestador({ logo: "" })}
+									>
+										<Trash className="size-4" />
+										Remover
+									</Button>
 									</div>
 								) : (
 									<label className="cursor-pointer">
@@ -528,14 +526,14 @@ export function OrdemServicoEditor() {
 									/>
 									<Button
 										type="button"
-										variant="ghost"
-										size="icon"
+										variant="secondary"
 										onClick={() => removeItem(item.id)}
 										disabled={state.itens.length <= 1}
 										aria-label="Remover item"
 										className="shrink-0"
 									>
-										<Trash2 className="size-4" />
+										<Trash className="size-4" />
+										Remover
 									</Button>
 								</div>
 							))}

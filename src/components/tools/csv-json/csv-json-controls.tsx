@@ -1,6 +1,6 @@
 "use client";
 
-import { CopyIcon, TrashIcon } from "lucide-react";
+import { CopyIcon, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type Props = {
@@ -12,8 +12,8 @@ type Props = {
 export function CsvJsonControls({ onClear, onCopy, hasResult }: Props) {
 	return (
 		<div className="flex gap-2">
-			<Button variant="destructive" disabled={!hasResult} onClick={onClear}>
-				<TrashIcon />
+			<Button variant="secondary" disabled={!hasResult} onClick={onClear}>
+				<Trash />
 				Limpar
 			</Button>
 

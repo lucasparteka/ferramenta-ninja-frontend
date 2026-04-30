@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Trash } from "lucide-react";
 import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -55,9 +56,10 @@ export function DecodificadorPixClient() {
 				<Button onClick={handleDecode} disabled={!input.trim()}>
 					Decodificar
 				</Button>
-				<Button variant="outline" onClick={handleClear} disabled={!input}>
-					Limpar
-				</Button>
+			<Button variant="secondary" onClick={handleClear} disabled={!input}>
+				<Trash />
+				Limpar
+			</Button>
 			</div>
 
 			{result && (

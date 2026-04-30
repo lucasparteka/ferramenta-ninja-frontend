@@ -2,7 +2,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Copy, ImageIcon, Mail, Moon, Sun } from "lucide-react";
+import { Copy, ImageIcon, Mail, Moon, Sun, Trash } from "lucide-react";
 import { useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
@@ -477,14 +477,14 @@ export function EmailSignature() {
 									className="cursor-pointer"
 								/>
 								{watch("photoUrl") && (
-									<Button
-										type="button"
-										variant="ghost"
-										size="sm"
-										onClick={() => setValue("photoUrl", "")}
-									>
-										Remover
-									</Button>
+								<Button
+									type="button"
+									variant="secondary"
+									onClick={() => setValue("photoUrl", "")}
+								>
+									<Trash />
+									Remover
+								</Button>
 								)}
 							</div>
 							{watch("photoUrl") && (
@@ -506,14 +506,14 @@ export function EmailSignature() {
 									className="cursor-pointer"
 								/>
 								{watch("logoUrl") && (
-									<Button
-										type="button"
-										variant="ghost"
-										size="sm"
-										onClick={() => setValue("logoUrl", "")}
-									>
-										Remover
-									</Button>
+								<Button
+									type="button"
+									variant="secondary"
+									onClick={() => setValue("logoUrl", "")}
+								>
+									<Trash />
+									Remover
+								</Button>
 								)}
 							</div>
 							{watch("logoUrl") && (
@@ -535,14 +535,14 @@ export function EmailSignature() {
 									className="cursor-pointer"
 								/>
 								{watch("bannerUrl") && (
-									<Button
-										type="button"
-										variant="ghost"
-										size="sm"
-										onClick={() => setValue("bannerUrl", "")}
-									>
-										Remover
-									</Button>
+								<Button
+									type="button"
+									variant="secondary"
+									onClick={() => setValue("bannerUrl", "")}
+								>
+									<Trash />
+									Remover
+								</Button>
 								)}
 							</div>
 							{watch("bannerUrl") && (

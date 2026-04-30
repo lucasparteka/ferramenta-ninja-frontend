@@ -8,8 +8,9 @@ import {
 	ImageOff,
 	Pencil,
 	Square,
-	Trash2,
+	Trash,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type Tool = "pencil" | "eraser" | "rectangle" | "circle";
 
@@ -142,15 +143,15 @@ export function CanvasToolbar({
 				<p className="hidden w-full text-xs font-medium text-muted-foreground lg:block">
 					Ações
 				</p>
-				<button
+				<Button
 					type="button"
 					aria-label="Limpar canvas"
+					variant="secondary"
 					onClick={onClear}
-					className={`${baseButtonClass} border-border bg-background text-destructive hover:border-destructive`}
 				>
-					<Trash2 className="h-4 w-4 shrink-0" aria-hidden="true" />
+					<Trash className="h-4 w-4 shrink-0" aria-hidden="true" />
 					Limpar
-				</button>
+				</Button>
 				<button
 					type="button"
 					aria-label="Salvar imagem como PNG"

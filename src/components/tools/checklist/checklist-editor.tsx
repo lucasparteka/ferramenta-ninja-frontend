@@ -9,7 +9,7 @@ import {
 	Hash,
 	Image,
 	Plus,
-	Trash2,
+	Trash,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -150,13 +150,12 @@ function SortableItem({
 			</Button>
 			<Button
 				type="button"
-				variant="ghost"
-				size="icon"
+				variant="secondary"
 				onClick={() => onRemove(index)}
 				aria-label="Remover item"
 				disabled={disableRemove}
 			>
-				<Trash2 className="size-4" />
+				<Trash className="size-4" />
 			</Button>
 		</li>
 	);
@@ -644,15 +643,10 @@ export function ChecklistEditor() {
 						<AlertDialog>
 							<AlertDialogTrigger
 								render={
-									<Button
-										type="button"
-										variant="destructive"
-										size="sm"
-										className="mt-4"
-									/>
+									<Button type="button" variant="secondary" className="mt-4" />
 								}
 							>
-								<Trash2 className="size-4" />
+								<Trash className="size-4" />
 								Limpar todos os itens
 							</AlertDialogTrigger>
 							<AlertDialogContent size="sm">

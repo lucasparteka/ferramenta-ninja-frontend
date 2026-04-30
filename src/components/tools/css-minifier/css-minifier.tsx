@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Trash } from "lucide-react";
 import {
 	ResultBox,
 	ResultGrid,
@@ -111,8 +112,9 @@ export function CssMinifier() {
 					<Button
 						onClick={handleClear}
 						disabled={!input && !output}
-						variant="ghost"
+						variant="secondary"
 					>
+						<Trash />
 						Limpar
 					</Button>
 				</div>

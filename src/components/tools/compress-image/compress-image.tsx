@@ -1,6 +1,6 @@
 "use client";
 
-import { FileDown, Minimize2, X } from "lucide-react";
+import { FileDown, Minimize2, Trash } from "lucide-react";
 import { useCallback, useState } from "react";
 import { ImageDropzone } from "@/components/shared/image-dropzone";
 import { ResultBox, ResultRow } from "@/components/shared/result-box";
@@ -227,11 +227,11 @@ export function CompressImage() {
 								{state === "loading" ? "Comprimindo..." : "Comprimir"}
 							</Button>
 							<Button
-								variant="outline"
+								variant="secondary"
 								onClick={handleClear}
 								disabled={state === "idle" && !file}
 							>
-								<X className="mr-2 h-4 w-4" />
+								<Trash />
 								Limpar
 							</Button>
 						</div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -188,8 +189,9 @@ export function JsonFormatter() {
 				<Button
 					onClick={handleClear}
 					disabled={!input.trim() && !output}
-					variant="ghost"
+					variant="secondary"
 				>
+					<Trash />
 					Limpar
 				</Button>
 				<div className="ml-auto flex items-center gap-2">

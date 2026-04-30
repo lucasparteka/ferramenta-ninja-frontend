@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
+import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -114,13 +115,15 @@ function hello(name: string): string {
 						 >
 							 Markdown
 						 </label>
-						 <button
+						 <Button
 							 type="button"
+							 variant="secondary"
+							 size="sm"
 							 onClick={() => setMarkdown("")}
-							 className="text-xs text-muted-foreground hover:text-foreground"
 						 >
+							 <Trash />
 							 Limpar
-						 </button>
+						 </Button>
 					 </div>
 					 <Textarea
 						 id="md-input"

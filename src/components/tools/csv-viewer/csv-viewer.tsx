@@ -6,6 +6,7 @@ import {
 	ArrowUpDown,
 	ChevronLeft,
 	ChevronRight,
+	Trash,
 	Upload,
 	X,
 } from "lucide-react";
@@ -540,11 +541,11 @@ export function CsvViewer() {
 					)}
 
 					<Button
-						variant="outline"
-						size="sm"
+						variant="secondary"
 						onClick={handleClear}
 						className="w-full sm:w-auto"
 					>
+						<Trash />
 						Limpar e começar novamente
 					</Button>
 				</div>

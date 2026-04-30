@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Trash } from "lucide-react";
 import { ResultGrid, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { DateInput } from "@/components/ui/date-input";
@@ -174,10 +175,11 @@ export function TimestampConverter() {
 						Agora
 					</Button>
 					<Button
-						variant="ghost"
+						variant="secondary"
 						onClick={handleClear}
 						disabled={!timestampInput && !dateInput}
 					>
+						<Trash />
 						Limpar
 					</Button>
 				</div>

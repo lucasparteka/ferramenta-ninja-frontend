@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { type Control, useFormContext, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -76,12 +76,11 @@ function SocialLinkRow({
 			</div>
 			<Button
 				type="button"
-				variant="ghost"
-				size="icon"
-				className="mt-1.5 text-destructive hover:text-destructive shrink-0"
+				variant="secondary"
+				className="shrink-0"
 				onClick={onRemove}
 			>
-				<Trash2 size={16} />
+				<Trash />
 			</Button>
 		</div>
 	);

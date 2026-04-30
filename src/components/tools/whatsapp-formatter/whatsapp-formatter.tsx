@@ -2,7 +2,7 @@
 
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Copy, Eraser, Trash2, Undo2 } from "lucide-react";
+import { Copy, Eraser, Trash, Undo2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { serializeToWhatsApp } from "@/lib/text/whatsapp-serializer";
@@ -69,13 +69,12 @@ export function WhatsAppFormatter() {
 							Copiar mensagem
 						</Button>
 						<Button
-							size="sm"
-							variant="outline"
+							variant="secondary"
 							onClick={handleClear}
 							disabled={isEmpty}
 						>
-							<Trash2 />
-							Remover texto
+							<Trash />
+							Limpar
 						</Button>
 						<Button
 							size="sm"

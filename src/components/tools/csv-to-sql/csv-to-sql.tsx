@@ -187,7 +187,10 @@ function OptionCheckbox({
 				checked={checked}
 				onCheckedChange={(v) => onChange(v === true)}
 			/>
-			<label htmlFor={id} className="cursor-pointer select-none text-sm text-foreground">
+			<label
+				htmlFor={id}
+				className="cursor-pointer select-none text-sm text-foreground"
+			>
 				{label}
 			</label>
 		</div>

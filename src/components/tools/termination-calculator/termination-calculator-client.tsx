@@ -7,6 +7,7 @@ import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
 import { ResultBox, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { DateInput } from "@/components/ui/date-input";
 import {
 	Form,
@@ -249,18 +250,20 @@ export function TerminationCalculatorClient() {
 						name="hasExpiredVacation"
 						render={({ field }) => (
 							<FormItem>
-								<label className="flex cursor-pointer items-center gap-2">
-									<input
-										type="checkbox"
+								<div className="flex items-center gap-2">
+									<Checkbox
+										id="has-expired-vacation"
 										checked={field.value}
-										onChange={(e) => field.onChange(e.target.checked)}
-										className="accent-primary"
+										onCheckedChange={field.onChange}
 									/>
-									<span className="text-sm text-foreground">
+									<label
+										htmlFor="has-expired-vacation"
+										className="cursor-pointer text-sm text-foreground"
+									>
 										Possui férias vencidas (período aquisitivo completo não
 										usufruído)
-									</span>
-								</label>
+									</label>
+								</div>
 							</FormItem>
 						)}
 					/>

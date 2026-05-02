@@ -11,6 +11,7 @@ import {
 	ResultRow,
 } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	Form,
 	FormControl,
@@ -154,17 +155,19 @@ export function OvertimeCalculatorClient() {
 						name="includeDsr"
 						render={({ field }) => (
 							<FormItem>
-								<label className="flex cursor-pointer items-center gap-2">
-									<input
-										type="checkbox"
+								<div className="flex items-center gap-2">
+									<Checkbox
+										id="include-dsr"
 										checked={field.value}
-										onChange={(e) => field.onChange(e.target.checked)}
-										className="accent-primary"
+										onCheckedChange={field.onChange}
 									/>
-									<span className="text-sm text-foreground">
+									<label
+										htmlFor="include-dsr"
+										className="cursor-pointer text-sm text-foreground"
+									>
 										Incluir DSR - Descanso semanal remunerado
-									</span>
-								</label>
+									</label>
+								</div>
 							</FormItem>
 						)}
 					/>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import { generateNumbers } from "@/lib/random/numbers";
@@ -156,15 +157,16 @@ export function NumberGenerator() {
 							Números únicos
 						</span>
 						<div className="flex h-10 items-center">
-							<label className="flex cursor-pointer items-center gap-2">
-								<input
-									type="checkbox"
-									checked={options.unique}
-									onChange={(e) => set("unique", e.target.checked)}
-									className="accent-primary"
-								/>
-								<span className="text-sm text-foreground">Ativar</span>
+						<div className="flex items-center gap-2">
+							<Checkbox
+								id="unique"
+								checked={options.unique}
+								onCheckedChange={(checked) => set("unique", checked === true)}
+							/>
+							<label htmlFor="unique" className="text-sm text-foreground cursor-pointer">
+								Ativar
 							</label>
+						</div>
 						</div>
 					</div>
 				</div>

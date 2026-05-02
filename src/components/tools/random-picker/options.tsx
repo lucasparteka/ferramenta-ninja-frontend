@@ -1,3 +1,4 @@
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 
 type PickerOptions = {
@@ -49,25 +50,31 @@ export function RandomPickerOptions({
 			</div>
 
 			<div className="flex flex-wrap gap-x-6 gap-y-3">
-				<label className="flex cursor-pointer items-center gap-2">
-					<input
-						type="checkbox"
-						checked={options.allowRepeat}
-						onChange={() => set("allowRepeat", !options.allowRepeat)}
-						className="accent-primary"
-					/>
-					<span className="text-sm text-foreground">Permitir repetição</span>
+			<div className="flex items-center gap-2">
+				<Checkbox
+					id="allow-repeat"
+					checked={options.allowRepeat}
+					onCheckedChange={(checked) =>
+						set("allowRepeat", checked === true)
+					}
+				/>
+				<label htmlFor="allow-repeat" className="cursor-pointer text-sm text-foreground">
+					Permitir repetição
 				</label>
+			</div>
 
-				<label className="flex cursor-pointer items-center gap-2">
-					<input
-						type="checkbox"
-						checked={options.removeEmpty}
-						onChange={() => set("removeEmpty", !options.removeEmpty)}
-						className="accent-primary"
-					/>
-					<span className="text-sm text-foreground">Ignorar linhas vazias</span>
+			<div className="flex items-center gap-2">
+				<Checkbox
+					id="remove-empty"
+					checked={options.removeEmpty}
+					onCheckedChange={(checked) =>
+						set("removeEmpty", checked === true)
+					}
+				/>
+				<label htmlFor="remove-empty" className="cursor-pointer text-sm text-foreground">
+					Ignorar linhas vazias
 				</label>
+			</div>
 			</div>
 		</div>
 	);

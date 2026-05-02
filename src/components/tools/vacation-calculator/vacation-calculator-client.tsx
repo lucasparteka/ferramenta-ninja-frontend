@@ -11,6 +11,7 @@ import {
 	ResultRow,
 } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	Form,
 	FormControl,
@@ -169,18 +170,20 @@ export function VacationCalculatorClient() {
 						name="sellAbono"
 						render={({ field }) => (
 							<FormItem>
-								<label className="flex cursor-pointer items-center gap-2">
-									<input
-										type="checkbox"
+								<div className="flex items-center gap-2">
+									<Checkbox
+										id="sell-abono"
 										checked={field.value}
-										onChange={(e) => field.onChange(e.target.checked)}
-										className="accent-primary"
+										onCheckedChange={field.onChange}
 									/>
-									<span className="text-sm text-foreground">
+									<label
+										htmlFor="sell-abono"
+										className="cursor-pointer text-sm text-foreground"
+									>
 										Vender abono pecuniário (até 1/3 dos dias de direito — CLT
 										art. 143)
-									</span>
-								</label>
+									</label>
+								</div>
 							</FormItem>
 						)}
 					/>

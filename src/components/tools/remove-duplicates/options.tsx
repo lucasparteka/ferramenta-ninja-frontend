@@ -1,3 +1,5 @@
+import { Checkbox } from "@/components/ui/checkbox";
+
 type DeduplicateOptions = {
 	ignoreCase: boolean;
 	trimWhitespace: boolean;
@@ -26,48 +28,46 @@ export function RemoveDuplicatesOptions({
 
 	return (
 		<div className="flex flex-wrap gap-x-6 gap-y-3">
-			<label className="flex cursor-pointer items-center gap-2">
-				<input
-					type="checkbox"
-					checked={options.ignoreCase}
-					onChange={() => handleToggle("ignoreCase")}
-					className="accent-primary"
-				/>
-				<span className="text-sm text-foreground">
-					Ignorar maiúsculas e minúsculas
-				</span>
+		<div className="flex items-center gap-2">
+			<Checkbox
+				id="ignore-case"
+				checked={options.ignoreCase}
+				onCheckedChange={() => handleToggle("ignoreCase")}
+			/>
+			<label htmlFor="ignore-case" className="cursor-pointer text-sm text-foreground">
+				Ignorar maiúsculas e minúsculas
 			</label>
-			<label className="flex cursor-pointer items-center gap-2">
-				<input
-					type="checkbox"
-					checked={options.trimWhitespace}
-					onChange={() => handleToggle("trimWhitespace")}
-					className="accent-primary"
-				/>
-				<span className="text-sm text-foreground">Remover espaços</span>
+		</div>
+		<div className="flex items-center gap-2">
+			<Checkbox
+				id="trim-whitespace"
+				checked={options.trimWhitespace}
+				onCheckedChange={() => handleToggle("trimWhitespace")}
+			/>
+			<label htmlFor="trim-whitespace" className="cursor-pointer text-sm text-foreground">
+				Remover espaços
 			</label>
-			<label className="flex cursor-pointer items-center gap-2">
-				<input
-					type="checkbox"
-					checked={options.sortOrder === "asc"}
-					onChange={() => handleSortOrder("asc")}
-					className="accent-primary"
-				/>
-				<span className="text-sm text-foreground">
-					Ordenar resultados de A-Z
-				</span>
+		</div>
+		<div className="flex items-center gap-2">
+			<Checkbox
+				id="sort-asc"
+				checked={options.sortOrder === "asc"}
+				onCheckedChange={() => handleSortOrder("asc")}
+			/>
+			<label htmlFor="sort-asc" className="cursor-pointer text-sm text-foreground">
+				Ordenar resultados de A-Z
 			</label>
-			<label className="flex cursor-pointer items-center gap-2">
-				<input
-					type="checkbox"
-					checked={options.sortOrder === "desc"}
-					onChange={() => handleSortOrder("desc")}
-					className="accent-primary"
-				/>
-				<span className="text-sm text-foreground">
-					Ordenar resultados de Z-A
-				</span>
+		</div>
+		<div className="flex items-center gap-2">
+			<Checkbox
+				id="sort-desc"
+				checked={options.sortOrder === "desc"}
+				onCheckedChange={() => handleSortOrder("desc")}
+			/>
+			<label htmlFor="sort-desc" className="cursor-pointer text-sm text-foreground">
+				Ordenar resultados de Z-A
 			</label>
+		</div>
 		</div>
 	);
 }

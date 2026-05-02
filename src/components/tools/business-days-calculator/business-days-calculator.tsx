@@ -4,6 +4,7 @@ import { Trash } from "lucide-react";
 import { useState } from "react";
 import { ResultGrid, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { DateInput } from "@/components/ui/date-input";
 import { Input } from "@/components/ui/input";
 import {
@@ -222,16 +223,13 @@ export function BusinessDaysCalculator() {
 					)}
 				</div>
 
-				{/* Optional holidays checkbox */}
 				<div className="flex items-center gap-2">
-					<input
+					<Checkbox
 						id="bd-optional"
-						type="checkbox"
 						checked={includeOptional}
-						onChange={(e) => setIncludeOptional(e.target.checked)}
-						className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+						onCheckedChange={(checked) => setIncludeOptional(checked === true)}
 					/>
-					<label htmlFor="bd-optional" className="text-sm text-foreground">
+					<label htmlFor="bd-optional" className="cursor-pointer text-sm text-foreground">
 						Contabilizar feriados facultativos (Dia do Servidor Público, Véspera
 						de Natal, Véspera de Ano-Novo)
 					</label>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { generateMultipleCPF } from "@/lib/cpf/generate";
 import { CpfList } from "./cpf-list";
@@ -43,17 +44,16 @@ export function CpfGenerator() {
 					/>
 				</div>
 
-				<label className="flex cursor-pointer items-center gap-2">
-					<input
-						type="checkbox"
+				<div className="flex items-center gap-2">
+					<Checkbox
+						id="format-cpf"
 						checked={formatted}
-						onChange={(e) => setFormatted(e.target.checked)}
-						className="accent-primary"
+						onCheckedChange={(checked) => setFormatted(checked === true)}
 					/>
-					<span className="text-sm text-foreground">
+					<label htmlFor="format-cpf" className="cursor-pointer text-sm text-foreground">
 						Formatar CPF (###.###.###-##)
-					</span>
-				</label>
+					</label>
+				</div>
 			</div>
 
 			<Button onClick={handleGenerate}>Gerar CPF</Button>

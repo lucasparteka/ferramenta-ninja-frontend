@@ -1,3 +1,4 @@
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 
 type PasswordConfig = {
@@ -67,20 +68,24 @@ export function PasswordOptions({ config, onChange }: PasswordOptionsProps) {
 			</div>
 
 			<div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-				{checkboxOptions.map((option) => (
+			{checkboxOptions.map((option) => (
+				<div
+					key={option.key}
+					className="flex items-center gap-2 rounded-lg border border-border bg-secondary p-3 transition-colors hover:border-primary"
+				>
+					<Checkbox
+						id={`password-opt-${option.key}`}
+						checked={config[option.key]}
+						onCheckedChange={() => handleToggle(option.key)}
+					/>
 					<label
-						key={option.key}
-						className="flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-secondary p-3 transition-colors hover:border-primary"
+						htmlFor={`password-opt-${option.key}`}
+						className="cursor-pointer text-sm text-foreground"
 					>
-						<input
-							type="checkbox"
-							checked={config[option.key]}
-							onChange={() => handleToggle(option.key)}
-							className="accent-primary"
-						/>
-						<span className="text-sm text-foreground">{option.label}</span>
+						{option.label}
 					</label>
-				))}
+				</div>
+			))}
 			</div>
 		</div>
 	);

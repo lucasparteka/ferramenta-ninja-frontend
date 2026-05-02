@@ -3,6 +3,7 @@
 import JsBarcode from "jsbarcode";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 
@@ -145,18 +146,19 @@ export function BarcodeGenerator() {
 					<span className="text-sm font-medium text-foreground">
 						Exibir texto
 					</span>
-					<label className="flex cursor-pointer items-center gap-2">
-						<input
-							type="checkbox"
+					<div className="flex items-center gap-2">
+						<Checkbox
+							id="display-value"
 							checked={displayValue}
-							onChange={(e) => {
-								setDisplayValue(e.target.checked);
+							onCheckedChange={(checked) => {
+								setDisplayValue(checked === true);
 								setGenerated(false);
 							}}
-							className="accent-primary"
 						/>
-						<span className="text-sm text-foreground">Ativar</span>
-					</label>
+						<label htmlFor="display-value" className="cursor-pointer text-sm text-foreground">
+							Ativar
+						</label>
+					</div>
 				</div>
 
 				{error && <p className="text-sm text-destructive">{error}</p>}

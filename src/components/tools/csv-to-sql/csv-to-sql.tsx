@@ -4,6 +4,7 @@ import { Download, Trash, Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -180,19 +181,16 @@ function OptionCheckbox({
 	onChange: (v: boolean) => void;
 }) {
 	return (
-		<label
-			htmlFor={id}
-			className="flex cursor-pointer select-none items-center gap-2 text-sm text-foreground"
-		>
-			<input
+		<div className="flex items-center gap-2">
+			<Checkbox
 				id={id}
-				type="checkbox"
 				checked={checked}
-				onChange={(e) => onChange(e.target.checked)}
-				className="h-4 w-4 cursor-pointer accent-primary"
+				onCheckedChange={(v) => onChange(v === true)}
 			/>
-			{label}
-		</label>
+			<label htmlFor={id} className="cursor-pointer select-none text-sm text-foreground">
+				{label}
+			</label>
+		</div>
 	);
 }
 

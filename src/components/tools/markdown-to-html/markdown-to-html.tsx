@@ -5,6 +5,7 @@ import { Trash } from "lucide-react";
 import { marked } from "marked";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 
 const SAMPLE_MARKDOWN = `# Título Principal
@@ -166,14 +167,12 @@ export function MarkdownToHtml() {
 					Baixar HTML
 				</Button>
 				<div className="flex items-center gap-2">
-					<input
+					<Checkbox
 						id="md-css"
-						type="checkbox"
 						checked={includeCss}
-						onChange={(e) => setIncludeCss(e.target.checked)}
-						className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+						onCheckedChange={(checked) => setIncludeCss(checked === true)}
 					/>
-					<label htmlFor="md-css" className="text-sm text-foreground">
+					<label htmlFor="md-css" className="text-sm text-foreground cursor-pointer">
 						Incluir CSS básico no download
 					</label>
 				</div>

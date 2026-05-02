@@ -1,3 +1,4 @@
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 
@@ -90,17 +91,18 @@ export function GeneratorControls({
 
 			{options.type === "lorem" && (
 				<div className="sm:col-span-3">
-					<label className="flex cursor-pointer items-center gap-2">
-						<input
-							type="checkbox"
-							checked={options.startWithLorem}
-							onChange={(e) => set("startWithLorem", e.target.checked)}
-							className="accent-primary"
-						/>
-						<span className="text-sm text-foreground">
-							Começar com "Lorem ipsum dolor sit amet..."
-						</span>
+				<div className="flex items-center gap-2">
+					<Checkbox
+						id="start-with-lorem"
+						checked={options.startWithLorem}
+						onCheckedChange={(checked) =>
+							set("startWithLorem", checked === true)
+						}
+					/>
+					<label htmlFor="start-with-lorem" className="cursor-pointer text-sm text-foreground">
+						Começar com "Lorem ipsum dolor sit amet..."
 					</label>
+				</div>
 				</div>
 			)}
 		</div>

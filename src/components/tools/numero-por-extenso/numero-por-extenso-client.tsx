@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { numberToWords } from "@/lib/extenso/numero-extenso";
 
@@ -67,17 +68,16 @@ export function NumeroPorExtensoClient() {
 					</div>
 				</div>
 
-				<label className="flex cursor-pointer items-center gap-2">
-					<input
-						type="checkbox"
-						checked={currency}
-						onChange={(e) => setCurrency(e.target.checked)}
-						className="accent-primary"
-					/>
-					<span className="text-sm text-foreground">
-						Incluir &quot;reais&quot; e &quot;centavos&quot; (R$)
-					</span>
+			<div className="flex items-center gap-2">
+				<Checkbox
+					id="include-currency"
+					checked={currency}
+					onCheckedChange={(checked) => setCurrency(checked === true)}
+				/>
+				<label htmlFor="include-currency" className="cursor-pointer text-sm text-foreground">
+					Incluir &quot;reais&quot; e &quot;centavos&quot; (R$)
 				</label>
+			</div>
 
 				<div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
 					<span className="mr-1">Exemplos:</span>

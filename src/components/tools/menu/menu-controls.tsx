@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/suspicious/noArrayIndexKey: itens fixos */
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MENU_TEMPLATES } from "@/lib/menu/templates";
@@ -229,12 +230,12 @@ export function MenuControls({
 				</div>
 
 				<div className="flex items-center gap-3">
-					<input
+					<Checkbox
 						id="show-prices"
-						type="checkbox"
 						checked={data.style.showPrices}
-						onChange={(e) => onUpdateStyle({ showPrices: e.target.checked })}
-						className="h-4 w-4 rounded border-border accent-primary"
+						onCheckedChange={(checked) =>
+							onUpdateStyle({ showPrices: checked === true })
+						}
 					/>
 					<Label htmlFor="show-prices">Exibir preços</Label>
 				</div>

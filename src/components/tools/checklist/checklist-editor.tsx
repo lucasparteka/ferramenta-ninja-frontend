@@ -24,6 +24,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { exportChecklistPdf, exportChecklistPng } from "@/lib/checklist/export";
@@ -358,15 +359,21 @@ export function ChecklistEditor() {
 							/>
 						</div>
 						<div className="space-y-3">
-							<label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
-								<input
-									type="checkbox"
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id="header-enabled"
 									checked={state.header.enabled}
-									onChange={(e) => updateHeader({ enabled: e.target.checked })}
-									className="rounded"
+									onCheckedChange={(checked) =>
+										updateHeader({ enabled: checked === true })
+									}
 								/>
-								Cabeçalho personalizado
-							</label>
+								<label
+									htmlFor="header-enabled"
+									className="cursor-pointer text-sm font-medium"
+								>
+									Cabeçalho personalizado
+								</label>
+							</div>
 							{state.header.enabled && (
 								<div className="space-y-3 rounded-md border border-border p-3">
 									<div className="space-y-2">
@@ -538,28 +545,36 @@ export function ChecklistEditor() {
 							</div>
 						</div>
 						<div className="flex flex-wrap gap-4">
-							<label className="flex cursor-pointer items-center gap-2 text-sm">
-								<input
-									type="checkbox"
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id="show-checkbox"
 									checked={state.layout.showCheckbox}
-									onChange={(e) =>
-										updateLayout({ showCheckbox: e.target.checked })
+									onCheckedChange={(checked) =>
+										updateLayout({ showCheckbox: checked === true })
 									}
-									className="rounded"
 								/>
-								Mostrar caixas de seleção
-							</label>
-							<label className="flex cursor-pointer items-center gap-2 text-sm">
-								<input
-									type="checkbox"
+								<label
+									htmlFor="show-checkbox"
+									className="cursor-pointer text-sm"
+								>
+									Mostrar caixas de seleção
+								</label>
+							</div>
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id="show-dividers"
 									checked={state.layout.showDividers}
-									onChange={(e) =>
-										updateLayout({ showDividers: e.target.checked })
+									onCheckedChange={(checked) =>
+										updateLayout({ showDividers: checked === true })
 									}
-									className="rounded"
 								/>
-								Mostrar divisores
-							</label>
+								<label
+									htmlFor="show-dividers"
+									className="cursor-pointer text-sm"
+								>
+									Mostrar divisores
+								</label>
+							</div>
 						</div>
 						<div className="space-y-2">
 							<Label className="text-sm font-medium">Cor de fundo</Label>

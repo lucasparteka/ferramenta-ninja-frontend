@@ -4,6 +4,7 @@ import { Download, Trash } from "lucide-react";
 import QRCodeStyling from "qr-code-styling";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
@@ -396,16 +397,14 @@ export function CustomQrCode() {
 										</NativeSelect>
 									</div>
 									<div className="flex items-center gap-2 pt-6">
-										<input
+										<Checkbox
 											id="qr-wifi-hidden"
-											type="checkbox"
 											checked={wifiHidden}
-											onChange={(e) => setWifiHidden(e.target.checked)}
-											className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+											onCheckedChange={(checked) => setWifiHidden(checked === true)}
 										/>
 										<label
 											htmlFor="qr-wifi-hidden"
-											className="text-sm text-foreground"
+											className="text-sm text-foreground cursor-pointer"
 										>
 											Rede oculta
 										</label>

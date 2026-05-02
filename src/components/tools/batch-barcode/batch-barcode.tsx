@@ -3,6 +3,7 @@
 import JsBarcode from "jsbarcode";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -131,15 +132,16 @@ export function BatchBarcode() {
 					<span className="text-sm font-medium text-foreground">
 						Exibir texto
 					</span>
-					<label className="flex cursor-pointer items-center gap-2">
-						<input
-							type="checkbox"
+					<div className="flex items-center gap-2">
+						<Checkbox
+							id="display-value"
 							checked={displayValue}
-							onChange={(e) => setDisplayValue(e.target.checked)}
-							className="accent-primary"
+							onCheckedChange={(checked) => setDisplayValue(checked === true)}
 						/>
-						<span className="text-sm text-foreground">Ativar</span>
-					</label>
+						<label htmlFor="display-value" className="cursor-pointer text-sm text-foreground">
+							Ativar
+						</label>
+					</div>
 				</div>
 
 				<div className="space-y-1">

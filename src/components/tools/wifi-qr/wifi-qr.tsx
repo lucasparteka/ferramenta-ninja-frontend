@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import { generateQRCode } from "@/lib/qrcode/generate";
@@ -133,18 +134,19 @@ export function WifiQR() {
 					<span className="text-sm font-medium text-foreground">
 						Rede oculta
 					</span>
-					<label className="flex cursor-pointer items-center gap-2">
-						<input
-							type="checkbox"
+					<div className="flex items-center gap-2">
+						<Checkbox
+							id="wifi-hidden"
 							checked={hidden}
-							onChange={(e) => {
-								setHidden(e.target.checked);
+							onCheckedChange={(checked) => {
+								setHidden(checked === true);
 								setDataUrl("");
 							}}
-							className="accent-primary"
 						/>
-						<span className="text-sm text-foreground">Ativar</span>
-					</label>
+						<label htmlFor="wifi-hidden" className="text-sm text-foreground cursor-pointer">
+							Ativar
+						</label>
+					</div>
 				</div>
 
 				{error && <p className="text-sm text-destructive">{error}</p>}

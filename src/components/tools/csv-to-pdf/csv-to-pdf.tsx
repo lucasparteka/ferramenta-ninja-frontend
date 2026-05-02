@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { generateCsvPdf } from "@/lib/pdf/csv-to-pdf";
 import { downloadPDF } from "@/lib/pdf/merge";
@@ -353,7 +354,7 @@ export function CsvToPdf() {
 				)}
 			</div>
 
-			<input
+			<Input
 				ref={inputRef}
 				type="file"
 				accept=".csv,text/csv"

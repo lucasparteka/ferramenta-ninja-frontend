@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 const ROWS_PER_PAGE = 50;
@@ -392,7 +393,7 @@ export function CsvViewer() {
 				)}
 			</div>
 
-			<input
+			<Input
 				ref={inputRef}
 				type="file"
 				accept=".csv,text/csv"

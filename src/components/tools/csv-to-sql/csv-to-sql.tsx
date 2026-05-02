@@ -485,7 +485,7 @@ export function CsvToSql() {
 				)}
 			</div>
 
-			<input
+			<Input
 				ref={inputRef}
 				type="file"
 				accept=".csv,text/csv"

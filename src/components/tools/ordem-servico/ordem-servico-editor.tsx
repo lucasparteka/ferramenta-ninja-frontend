@@ -305,7 +305,7 @@ export function OrdemServicoEditor() {
 											<Upload className="size-4" />
 											Carregar imagem
 										</span>
-										<input
+										<Input
 											type="file"
 											accept="image/*"
 											className="hidden"

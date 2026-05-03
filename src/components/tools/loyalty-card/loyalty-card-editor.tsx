@@ -142,7 +142,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 						type="color"
 						value={value.color}
 						onChange={(e) => onChange({ type: "solid", color: e.target.value })}
-						className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+						className="h-8 w-8 cursor-pointer bg-transparent p-0.5"
 						aria-label="Cor de fundo"
 					/>
 					<span className="font-mono text-xs text-muted-foreground">
@@ -163,7 +163,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 									onChange={(e) =>
 										onChange({ ...value, color1: e.target.value })
 									}
-									className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+									className="h-8 w-8 cursor-pointer bg-transparent p-0.5"
 									aria-label="Cor inicial do gradiente"
 								/>
 								<span className="font-mono text-xs text-muted-foreground">
@@ -180,7 +180,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 									onChange={(e) =>
 										onChange({ ...value, color2: e.target.value })
 									}
-									className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+									className="h-8 w-8 cursor-pointer bg-transparent p-0.5"
 									aria-label="Cor final do gradiente"
 								/>
 								<span className="font-mono text-xs text-muted-foreground">
@@ -216,7 +216,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 							type="color"
 							value={value.color}
 							onChange={(e) => onChange({ ...value, color: e.target.value })}
-							className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+							className="h-8 w-8 cursor-pointer bg-transparent p-0.5"
 							aria-label="Cor de fundo da textura"
 						/>
 						<span className="font-mono text-xs text-muted-foreground">
@@ -653,7 +653,7 @@ export function LoyaltyCardEditor() {
 												primaryColor: e.target.value,
 											}))
 										}
-										className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+										className="h-8 w-8 cursor-pointer bg-transparent p-0.5"
 									/>
 									<span className="font-mono text-xs text-muted-foreground">
 										{frontData.primaryColor}
@@ -858,7 +858,7 @@ export function LoyaltyCardEditor() {
 												primaryColor: e.target.value,
 											}))
 										}
-										className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+										className="h-8 w-8 cursor-pointer bg-transparent p-0.5"
 									/>
 									<span className="font-mono text-xs text-muted-foreground">
 										{backData.primaryColor}

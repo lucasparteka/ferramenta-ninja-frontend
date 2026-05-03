@@ -89,7 +89,7 @@ export function CanvasToolbar({
 					type="color"
 					value={color}
 					onChange={(e) => onColorChange(e.target.value)}
-					className="h-9 w-full cursor-pointer rounded-md border border-border bg-background p-1"
+					className="h-9 w-full cursor-pointer p-1"
 					aria-label="Selecionar cor"
 				/>
 			</div>

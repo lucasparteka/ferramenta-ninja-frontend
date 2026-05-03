@@ -7,6 +7,7 @@ import {
 	ResultRow,
 } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	calculateAccuracy,
@@ -149,7 +150,7 @@ export function TypingTest() {
 							</span>
 						)}
 					</button>
-					<input
+					<Input
 						ref={inputRef}
 						type="text"
 						value={input}

@@ -308,6 +308,7 @@ export function MenuEditor() {
 							{data.logo ? (
 								<div className="space-y-3">
 									<div className="flex items-center gap-3">
+										{/** biome-ignore lint/performance/noImgElement: ... */}
 										<img
 											src={data.logo.dataUrl}
 											alt="Logo"
@@ -388,7 +389,7 @@ export function MenuEditor() {
 										onChange={(e) =>
 											updateStyle({ primaryColor: e.target.value })
 										}
-										className="h-9 w-12 cursor-pointer rounded-md border border-border bg-card p-1"
+										className="h-9 w-12 cursor-pointer p-1"
 									/>
 									<Input
 										value={data.style.primaryColor}
@@ -409,7 +410,7 @@ export function MenuEditor() {
 										onChange={(e) =>
 											updateStyle({ backgroundColor: e.target.value })
 										}
-										className="h-9 w-12 cursor-pointer rounded-md border border-border bg-card p-1"
+										className="h-9 w-12 cursor-pointer p-1"
 									/>
 									<Input
 										value={data.style.backgroundColor}

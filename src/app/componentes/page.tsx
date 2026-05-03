@@ -3,6 +3,7 @@
 import { Eraser, RotateCcw, Trash2, X } from "lucide-react";
 import Head from "next/head";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 function Section({
 	title,
@@ -254,10 +255,10 @@ export default function ComponentesPage() {
 				<div className="space-y-6">
 					<h2 className="text-2xl font-bold text-foreground">Inputs</h2>
 					<Section title="Input + Textarea + Select">
-						<input
+						<Input
 							type="text"
 							placeholder="Input padrão..."
-							className="h-9 w-64 rounded-lg border border-input bg-card px-2.5 py-1 text-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
+							className="w-64"
 						/>
 						<textarea
 							placeholder="Textarea padrão..."

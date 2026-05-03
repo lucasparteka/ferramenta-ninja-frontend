@@ -218,7 +218,7 @@ export function InventarioEditor() {
 												tableHeaderColor: e.target.value,
 											}))
 										}
-										className="h-10 w-14 cursor-pointer rounded border border-border bg-transparent p-0.5"
+										className="h-10 w-14 cursor-pointer bg-transparent p-0.5"
 									/>
 									<span className="text-sm text-muted-foreground font-mono">
 										{state.tableHeaderColor}

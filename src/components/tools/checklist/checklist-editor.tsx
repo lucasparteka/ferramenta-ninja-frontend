@@ -387,7 +387,7 @@ export function ChecklistEditor() {
 														backgroundColor: e.target.value,
 													})
 												}
-												className="h-9 w-12 cursor-pointer rounded-md border border-border bg-card p-1"
+												className="h-9 w-12 cursor-pointer p-1"
 											/>
 											<Input
 												value={state.header.backgroundColor}
@@ -585,7 +585,7 @@ export function ChecklistEditor() {
 									onChange={(e) =>
 										updateStyle({ backgroundColor: e.target.value })
 									}
-									className="h-9 w-12 cursor-pointer rounded-md border border-border bg-card p-1"
+									className="h-9 w-12 cursor-pointer p-1"
 								/>
 								<Input
 									value={state.style.backgroundColor}

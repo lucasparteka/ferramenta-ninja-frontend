@@ -31,9 +31,10 @@ export function ImageUpload({
 
 	return (
 		<div className="space-y-1">
-			<label className="block text-sm font-medium text-foreground">
+			<div className="block text-sm font-medium text-foreground">
 				Selecione uma imagem
-			</label>
+			</div>
+			{/** biome-ignore lint/a11y/useSemanticElements: needs drag drop events */}
 			<div
 				role="button"
 				tabIndex={0}
@@ -52,6 +53,7 @@ export function ImageUpload({
 				}`}
 			>
 				{preview ? (
+					// biome-ignore lint/performance/noImgElement: ...
 					<img
 						src={preview}
 						alt="Pré-visualização da imagem selecionada"
@@ -72,7 +74,6 @@ export function ImageUpload({
 				accept="image/png,image/jpeg,image/webp"
 				onChange={handleFileChange}
 				className="hidden"
-				aria-hidden="true"
 			/>
 			{preview && (
 				<Button variant="outline" className="mt-3 w-full" onClick={onClear}>

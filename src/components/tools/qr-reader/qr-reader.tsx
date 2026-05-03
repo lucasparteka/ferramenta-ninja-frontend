@@ -76,6 +76,8 @@ export function QRReader() {
 					<span className="flex w-full text-sm font-medium text-foreground">
 						Imagem com QR Code
 					</span>
+					{/** biome-ignore lint/a11y/noStaticElementInteractions: ... */}
+					{/** biome-ignore lint/a11y/useKeyWithClickEvents: ...*/}
 					<div
 						onClick={() => inputRef.current?.click()}
 						onDragOver={(e) => {
@@ -91,6 +93,7 @@ export function QRReader() {
 						}`}
 					>
 						{preview ? (
+							// biome-ignore lint/performance/noImgElement: ...
 							<img
 								src={preview}
 								alt="Imagem carregada"

@@ -195,7 +195,7 @@ export function MenuControls({
 								onChange={(e) =>
 									onUpdateStyle({ primaryColor: e.target.value })
 								}
-								className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+								className="h-8 w-8 cursor-pointer bg-transparent p-0.5"
 							/>
 							<span className="text-sm text-muted-foreground font-mono">
 								{data.style.primaryColor}
@@ -212,7 +212,7 @@ export function MenuControls({
 								onChange={(e) =>
 									onUpdateStyle({ backgroundColor: e.target.value })
 								}
-								className="h-8 w-8 cursor-pointer rounded border border-border bg-transparent p-0.5"
+								className="h-8 w-8 cursor-pointer bg-transparent p-0.5"
 							/>
 							<span className="text-sm text-muted-foreground font-mono">
 								{data.style.backgroundColor}

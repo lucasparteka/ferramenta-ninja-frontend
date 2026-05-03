@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { categories } from "@/lib/data/tools";
+import { Input } from "@/components/ui/input";
 import { ToolCard } from "./tool-card";
 
 function normalize(text: string) {
@@ -31,12 +32,11 @@ export function ToolSearch() {
 
 	return (
 		<div className="flex flex-col gap-8">
-			<input
+			<Input
 				type="text"
 				placeholder="Buscar ferramenta..."
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
-				className="w-full rounded-md border border-border px-4 py-2 text-sm outline-none focus:border-primary bg-white"
 			/>
 
 			<div className="space-y-12">

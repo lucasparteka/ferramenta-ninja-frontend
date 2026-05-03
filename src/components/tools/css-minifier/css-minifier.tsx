@@ -138,10 +138,10 @@ export function CssMinifier() {
 					</div>
 
 					<ResultBox tone="primary">
-						<p className="text-3xl font-bold text-primary">
+						<p className="text-3xl font-bold">
 							-{stats.reduction}%
 						</p>
-						<p className="mt-1 text-sm text-primary">
+						<p className="mt-1 text-sm">
 							Redução de {stats.original} bytes para {stats.minified} bytes
 						</p>
 					</ResultBox>

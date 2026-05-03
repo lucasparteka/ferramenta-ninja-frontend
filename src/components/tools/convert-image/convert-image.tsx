@@ -227,10 +227,10 @@ export function ConvertImage() {
 								/>
 
 								<ResultBox tone="primary">
-									<p className="text-3xl font-bold text-green-700 dark:text-green-400">
+									<p className="text-3xl font-bold">
 										{info.format} → {targetLabel}
 									</p>
-									<p className="mt-1 text-sm text-green-700 dark:text-green-400">
+									<p className="mt-1 text-sm">
 										{formatBytes(file?.size ?? 0)} → {formatBytes(resultSize)}
 									</p>
 								</ResultBox>

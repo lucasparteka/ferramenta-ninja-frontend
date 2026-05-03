@@ -164,14 +164,12 @@ export function TemperatureConverter() {
 					<ResultBox
 						label={`Resultado: ${SCALE_LABELS[toScale]}`}
 						value={
-							<span className="text-primary">
-								{Number.isFinite(result)
-									? `${result.toLocaleString("pt-BR", {
-											minimumFractionDigits: 2,
-											maximumFractionDigits: 4,
-										})} ${SCALE_SHORT[toScale]}`
-									: "—"}
-							</span>
+							Number.isFinite(result)
+								? `${result.toLocaleString("pt-BR", {
+										minimumFractionDigits: 2,
+										maximumFractionDigits: 4,
+									})} ${SCALE_SHORT[toScale]}`
+								: "—"
 						}
 						hint={getFormula(fromScale, toScale)}
 					/>

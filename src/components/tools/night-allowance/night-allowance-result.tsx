@@ -43,11 +43,7 @@ export function NightAllowanceResultCard({
 		<div className="space-y-4">
 			<ResultBox
 				label="Total do adicional noturno devido"
-				value={
-					<span className="text-green-700 dark:text-green-400">
-						{formatCurrency(totalAllowanceDue)}
-					</span>
-				}
+				value={formatCurrency(totalAllowanceDue)}
 			/>
 
 			<ResultGrid>

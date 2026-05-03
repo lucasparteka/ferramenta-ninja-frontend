@@ -253,10 +253,10 @@ export function CompressImage() {
 								/>
 
 								<ResultBox tone="primary">
-									<p className="text-3xl font-bold text-green-700 dark:text-green-400">
+									<p className="text-3xl font-bold">
 										-{reduction}%
 									</p>
-									<p className="mt-1 text-sm text-green-700 dark:text-green-400">
+									<p className="mt-1 text-sm">
 										Redução de {formatBytes(file?.size ?? 0)} para{" "}
 										{formatBytes(resultSize)}
 									</p>

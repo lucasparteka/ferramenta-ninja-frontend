@@ -27,11 +27,7 @@ export function SalaryResultCard({ result }: SalaryResultCardProps) {
 		<div className="space-y-4">
 			<ResultBox
 				label="Salário líquido"
-				value={
-					<span className="text-green-700 dark:text-green-400">
-						{formatCurrency(netSalary)}
-					</span>
-				}
+				value={formatCurrency(netSalary)}
 			/>
 
 			<ResultGrid>

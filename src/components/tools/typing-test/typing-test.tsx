@@ -194,8 +194,8 @@ export function TypingTest() {
 
 					{status === "finished" && (
 						<ResultBox tone="primary">
-							<p className="text-3xl font-bold text-primary">{wpm} WPM</p>
-							<p className="mt-1 text-sm text-primary">
+							<p className="text-3xl font-bold">{wpm} WPM</p>
+							<p className="mt-1 text-sm">
 								{accuracy}% de precisão · {cpm} CPM · {elapsed}s
 							</p>
 						</ResultBox>

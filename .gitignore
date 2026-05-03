@@ -47,3 +47,6 @@ plans
 
 opencode.json
 .aider*
+
+src/graphify-out
+graphify-out

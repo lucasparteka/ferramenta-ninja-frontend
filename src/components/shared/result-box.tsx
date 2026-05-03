@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 type Tone = "primary" | "warning" | "destructive" | "muted";
 
 const toneStyles: Record<Tone, string> = {
-	primary: "border-primary/30 bg-primary/5",
+	primary: "border bg-muted",
 	warning: "border-warning/40 bg-warning/10",
 	destructive: "border-destructive/40 bg-destructive/10",
 	muted: "border-border bg-card",

@@ -1,0 +1,1886 @@
+{
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\next-env.d.ts": {
+    "mtime": 1777842191.4617624,
+    "hash": "2a74d3909800ca5467fa83b0ab4a4890"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\next.config.ts": {
+    "mtime": 1776253198.5635777,
+    "hash": "316ddc838508991f81786c17121ed20f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\postcss.config.mjs": {
+    "mtime": 1775844211.195799,
+    "hash": "e9d66e1263ec6f84f9c7f4b88b00e4f9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\vitest.config.ts": {
+    "mtime": 1777131382.0437262,
+    "hash": "4105b785c58b62dba19f42cf2d28efff"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\scripts\\sync-tools.ts": {
+    "mtime": 1776370883.0841079,
+    "hash": "5e86a624ac2a3124fd972982290798f4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\middleware.ts": {
+    "mtime": 1776170056.5778236,
+    "hash": "d0dfa64490dafbb0fd93e04b47df716f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\layout.tsx": {
+    "mtime": 1777560280.2201285,
+    "hash": "b8a83f3ade60e877b26f0aa6d9663e9a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\not-found.tsx": {
+    "mtime": 1776170056.6387806,
+    "hash": "d4f323d4de1ada2b82be180e82de0fd9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\page.tsx": {
+    "mtime": 1776370402.4107544,
+    "hash": "9497e7d85d52a6ea0f5c10ae5f38aba5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\robots.ts": {
+    "mtime": 1776170056.6387806,
+    "hash": "41aec3f01d9df7cb97a91f61c4d276a7"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\sitemap.ts": {
+    "mtime": 1777247005.8642633,
+    "hash": "bcfc91dc8669ca255df7b158429c2233"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\api\\comprimir-pdf\\route.ts": {
+    "mtime": 1776170056.5653322,
+    "hash": "4e7c96f4447daccc4e0b41c87d20f171"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\api\\curriculo\\gerar-pdf\\route.ts": {
+    "mtime": 1776170056.5633225,
+    "hash": "99dfa34a7593733abd79595a5bba78e7"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\api\\fetch-meta\\route.ts": {
+    "mtime": 1777080687.08629,
+    "hash": "4855965596d776818ffdb5244874f6fb"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\api\\google-preview\\route.ts": {
+    "mtime": 1777080687.1059825,
+    "hash": "f10ce22ab09dee474f26d76e88d41af0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\api\\og\\route.tsx": {
+    "mtime": 1776170056.5653322,
+    "hash": "bdb32f17928d058386fad33780503822"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\blog\\page.tsx": {
+    "mtime": 1777231895.2819183,
+    "hash": "954e3bf2c67867438ef0a37eb74f6017"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\blog\\[slug]\\page.tsx": {
+    "mtime": 1777231903.875852,
+    "hash": "28f64481f5e0d1f739d7b15fdbb11a91"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\categorias\\[slug]\\page.tsx": {
+    "mtime": 1777228741.1997502,
+    "hash": "433bc5a1373117984e3eaa3e5ad8b1ce"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\componentes\\layout.tsx": {
+    "mtime": 1777592252.4865477,
+    "hash": "6c7445982ca39eb659529dc8a59ff97a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\componentes\\page.tsx": {
+    "mtime": 1777771640.4378998,
+    "hash": "e9689b85fe213394641c96d43fb6091f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\contato\\page.tsx": {
+    "mtime": 1777230271.3871872,
+    "hash": "5709fd8bb2e5a5e5b37cf40823f9e64c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\curriculo-render\\layout.tsx": {
+    "mtime": 1776170056.5612903,
+    "hash": "5bba0b51797f373962158f876ad64061"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\curriculo-render\\[token]\\page.tsx": {
+    "mtime": 1776170056.5653322,
+    "hash": "731758adb924fa23be249b36da161d8f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\page.tsx": {
+    "mtime": 1777229068.1827326,
+    "hash": "c09bb5540267f5e12d379f1cb283ed83"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\assinatura-de-email\\page.tsx": {
+    "mtime": 1777485704.5697887,
+    "hash": "48021476852e2026c22ae2362bbde3d9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\base64\\page.tsx": {
+    "mtime": 1777424933.2822561,
+    "hash": "9b6945fa0cb8cf07ca7aad5bc47cf44b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-13-salario\\page.tsx": {
+    "mtime": 1777424933.2792542,
+    "hash": "3b52780bf16f5df44d7150ec785887c4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-adicional-noturno\\page.tsx": {
+    "mtime": 1777227253.5962353,
+    "hash": "b8e5df56d37973ecff94b3497493110f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-de-dias-uteis\\page.tsx": {
+    "mtime": 1777592252.5013578,
+    "hash": "0523e63a8b3b37bd37d0c826bb5521ea"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-de-ferias\\page.tsx": {
+    "mtime": 1777424933.2792542,
+    "hash": "aeb2a8a778871f20d480239d81b7fe21"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-de-hora-extra\\page.tsx": {
+    "mtime": 1777424933.2792542,
+    "hash": "8f55cc978191ae475b41245eb1cac66a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-de-idade\\page.tsx": {
+    "mtime": 1777227253.9858818,
+    "hash": "2911dd543f146983c28d3118217b2bf3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-de-imc\\page.tsx": {
+    "mtime": 1777227254.1242013,
+    "hash": "51d2647a7720df9296b84da55ef125e9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-de-porcentagem\\page.tsx": {
+    "mtime": 1777227254.240425,
+    "hash": "b851c9d7763d439075743c46b52c6dbc"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-de-rescisao\\page.tsx": {
+    "mtime": 1777424933.2792542,
+    "hash": "8e3af0b9c3ddc3a435068f7e0cae4ee5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-juros-compostos\\page.tsx": {
+    "mtime": 1777424933.2872555,
+    "hash": "c81904b2f96a9ff06cdc644561722ef5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\calculadora-salario-liquido\\page.tsx": {
+    "mtime": 1777227254.706206,
+    "hash": "352a8ea5c00de44b2ed54cbd4d2f393c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\cardapio-online\\layout.tsx": {
+    "mtime": 1777080687.0942929,
+    "hash": "35344c1e22ac99e4552dc4ebd756db04"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\cardapio-online\\page.tsx": {
+    "mtime": 1777227254.8581543,
+    "hash": "187af1d5be0fe5393141941778d591b2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\cartao-fidelidade\\page.tsx": {
+    "mtime": 1777227254.977621,
+    "hash": "eef005ea58bd997f05c6027ea8b5e7c3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\checklist-personalizado\\page.tsx": {
+    "mtime": 1777227255.1162024,
+    "hash": "47b875e482b9a51af0c0e7de83af88ee"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\codigo-binario\\page.tsx": {
+    "mtime": 1777227255.2389295,
+    "hash": "6985109d7a10ec3c37d99d35b196eb81"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\codigo-morse\\page.tsx": {
+    "mtime": 1777227255.3578465,
+    "hash": "3fa0c573c7f003a8dd49ca26ea3a6a44"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\comparar-textos\\page.tsx": {
+    "mtime": 1777227255.493544,
+    "hash": "fbef6b1ca7ab100d324b79ac71462a4f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\comprimir-imagem\\page.tsx": {
+    "mtime": 1777424933.297254,
+    "hash": "6a0c2be0769405ba3810f148a819d3e2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\comprimir-pdf\\page.tsx": {
+    "mtime": 1777227255.6289282,
+    "hash": "7349502c1dcb9846484fd4b426494526"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\consulta-cep\\page.tsx": {
+    "mtime": 1777227255.7595432,
+    "hash": "fad61f13ea167b74c131a9c41e41e7db"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\consulta-cnpj\\page.tsx": {
+    "mtime": 1777227255.8740199,
+    "hash": "5e738407c7d5d46133208c371cd3bead"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\contador-de-caracteres\\page.tsx": {
+    "mtime": 1777227256.0071783,
+    "hash": "d85446dcc59208b50ac6de0ea3140476"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\controle-de-estoque\\page.tsx": {
+    "mtime": 1777227256.1405885,
+    "hash": "09776691b2ff6ad72230a3fa8041df10"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\conversor-csv-json\\page.tsx": {
+    "mtime": 1777227256.2605865,
+    "hash": "4324efa1fa6d9c3dda0f65296398af0b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\conversor-de-temperatura\\page.tsx": {
+    "mtime": 1777592252.532577,
+    "hash": "f706f403e6be2c10c0faea68a61f358e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\conversor-de-texto\\page.tsx": {
+    "mtime": 1777227256.3924534,
+    "hash": "379de7ae8229608566a499cfe8a57bb2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\conversor-de-unidades\\page.tsx": {
+    "mtime": 1777227256.5238245,
+    "hash": "6e126f1e273472eda7226cbca6904a1a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\converter-csv-para-pdf\\page.tsx": {
+    "mtime": 1777227256.679354,
+    "hash": "7888f97427fff5d9bc7c22f8853d507f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\converter-csv-para-sql\\page.tsx": {
+    "mtime": 1777227256.8111525,
+    "hash": "cf91e8c67931afa083db9c5f2945bce5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\converter-imagem\\page.tsx": {
+    "mtime": 1777424933.3212564,
+    "hash": "a9e04c553e4d772a93eadd100da1311c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\converter-imagem-em-texto\\page.tsx": {
+    "mtime": 1777227256.9405074,
+    "hash": "dbfb3e3a09108044c314e50b23fe8aed"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\converter-markdown-para-html\\page.tsx": {
+    "mtime": 1777488784.111573,
+    "hash": "561d964790d7e809ae94d086b3903a5a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\converter-timestamp\\page.tsx": {
+    "mtime": 1777424933.3372533,
+    "hash": "4687356c5dfba2fe0ac140ef794ce6a3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\criador-de-curriculo\\layout.tsx": {
+    "mtime": 1776170056.5778236,
+    "hash": "f35f4ca2845f69d7cce1894c81332eb2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\criador-de-curriculo\\page.tsx": {
+    "mtime": 1777227257.072514,
+    "hash": "11ee96dea5d8c8c5f8fdee478f5ba328"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\criptografia-de-texto\\page.tsx": {
+    "mtime": 1777227257.2062206,
+    "hash": "420117e63e4f3a5c526eea34d6d76ec8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\cronometro-online\\page.tsx": {
+    "mtime": 1777424933.3312564,
+    "hash": "0671a8c19aa032c85c0e777636589487"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\decodificador-pix\\page.tsx": {
+    "mtime": 1777227257.3298967,
+    "hash": "9cc872982c1d6163eda02cf3225f88ca"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\desenhar-online\\page.tsx": {
+    "mtime": 1777227257.4619632,
+    "hash": "9c74e20e4f119f12eac0cd3ce32349d9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\dividir-pdf\\page.tsx": {
+    "mtime": 1777227257.5937364,
+    "hash": "0a9bf42743e69553fbc7a90e0053e801"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\emojis\\page.tsx": {
+    "mtime": 1777227257.7262204,
+    "hash": "c669c3e67a36e081f93b16653396eb87"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\emoticons\\page.tsx": {
+    "mtime": 1777227257.8646026,
+    "hash": "fb5eb93f610feb6f122797217133091d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\formatador-de-texto-whatsapp\\page.tsx": {
+    "mtime": 1777227257.996484,
+    "hash": "3ac8bec60bcefe6dd18018fab302b756"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\formatar-json\\page.tsx": {
+    "mtime": 1777424933.3452547,
+    "hash": "b4f9bbc881a50c61a2316cda48856e6d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-cartao-de-credito\\page.tsx": {
+    "mtime": 1777227258.1212962,
+    "hash": "a70a1279937affdd4f788cd865f5ee0a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-cnpj\\page.tsx": {
+    "mtime": 1777227258.2539487,
+    "hash": "b1e8840074894f7bd7d7818289fc3018"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-codigo-de-barras\\page.tsx": {
+    "mtime": 1777227258.3798418,
+    "hash": "fda72610ee6c87e8ce99ae681fbc14a1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-codigo-de-barras-em-lote\\page.tsx": {
+    "mtime": 1777227258.508412,
+    "hash": "0f1944c51880e9e13bd1b4296b1efbc8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-cpf\\page.tsx": {
+    "mtime": 1777227258.6768174,
+    "hash": "6a9bcded5c0d6b67dfeacc1ef748819e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-numeros\\page.tsx": {
+    "mtime": 1777227258.815242,
+    "hash": "ad45579e32b4c0c4aa83a554340316fe"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-qr-code\\page.tsx": {
+    "mtime": 1777227258.9408188,
+    "hash": "cdd0baec903fc39d2fa068daef998145"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-qr-code-personalizado\\page.tsx": {
+    "mtime": 1777592252.57112,
+    "hash": "5611753b886d3255a1309b9d06e0ba7f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-qr-code-pix\\page.tsx": {
+    "mtime": 1777227259.0740342,
+    "hash": "8c2028baf0dbdeec3ef2ba346cfcde5e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-qr-code-wifi\\page.tsx": {
+    "mtime": 1777227259.1928232,
+    "hash": "6d0d303d374aa3ffc1feea1130e946e1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-senha\\page.tsx": {
+    "mtime": 1777227259.3075936,
+    "hash": "b5050bfbe90cb7196918ea9a2e6cf719"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-texto\\page.tsx": {
+    "mtime": 1777227259.4428866,
+    "hash": "f7a8ea8eb42d27d8064df94da474340e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-de-uuid\\page.tsx": {
+    "mtime": 1777227259.5572143,
+    "hash": "c4946f926dba6ad8203992a621355612"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-gradiente-css\\page.tsx": {
+    "mtime": 1777427305.503189,
+    "hash": "4a0bc29bdf0e1c3e8ae6000d7e5ef059"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\gerador-meta-tags\\page.tsx": {
+    "mtime": 1777427305.503189,
+    "hash": "0ae96cf25530d7dbfe63dec364806012"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\juntar-pdf\\page.tsx": {
+    "mtime": 1777227259.6889002,
+    "hash": "f3cb20b1eb8d616290c16bbfe0be6d80"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\leitor-de-qr-code\\page.tsx": {
+    "mtime": 1777227259.806876,
+    "hash": "9a13f2d78893dee891cfbae21564c542"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\limpar-texto\\page.tsx": {
+    "mtime": 1777227259.9516,
+    "hash": "5185ca14d44ba6e235e74e5362befbb0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\manter-tela-ligada\\page.tsx": {
+    "mtime": 1777775075.4447305,
+    "hash": "29e6c7ec2823facbb725f449c574a72d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\minificador-css\\page.tsx": {
+    "mtime": 1777424933.365254,
+    "hash": "71ce37fb998f84bb1885fcf529b20c7d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\numero-por-extenso\\page.tsx": {
+    "mtime": 1777227260.074269,
+    "hash": "814fe8b9c84650d07a1ab41e1531ba36"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\ordem-de-servico\\page.tsx": {
+    "mtime": 1777227260.196407,
+    "hash": "0e5923269c2ce26c8b3f3930e5e081c2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\paleta-de-cores\\page.tsx": {
+    "mtime": 1777427305.503189,
+    "hash": "b3b7893a7b9599a23c06bf2db7b7d8d2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\previa-resultado-google\\page.tsx": {
+    "mtime": 1777227260.307163,
+    "hash": "f13634b7c675f9fd2571581a1202e877"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\recibo-simples\\page.tsx": {
+    "mtime": 1777227260.4474792,
+    "hash": "0e11146a0b4bef272dd3d4d29070d6ec"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\recortar-imagem\\page.tsx": {
+    "mtime": 1777427305.503189,
+    "hash": "44576f97f2860c600f6e9991a5d91ecc"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\redimensionar-imagem\\page.tsx": {
+    "mtime": 1777424933.3762538,
+    "hash": "a9bde2b629a3d9bb7ab9a78776970691"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\remover-caracteres-invisiveis\\page.tsx": {
+    "mtime": 1777227260.570573,
+    "hash": "b9edfe38faa119893aa06c58ff335ff4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\remover-duplicados\\page.tsx": {
+    "mtime": 1777227260.6905403,
+    "hash": "afa0a39dc4e37a181db879530232f0b4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\remover-espacos-duplicados\\page.tsx": {
+    "mtime": 1777227260.8072014,
+    "hash": "ca84b64ec453240bc5c132c37cf552ae"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\remover-quebras-de-linhas\\page.tsx": {
+    "mtime": 1777227260.9382155,
+    "hash": "e6e2ad1e88f20daea3b54bb6976bf560"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\rendimento-cdi-selic\\page.tsx": {
+    "mtime": 1777424933.380258,
+    "hash": "a6e5017298b06946e7a011b71a6a9e76"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\simbolos\\page.tsx": {
+    "mtime": 1777227261.1904838,
+    "hash": "b284b407a3b710017c6e351a085a883c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\simulador-financiamento\\page.tsx": {
+    "mtime": 1777424933.4092555,
+    "hash": "edd2f8759f20e31e00677835e81e6ae0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\sorteio-online\\page.tsx": {
+    "mtime": 1777227261.457224,
+    "hash": "3a49537e536847f273cbeb19f3b6ee9e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\tabela-fipe\\page.tsx": {
+    "mtime": 1777424933.387254,
+    "hash": "6aeb0c911d60459f1bfb0a939bffbfe1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\teste-digitacao\\page.tsx": {
+    "mtime": 1777424933.3862522,
+    "hash": "8835809e8ed65b1790495548ff7d2952"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\validador-de-boleto\\page.tsx": {
+    "mtime": 1777424933.3892536,
+    "hash": "b091fe6bb7638af26885e45437d58e54"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\validador-de-cartao-de-credito\\page.tsx": {
+    "mtime": 1777227261.8608985,
+    "hash": "343e3bcf81cd7955f71273d15d6fb4ad"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\ferramentas\\visualizador-de-csv\\page.tsx": {
+    "mtime": 1777227261.9962592,
+    "hash": "8a11215289ab7529035a61ca11eb6d6a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\metodologia\\page.tsx": {
+    "mtime": 1777230479.6961155,
+    "hash": "3002a5671898190baba98400ba103019"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\politica-de-privacidade\\page.tsx": {
+    "mtime": 1777230479.695114,
+    "hash": "66f1afb3324cd04e4ad3bccfe8eeafbc"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\sobre\\page.tsx": {
+    "mtime": 1777230479.6941118,
+    "hash": "1cfc73f6b79adb526dbd5d364888a73c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\app\\termos-de-uso\\page.tsx": {
+    "mtime": 1777230479.695114,
+    "hash": "cf66f6711e07135cda58f7a7f23ced03"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\home\\tool-card.tsx": {
+    "mtime": 1777080687.3435626,
+    "hash": "09ae57d34460f72bbad5914fcb0e7002"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\home\\tool-search.tsx": {
+    "mtime": 1777771641.8722706,
+    "hash": "f515624daf433adfc13f7d5285e3e4ae"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\layout\\footer.tsx": {
+    "mtime": 1777572229.0243185,
+    "hash": "ec49b092d6c2966eb0688aee058d79f4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\layout\\header.tsx": {
+    "mtime": 1777572192.1057065,
+    "hash": "f898d9baa49c2719f8bf17735f4ad48b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\seo\\json-ld.tsx": {
+    "mtime": 1777227062.9113455,
+    "hash": "0ded7c4455740f930ce149386587178b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\blog-layout.tsx": {
+    "mtime": 1777231871.9721594,
+    "hash": "e2b3aac0413f2d282c2299b51f0953c1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\breadcrumb.tsx": {
+    "mtime": 1777227308.3904183,
+    "hash": "0393f9fe2d632e9d13059273d5c9b447"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\category-tools-section.tsx": {
+    "mtime": 1777592252.6252873,
+    "hash": "8069097383695043bc8e0df54a57f92a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\copy-button.tsx": {
+    "mtime": 1777592025.3963373,
+    "hash": "be17914e0a81c69bc88264ef2a2bed07"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\copy-grid.tsx": {
+    "mtime": 1776171226.6874104,
+    "hash": "7aebf07bbae35bf917ff0ad8b7d93ead"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\image-dropzone.tsx": {
+    "mtime": 1777592252.6284683,
+    "hash": "4df34d44e2a4544290877c1cafd0b8d5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\image-uploader.tsx": {
+    "mtime": 1776171192.4616892,
+    "hash": "539706feedaf72b19a2c4bb9f3be8e42"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\page-layout.tsx": {
+    "mtime": 1777592252.6324854,
+    "hash": "b4341e1ecb332b7710903961ee315067"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\related-tools.tsx": {
+    "mtime": 1777229068.1847332,
+    "hash": "f0d93082cced184d4f390296301929ee"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\result-box.tsx": {
+    "mtime": 1777840194.0897791,
+    "hash": "8da27996f484a18a6df755065af04b41"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\slider.tsx": {
+    "mtime": 1776171174.5779343,
+    "hash": "e50fc53892cf25b806019847d2bb32d1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\static-page.tsx": {
+    "mtime": 1777230237.4744737,
+    "hash": "63eb5b1696d66c6cb1daed37b9aecff8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\shared\\tool-sidebar.tsx": {
+    "mtime": 1777229068.1827326,
+    "hash": "263e966186f15013e172a67a9caa6879"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\age-calculator\\age-calculator-client.tsx": {
+    "mtime": 1777225940.405511,
+    "hash": "34463e3088af34ca6d557aceca912e1e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\barcode-generator\\barcode-generator.tsx": {
+    "mtime": 1777689575.374574,
+    "hash": "bf75b27ff93d3e41f6350ace78507f3c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\base64\\base64.tsx": {
+    "mtime": 1777591319.7414875,
+    "hash": "3d1ba03fbc1e6ad625bd4e263d60b52b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\batch-barcode\\batch-barcode.tsx": {
+    "mtime": 1777689739.2632535,
+    "hash": "47a242a6c5b787dafc61754e23836fc1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\binary-converter\\binary-converter.tsx": {
+    "mtime": 1777592252.6530204,
+    "hash": "3179594a29561492e57ecbeb51a35403"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\bmi-calculator\\bmi-calculator-client.tsx": {
+    "mtime": 1777225873.4600377,
+    "hash": "43639680e1d8c80699ffff74c3dfbdc7"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\business-days-calculator\\business-days-calculator.tsx": {
+    "mtime": 1777689492.3361669,
+    "hash": "91b0311d881754707821d81b09b90adf"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\character-counter\\character-counter-stats.tsx": {
+    "mtime": 1777572531.7991068,
+    "hash": "0a6f9d83841c8d614cecaf8c6edb7feb"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\character-counter\\character-counter.tsx": {
+    "mtime": 1777590538.273819,
+    "hash": "41d8d028d2b4d87b939820f8f89f0b0f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\checklist\\checklist-canvas.tsx": {
+    "mtime": 1776692678.5389938,
+    "hash": "167adc8562ac5c4b1bf7dba6a10379f4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\checklist\\checklist-client.tsx": {
+    "mtime": 1776277310.4065137,
+    "hash": "df854f5d2336d747a13546242b643d19"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\checklist\\checklist-editor.tsx": {
+    "mtime": 1777771773.0331738,
+    "hash": "175a187e7fc873d024c4994e47864d1a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\checklist\\template-selector.tsx": {
+    "mtime": 1776303227.0485413,
+    "hash": "9e1ec786c476855d2c5b6ac1242152db"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\christmas-bonus-calculator\\christmas-bonus-calculator-client.tsx": {
+    "mtime": 1777225940.4349535,
+    "hash": "1d44def7529b1032dccb64fc46e4313c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\cnpj-generator\\cnpj-generator.tsx": {
+    "mtime": 1777689535.3590722,
+    "hash": "3950c48b27ed91530df7fd66b6c1025a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\cnpj-generator\\cnpj-list.tsx": {
+    "mtime": 1777592252.6661005,
+    "hash": "eab639b7675a01624d23e3ce3dced445"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\cnpj-generator\\cnpj-validator.tsx": {
+    "mtime": 1777569940.4408581,
+    "hash": "101b5a71ed6f049bd8c95ac03de44711"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\color-palette\\color-palette.tsx": {
+    "mtime": 1777590719.7082148,
+    "hash": "607fa1c240239a8569d88446c01a47b6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\compound-interest\\compound-interest-client.tsx": {
+    "mtime": 1777225940.4325104,
+    "hash": "e85cf1161b6b9d955d2e7c59d93f03aa"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\compress-image\\compress-image.tsx": {
+    "mtime": 1777592252.689433,
+    "hash": "b1b381206fb7b0f0a36191f5652fac21"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\consulta-cep\\consulta-cep-client.tsx": {
+    "mtime": 1777590545.9579244,
+    "hash": "02e1fc8b704cf598c88fd17afa6cccdb"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\consulta-cnpj\\consulta-cnpj-client.tsx": {
+    "mtime": 1777590554.6900935,
+    "hash": "dfde44572b1c34ac5cf55b20973b5068"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\convert-image\\convert-image.tsx": {
+    "mtime": 1777424933.4832542,
+    "hash": "f2435b2929047b7a04b24881a7032119"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\cpf-generator\\cpf-generator.tsx": {
+    "mtime": 1777689448.7030065,
+    "hash": "14516de3307ee13e8c8596c6cfd9a96d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\cpf-generator\\cpf-list.tsx": {
+    "mtime": 1777590678.9408257,
+    "hash": "b082fc99c51dd53fd7323e68097d0136"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\cpf-generator\\cpf-validator.tsx": {
+    "mtime": 1777569942.718532,
+    "hash": "a3bf94d0c733beee4cf4b9e484cce93a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\credit-card-generator\\card-preview.tsx": {
+    "mtime": 1776171058.1915243,
+    "hash": "bfe334d7c033f76d3a817271c54b77ad"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\credit-card-generator\\credit-card-generator.tsx": {
+    "mtime": 1777591150.1450722,
+    "hash": "68ada3a29b4ce40b89c9fba837136084"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\credit-card-generator\\credit-card-validator.tsx": {
+    "mtime": 1777569944.8397255,
+    "hash": "59722e481821f38c10db4930bfb57ff8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\css-minifier\\css-minifier.tsx": {
+    "mtime": 1777592252.7064338,
+    "hash": "ab4c4cf83bd34645baf6061285b6362a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-json\\csv-json-controls.tsx": {
+    "mtime": 1777592252.6974342,
+    "hash": "72a006d7a2b810a819d30c87a78110c6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-json\\csv-json-converter.tsx": {
+    "mtime": 1777592252.698434,
+    "hash": "de638b36cacccfde1405601e1fcd5bcc"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-json\\csv-json-input.tsx": {
+    "mtime": 1777080687.4425306,
+    "hash": "dc13c13f8d6497b47bf2da1e85b230b9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-json\\csv-json-result.tsx": {
+    "mtime": 1777080687.4345365,
+    "hash": "365fb99fffb4560c0fe55767eb9ee36f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-json\\csv-json-table.tsx": {
+    "mtime": 1777080687.4425306,
+    "hash": "06a118013dd98f7fc95bcb37b7d81473"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-json\\use-csv-json.ts": {
+    "mtime": 1777080687.4695394,
+    "hash": "a380ae2219f0ea25b2d3a81420fe5f02"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-to-pdf\\csv-to-pdf.tsx": {
+    "mtime": 1777755309.0914853,
+    "hash": "9237714d7dcca2d051c071eae9b16614"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-to-sql\\csv-to-sql.tsx": {
+    "mtime": 1777755312.1742878,
+    "hash": "186bc9352da7599f51943e0d1f61600a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\csv-viewer\\csv-viewer.tsx": {
+    "mtime": 1777755311.253941,
+    "hash": "bdeae2823755bf812097ff5e2b30aac5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-builder\\education-section.tsx": {
+    "mtime": 1777578001.1896348,
+    "hash": "53c2024d7362b4520eb0bba2288ed939"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-builder\\experience-section.tsx": {
+    "mtime": 1777575971.5846026,
+    "hash": "e07de7de1b3153f504eeaa99c7abaf28"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-builder\\index.tsx": {
+    "mtime": 1777080687.504678,
+    "hash": "65c42498aced6c97def0e7c5d1586a5d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-builder\\languages-section.tsx": {
+    "mtime": 1777578029.024801,
+    "hash": "c8ab5245bb0c303f6818759d9f955c1b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-builder\\skills-section.tsx": {
+    "mtime": 1776170056.7036548,
+    "hash": "e8dacc97d93460cf528cb87f724d4be0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-builder\\social-links-section.tsx": {
+    "mtime": 1777578036.4826057,
+    "hash": "0c7eff47efd835e7943d0b2e957b3575"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-builder\\template-selector.tsx": {
+    "mtime": 1776170183.093057,
+    "hash": "456a0ecdbf88cd3c4c56694480c53b5f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-builder\\types.ts": {
+    "mtime": 1776171690.5664966,
+    "hash": "3cf6399b9271d2c87335295ec8bd6da5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-pdf-button\\index.tsx": {
+    "mtime": 1776170056.7310302,
+    "hash": "c300d8e8ab65c1dd7d8ca86112046633"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-preview-modal\\index.tsx": {
+    "mtime": 1777080687.5866137,
+    "hash": "d97c4e647714dc9550652ad738d5e024"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\classic.tsx": {
+    "mtime": 1776700821.0938444,
+    "hash": "0c9df9276f2b4f6dc4dddc66153982c7"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\config.ts": {
+    "mtime": 1776170056.7410932,
+    "hash": "3c52ed93c8fb2e23dd7c7c9ff82e946f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\elegante.tsx": {
+    "mtime": 1776170056.7547476,
+    "hash": "af9812fb9af66fb261195a643d44e855"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\executivo.tsx": {
+    "mtime": 1776170056.7733974,
+    "hash": "aff25f6aabeaae254fd5c787067e4837"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\minimalist.tsx": {
+    "mtime": 1776170056.7817924,
+    "hash": "77a72fa2a6100019a58456e3d4de7147"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\mock-data.ts": {
+    "mtime": 1776170056.7487092,
+    "hash": "cfceffafe99a6e28a4203deb152ecc59"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\moderno.tsx": {
+    "mtime": 1776170056.7858212,
+    "hash": "edbf7b5aeeccc5e458c041086344c913"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\renderer.tsx": {
+    "mtime": 1776170056.7527356,
+    "hash": "919e83c73cbbb29146fa41ae8aeac99f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\scaled-resume.tsx": {
+    "mtime": 1776170056.765347,
+    "hash": "38eec2d1fd4db32df499503b4a00666f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\template-thumbnail.tsx": {
+    "mtime": 1776170056.7613075,
+    "hash": "17e99d196ec2a4dd3784c9ba69557d4e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\traditional.tsx": {
+    "mtime": 1776170056.7817924,
+    "hash": "af7442496ba7e7963d2a584bf901e00d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\curriculo\\resume-templates\\types.ts": {
+    "mtime": 1776170056.7633266,
+    "hash": "051af42af57a27738dcf70fe34e2d828"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\custom-qr-code\\custom-qr-code.tsx": {
+    "mtime": 1777689369.6259234,
+    "hash": "1e27e29677dc8308119d5ca89eb00ce0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\decodificador-pix\\decodificador-pix-client.tsx": {
+    "mtime": 1777592252.797845,
+    "hash": "668c578c5ea8cc30518b771297e45ea0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\drawing-canvas\\canvas-area.tsx": {
+    "mtime": 1776170056.7733974,
+    "hash": "2b31eb4b4092cedec2f65d441b413ec1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\drawing-canvas\\canvas-toolbar.tsx": {
+    "mtime": 1777771644.9187443,
+    "hash": "d3a9fb3d34808ab86bd3ac34e3824662"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\drawing-canvas\\drawing-canvas-client.tsx": {
+    "mtime": 1776170056.7756176,
+    "hash": "e49c017cdf6e310ecad8a85fca88a2d4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\drawing-canvas\\drawing-canvas.tsx": {
+    "mtime": 1776170056.8116512,
+    "hash": "e1d78f63f7b2dccb92e993c829de9be9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\config.ts": {
+    "mtime": 1777481520.7661731,
+    "hash": "5a30a4b28a18f06c3d4817d2e4fc3d4f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\email-signature.tsx": {
+    "mtime": 1777592252.8328881,
+    "hash": "c832691c13c73576a1270ae9de64a468"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\export-utils.ts": {
+    "mtime": 1777485704.8850312,
+    "hash": "481ceb257b2821deb1bc4f6ef0055a80"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\renderer.tsx": {
+    "mtime": 1777485704.8734145,
+    "hash": "039c999fa25399a9643f0efbcd30ba5c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\signature-preview.tsx": {
+    "mtime": 1777485704.8714151,
+    "hash": "f1f4e194b31f66a7e66eca572ccb28b4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\social-icons.tsx": {
+    "mtime": 1777485704.8714151,
+    "hash": "d81d68db8253f1d38c2fdfc4df71082e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\types.ts": {
+    "mtime": 1777483642.1316402,
+    "hash": "954b21516847b556779399d284fa633b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\templates\\banner-template.tsx": {
+    "mtime": 1777485704.8774147,
+    "hash": "9b1ab9961ba76652d30f02ad9d50a9e4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\templates\\classic-template.tsx": {
+    "mtime": 1777485704.878415,
+    "hash": "650810dc9af167ae36265b73a639d4f2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\templates\\minimal-template.tsx": {
+    "mtime": 1777485704.8774147,
+    "hash": "133493b0dd95c17b1bbe970729b84d42"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\templates\\modern-template.tsx": {
+    "mtime": 1777485704.8920264,
+    "hash": "b0e95be7f57a026255d35b02c995e5b1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\templates\\photo-template.tsx": {
+    "mtime": 1777485704.9027886,
+    "hash": "c6f23241d5f6e65de4b58d64cd90f5c6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\email-signature\\templates\\professional-template.tsx": {
+    "mtime": 1777485704.886027,
+    "hash": "e32a56f9702d2a7df7926f3dcb9fb830"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\fixed-income\\fixed-income-client.tsx": {
+    "mtime": 1777225970.2020147,
+    "hash": "dd88a51db1e226ff1e35defe4ad8381e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\google-preview\\google-preview-input.tsx": {
+    "mtime": 1776270454.1743968,
+    "hash": "ad7ca4b6fd4f744404d0fa26975ce75e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\google-preview\\google-preview-result.tsx": {
+    "mtime": 1777080687.638379,
+    "hash": "e23fbab6339a1a70bc5ee7af481f9fb8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\google-preview\\google-preview-tool.tsx": {
+    "mtime": 1776255273.6001608,
+    "hash": "74a2e2c0edc0b05baa170d266770ece1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\google-preview\\google-preview-url.tsx": {
+    "mtime": 1776270439.2181551,
+    "hash": "a0fc12848639186d209312662cc9c07d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\google-preview\\google-preview.tsx": {
+    "mtime": 1777080687.62564,
+    "hash": "f49d888b4fcd171caaf77deaf58b7e98"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\google-preview\\seo-counter.tsx": {
+    "mtime": 1776252683.6428137,
+    "hash": "397873715d20d0db0a6a7e96ebbe8523"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\google-preview\\use-google-preview.ts": {
+    "mtime": 1777080687.6433785,
+    "hash": "e274bdef27dd3113d35a287dd0f67a5e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\gradient-generator\\gradient-generator.tsx": {
+    "mtime": 1777592252.8369107,
+    "hash": "ae9c766b8d29ec26bc38dabd0cfd05b2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\image-cropper\\image-cropper.tsx": {
+    "mtime": 1777592252.8429453,
+    "hash": "1a7d2c5f45eebbb34472fbfd12b68fce"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\image-to-text\\image-to-text.tsx": {
+    "mtime": 1776170056.820647,
+    "hash": "1f25802e032cae0729c4bdb08a62ceee"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\image-to-text\\image-upload.tsx": {
+    "mtime": 1777772313.7543764,
+    "hash": "38fbeef77951fad5c6a2515d3892776a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\image-to-text\\ocr-controls.tsx": {
+    "mtime": 1777570600.192279,
+    "hash": "fccf8e6345b6c7e930025bfbb0a49b5e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\image-to-text\\ocr-output.tsx": {
+    "mtime": 1777567766.2967253,
+    "hash": "742869a164ba9e5224ba0adc4f1736a8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\inventario\\inventario-canvas.tsx": {
+    "mtime": 1777080687.6737044,
+    "hash": "fd48e498e2ec91d2776c25519b3936fa"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\inventario\\inventario-client.tsx": {
+    "mtime": 1776690256.6641529,
+    "hash": "20e283d10fe6fb0441469b43cc89fd04"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\inventario\\inventario-editor.tsx": {
+    "mtime": 1777771773.047493,
+    "hash": "608e0da9080208ffdf4ea0b415e01af9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\json-formatter\\json-formatter.tsx": {
+    "mtime": 1777592252.8800993,
+    "hash": "827e74653e7140247bfabf171d06baae"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\keep-awake\\keep-awake.tsx": {
+    "mtime": 1777842085.6681535,
+    "hash": "57236d878d2b1ef0acd08a19b81519a2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loan-calculator\\loan-calculator-client.tsx": {
+    "mtime": 1777225940.5804408,
+    "hash": "2925d4b0c3814d6506cb6f1de8cf8cf3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loyalty-card\\back-canvas.tsx": {
+    "mtime": 1777080687.7523496,
+    "hash": "659181089123cd235896df31ee3e59b4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loyalty-card\\export-panel.tsx": {
+    "mtime": 1777080687.671704,
+    "hash": "4005099dcb02be55e0d9fc4d395c2fce"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loyalty-card\\front-canvas.tsx": {
+    "mtime": 1777080687.7776587,
+    "hash": "c66b1405ffc5998050e37ee3a0581af5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loyalty-card\\loyalty-card-client.tsx": {
+    "mtime": 1776170056.8126457,
+    "hash": "9f7249f69b838fc0aa49cccb313f281d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loyalty-card\\loyalty-card-editor.tsx": {
+    "mtime": 1777771869.9469736,
+    "hash": "a16cfc19c11fd4705de5cdeec3c02ac2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loyalty-card\\template-selector.tsx": {
+    "mtime": 1776348472.372869,
+    "hash": "32d005e295149665edc35503f48f4685"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loyalty-card\\templates.ts": {
+    "mtime": 1776349813.6621172,
+    "hash": "8cba142dfb69db966f21ed62d05966bd"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\loyalty-card\\types.ts": {
+    "mtime": 1777080687.6967964,
+    "hash": "a42ee0b8ee74061ba502c9f662fd538e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\markdown-to-html\\markdown-to-html.tsx": {
+    "mtime": 1777689322.0981066,
+    "hash": "77e766c855a666e1bd281804e9f20031"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\menu\\font-selector.tsx": {
+    "mtime": 1776343575.900443,
+    "hash": "67724dda3fdd184a4080fb2a5f309f16"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\menu\\menu-canvas.tsx": {
+    "mtime": 1776692692.3156612,
+    "hash": "fafe380c9ff53641c387b0e7682e9f0a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\menu\\menu-client.tsx": {
+    "mtime": 1776342943.8928778,
+    "hash": "c2d0699b6bb027de02e068d1ecbbb7a4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\menu\\menu-controls.tsx": {
+    "mtime": 1777771769.99775,
+    "hash": "88b76de23fd43100ea93a70a577b7700"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\menu\\menu-editor.tsx": {
+    "mtime": 1777772376.3669393,
+    "hash": "603c51c1813398ab9fc1811981ad4ff6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\menu\\template-selector.tsx": {
+    "mtime": 1776348293.612364,
+    "hash": "80996dc0dc1b7c62d50588d14ce9f231"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\meta-tag-generator\\meta-tag-generator.tsx": {
+    "mtime": 1777592252.9066381,
+    "hash": "a7d4067b82a5c192caaba1e5363df118"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\morse-converter\\morse-converter.tsx": {
+    "mtime": 1777567543.0384433,
+    "hash": "512fa37ee82fea8dbed4498ef0d6abcb"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\night-allowance\\night-allowance-content.tsx": {
+    "mtime": 1777409903.1525793,
+    "hash": "049284b97bb71648f9ab45c26503a374"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\night-allowance\\night-allowance-form.tsx": {
+    "mtime": 1777424933.6832516,
+    "hash": "0644302139314e40cb72073881039832"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\night-allowance\\night-allowance-result.tsx": {
+    "mtime": 1777424933.6632571,
+    "hash": "445db8784ac56c28f0862be224813744"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\night-allowance\\types.ts": {
+    "mtime": 1776170056.8146458,
+    "hash": "6c5c1a40b3efa020110dcbfbb65b86c4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\night-allowance\\utils.ts": {
+    "mtime": 1776170056.8216472,
+    "hash": "0464579809f80af2f9e4a5fc33635144"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\number-generator\\number-generator.tsx": {
+    "mtime": 1777689286.7510805,
+    "hash": "d3fa3b07238b9d5cc57800154968abcd"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\numero-por-extenso\\numero-por-extenso-client.tsx": {
+    "mtime": 1777690022.4308865,
+    "hash": "3e3aebc83ab6b6ea948186ae773d8f2c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\ordem-servico\\ordem-servico-canvas.tsx": {
+    "mtime": 1776364827.561829,
+    "hash": "3bc1021cf84df954c23d74578f5fc247"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\ordem-servico\\ordem-servico-client.tsx": {
+    "mtime": 1776363708.1449454,
+    "hash": "7298550ab888b15720dd6456aa408e6c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\ordem-servico\\ordem-servico-editor.tsx": {
+    "mtime": 1777755310.2207725,
+    "hash": "13cf503ea66454c548b98e824458689d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\overtime-calculator\\overtime-calculator-client.tsx": {
+    "mtime": 1777689941.8431408,
+    "hash": "b28d399f526cb252815362f23dac7c7f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\pdf\\compress\\compress-pdf.tsx": {
+    "mtime": 1777592252.9702253,
+    "hash": "ad43652e15a3093f28ac20ca449ca147"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\pdf\\merge\\merge-pdf.tsx": {
+    "mtime": 1776170056.8595877,
+    "hash": "1919f81f06fe5c6493be538f04c75dd6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\pdf\\split\\split-pdf.tsx": {
+    "mtime": 1776170056.8749833,
+    "hash": "0fab51f333b2d6a10fa45c9f899eef77"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\percentage-calculator\\percentage-calculator.tsx": {
+    "mtime": 1777569938.0895343,
+    "hash": "acb515e2a40c0bbc2f2c3b2eb46ff8f1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\pix-qr\\pix-qr.tsx": {
+    "mtime": 1777570029.9802985,
+    "hash": "18fd72edfaefbc86ae575f56907be36f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\qr-generator\\qr-generator.tsx": {
+    "mtime": 1777570589.6749704,
+    "hash": "fd9d21c18c2004ca6ba22237976833e6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\qr-reader\\qr-reader.tsx": {
+    "mtime": 1777772363.1416168,
+    "hash": "ff59739fe6d3992385919d3e6758c651"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\random-picker\\input.tsx": {
+    "mtime": 1777567724.0927837,
+    "hash": "0c6ceabd5b167913b9d609afecc927bd"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\random-picker\\options.tsx": {
+    "mtime": 1777689782.2200577,
+    "hash": "45ac8ed8e9f73e47a2ca089c88c8a812"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\random-picker\\random-picker.tsx": {
+    "mtime": 1776170056.9056919,
+    "hash": "d664ef8462fb32d6bed78ffb124b2645"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\random-picker\\result.tsx": {
+    "mtime": 1777080687.8485851,
+    "hash": "60543bdcfefd54692c5af12223b1ed13"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\receipt\\receipt-actions.tsx": {
+    "mtime": 1776272968.8628225,
+    "hash": "f5809262b1489522d137e7703417b3dc"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\receipt\\receipt-client.tsx": {
+    "mtime": 1776274863.2097228,
+    "hash": "6f77f9b203741583f0dc807f19877747"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\receipt\\receipt-form.tsx": {
+    "mtime": 1777225940.703025,
+    "hash": "7d6d245d7ec957f4d1280dcd8e932fb4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\receipt\\receipt-preview.tsx": {
+    "mtime": 1776274331.4970891,
+    "hash": "c41cabd783e5addec712c02a40b90d9c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\remove-duplicates\\input.tsx": {
+    "mtime": 1777567734.232564,
+    "hash": "7ab8d58f1b75c96bf1e354cc69aa8e6f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\remove-duplicates\\options.tsx": {
+    "mtime": 1777690137.571652,
+    "hash": "dc69eb3ca2f0252f1482b6a45ac2e810"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\remove-duplicates\\output.tsx": {
+    "mtime": 1777567730.390823,
+    "hash": "2efde798bf57f824174663a9602b2698"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\remove-duplicates\\remove-duplicates.tsx": {
+    "mtime": 1776170056.8934877,
+    "hash": "1d82717235205cd04e7e4c382780e311"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\resize-image\\resize-image.tsx": {
+    "mtime": 1777592328.709126,
+    "hash": "3903acfbf1deba7e5dabc9a2269f1ce3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\salary-calculator\\salary-content.tsx": {
+    "mtime": 1777409902.5514436,
+    "hash": "87f72b7132fddef9d8faa6191e81a343"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\salary-calculator\\salary-form.tsx": {
+    "mtime": 1777424933.7642548,
+    "hash": "20d83d14ba956beccbf76930e5630d5c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\salary-calculator\\salary-result.tsx": {
+    "mtime": 1777424933.7672527,
+    "hash": "e1f91e2784176d9f4911d29e022644d1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\salary-calculator\\types.ts": {
+    "mtime": 1776170056.8947325,
+    "hash": "752af9cbbc39380c410181ed05b1333a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\salary-calculator\\utils.ts": {
+    "mtime": 1777131622.0012467,
+    "hash": "7c43377e7c45c55b31dd5a22945e1933"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\stopwatch\\stopwatch.tsx": {
+    "mtime": 1777425195.7771137,
+    "hash": "6132abec75ef8f3630352b2944484c9e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\tabela-fipe\\tabela-fipe-client.tsx": {
+    "mtime": 1777225940.7187407,
+    "hash": "c784793002f589663d715bdf949fcd30"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\temperature-converter\\temperature-converter.tsx": {
+    "mtime": 1777592253.0425358,
+    "hash": "303fff022e0a763aa1eac44ffe8f67d4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\termination-calculator\\termination-calculator-client.tsx": {
+    "mtime": 1777689895.3270574,
+    "hash": "bf6fe49567485a1d05c48cd82ac5dcc1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-cipher\\text-cipher.tsx": {
+    "mtime": 1777592253.0303082,
+    "hash": "09e78ebfdbef440700feda8820428960"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-cleaner\\text-cleaner-controls.tsx": {
+    "mtime": 1777080687.8986926,
+    "hash": "4022972fd0625017010d3bdbcd966405"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-cleaner\\text-cleaner-highlight.tsx": {
+    "mtime": 1777080687.9016917,
+    "hash": "d52ab51a8296a09444a6ce9372ebb11c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-cleaner\\text-cleaner-input.tsx": {
+    "mtime": 1777410129.5729332,
+    "hash": "f407dc7a229a090f5bf968cbb70b9d28"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-cleaner\\text-cleaner-options.tsx": {
+    "mtime": 1777080687.9096916,
+    "hash": "01786e968fa74764536ee6f35b3ab283"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-cleaner\\text-cleaner-result.tsx": {
+    "mtime": 1777590760.211167,
+    "hash": "ec979fbc6d44f92283cf0bbc625d828c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-cleaner\\text-cleaner.tsx": {
+    "mtime": 1777080687.9165034,
+    "hash": "e274c8ddbab062e229c8195b012591a0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-cleaner\\use-text-cleaner.ts": {
+    "mtime": 1777080687.9548786,
+    "hash": "9ae301b9e7264448487255bdb50a4c99"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-converter\\text-actions.tsx": {
+    "mtime": 1776170056.8977299,
+    "hash": "9be724ffeefd8314e28e3f29b2bf4a3f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-converter\\text-converter.tsx": {
+    "mtime": 1776170056.9080994,
+    "hash": "63cdef7cbd746949d94bab6660c8f65e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-converter\\text-input.tsx": {
+    "mtime": 1777567739.9913025,
+    "hash": "4a74f94187cd6eedc10df6a6370ba75e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-converter\\text-output.tsx": {
+    "mtime": 1777567737.1805594,
+    "hash": "cbb340c5706febcc1eadb0fca600529a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-diff\\diff-controls.tsx": {
+    "mtime": 1777592253.0607526,
+    "hash": "23536efd048e934aafe36d069d4124ef"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-diff\\diff-inputs.tsx": {
+    "mtime": 1777410139.4739964,
+    "hash": "7fe7596612ef880ce8e820e0323ff1f0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-diff\\diff-options.tsx": {
+    "mtime": 1776170056.9165382,
+    "hash": "8559de33f4139ec7c208a6d384592780"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-diff\\diff-result.tsx": {
+    "mtime": 1776182368.9637961,
+    "hash": "c4a09b62d1abcc1327caf2a593729590"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-diff\\text-diff.tsx": {
+    "mtime": 1777591166.2770443,
+    "hash": "7f88fd0ad2f041df3bcc154c4b637bf9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-diff\\use-diff.ts": {
+    "mtime": 1776172244.6956813,
+    "hash": "606596a1745eaba07d7dc585e7c09740"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-generator\\generator-controls.tsx": {
+    "mtime": 1777689698.2920012,
+    "hash": "256f769a6a9d6d58a54d4f676aa40cb1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-generator\\generator-output.tsx": {
+    "mtime": 1777567762.0506496,
+    "hash": "2b620b26c314c89cbf4298282638b9bd"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\text-generator\\text-generator.tsx": {
+    "mtime": 1776170056.9226654,
+    "hash": "79f107243411136fea3000b75aa8fccd"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\timestamp-converter\\timestamp-converter.tsx": {
+    "mtime": 1777592253.0903854,
+    "hash": "cd29152b3a5491110b34002574a3f4b6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\typing-test\\typing-test.tsx": {
+    "mtime": 1777771643.9589534,
+    "hash": "e867c4ee57b8e0f53962b849a86fa719"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\unit-converter\\unit-converter-client.tsx": {
+    "mtime": 1777225940.6549969,
+    "hash": "569ea804792f1920ab0ab6ba44e3c469"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\uuid-generator\\uuid-generator.tsx": {
+    "mtime": 1777592225.0913267,
+    "hash": "b72afb439e488859ace633e8533a52e8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\uuid-generator\\uuid-validator.tsx": {
+    "mtime": 1777569974.1849973,
+    "hash": "6e3895ebd1e70b3f4bf75082285431c0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\vacation-calculator\\vacation-calculator-client.tsx": {
+    "mtime": 1777689985.3565633,
+    "hash": "a51795e2e35bf7f57e7a6ae16ed5352f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\validador-boleto\\validador-boleto-client.tsx": {
+    "mtime": 1777225940.5234642,
+    "hash": "6b942584c8fa54d21fe4f966b329a7cc"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\whatsapp-formatter\\formatting-toolbar.tsx": {
+    "mtime": 1776170056.9285586,
+    "hash": "c3abab63d91d21c472728058751cc475"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\whatsapp-formatter\\message-input.tsx": {
+    "mtime": 1777567727.1196175,
+    "hash": "568c6948fc70cd3f801b6d6ad2ad9b0e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\whatsapp-formatter\\rich-editor.tsx": {
+    "mtime": 1776170056.9305582,
+    "hash": "73b0e680e53c22ef5e8dd183ff3247ae"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\whatsapp-formatter\\whatsapp-formatter.tsx": {
+    "mtime": 1777575579.6875958,
+    "hash": "39f0947058e0f4a202cf046d2f9f1f46"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\whatsapp-formatter\\whatsapp-preview.tsx": {
+    "mtime": 1776173549.0225093,
+    "hash": "bacbf2a4492bf4a59cc8a6074becc18b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\tools\\wifi-qr\\wifi-qr.tsx": {
+    "mtime": 1777689252.5343666,
+    "hash": "416e6bb0f3494603de138c1001b8a9d6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\alert-dialog.tsx": {
+    "mtime": 1776303921.154294,
+    "hash": "8da9c8a14adfaba2a43ef1acf03734f4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\button.tsx": {
+    "mtime": 1777574187.9459267,
+    "hash": "b3f97b9d39991dad512f8d6c40a7b7ef"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\calendar.tsx": {
+    "mtime": 1777485624.5745833,
+    "hash": "589fadf428d3cb96e6025831f95ae703"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\checkbox.tsx": {
+    "mtime": 1777838761.6092691,
+    "hash": "3cb50974631135d1d6e02886cae9cad1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\date-input.tsx": {
+    "mtime": 1777424933.8652546,
+    "hash": "306703503366a6fe2d3b974816ff6ba4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\dialog.tsx": {
+    "mtime": 1776170056.945734,
+    "hash": "063e2cf8c83120526f80d874972b7a29"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\form.tsx": {
+    "mtime": 1776170056.967722,
+    "hash": "5bc54a2907cc74d3e0e9561d394b8e8b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\input.tsx": {
+    "mtime": 1777571302.207181,
+    "hash": "20dcbc4baf960aae98b71d9b938d01ab"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\label.tsx": {
+    "mtime": 1776170056.944734,
+    "hash": "2197849a8966fbd62613a86ac8e15e7b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\popover.tsx": {
+    "mtime": 1776170056.9652789,
+    "hash": "788b122ff2f87bf4e2fc8de4f9959d49"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\select-native.tsx": {
+    "mtime": 1777571313.028591,
+    "hash": "dab033fd856543415017de899b0fe782"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\separator.tsx": {
+    "mtime": 1776170056.9496076,
+    "hash": "f030650ab1e463dadd129ec97af5c3a5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\sheet.tsx": {
+    "mtime": 1776170056.9622798,
+    "hash": "8b40329c5bd93162aabe17a467442545"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\components\\ui\\textarea.tsx": {
+    "mtime": 1777571308.9791808,
+    "hash": "69305b80b338d3f7fe419f18ebf1c5c0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\content\\blog\\13-salario-como-calcular.tsx": {
+    "mtime": 1777247088.0689826,
+    "hash": "9aa65e774dd32ec48af5d9a8d35effe1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\content\\blog\\como-calcular-salario-liquido.tsx": {
+    "mtime": 1777247088.0659845,
+    "hash": "4414d18edd94d32c13592074e7b6a9cb"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\content\\blog\\ferias-clt-guia-completo.tsx": {
+    "mtime": 1777247088.0649824,
+    "hash": "3d9ed49281af65d4ae186d4aa6c663dd"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\utils.ts": {
+    "mtime": 1776170056.6173613,
+    "hash": "bb36ea825a37986c69eae74eefe688d3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\boleto\\parse.test.ts": {
+    "mtime": 1777424933.8712535,
+    "hash": "d8dfe9c9ffbd2b98bf92d47631fb4309"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\boleto\\parse.ts": {
+    "mtime": 1777424933.8842533,
+    "hash": "53d40aaf6bb44bfd6c6b7950137881d4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cep\\lookup.ts": {
+    "mtime": 1777080987.039089,
+    "hash": "94743ef071afcd6fd3e4a86c87d7e68f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\checklist\\export.ts": {
+    "mtime": 1776276995.2502494,
+    "hash": "6fe7e56e8320caabfdec14e5635e9812"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\checklist\\renderer.ts": {
+    "mtime": 1777080688.0753706,
+    "hash": "e2efdf235bdfa600d06019022424f853"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\checklist\\templates.ts": {
+    "mtime": 1776340191.1876814,
+    "hash": "3f71fd11e254cab081f866fb7e2c62b9"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\checklist\\types.ts": {
+    "mtime": 1776302808.7666824,
+    "hash": "90da8d6fc5d4d2ee4ae3817afe105141"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cnpj\\format.ts": {
+    "mtime": 1776170056.9545794,
+    "hash": "cf2682b094a45e213271f40b57bca599"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cnpj\\generate.ts": {
+    "mtime": 1776170056.9656444,
+    "hash": "485944e5b557ca3613d1d22d5b08703e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cnpj\\lookup.test.ts": {
+    "mtime": 1777154709.3828702,
+    "hash": "d48da1b059ed18c6de1a644c7c1364a7"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cnpj\\lookup.ts": {
+    "mtime": 1777424933.9002526,
+    "hash": "1a2d5f573a4c66805eb4c22de9645841"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cnpj\\validate.ts": {
+    "mtime": 1776170056.9555764,
+    "hash": "a57d6fc980989176c83c1b3b4c608b4b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\color\\gradient.ts": {
+    "mtime": 1777465078.270151,
+    "hash": "6ffd5bb68f3cade2e5a4c85cffe235e0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\color\\palette.ts": {
+    "mtime": 1777427305.5091927,
+    "hash": "7b6d086ef8d7dd8d28c3de834a61c505"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cpf\\format.ts": {
+    "mtime": 1776170056.9632819,
+    "hash": "e3cd41cb6087fe65fb95436c62ef620b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cpf\\generate.ts": {
+    "mtime": 1776170056.9612768,
+    "hash": "a4ba453c073a4f94e7e05028223b01a6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\cpf\\validate.ts": {
+    "mtime": 1776170056.9612768,
+    "hash": "3f7f2b4a37b7bde53ed31c077c7248a4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\credit-card\\generate.ts": {
+    "mtime": 1776170056.968722,
+    "hash": "50ac56ce2ddae57ca2b0aa6d70348041"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\credit-card\\validate.ts": {
+    "mtime": 1776170056.967722,
+    "hash": "eee0177e5d03bbb9996b06f6ea4c5fd7"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\crypto\\cipher.ts": {
+    "mtime": 1776170056.9697201,
+    "hash": "0ebbdaba1075e96fbfbf6cf45fcd4a95"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\csv\\parse-csv.ts": {
+    "mtime": 1777080688.0973747,
+    "hash": "d53afbe92e1049c5001440e303d4d56c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\csv\\stringify-csv.ts": {
+    "mtime": 1777080688.1113708,
+    "hash": "8c014ed4067a81ae6c099b05fba3af2d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\csv\\validate-csv.ts": {
+    "mtime": 1777080688.1043732,
+    "hash": "4a9d0292c789a2831161789d3cddb136"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\curriculo\\browser-pool.ts": {
+    "mtime": 1776170056.9697201,
+    "hash": "a749cd0529bec4c8e7e569ddc3bed235"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\curriculo\\storage.ts": {
+    "mtime": 1776170056.971721,
+    "hash": "b0d1278decc2a598fcc0d3d388b3f954"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\curriculo\\temp-store.ts": {
+    "mtime": 1776170056.972722,
+    "hash": "8254f5f8a2e06b434f67dca0724f984d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\data\\blog-posts.ts": {
+    "mtime": 1777247088.062984,
+    "hash": "187c0443605d3cd57248c3b3ba556f76"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\data\\category-content.ts": {
+    "mtime": 1777229068.181741,
+    "hash": "b2bd4cff6e916a62bfe17c97e136b41a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\data\\emojis.ts": {
+    "mtime": 1776170056.975688,
+    "hash": "29bc5a45f8f42c4e368b97619d76528a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\data\\emoticons.ts": {
+    "mtime": 1776170056.975688,
+    "hash": "8849185748bcf000bdddfd168fee97b1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\data\\symbols.ts": {
+    "mtime": 1776170056.9816985,
+    "hash": "dad20b207ee8efe2a14612860ac49f26"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\data\\tools.ts": {
+    "mtime": 1777773652.6616702,
+    "hash": "e0495b5910db0bcc2348489cf2f079e8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\date\\age.ts": {
+    "mtime": 1777424933.936255,
+    "hash": "8b8c41b6bfbbf5654f6f695625e86547"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\date\\holidays.ts": {
+    "mtime": 1777592253.223475,
+    "hash": "5051645c2cafcfd680dcb4f3248674ea"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\date\\stopwatch.ts": {
+    "mtime": 1777424206.153678,
+    "hash": "ca50d84f4f73c3ccc995e0809c584d29"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\date\\timestamp.ts": {
+    "mtime": 1777424933.939252,
+    "hash": "610ee22d64bd288f0d2ffdf6c7f67193"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\encoding\\base64.ts": {
+    "mtime": 1777424933.9382532,
+    "hash": "937c201cadba2c850dcc4a6ddb4778a8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\encoding\\binary.ts": {
+    "mtime": 1776170056.971721,
+    "hash": "7d659ccf2299e3e37d0286709b128dc5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\encoding\\morse.ts": {
+    "mtime": 1776170056.9496076,
+    "hash": "c5b34214a998f15579bdab78cbb10447"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\extenso\\numero-extenso.ts": {
+    "mtime": 1777083347.6717594,
+    "hash": "0df20b58cdba05867dea056dcc88059f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\finance\\amortization.test.ts": {
+    "mtime": 1777154765.278956,
+    "hash": "b908326fcf3f5aab5cbc9881979f5a89"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\finance\\amortization.ts": {
+    "mtime": 1777424933.9502537,
+    "hash": "2b266a3e5b3e4949fc1ecf67cb170099"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\finance\\compound-interest.test.ts": {
+    "mtime": 1777424933.9502537,
+    "hash": "81a71e5015fa39f31fa8829a0f5b8afe"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\finance\\compound-interest.ts": {
+    "mtime": 1777154725.513488,
+    "hash": "fe402663c069f90c8e83c34aad369e45"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\finance\\fixed-income.test.ts": {
+    "mtime": 1777154797.9266858,
+    "hash": "810f3e2aa32f546e373ff55b3df9ef28"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\finance\\fixed-income.ts": {
+    "mtime": 1777424934.0032537,
+    "hash": "a5f9d65a1034da3e15677842886c3f10"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\fipe\\client.ts": {
+    "mtime": 1777154020.5791905,
+    "hash": "011ca162d106feedaaa1bf6032735ff2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\fonts\\resume-fonts.ts": {
+    "mtime": 1776170056.9354382,
+    "hash": "82aafaab96452cd2c73608bca1e4d885"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\health\\bmi.ts": {
+    "mtime": 1777129599.0321584,
+    "hash": "e94e9ff569f3f918e5455e025c4ad280"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\image\\compress.ts": {
+    "mtime": 1777402417.9028122,
+    "hash": "4680e0f9dfcf226669a30086e9acf64f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\image\\convert.ts": {
+    "mtime": 1777402444.7939117,
+    "hash": "e797128818a84a082f89a4e5045c8cf2"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\image\\index.ts": {
+    "mtime": 1777424933.979255,
+    "hash": "d97955192cdb1b24d1340a1fbfb26081"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\image\\info.ts": {
+    "mtime": 1777424933.973254,
+    "hash": "b7d7b73149ba5a1606a8c90fc7008b2b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\image\\resize.ts": {
+    "mtime": 1777424933.9772556,
+    "hash": "b172514fedc00c43d525b3e71535f095"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\inventario\\defaults.ts": {
+    "mtime": 1776691635.548637,
+    "hash": "4e9b15e2bebb8ba3d90be28be94f58f4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\inventario\\export.ts": {
+    "mtime": 1776690361.4017317,
+    "hash": "dcced3421c361be0a8ce38498f26aac4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\inventario\\renderer.ts": {
+    "mtime": 1776691653.9578986,
+    "hash": "cf5242d94f771a83f1c3cefd6aeee301"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\inventario\\types.ts": {
+    "mtime": 1776691628.1652668,
+    "hash": "fdac95ae0eb586a51da55d8e0d37958e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\json\\flatten-object.ts": {
+    "mtime": 1777080688.1683736,
+    "hash": "5fda3248ac04e76d6c609e70d6881e29"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\labor\\christmas-bonus.test.ts": {
+    "mtime": 1777424934.0042534,
+    "hash": "5ee22f6a2b4cf8ae2bec32f0d3629fc4"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\labor\\christmas-bonus.ts": {
+    "mtime": 1777424933.9852533,
+    "hash": "722076d2e22f09505c11fc2f315590d3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\labor\\overtime.test.ts": {
+    "mtime": 1777131700.1459236,
+    "hash": "e1a410efefc23561094ae868a4da1b12"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\labor\\overtime.ts": {
+    "mtime": 1777131688.601862,
+    "hash": "7ffa6cd45bb4bde08cb6aef6d6607fc8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\labor\\termination.test.ts": {
+    "mtime": 1777131817.668015,
+    "hash": "3014163ba6bac4685ea80fcdb50d1e47"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\labor\\termination.ts": {
+    "mtime": 1777424934.0192559,
+    "hash": "bd8cfbf13239dc401647fb2392b67909"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\labor\\vacation.test.ts": {
+    "mtime": 1777424934.0388715,
+    "hash": "22cba3555ebda8f7cc81849b85404d29"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\labor\\vacation.ts": {
+    "mtime": 1777164689.4926817,
+    "hash": "35317d42308d2d34eed09f83d9033c7b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\math\\percentage.ts": {
+    "mtime": 1776170056.9155388,
+    "hash": "36fb98f78002371fa786b4cae2b4392b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\menu\\export.ts": {
+    "mtime": 1777080688.1843705,
+    "hash": "79ba13b5293aad813cc57e2633c839f6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\menu\\fonts.ts": {
+    "mtime": 1776342727.5027485,
+    "hash": "2a4b3f257449548d31b306d96ac868f0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\menu\\renderer.ts": {
+    "mtime": 1777080688.227601,
+    "hash": "44ced3ba91f9bf34689874203f558355"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\menu\\templates.ts": {
+    "mtime": 1776342732.6927052,
+    "hash": "788c921923cfc89abaadd8833bb04dc3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\menu\\types.ts": {
+    "mtime": 1776357690.25397,
+    "hash": "f9b4aff7055a82a3dff4c16f2308d58b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\ocr\\extract.ts": {
+    "mtime": 1776170056.903534,
+    "hash": "be3daa3520cffd65668e0e00bdc2e06f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\ordem-servico\\defaults.ts": {
+    "mtime": 1776366326.447935,
+    "hash": "cee7915b8ff772ea8e0047fe39dce566"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\ordem-servico\\export.ts": {
+    "mtime": 1776363479.965862,
+    "hash": "f57713b8b846d018167ce1a84b9785e3"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\ordem-servico\\renderer.ts": {
+    "mtime": 1776367268.63581,
+    "hash": "bc8f05e5837c18502258de0987c21d9d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\ordem-servico\\types.ts": {
+    "mtime": 1776364739.299512,
+    "hash": "72e57bad485b3b62874b8b92dd2b8071"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\fgts.test.ts": {
+    "mtime": 1777131542.258232,
+    "hash": "32b20ba5394502c4491b7f8b9ec26056"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\fgts.ts": {
+    "mtime": 1777131533.4925902,
+    "hash": "69779751820ca6fbb5ec524e6f388f33"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\index.ts": {
+    "mtime": 1777424934.0042534,
+    "hash": "84e4bc6fb70048db40144ef09475488e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\inss.test.ts": {
+    "mtime": 1777131419.366212,
+    "hash": "f303a29edf05035ca3a45531d62131fa"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\inss.ts": {
+    "mtime": 1777131408.6465623,
+    "hash": "79e50b177d8ac8939f2e332617d30850"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\irrf.test.ts": {
+    "mtime": 1777131521.7944274,
+    "hash": "eb38895ec81b2346a30fcb7d66829a03"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\irrf.ts": {
+    "mtime": 1777131604.7481742,
+    "hash": "587ef90de1c74275d9f232fe36468f4d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\minimum-wage.ts": {
+    "mtime": 1777131550.8675432,
+    "hash": "f2ccce834791a3a47c0a4f3622df21e8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\payroll\\working-hours.ts": {
+    "mtime": 1777424933.904257,
+    "hash": "c13830271be3c942d59e7d306dc69d36"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\pdf\\compress.ts": {
+    "mtime": 1776170056.890769,
+    "hash": "f6d5f110a808a7d247874f91c9738a0c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\pdf\\csv-to-pdf.ts": {
+    "mtime": 1776170056.8714435,
+    "hash": "f80691fdd35960ba52bf9d76489ed744"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\pdf\\merge.ts": {
+    "mtime": 1776172226.673183,
+    "hash": "1a29310dfa3df015128fb0f4e0ff718f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\pdf\\split.ts": {
+    "mtime": 1776172230.4591243,
+    "hash": "68eef3048fa11d99418e501bb340294b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\pdf\\thumbnail.ts": {
+    "mtime": 1776170056.8025303,
+    "hash": "b48117521adb0c96870c3e30df42f1d8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\pix\\decode.ts": {
+    "mtime": 1777080954.6743178,
+    "hash": "ce04b59989ca0b0eb8186aef55ce4819"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\pix\\generate.ts": {
+    "mtime": 1776170056.7746043,
+    "hash": "9f2c1782279ecd8bb8dc864abc06d05c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\print\\dimensions.ts": {
+    "mtime": 1777080688.1393752,
+    "hash": "d82695fc19c009b3ca0ac0d4b576fef8"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\print\\export-pdf.ts": {
+    "mtime": 1777080688.1133728,
+    "hash": "05422549bc45ab0cb94ecaf794dcba44"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\print\\export-png.ts": {
+    "mtime": 1777080688.0793686,
+    "hash": "9255282220f6bd86aab6e3cb018adaf0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\print\\layout.ts": {
+    "mtime": 1777080688.043105,
+    "hash": "5bbddb4c99d62d327f8620369df23207"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\qrcode\\generate.ts": {
+    "mtime": 1776170056.759058,
+    "hash": "0ea0b7e5276aaa8648cf0495d9bbb6dd"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\random\\draw.ts": {
+    "mtime": 1776170056.7487092,
+    "hash": "498add8f12ee7c309e1f4009ba53fd13"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\random\\numbers.ts": {
+    "mtime": 1776170056.7370698,
+    "hash": "3abb066c0e002d9659038bee01ce3632"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\receipt\\export.ts": {
+    "mtime": 1776272741.3670044,
+    "hash": "adaefc94c2820a20c844246e450dbe1a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\receipt\\format.ts": {
+    "mtime": 1776274502.372712,
+    "hash": "8f4866037fd9d6aa13ea69d0e4952d3a"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\seo\\format-url.ts": {
+    "mtime": 1777080687.793384,
+    "hash": "e4f5a3357fe703b703c7bdeb8a35a984"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\seo\\highlight.ts": {
+    "mtime": 1777080687.7613513,
+    "hash": "c7d1feb700a7b121f82b7d2816eef524"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\seo\\jsonld.ts": {
+    "mtime": 1777231846.5157936,
+    "hash": "f4039a1e91fee9332a1fe39940ccd21d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\seo\\metadata.ts": {
+    "mtime": 1777227215.961829,
+    "hash": "e787e71e81deb183de6deefb5d328fa1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\seo\\seo-preview.ts": {
+    "mtime": 1777080687.7352562,
+    "hash": "564a79978e6290c6eecf1ac66973e11b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\text\\deduplicate.ts": {
+    "mtime": 1776170056.7139344,
+    "hash": "d7604f89830985a4ea033c5a3f7d4453"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\text\\lorem.ts": {
+    "mtime": 1776171682.3163369,
+    "hash": "9814dcf5c6195e52f18951323c81b563"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\text\\minifier.ts": {
+    "mtime": 1777424933.4332552,
+    "hash": "fdcd269c7bdb57bddb87b5835dae190f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\text\\random.ts": {
+    "mtime": 1776171642.5112276,
+    "hash": "6853428e78017542fb6b85ce6d00455c"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\text\\transformations.ts": {
+    "mtime": 1776170056.6653664,
+    "hash": "8b53e899e9c4dba4140e4ace19dfbba1"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\text\\typing-test.ts": {
+    "mtime": 1777424933.4012547,
+    "hash": "ff03a8f2fec48e9ec83f55463b813c4e"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\text\\whatsapp-formatting.ts": {
+    "mtime": 1776170056.6567638,
+    "hash": "fd57f393f3edfae37efd324202bf8fd5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\text\\whatsapp-serializer.ts": {
+    "mtime": 1776170056.646685,
+    "hash": "f513c3a2c2087d96ce5c6f7fbed70fbc"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\units\\convert.ts": {
+    "mtime": 1777129589.3840983,
+    "hash": "17acabbf22bc32877fb7e814daf8a465"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\uuid\\generate.ts": {
+    "mtime": 1776170056.6113245,
+    "hash": "9b40e3e7aeed85745602ff1249ffdd73"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\uuid\\validate.ts": {
+    "mtime": 1776170056.599469,
+    "hash": "26e5476a18a6c799b73a3b9d7a0cfdb5"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\lib\\wifi\\generate.ts": {
+    "mtime": 1776170056.5898964,
+    "hash": "32114917b3a3bc73e5a0b87724cfa873"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\utils\\image.ts": {
+    "mtime": 1777472730.0248415,
+    "hash": "784fe7441dfc3125090a102418e0818d"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\src\\utils\\number.ts": {
+    "mtime": 1776171624.9649415,
+    "hash": "a8a4490f2a62b6cf39b0f26f9884d1bd"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\AGENTS.md": {
+    "mtime": 1777835767.6265018,
+    "hash": "93c8483a00afa2a3cbe3306f2e223b3f"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\CLAUDE.md": {
+    "mtime": 1777686868.572677,
+    "hash": "b98f31034c074ebbe975e9ea7c7cb573"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\plan.md": {
+    "mtime": 1777775103.9436154,
+    "hash": "fd2231c930e82aac6cd659620b14e1d0"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\pnpm-workspace.yaml": {
+    "mtime": 1775844106.05477,
+    "hash": "b6e0a9c1a7b488c11a1c5812b4ed319b"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\README.md": {
+    "mtime": 1777672262.852279,
+    "hash": "a1f731bace85ac20f3364468c48aa7a6"
+  },
+  "C:\\Users\\lucas\\Documents\\pessoal\\Ferramenta Ninja\\frontend\\docs\\plano-ferramentas-seo.md": {
+    "mtime": 1777489657.688876,
+    "hash": "99967e15d7b2b1d44471aac53172edb5"
+  }
+}

@@ -1,0 +1,18 @@
+# Gerados — não precisam de contexto AI
+.next/
+out/
+dist/
+
+# Dependências
+node_modules/
+
+# Configs que o modelo não precisa ver
+*.lock
+pnpm-lock.yaml
+
+# Env e segredos
+.env*
+
+# Cache e logs
+.cache/
+*.log

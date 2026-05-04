@@ -48,12 +48,7 @@
 	// TOOLS: desativar o que gera chamadas desnecessárias
 	// ─────────────────────────────────────────────
 	"tools": {
-		// todowrite gera chamadas extras para gerenciar lista de tarefas
-		// internamente — o modelo fica criando/atualizando todos a cada passo
 		"todowrite": false,
-
-		// webfetch e websearch: desativa se não precisa de acesso web
-		// (evita que o modelo saia buscando documentação sozinho)
 		"webfetch": false,
 		"websearch": false
 	},
@@ -65,16 +60,15 @@
 		"build": {
 			"mode": "primary",
 			"model": "moonshot/kimi-k2.6",
-			// Limita o número máximo de tool calls por turno
-			// Evita loops infinitos — após 15 steps, para
 			"steps": 15,
 			"temperature": 0.6,
 			"permission": {
 				"edit": "allow",
 				"bash": "allow",
-				"read": "allow",
-				"grep": "allow",
-				"glob": "allow"
+				// Pede aprovação antes de ler/buscar — evita leituras desnecessárias
+				"read": "ask",
+				"grep": "ask",
+				"glob": "ask"
 			}
 		},
 		"plan": {
@@ -82,16 +76,15 @@
 			"model": "moonshot/kimi-k2.6",
 			"steps": 10,
 			"temperature": 0.4,
-			// Plan mode: apenas leitura, sem edições
 			"permission": {
 				"edit": "deny",
 				"bash": "deny",
-				"read": "allow",
-				"grep": "allow",
-				"glob": "allow"
+				// No plan, read/grep/glob também pedem aprovação
+				"read": "ask",
+				"grep": "ask",
+				"glob": "ask"
 			}
 		},
-		// Subagent explore: read-only, poucos steps
 		"explore": {
 			"mode": "subagent",
 			"model": "moonshot/kimi-k2.6",
@@ -99,15 +92,22 @@
 			"temperature": 0.3,
 			"permission": {
 				"edit": "deny",
-				"bash": "deny"
+				"bash": "deny",
+				"read": "ask",
+				"grep": "ask",
+				"glob": "ask"
 			}
 		},
-		// Subagent general: limitado para evitar loops
 		"general": {
 			"mode": "subagent",
 			"model": "moonshot/kimi-k2.6",
 			"steps": 10,
-			"temperature": 0.5
+			"temperature": 0.5,
+			"permission": {
+				"read": "ask",
+				"grep": "ask",
+				"glob": "ask"
+			}
 		}
 	},
 
@@ -115,21 +115,14 @@
 	// COMPACTION: compactar contexto agressivamente
 	// ─────────────────────────────────────────────
 	"compaction": {
-		// Ativa auto-compaction
 		"auto": true,
-		// Poda tool outputs grandes automaticamente
 		"prune": true,
-		// Compacta quando atingir 50% do contexto do modelo
-		// Kimi K2.6 tem 262k, então compacta por volta de ~130k
 		"threshold": 0.5,
-		// Limite máximo de contexto a usar (tokens)
-		// Mesmo que o Kimi suporte 262k, limitamos a 100k
-		// para manter custos baixos e evitar reenvio de contexto gigante
 		"maxContext": 100000
 	},
 
 	// ─────────────────────────────────────────────
-	// SNAPSHOT: manter snapshots para poder reverter
+	// SNAPSHOT
 	// ─────────────────────────────────────────────
 	"snapshot": true,
 
@@ -139,7 +132,7 @@
 	"autoupdate": true,
 
 	// ─────────────────────────────────────────────
-	// MCP SERVERS: code-review-graph para exploração eficiente
+	// MCP SERVERS
 	// ─────────────────────────────────────────────
 	"mcp": {
 		"code-review-graph": {
@@ -151,19 +144,20 @@
 	},
 
 	// ─────────────────────────────────────────────
-	// PERMISSÕES PADRÃO
+	// PERMISSÕES PADRÃO (fallback global)
 	// ─────────────────────────────────────────────
 	"permission": {
 		"edit": "allow",
 		"bash": "allow",
-		"read": "allow",
-		"grep": "allow",
-		"glob": "allow",
+		// Leitura/busca: pedir aprovação globalmente
+		"read": "ask",
+		"grep": "ask",
+		"glob": "ask",
 		"todowrite": "deny",
 		"webfetch": "deny",
 		"websearch": "deny",
 
-		// MCP tools do code-review-graph: auto-allow
+		// MCP do code-review-graph: liberado (queries são baratas)
 		"code-review-graph_*": "allow"
 	}
 }

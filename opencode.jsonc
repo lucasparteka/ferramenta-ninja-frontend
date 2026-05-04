@@ -1,5 +1,6 @@
 {
 	"$schema": "https://opencode.ai/config.json",
+	"plugin": ["openslimedit@latest"],
 
 	// ─────────────────────────────────────────────
 	// PROVIDER: Moonshot AI (Kimi K2.6)

@@ -257,6 +257,16 @@ export const categories: ToolCategory[] = [
 				intent: "format",
 				weight: 2,
 			},
+			{
+				name: "Gerador de Dados Mock",
+				href: "/ferramentas/gerador-de-dados-mock",
+				description:
+					"Gere dados mock realistas em JSON e CSV para testes e desenvolvimento",
+				icon: Database,
+				tags: ["mock", "json", "csv", "dados", "teste", "dev"],
+				intent: "generate",
+				weight: 2,
+			},
 		],
 	},
 	{

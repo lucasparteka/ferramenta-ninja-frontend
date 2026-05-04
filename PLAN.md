@@ -1,77 +1,269 @@
-# Plano: Remover `size="sm"` de botões de ação
+# Plano de Implementação: Gerador de Dados Mock
 
-**Critério:**
-- **REMOVER**: botões de ação (download, cópia, upload, adicionar/remover item, limpar, randomizar, exportar)
-- **MANTER**: botões de opção da ferramenta (toggles, navegação/paginação, toolbar de formatação)
-- **MANTER**: `AlertDialogContent size="sm"` (prop do dialog, não do Button)
+## 1. Visão Geral
 
----
+Criar uma ferramenta que gere dados mock realistas (JSON e CSV) para desenvolvedores usarem em testes, prototipação e desenvolvimento. A ferramenta seguirá o padrão estabelecido no projeto: página Next.js com `PageLayout`, componente client interativo, SEO completo e conteúdo explicativo.
 
-## Arquivos a modificar (46 remoções em 26 arquivos)
+## 2. Análise do Projeto
 
-| # | Arquivo | Linha | Contexto |
-|---|---------|-------|----------|
-| 1 | `src/components/shared/image-uploader.tsx` | 165 | Upload de arquivo |  
-| 2 | `src/components/tools/batch-barcode/batch-barcode.tsx` | 81 | Baixar SVG |  
-| 3 | `src/components/tools/binary-converter/binary-converter.tsx` | 115 | CopyButton | 
-| 4 | `src/components/tools/checklist/checklist-editor.tsx` | 640 | addItem |  
-| 5 | `src/components/tools/checklist/checklist-editor.tsx` | 650 | addGroup |  
-| 6 | `src/components/tools/cnpj-generator/cnpj-list.tsx` | 17 | CopyButton "Copiar tudo" |  
-| 7 | `src/components/tools/cnpj-generator/cnpj-list.tsx` | 26 | CopyButton por item |  
-| 8 | `src/components/tools/cpf-generator/cpf-list.tsx` | 17 | CopyButton "Copiar tudo" |  
-| 9 | `src/components/tools/cpf-generator/cpf-list.tsx` | 26 | CopyButton por item |  
-| 10 | `src/components/tools/csv-to-sql/csv-to-sql.tsx` | 548 | CopyButton "Copiar SQL" |  
-| 11 | `src/components/tools/csv-to-sql/csv-to-sql.tsx` | 551 | Download SQL |  
-| 12 | `src/components/tools/curriculo/resume-pdf-button/index.tsx` | 147 | Upload de arquivo |  
-| 13 | `src/components/tools/curriculo/resume-pdf-button/index.tsx` | 154 | Baixar assim mesmo |  
-| 14 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 789 | Download PNG |  
-| 15 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 797 | Download JPEG |  
-| 16 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 805 | Download SVG |  
-| 17 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 167 | Adicionar cor |  
-| 18 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 171 | Randomizar |  
-| 19 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 194 | CopyButton |  
-| 20 | `src/components/tools/image-to-text/ocr-output.tsx` | 34 | CopyButton "Copiar texto" |
-| 21 | `src/components/tools/inventario/inventario-editor.tsx` | 284 | addHeaderField |
-| 22 | `src/components/tools/inventario/inventario-editor.tsx` | 352 | addColumn |
-| 23 | `src/components/tools/loyalty-card/export-panel.tsx` | 64 | Exportar PDF (frente) |
-| 24 | `src/components/tools/loyalty-card/export-panel.tsx` | 68 | Exportar PNG (frente) |
-| 25 | `src/components/tools/loyalty-card/export-panel.tsx` | 78 | Exportar PDF (verso) |
-| 26 | `src/components/tools/loyalty-card/export-panel.tsx` | 82 | Exportar PNG (verso) |
-| 27 | `src/components/tools/loyalty-card/loyalty-card-editor.tsx` | 683 | Remover logo |
-| 28 | `src/components/tools/loyalty-card/loyalty-card-editor.tsx` | 694 | Upload de logo |
-| 29 | `src/components/tools/markdown-to-html/markdown-to-html.tsx` | 119 | Limpar markdown |
-| 30 | `src/components/tools/markdown-to-html/markdown-to-html.tsx` | 154 | CopyButton "Copiar HTML" |
-| 31 | `src/components/tools/markdown-to-html/markdown-to-html.tsx` | 155 | Baixar HTML |
-| 32 | `src/components/tools/menu/menu-controls.tsx` | 106 | Remover seção |
-| 33 | `src/components/tools/menu/menu-controls.tsx` | 164 | Adicionar item |
-| 34 | `src/components/tools/menu/menu-controls.tsx` | 175 | Adicionar seção |
-| 35 | `src/components/tools/menu/menu-editor.tsx` | 462 | Deletar seção |
-| 36 | `src/components/tools/morse-converter/morse-converter.tsx` | 107 | CopyButton |
-| 37 | `src/components/tools/number-generator/number-generator.tsx` | 192 | CopyButton "Copiar" |
-| 38 | `src/components/tools/ordem-servico/ordem-servico-editor.tsx` | 545 | addItem |
-| 39 | `src/components/tools/qr-reader/qr-reader.tsx` | 139 | CopyButton |
-| 40 | `src/components/tools/remove-duplicates/output.tsx` | 20 | CopyButton |
-| 41 | `src/components/tools/text-cipher/text-cipher.tsx` | 164 | CopyButton |
-| 42 | `src/components/tools/text-cleaner/text-cleaner-input.tsx` | 67 | Upload de arquivo |
-| 43 | `src/components/tools/text-converter/text-output.tsx` | 22 | CopyButton |
-| 44 | `src/components/tools/text-diff/diff-inputs.tsx` | 44 | Upload de arquivo |
-| 45 | `src/components/tools/text-generator/generator-output.tsx` | 20 | CopyButton |
-| 46 | `src/components/tools/uuid-generator/uuid-generator.tsx` | 191 | CopyButton "Copiar todos" |
+### 2.1 Stack Tecnológico
+- **Framework**: Next.js 15 (App Router)
+- **Linguagem**: TypeScript
+- **Estilização**: Tailwind CSS + shadcn/ui
+- **Ícones**: Lucide React
+- **Padrão de Ferramentas**: Cada ferramenta = rota em `src/app/ferramentas/<slug>/page.tsx`
+
+### 2.2 Componentes Compartilhados Disponíveis
+- `PageLayout` → SEO, breadcrumb, FAQ, related tools, JSON-LD
+- `CopyButton` → Clipboard com feedback visual (ícones Copy/Check com transição)
+- `ResultBox/ResultRow/ResultGrid` → Exibição de resultados estruturados
+- `Slider` → Seletor de quantidade
+- `Button`, `Textarea`, `Select` → shadcn/ui base
+
+### 2.3 Libs Utilitárias Existentes
+- `src/lib/text/random.ts` → Geração de palavras/frases aleatórias (pode ser reaproveitada)
+- `src/lib/data/tools.ts` → Registro central de todas as ferramentas
+- `src/lib/seo/jsonld.ts` → Schemas para SEO
+
+### 2.4 Padrão de Página de Ferramenta
+```tsx
+// Estrutura padrão observada em ferramentas existentes:
+1. Export metadata (title, description, keywords)
+2. Componente SeoContent() com sections explicativas
+3. Page default com <PageLayout toolHref="..." title="..." description="...">
+4. Componente client da ferramenta como children
+```
 
 ---
 
-## Arquivos que NÃO mudam (22 mantidos)
+## 3. Arquivos a Criar/Modificar
 
-| # | Arquivo | Linha | Motivo |
-|---|---------|-------|--------|
-| 1 | `base64.tsx` | 66 | Toggle encode/decode |
-| 2 | `css-minifier.tsx` | 71 | Toggle minify/beautify |
-| 3 | `csv-to-pdf.tsx` | 143,163,174 | Paginação |
-| 4 | `csv-viewer.tsx` | 150,170,181 | Paginação |
-| 5 | `custom-qr-code.tsx` | 755 | Remover logo (limpa setting da ferramenta) |
-| 6 | `json-formatter.tsx` | 191,198 | Toggle indent 2/4 |
-| 7 | `keep-awake.tsx` | 249,256,274,282 | Toggle modo/preset |
-| 8 | `text-converter/text-actions.tsx` | 29 | Transformações de texto (toolbar) |
-| 9 | `whatsapp-formatter/formatting-toolbar.tsx` | 16,26,36,46 | Toolbar de formatação |
-| 10 | `checklist-editor.tsx` | 667 | AlertDialogContent (não é Button) |
-| 11 | `menu-editor.tsx` | 470 | AlertDialogContent (não é Button) |
+### 3.1 Registro da Ferramenta
+**Arquivo**: `src/lib/data/tools.ts`
+**Ação**: Adicionar nova ferramenta na categoria `"dados"`
+
+```typescript
+{
+  name: "Gerador de Dados Mock",
+  href: "/ferramentas/gerador-de-dados-mock",
+  description: "Gere dados mock realistas em JSON e CSV para testes e desenvolvimento",
+  icon: Database,  // ou Package
+  tags: ["mock", "json", "csv", "dados", "teste", "dev"],
+  intent: "generate",
+  weight: 2,
+}
+```
+
+### 3.2 Página da Ferramenta
+**Arquivo**: `src/app/ferramentas/gerador-de-dados-mock/page.tsx`
+**Ação**: Criar página com metadata SEO e estrutura padrão
+
+**Metadata**:
+- Title: "Gerador de Dados Mock Online Grátis | Ferramenta Ninja"
+- Description: "Gere dados mock realistas em JSON e CSV. Usuários, produtos, API responses e edge cases para testes e desenvolvimento."
+- Keywords: `["dados mock", "json exemplo", "fake data generator", "dados para teste", "csv mock", "gerador de dados"]`
+
+**SeoContent sections**:
+1. O que são dados mock?
+2. Casos de uso (testes, prototipação, APIs, performance)
+3. Tipos de dados disponíveis
+4. Perguntas frequentes (5-6 FAQs)
+
+### 3.3 Componentes da Ferramenta
+
+#### `src/components/tools/mock-data/mock-data-generator.tsx` (CLIENT COMPONENT)
+Componente principal da ferramenta. Responsabilidades:
+- Estado: tipo de dado, quantidade, formato (JSON/CSV), estado de minificação
+- Chamar funções de geração
+- Exibir resultado com syntax highlight
+- Ações: copiar, download, alternar formato
+
+#### `src/components/tools/mock-data/data-type-selector.tsx`
+Seletor de tipo de dado mock:
+- Usuário
+- Produto
+- API Response (success)
+- API Response (error)
+- Paginação
+- Edge Cases
+
+#### `src/components/tools/mock-data/output-viewer.tsx`
+Visualizador de saída:
+- Syntax highlight para JSON (reutilizar lógica do json-formatter)
+- Preview com scroll
+- Toggle formatado/minificado
+- Contador de registros/bytes
+
+### 3.4 Libs de Geração de Dados
+
+#### `src/lib/mock-data/generators.ts`
+Funções puras de geração:
+
+```typescript
+export type MockDataType = "user" | "product" | "api-success" | "api-error" | "pagination" | "edge-cases";
+
+export interface MockUser {
+  id: number;
+  name: string;
+  email: string;
+  address: { street: string; city: string; state: string; zip: string };
+  roles: string[];
+  createdAt: string;
+}
+
+export interface MockProduct {
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
+  category: string;
+  sku: string;
+}
+
+export function generateUsers(count: number): MockUser[]
+export function generateProducts(count: number): MockProduct[]
+export function generateApiResponse(type: "success" | "error", data: unknown)
+export function generatePagination(data: unknown[], page: number, limit: number)
+export function generateEdgeCases(): Record<string, unknown>
+```
+
+#### `src/lib/mock-data/csv-export.ts`
+Conversão para CSV:
+```typescript
+export function jsonToCSV(data: Record<string, unknown>[]): string
+export function downloadFile(content: string, filename: string, mimeType: string)
+```
+
+#### `src/lib/mock-data/names.ts`
+Listas de dados realistas (nomes brasileiros, cidades, categorias de produtos) para evitar dados genéricos em inglês.
+
+---
+
+## 4. Especificação de Funcionalidades
+
+### 4.1 Gerador Simples (MVP)
+- [ ] Seletor de tipo de dado (dropdown)
+- [ ] Seletor de quantidade (10, 50, 100, 500, 1000, 10000)
+- [ ] Botão "Gerar"
+- [ ] Preview do resultado com syntax highlight
+- [ ] Botão "Copiar" (reutilizar CopyButton)
+- [ ] Botão "Download JSON"
+- [ ] Botão "Download CSV" (quando aplicável)
+- [ ] Toggle "Formatado / Minificado"
+
+### 4.2 Dados Realistas
+- [ ] **Usuário**: nome brasileiro, email válido, endereço com cidade/estado BR, roles (admin, user, editor), createdAt ISO
+- [ ] **Produto**: nome realista, preço em BRL, estoque, categoria, SKU
+- [ ] **API Response**: estrutura completa com status, message, data, timestamp
+- [ ] **Paginação**: page, limit, total, totalPages, data[]
+- [ ] **Edge Cases**: strings longas, caracteres especiais (ç, ã, é, emojis), null, undefined, datas em múltiplos formatos, números extremos (MAX_SAFE_INTEGER, negativos, decimais)
+
+### 4.3 Feedback Visual
+- [ ] Toast/estado "Copiado!" ao copiar
+- [ ] Contador de registros gerados
+- [ ] Indicador de tamanho (bytes/KB)
+- [ ] Loading state durante geração de grandes volumes
+
+---
+
+## 5. SEO e Conteúdo
+
+### 5.1 Keywords Alvo
+Primárias: `dados mock`, `gerador de dados mock`, `json exemplo`, `fake data generator`
+Secundárias: `dados para teste`, `csv mock`, `mock api response`, `edge cases dados`
+
+### 5.2 Estrutura de Conteúdo SEO
+```
+H1: Gerador de Dados Mock Online
+→ Descrição curta
+→ Componente da ferramenta
+→ Seção: O que são dados mock?
+→ Seção: Casos de uso
+→ Seção: Tipos de dados disponíveis
+→ Seção: Perguntas frequentes (FAQ)
+→ RelatedTools
+```
+
+### 5.3 FAQ Sugerido
+1. O que são dados mock?
+2. Para que servem dados mock?
+3. Posso usar em produção?
+4. Quais formatos são suportados?
+5. Há limite de registros?
+6. Os dados são enviados para servidor?
+
+---
+
+## 6. Dependências
+
+### 6.1 Verificar/Instalar
+- `lucide-react` → já instalado (usar ícone Database ou Package)
+- Componentes shadcn/ui → verificar se `Select`, `Button`, `Textarea` estão disponíveis
+- Syntax highlight → reutilizar lógica do `json-formatter` (função `highlightJSON`)
+
+### 6.2 Sem Dependências Externas
+Toda a geração será feita no cliente, sem chamadas de API.
+
+---
+
+## 7. Checklist de Implementação
+
+### Fase 1: Setup
+- [ ] Adicionar ferramenta em `src/lib/data/tools.ts`
+- [ ] Criar diretórios:
+  - `src/app/ferramentas/gerador-de-dados-mock/`
+  - `src/components/tools/mock-data/`
+  - `src/lib/mock-data/`
+
+### Fase 2: Libs de Geração
+- [ ] Criar `src/lib/mock-data/names.ts` (listas de nomes, cidades, categorias)
+- [ ] Criar `src/lib/mock-data/generators.ts` (funções de geração)
+- [ ] Criar `src/lib/mock-data/csv-export.ts` (conversão e download)
+
+### Fase 3: Componentes UI
+- [ ] Criar `data-type-selector.tsx`
+- [ ] Criar `output-viewer.tsx` (com syntax highlight reutilizado)
+- [ ] Criar `mock-data-generator.tsx` (componente principal)
+
+### Fase 4: Página
+- [ ] Criar `src/app/ferramentas/gerador-de-dados-mock/page.tsx`
+- [ ] Escrever conteúdo SEO completo
+- [ ] Configurar metadata (title, description, keywords)
+
+### Fase 5: Testes e Ajustes
+- [ ] Testar geração de todos os tipos de dados
+- [ ] Testar download JSON e CSV
+- [ ] Testar copy para clipboard
+- [ ] Testar toggle formatado/minificado
+- [ ] Verificar responsividade mobile
+- [ ] Verificar SEO (title, description, JSON-LD)
+
+---
+
+## 8. Notas Técnicas
+
+### 8.1 Performance
+- Para volumes grandes (10.000 registros), usar `requestIdleCallback` ou `setTimeout` para não bloquear a UI
+- Considerar virtualização ou paginação no preview para grandes volumes
+
+### 8.2 Reutilização
+- Syntax highlight: copiar função `highlightJSON` do `json-formatter.tsx`
+- CopyButton: usar componente existente em `src/components/shared/copy-button.tsx`
+- PageLayout: usar componente existente com `toolHref`, `title`, `description`, `extraContent`
+
+### 8.3 Padrões do Projeto
+- Usar `"use client"` apenas no componente interativo (mock-data-generator.tsx)
+- Página (`page.tsx`) deve ser Server Component (sem "use client")
+- Usar `cn()` do `@/lib/utils` para classes condicionais
+- Seguir padrão de nomenclatura: kebab-case para arquivos, PascalCase para componentes
+
+---
+
+## 9. Resultado Esperado
+
+Uma ferramenta funcional em `/ferramentas/gerador-de-dados-mock` que:
+- Gere dados mock realistas em JSON e CSV
+- Suporte múltiplos tipos de dados e volumes
+- Tenha SEO otimizado com conteúdo explicativo
+- Siga o design system e padrões do projeto
+- Seja útil para desenvolvedores em testes e prototipação

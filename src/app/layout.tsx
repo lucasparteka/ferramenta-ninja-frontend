@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { JsonLd } from "@/components/seo/json-ld";
 import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
 import "./globals.css";
@@ -56,10 +57,12 @@ export default async function RootLayout({
 				<JsonLd data={websiteSchema()} />
 			</head>
 			<body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
-				<Header />
-				<main className="flex-1">{children}</main>
-				<Footer />
-				<Toaster />
+				<ThemeProvider>
+					<Header />
+					<main className="flex-1">{children}</main>
+					<Footer />
+					<Toaster />
+				</ThemeProvider>
 			</body>
 		</html>
 	);

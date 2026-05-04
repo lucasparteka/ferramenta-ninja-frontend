@@ -11,28 +11,25 @@
 
 | # | Arquivo | Linha | Contexto |
 |---|---------|-------|----------|
-| 1 | `src/components/shared/image-uploader.tsx` | 165 | Upload de arquivo | ✅ 
-| 2 | `src/components/tools/batch-barcode/batch-barcode.tsx` | 81 | Baixar SVG | ✅ 
-| 3 | `src/components/tools/binary-converter/binary-converter.tsx` | 115 | CopyButton |✅ 
-| 4 | `src/components/tools/checklist/checklist-editor.tsx` | 640 | addItem | ✅ 
-| 5 | `src/components/tools/checklist/checklist-editor.tsx` | 650 | addGroup | ✅ 
-| 6 | `src/components/tools/cnpj-generator/cnpj-list.tsx` | 17 | CopyButton "Copiar tudo" | ✅ 
-| 7 | `src/components/tools/cnpj-generator/cnpj-list.tsx` | 26 | CopyButton por item | ✅ 
-| 8 | `src/components/tools/cpf-generator/cpf-list.tsx` | 17 | CopyButton "Copiar tudo" | ✅ 
-| 9 | `src/components/tools/cpf-generator/cpf-list.tsx` | 26 | CopyButton por item | ✅ 
-| 10 | `src/components/tools/csv-to-sql/csv-to-sql.tsx` | 548 | CopyButton "Copiar SQL" | ✅ 
-| 11 | `src/components/tools/csv-to-sql/csv-to-sql.tsx` | 551 | Download SQL | ✅ 
-| 12 | `src/components/tools/curriculo/resume-pdf-button/index.tsx` | 147 | Upload de arquivo | ✅ 
-| 13 | `src/components/tools/curriculo/resume-pdf-button/index.tsx` | 154 | Baixar assim mesmo | ✅ 
-| 14 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 789 | Download PNG | ✅ 
-| 15 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 797 | Download JPEG | ✅ 
-| 16 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 805 | Download SVG | ✅ 
-| 17 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 167 | Adicionar cor | ✅ 
-| 18 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 171 | Randomizar | ✅ 
-| 19 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 194 | CopyButton | ✅ 
-
---- etapa 2
-
+| 1 | `src/components/shared/image-uploader.tsx` | 165 | Upload de arquivo |  
+| 2 | `src/components/tools/batch-barcode/batch-barcode.tsx` | 81 | Baixar SVG |  
+| 3 | `src/components/tools/binary-converter/binary-converter.tsx` | 115 | CopyButton | 
+| 4 | `src/components/tools/checklist/checklist-editor.tsx` | 640 | addItem |  
+| 5 | `src/components/tools/checklist/checklist-editor.tsx` | 650 | addGroup |  
+| 6 | `src/components/tools/cnpj-generator/cnpj-list.tsx` | 17 | CopyButton "Copiar tudo" |  
+| 7 | `src/components/tools/cnpj-generator/cnpj-list.tsx` | 26 | CopyButton por item |  
+| 8 | `src/components/tools/cpf-generator/cpf-list.tsx` | 17 | CopyButton "Copiar tudo" |  
+| 9 | `src/components/tools/cpf-generator/cpf-list.tsx` | 26 | CopyButton por item |  
+| 10 | `src/components/tools/csv-to-sql/csv-to-sql.tsx` | 548 | CopyButton "Copiar SQL" |  
+| 11 | `src/components/tools/csv-to-sql/csv-to-sql.tsx` | 551 | Download SQL |  
+| 12 | `src/components/tools/curriculo/resume-pdf-button/index.tsx` | 147 | Upload de arquivo |  
+| 13 | `src/components/tools/curriculo/resume-pdf-button/index.tsx` | 154 | Baixar assim mesmo |  
+| 14 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 789 | Download PNG |  
+| 15 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 797 | Download JPEG |  
+| 16 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 805 | Download SVG |  
+| 17 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 167 | Adicionar cor |  
+| 18 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 171 | Randomizar |  
+| 19 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 194 | CopyButton |  
 | 20 | `src/components/tools/image-to-text/ocr-output.tsx` | 34 | CopyButton "Copiar texto" |
 | 21 | `src/components/tools/inventario/inventario-editor.tsx` | 284 | addHeaderField |
 | 22 | `src/components/tools/inventario/inventario-editor.tsx` | 352 | addColumn |
@@ -60,8 +57,6 @@
 | 44 | `src/components/tools/text-diff/diff-inputs.tsx` | 44 | Upload de arquivo |
 | 45 | `src/components/tools/text-generator/generator-output.tsx` | 20 | CopyButton |
 | 46 | `src/components/tools/uuid-generator/uuid-generator.tsx` | 191 | CopyButton "Copiar todos" |
-
---- fim etapa 2
 
 ---
 

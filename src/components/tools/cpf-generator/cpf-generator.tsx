@@ -50,14 +50,15 @@ export function CpfGenerator() {
 						checked={formatted}
 						onCheckedChange={(checked) => setFormatted(checked === true)}
 					/>
-					<label htmlFor="format-cpf" className="cursor-pointer text-sm text-foreground">
+					<label
+						htmlFor="format-cpf"
+						className="cursor-pointer text-sm text-foreground"
+					>
 						Formatar CPF (###.###.###-##)
 					</label>
 				</div>
 			</div>
-
 			<Button onClick={handleGenerate}>Gerar CPF</Button>
-
 			{cpfs.length > 0 && <CpfList cpfs={cpfs} />}
 		</div>
 	);

@@ -3,6 +3,7 @@
 import { Shuffle, Trash } from "lucide-react";
 import { useState } from "react";
 import { Slider } from "@/components/shared/slider";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
@@ -22,7 +23,6 @@ export function GradientGenerator() {
 	const [type, setType] = useState<GradientType>("linear");
 	const [angle, setAngle] = useState(90);
 	const [stops, setStops] = useState<ColorStop[]>(INITIAL_STOPS);
-	const [copied, setCopied] = useState(false);
 
 	const gradientCSS = buildGradientCSS(type, stops, angle);
 
@@ -57,12 +57,6 @@ export function GradientGenerator() {
 		]);
 	}
 
-	function handleCopy() {
-		const code = `background: ${gradientCSS};`;
-		navigator.clipboard.writeText(code);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	return (
 		<div className="space-y-6">
@@ -196,9 +190,9 @@ export function GradientGenerator() {
 						>
 							Código CSS
 						</label>
-						<Button onClick={handleCopy} variant="outline" size="sm">
-							{copied ? "Copiado!" : "Copiar"}
-						</Button>
+					<CopyButton text={
+						`background: ${gradientCSS};`
+					} label="Copiar" variant="outline" size="sm" />
 					</div>
 					<pre
 						id="gradient-css"

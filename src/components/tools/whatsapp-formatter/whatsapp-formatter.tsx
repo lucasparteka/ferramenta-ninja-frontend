@@ -2,8 +2,9 @@
 
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Copy, Eraser, Trash, Undo2 } from "lucide-react";
+import { Eraser, Trash, Undo2 } from "lucide-react";
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { serializeToWhatsApp } from "@/lib/text/whatsapp-serializer";
 import { FormattingToolbar } from "./formatting-toolbar";
@@ -12,7 +13,6 @@ import { WhatsAppPreview } from "./whatsapp-preview";
 
 export function WhatsAppFormatter() {
 	const [whatsAppText, setWhatsAppText] = useState("");
-	const [copied, setCopied] = useState(false);
 	const [, rerender] = useState(0);
 
 	const editor = useEditor({
@@ -41,17 +41,9 @@ export function WhatsAppFormatter() {
 		},
 	});
 
-	function handleCopy() {
-		if (!whatsAppText) return;
-		navigator.clipboard.writeText(whatsAppText);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
-
 	function handleClear() {
 		editor?.commands.clearContent(true);
 		setWhatsAppText("");
-		setCopied(false);
 	}
 
 	const isEmpty = editor?.isEmpty ?? true;
@@ -64,10 +56,11 @@ export function WhatsAppFormatter() {
 				<div className="space-y-4">
 					<RichEditor editor={editor} />
 					<div className="flex flex-wrap gap-2">
-						<Button size="sm" onClick={handleCopy} disabled={isEmpty}>
-							<Copy />
-							Copiar mensagem
-						</Button>
+						<CopyButton
+							text={whatsAppText}
+							label="Copiar mensagem"
+							disabled={isEmpty}
+						/>
 						<Button
 							variant="secondary"
 							onClick={handleClear}
@@ -77,7 +70,6 @@ export function WhatsAppFormatter() {
 							Limpar
 						</Button>
 						<Button
-							size="sm"
 							variant="outline"
 							onClick={() => editor?.chain().focus().unsetAllMarks().run()}
 							disabled={isEmpty}
@@ -86,7 +78,6 @@ export function WhatsAppFormatter() {
 							Limpar estilos
 						</Button>
 						<Button
-							size="sm"
 							variant="outline"
 							onClick={() => editor?.chain().focus().undo().run()}
 							disabled={!canUndo}
@@ -95,7 +86,6 @@ export function WhatsAppFormatter() {
 							Desfazer
 						</Button>
 					</div>
-					{copied && <p className="text-sm text-success">Mensagem copiada!</p>}
 				</div>
 				<div className="space-y-2">
 					<p className="text-sm font-medium text-foreground">

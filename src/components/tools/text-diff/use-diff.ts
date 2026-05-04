@@ -101,11 +101,6 @@ export function useDiff() {
 		setHasCompared(false);
 	}, [leftText, rightText]);
 
-	const copyResult = useCallback(() => {
-		const plain = diffResult.map(([, text]) => text).join("");
-		navigator.clipboard.writeText(plain);
-	}, [diffResult]);
-
 	return {
 		leftText,
 		rightText,
@@ -118,6 +113,5 @@ export function useDiff() {
 		computeDiff,
 		clearAll,
 		swapTexts,
-		copyResult,
 	};
 }

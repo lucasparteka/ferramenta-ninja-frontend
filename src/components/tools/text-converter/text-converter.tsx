@@ -33,20 +33,11 @@ const transformMap: Record<TransformKey, (text: string) => string> = {
 export function TextConverter() {
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState("");
-	const [copied, setCopied] = useState(false);
 
 	function handleTransform(key: string) {
 		const fn = transformMap[key as TransformKey];
 		if (!fn || !input.trim()) return;
 		setOutput(fn(input));
-		setCopied(false);
-	}
-
-	function handleCopy() {
-		if (!output) return;
-		navigator.clipboard.writeText(output);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
 	}
 
 	return (
@@ -56,8 +47,6 @@ export function TextConverter() {
 			<TextOutput
 				value={output}
 				onChange={setOutput}
-				onCopy={handleCopy}
-				copied={copied}
 			/>
 		</div>
 	);

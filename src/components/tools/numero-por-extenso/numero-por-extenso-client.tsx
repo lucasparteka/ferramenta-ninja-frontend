@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -20,21 +21,11 @@ const MAX_VALUE = 999_999_999_999_999; // 999 trilhões
 export function NumeroPorExtensoClient() {
 	const [value, setValue] = useState<number>(0);
 	const [currency, setCurrency] = useState(true);
-	const [copied, setCopied] = useState(false);
-
-	console.log("value", value);
 
 	const words = useMemo(
 		() => (value > 0 ? numberToWords(value, { currency }) : ""),
 		[value, currency],
 	);
-
-	function handleCopy() {
-		if (!words) return;
-		navigator.clipboard.writeText(words);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 1500);
-	}
 
 	const capitalized = words
 		? words.charAt(0).toUpperCase() + words.slice(1)
@@ -68,16 +59,19 @@ export function NumeroPorExtensoClient() {
 					</div>
 				</div>
 
-			<div className="flex items-center gap-2">
-				<Checkbox
-					id="include-currency"
-					checked={currency}
-					onCheckedChange={(checked) => setCurrency(checked === true)}
-				/>
-				<label htmlFor="include-currency" className="cursor-pointer text-sm text-foreground">
-					Incluir &quot;reais&quot; e &quot;centavos&quot; (R$)
-				</label>
-			</div>
+				<div className="flex items-center gap-2">
+					<Checkbox
+						id="include-currency"
+						checked={currency}
+						onCheckedChange={(checked) => setCurrency(checked === true)}
+					/>
+					<label
+						htmlFor="include-currency"
+						className="cursor-pointer text-sm text-foreground"
+					>
+						Incluir &quot;reais&quot; e &quot;centavos&quot; (R$)
+					</label>
+				</div>
 
 				<div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
 					<span className="mr-1">Exemplos:</span>
@@ -100,9 +94,7 @@ export function NumeroPorExtensoClient() {
 						{capitalized}
 					</p>
 					<div className="flex flex-wrap gap-2">
-						<Button variant="outline" onClick={handleCopy}>
-							{copied ? "Copiado!" : "Copiar"}
-						</Button>
+						<CopyButton text={capitalized} label="Copiar" variant="outline" />
 					</div>
 				</div>
 			)}

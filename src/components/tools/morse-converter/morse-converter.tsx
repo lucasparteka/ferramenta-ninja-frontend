@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { morseToText, textToMorse } from "@/lib/encoding/morse";
@@ -9,7 +10,6 @@ export function MorseConverter() {
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState("");
 	const [error, setError] = useState("");
-	const [copied, setCopied] = useState(false);
 
 	function resetOutput() {
 		setOutput("");
@@ -48,12 +48,6 @@ export function MorseConverter() {
 		}
 	}
 
-	function handleCopy() {
-		if (!output) return;
-		navigator.clipboard.writeText(output);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	return (
 		<div className="flex flex-col gap-6 sm:flex-row">
@@ -110,9 +104,7 @@ export function MorseConverter() {
 						Resultado
 					</label>
 					{output && (
-						<Button variant="outline" size="sm" onClick={handleCopy}>
-							{copied ? "Copiado!" : "Copiar"}
-						</Button>
+						<CopyButton text={output} label="Copiar" variant="outline" size="sm" />
 					)}
 				</div>
 				<Textarea

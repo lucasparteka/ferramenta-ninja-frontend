@@ -1,21 +1,16 @@
 "use client";
 
-import { Copy } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/shared/copy-button";
 
 type Props = {
-	onCopy: () => void;
-	hasResult: boolean;
+	result: string;
 };
 
-export function TextCleanerControls({ onCopy, hasResult }: Props) {
+export function TextCleanerControls({ result }: Props) {
 	return (
 		<div className="flex gap-2">
-			{hasResult && (
-				<Button variant="outline" onClick={onCopy} className="gap-1.5">
-					<Copy className="size-4" />
-					Copiar
-				</Button>
+			{result && (
+				<CopyButton text={result} label="Copiar" variant="outline" className="gap-1.5" />
 			)}
 		</div>
 	);

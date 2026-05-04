@@ -4,6 +4,7 @@ import DOMPurify from "dompurify";
 import { Trash } from "lucide-react";
 import { marked } from "marked";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
@@ -70,7 +71,6 @@ function SanitizedHtml({
 export function MarkdownToHtml() {
 	const [markdown, setMarkdown] = useState(SAMPLE_MARKDOWN);
 	const [includeCss, setIncludeCss] = useState(true);
-	const [copied, setCopied] = useState(false);
 
 	const html = useMemo(() => {
 		if (!markdown.trim()) return "";
@@ -87,15 +87,6 @@ export function MarkdownToHtml() {
 		return `<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Documento Markdown</title>\n${css}\n</head>\n<body>\n${html}\n</body>\n</html>`;
 	}, [html, includeCss]);
 
-	async function handleCopy() {
-		try {
-			await navigator.clipboard.writeText(fullHtml);
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
-		} catch {
-			// fallback
-		}
-	}
 
 	function handleDownload() {
 		const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
@@ -160,9 +151,7 @@ export function MarkdownToHtml() {
 
 			{/* Toolbar below preview */}
 			<div className="flex flex-wrap items-center gap-3">
-				<Button variant="outline" size="sm" onClick={handleCopy}>
-					{copied ? "Copiado!" : "Copiar HTML"}
-				</Button>
+				<CopyButton text={fullHtml} label="Copiar HTML" variant="outline" size="sm" />
 				<Button variant="outline" size="sm" onClick={handleDownload}>
 					Baixar HTML
 				</Button>

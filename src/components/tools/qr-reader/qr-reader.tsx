@@ -2,6 +2,7 @@
 
 import jsQR from "jsqr";
 import { useRef, useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 
 type ReaderState = "idle" | "loading" | "success" | "error";
@@ -25,7 +26,6 @@ export function QRReader() {
 	const [result, setResult] = useState("");
 	const [preview, setPreview] = useState("");
 	const [errorMsg, setErrorMsg] = useState("");
-	const [copied, setCopied] = useState(false);
 	const [isDragging, setIsDragging] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -63,11 +63,6 @@ export function QRReader() {
 		if (file) processFile(file);
 	}
 
-	function handleCopy() {
-		navigator.clipboard.writeText(result);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	return (
 		<div className="flex flex-col gap-6 sm:flex-row">
@@ -141,9 +136,7 @@ export function QRReader() {
 						Conteúdo decodificado
 					</span>
 					{result && (
-						<Button variant="outline" size="sm" onClick={handleCopy}>
-							{copied ? "Copiado!" : "Copiar"}
-						</Button>
+						<CopyButton text={result} label="Copiar" variant="outline" size="sm" />
 					)}
 				</div>
 				<div className="min-h-56 rounded-lg border border-border bg-secondary p-4">

@@ -1,16 +1,12 @@
-import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Input } from "@/components/ui/input";
 
 type PasswordOutputProps = {
 	password: string;
-	onCopy: () => void;
-	copied: boolean;
 };
 
 export function PasswordOutput({
 	password,
-	onCopy,
-	copied,
 }: PasswordOutputProps) {
 	return (
 		<div className="space-y-2">
@@ -29,16 +25,13 @@ export function PasswordOutput({
 					placeholder='Clique em "Gerar senha"'
 					className="flex-1 font-mono"
 				/>
-				<Button
-					variant="outline"
-					onClick={onCopy}
+				<CopyButton
+					text={password}
+					label="Copiar"
 					disabled={!password}
-					aria-label="Copiar senha"
-				>
-					{copied ? "Copiado!" : "Copiar"}
-				</Button>
+					variant="outline"
+				/>
 			</div>
-			{copied && <p className="text-sm text-success">Senha copiada!</p>}
 		</div>
 	);
 }

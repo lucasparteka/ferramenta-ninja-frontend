@@ -2,6 +2,7 @@
 
 import { Trash } from "lucide-react";
 import { useCallback, useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -61,7 +62,6 @@ export function JsonFormatter() {
 	const [status, setStatus] = useState<Status>("idle");
 	const [indentSize, setIndentSize] = useState<2 | 4>(2);
 	const [error, setError] = useState<ErrorInfo | null>(null);
-	const [copied, setCopied] = useState(false);
 
 	const validateInput = useCallback((value: string) => {
 		if (!value.trim()) {
@@ -118,20 +118,12 @@ export function JsonFormatter() {
 		}
 	}
 
-	function handleCopy() {
-		const textToCopy = output || input;
-		if (!textToCopy) return;
-		navigator.clipboard.writeText(textToCopy);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	function handleClear() {
 		setInput("");
 		setOutput("");
 		setStatus("idle");
 		setError(null);
-		setCopied(false);
 	}
 
 	const hasResult = output.length > 0;
@@ -183,9 +175,7 @@ export function JsonFormatter() {
 				>
 					Minificar
 				</Button>
-				<Button onClick={handleCopy} disabled={!input.trim()} variant="outline">
-					{copied ? "Copiado!" : "Copiar"}
-				</Button>
+				<CopyButton text={output} label="Copiar" disabled={!output} variant="outline" />
 				<Button
 					onClick={handleClear}
 					disabled={!input.trim() && !output}

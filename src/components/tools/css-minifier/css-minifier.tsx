@@ -7,6 +7,7 @@ import {
 	ResultGrid,
 	ResultRow,
 } from "@/components/shared/result-box";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import type { MinifierType } from "@/lib/text/minifier";
@@ -22,7 +23,6 @@ export function CssMinifier() {
 	const [type, setType] = useState<MinifierType>("css");
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState("");
-	const [copied, setCopied] = useState(false);
 	const [stats, setStats] = useState({
 		original: 0,
 		minified: 0,
@@ -42,20 +42,12 @@ export function CssMinifier() {
 		const reduction =
 			original > 0 ? Math.round((1 - minified / original) * 100) : 0;
 		setStats({ original, minified, reduction });
-		setCopied(false);
 	}
 
-	function handleCopy() {
-		if (!output) return;
-		navigator.clipboard.writeText(output);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	function handleClear() {
 		setInput("");
 		setOutput("");
-		setCopied(false);
 		setStats({ original: 0, minified: 0, reduction: 0 });
 	}
 
@@ -106,9 +98,7 @@ export function CssMinifier() {
 					<Button onClick={handleMinify} disabled={!input.trim()}>
 						Minificar
 					</Button>
-					<Button onClick={handleCopy} disabled={!output} variant="outline">
-						{copied ? "Copiado!" : "Copiar resultado"}
-					</Button>
+					<CopyButton text={output} label="Copiar resultado" disabled={!output} variant="outline" />
 					<Button
 						onClick={handleClear}
 						disabled={!input && !output}

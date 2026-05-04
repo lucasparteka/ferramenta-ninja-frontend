@@ -30,7 +30,6 @@ export function RemoveDuplicates() {
 	const [input, setInput] = useState("");
 	const [options, setOptions] = useState<DeduplicateOptions>(DEFAULT_OPTIONS);
 	const [result, setResult] = useState<ProcessResult | null>(null);
-	const [copied, setCopied] = useState(false);
 
 	function handleInput(value: string) {
 		setInput(value);
@@ -51,14 +50,6 @@ export function RemoveDuplicates() {
 			uniqueLines,
 			removedLines: totalLines - uniqueLines,
 		});
-		setCopied(false);
-	}
-
-	function handleCopy() {
-		if (!result?.output) return;
-		navigator.clipboard.writeText(result.output);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
 	}
 
 	return (
@@ -67,8 +58,6 @@ export function RemoveDuplicates() {
 				<RemoveDuplicatesInput value={input} onChange={handleInput} />
 				<RemoveDuplicatesOutput
 					value={result?.output ?? ""}
-					onCopy={handleCopy}
-					copied={copied}
 				/>
 			</div>
 

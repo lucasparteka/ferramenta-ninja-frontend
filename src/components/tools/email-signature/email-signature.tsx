@@ -2,7 +2,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Copy, ImageIcon, Mail, Moon, Sun, Trash } from "lucide-react";
+import { CopyButton } from "@/components/shared/copy-button";
+import { ImageIcon, Mail, Moon, Sun, Trash } from "lucide-react";
 import { useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
@@ -123,7 +124,6 @@ export function EmailSignature() {
 	const previewRef = useRef<HTMLDivElement>(null);
 	const [darkBg, setDarkBg] = useState(false);
 	const [activeSection, setActiveSection] = useState("info");
-	const [copied, setCopied] = useState(false);
 
 	const { register, control, setValue, watch } = useForm<FormValues>({
 		resolver: zodResolver(schema),
@@ -135,12 +135,6 @@ export function EmailSignature() {
 
 	const socials = watch("socials") || [];
 
-	function handleCopyHtml() {
-		const html = generateInlineHTML(data);
-		navigator.clipboard.writeText(html);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	function handleDownloadHtml() {
 		const html = generateInlineHTML(data);
@@ -631,16 +625,7 @@ export function EmailSignature() {
 
 			{/* Ações */}
 			<div className="flex flex-wrap gap-2">
-				<Button type="button" onClick={handleCopyHtml} variant="outline">
-					{copied ? (
-						"Copiado!"
-					) : (
-						<>
-							<Copy className="mr-2 h-4 w-4" />
-							Copiar HTML
-						</>
-					)}
-				</Button>
+				<CopyButton text={generateInlineHTML(data)} label="Copiar HTML" variant="outline" />
 				<Button type="button" onClick={handleDownloadHtml} variant="outline">
 					<Mail className="mr-2 h-4 w-4" />
 					Baixar HTML

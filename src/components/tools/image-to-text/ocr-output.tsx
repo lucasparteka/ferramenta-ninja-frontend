@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { CopyButton } from "@/components/shared/copy-button";
 
 type OcrState = "idle" | "loading" | "success" | "error";
 
@@ -10,9 +11,7 @@ type OcrOutputProps = {
 	result: string;
 	errorMsg: string;
 	progress: number;
-	copied: boolean;
 	onChange: (value: string) => void;
-	onCopy: () => void;
 };
 
 export function OcrOutput({
@@ -20,9 +19,7 @@ export function OcrOutput({
 	result,
 	errorMsg,
 	progress,
-	copied,
 	onChange,
-	onCopy,
 }: OcrOutputProps) {
 	return (
 		<div className="flex h-full flex-col space-y-1">
@@ -34,9 +31,7 @@ export function OcrOutput({
 					Texto extraído
 				</label>
 				{result && (
-					<Button variant="outline" size="sm" onClick={onCopy}>
-						{copied ? "Copiado!" : "Copiar texto"}
-					</Button>
+					<CopyButton text={result} label="Copiar texto" variant="outline" size="sm" />
 				)}
 			</div>
 			<div

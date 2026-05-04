@@ -65,7 +65,6 @@ function buildPassword(config: PasswordConfig): string {
 export function PasswordGenerator() {
 	const [config, setConfig] = useState<PasswordConfig>(DEFAULT_CONFIG);
 	const [password, setPassword] = useState(() => buildPassword(DEFAULT_CONFIG));
-	const [copied, setCopied] = useState(false);
 
 	const isValid =
 		config.uppercase || config.lowercase || config.numbers || config.symbols;
@@ -78,20 +77,11 @@ export function PasswordGenerator() {
 			return;
 		}
 		setPassword(buildPassword(config));
-		setCopied(false);
 	}, [config]);
 
 	function generate() {
 		if (!isValid) return;
 		setPassword(buildPassword(config));
-		setCopied(false);
-	}
-
-	function handleCopy() {
-		if (!password) return;
-		navigator.clipboard.writeText(password);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
 	}
 
 	return (
@@ -104,7 +94,7 @@ export function PasswordGenerator() {
 				</p>
 			)}
 
-			<PasswordOutput password={password} onCopy={handleCopy} copied={copied} />
+			<PasswordOutput password={password} />
 
 			<Button onClick={generate} disabled={!isValid}>
 				Gerar senha

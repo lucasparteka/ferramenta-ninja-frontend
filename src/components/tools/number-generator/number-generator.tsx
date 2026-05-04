@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -42,7 +43,6 @@ export function NumberGenerator() {
 	const [options, setOptions] =
 		useState<NumberGeneratorOptions>(DEFAULT_OPTIONS);
 	const [numbers, setNumbers] = useState<number[]>([]);
-	const [copied, setCopied] = useState(false);
 
 	function set<K extends keyof NumberGeneratorOptions>(
 		key: K,
@@ -59,15 +59,8 @@ export function NumberGenerator() {
 
 	function handleGenerate() {
 		setNumbers(generateNumbers(options));
-		setCopied(false);
 	}
 
-	function handleCopy() {
-		if (numbers.length === 0) return;
-		navigator.clipboard.writeText(numbers.join("\n"));
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	const rangeSize = Math.abs(options.max - options.min) + 1;
 	const uniqueWarning = options.unique && options.count > rangeSize;
@@ -196,9 +189,7 @@ export function NumberGenerator() {
 								{numbers.length}{" "}
 								{numbers.length === 1 ? "número gerado" : "números gerados"}
 							</p>
-							<Button variant="outline" size="sm" onClick={handleCopy}>
-								{copied ? "Copiado!" : "Copiar"}
-							</Button>
+						<CopyButton text={numbers.join("\n")} label="Copiar" variant="outline" size="sm" />
 						</div>
 						<div
 							className={`grid gap-2 rounded-lg border border-border bg-secondary p-4 ${COLS_CLASS[options.columns] ?? "grid-cols-1"}`}

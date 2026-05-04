@@ -1,18 +1,14 @@
-import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Textarea } from "@/components/ui/textarea";
 
 type TextOutputProps = {
 	value: string;
 	onChange: (value: string) => void;
-	onCopy: () => void;
-	copied: boolean;
 };
 
 export function TextOutput({
 	value,
 	onChange,
-	onCopy,
-	copied,
 }: TextOutputProps) {
 	return (
 		<div className="space-y-2">
@@ -23,9 +19,7 @@ export function TextOutput({
 				>
 					Resultado
 				</label>
-				<Button variant="outline" size="sm" onClick={onCopy} disabled={!value}>
-					{copied ? "Copiado!" : "Copiar"}
-				</Button>
+				<CopyButton text={value} label="Copiar" disabled={!value} variant="outline" size="sm" />
 			</div>
 			<Textarea
 				id="text-output"
@@ -35,7 +29,6 @@ export function TextOutput({
 				rows={8}
 				className="resize-y"
 			/>
-			{copied && <p className="text-sm text-success">Texto copiado!</p>}
 		</div>
 	);
 }

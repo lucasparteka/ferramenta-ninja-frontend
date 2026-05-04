@@ -1,16 +1,12 @@
-import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Textarea } from "@/components/ui/textarea";
 
 type RemoveDuplicatesOutputProps = {
 	value: string;
-	onCopy: () => void;
-	copied: boolean;
 };
 
 export function RemoveDuplicatesOutput({
 	value,
-	onCopy,
-	copied,
 }: RemoveDuplicatesOutputProps) {
 	return (
 		<div className="space-y-2">
@@ -21,9 +17,7 @@ export function RemoveDuplicatesOutput({
 				>
 					Lista Desduplicada
 				</label>
-				<Button variant="outline" size="sm" onClick={onCopy} disabled={!value}>
-					{copied ? "Copiado!" : "Copiar"}
-				</Button>
+				<CopyButton text={value} label="Copiar" disabled={!value} variant="outline" size="sm" />
 			</div>
 			<Textarea
 				id="duplicates-output"
@@ -33,7 +27,6 @@ export function RemoveDuplicatesOutput({
 				rows={12}
 				className="resize-y"
 			/>
-			{copied && <p className="text-sm text-success">Texto copiado!</p>}
 		</div>
 	);
 }

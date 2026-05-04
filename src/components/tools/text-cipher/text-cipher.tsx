@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
@@ -21,7 +22,6 @@ export function TextCipher() {
 	const [output, setOutput] = useState("");
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [copied, setCopied] = useState(false);
 
 	function resetOutput() {
 		setOutput("");
@@ -74,12 +74,6 @@ export function TextCipher() {
 		setLoading(false);
 	}
 
-	function handleCopy() {
-		if (!output) return;
-		navigator.clipboard.writeText(output);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	return (
 		<div className="flex flex-col gap-6 sm:flex-row">
@@ -167,9 +161,7 @@ export function TextCipher() {
 						Resultado
 					</label>
 					{output && (
-						<Button variant="outline" size="sm" onClick={handleCopy}>
-							{copied ? "Copiado!" : "Copiar"}
-						</Button>
+						<CopyButton text={output} label="Copiar" variant="outline" size="sm" />
 					)}
 				</div>
 				<Textarea

@@ -51,18 +51,9 @@ function generate(options: GeneratorOptions): string {
 export function TextGenerator() {
 	const [options, setOptions] = useState<GeneratorOptions>(DEFAULT_OPTIONS);
 	const [output, setOutput] = useState("");
-	const [copied, setCopied] = useState(false);
 
 	function handleGenerate() {
 		setOutput(generate(options));
-		setCopied(false);
-	}
-
-	function handleCopy() {
-		if (!output) return;
-		navigator.clipboard.writeText(output);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
 	}
 
 	return (
@@ -76,7 +67,7 @@ export function TextGenerator() {
 					</Button>
 				)}
 			</div>
-			<GeneratorOutput value={output} onCopy={handleCopy} copied={copied} />
+			<GeneratorOutput value={output} />
 		</div>
 	);
 }

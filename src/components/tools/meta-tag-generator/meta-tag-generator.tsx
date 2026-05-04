@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy } from "lucide-react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,6 @@ export function MetaTagGenerator() {
 	const [type, setType] = useState("website");
 	const [author, setAuthor] = useState("");
 	const [keywords, setKeywords] = useState("");
-	const [copied, setCopied] = useState(false);
 
 	const html = generateMetaHTML({
 		title,
@@ -33,12 +32,6 @@ export function MetaTagGenerator() {
 		keywords,
 	});
 
-	function handleCopy() {
-		if (!html) return;
-		navigator.clipboard.writeText(html);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
 
 	return (
 		<div className="space-y-6">
@@ -234,10 +227,7 @@ export function MetaTagGenerator() {
 					className="min-h-[280px] font-mono text-sm text-foreground"
 					spellCheck={false}
 				/>
-				<Button onClick={handleCopy} disabled={!html} variant="outline">
-					<Copy className="mr-2 h-4 w-4" />
-					{copied ? "Copiado!" : "Copiar código"}
-				</Button>
+				<CopyButton text={html} label="Copiar código" disabled={!html} variant="outline" />
 			</div>
 		</div>
 	);

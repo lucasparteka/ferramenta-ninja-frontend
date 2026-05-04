@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { copyToClipboard, extractTextFromImage } from "@/lib/ocr/extract";
+import { extractTextFromImage } from "@/lib/ocr/extract";
 import { ImageUpload } from "./image-upload";
 import { OcrControls } from "./ocr-controls";
 import { OcrOutput } from "./ocr-output";
@@ -17,7 +17,6 @@ export function ImageToText() {
 	const [result, setResult] = useState("");
 	const [errorMsg, setErrorMsg] = useState("");
 	const [progress, setProgress] = useState(0);
-	const [copied, setCopied] = useState(false);
 	const [isDragging, setIsDragging] = useState(false);
 
 	function processFile(selected: File) {
@@ -65,12 +64,6 @@ export function ImageToText() {
 		}
 	}
 
-	async function handleCopy() {
-		await copyToClipboard(result);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
-	}
-
 	function handleClear() {
 		setFile(null);
 		setPreview("");
@@ -78,7 +71,6 @@ export function ImageToText() {
 		setResult("");
 		setErrorMsg("");
 		setProgress(0);
-		setCopied(false);
 	}
 
 	return (
@@ -106,9 +98,7 @@ export function ImageToText() {
 					result={result}
 					errorMsg={errorMsg}
 					progress={progress}
-					copied={copied}
 					onChange={setResult}
-					onCopy={handleCopy}
 				/>
 			</div>
 		</div>

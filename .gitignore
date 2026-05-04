@@ -45,8 +45,4 @@ nul
 
 plans
 
-opencode.json
-.aider*
-
-src/graphify-out
-graphify-out
+.code-review-graph/

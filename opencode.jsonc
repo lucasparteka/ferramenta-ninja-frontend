@@ -1,0 +1,169 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+
+	// ─────────────────────────────────────────────
+	// PROVIDER: Moonshot AI (Kimi K2.6)
+	// ─────────────────────────────────────────────
+	"provider": {
+		"moonshot": {
+			"options": {
+				"baseURL": "https://api.moonshot.ai/v1",
+
+				// Timeout total da requisição: 3 minutos
+				// Se o modelo travar e não responder nada, aborta após 180s
+				"timeout": 180000,
+
+				// Timeout entre chunks de streaming: 15 segundos
+				// Se ficar 15s sem receber nenhum chunk, aborta
+				// (isso pega o caso de "ficar pensando sem retornar nada")
+				"chunkTimeout": 15000
+			},
+			"models": {
+				"kimi-k2.6": {
+					"name": "Kimi K2.6",
+					"limit": {
+						"context": 100000,
+						"output": 8192
+					},
+					"options": {
+						"thinking": {
+							"type": "disabled"
+						}
+					}
+				}
+			}
+		}
+	},
+
+	// ─────────────────────────────────────────────
+	// MODELO PADRÃO
+	// ─────────────────────────────────────────────
+	"model": "moonshot/kimi-k2.6",
+
+	// Usa o mesmo modelo para tarefas leves (título, resumo)
+	// pois não temos um modelo menor no Moonshot
+	"small_model": "moonshot/kimi-k2.6",
+
+	// ─────────────────────────────────────────────
+	// TOOLS: desativar o que gera chamadas desnecessárias
+	// ─────────────────────────────────────────────
+	"tools": {
+		// todowrite gera chamadas extras para gerenciar lista de tarefas
+		// internamente — o modelo fica criando/atualizando todos a cada passo
+		"todowrite": false,
+
+		// webfetch e websearch: desativa se não precisa de acesso web
+		// (evita que o modelo saia buscando documentação sozinho)
+		"webfetch": false,
+		"websearch": false
+	},
+
+	// ─────────────────────────────────────────────
+	// AGENTS: limitar steps e configurar comportamento
+	// ─────────────────────────────────────────────
+	"agent": {
+		"build": {
+			"mode": "primary",
+			"model": "moonshot/kimi-k2.6",
+			// Limita o número máximo de tool calls por turno
+			// Evita loops infinitos — após 15 steps, para
+			"steps": 15,
+			"temperature": 0.6,
+			"permission": {
+				"edit": "allow",
+				"bash": "allow",
+				"read": "allow",
+				"grep": "allow",
+				"glob": "allow"
+			}
+		},
+		"plan": {
+			"mode": "primary",
+			"model": "moonshot/kimi-k2.6",
+			"steps": 10,
+			"temperature": 0.4,
+			// Plan mode: apenas leitura, sem edições
+			"permission": {
+				"edit": "deny",
+				"bash": "deny",
+				"read": "allow",
+				"grep": "allow",
+				"glob": "allow"
+			}
+		},
+		// Subagent explore: read-only, poucos steps
+		"explore": {
+			"mode": "subagent",
+			"model": "moonshot/kimi-k2.6",
+			"steps": 8,
+			"temperature": 0.3,
+			"permission": {
+				"edit": "deny",
+				"bash": "deny"
+			}
+		},
+		// Subagent general: limitado para evitar loops
+		"general": {
+			"mode": "subagent",
+			"model": "moonshot/kimi-k2.6",
+			"steps": 10,
+			"temperature": 0.5
+		}
+	},
+
+	// ─────────────────────────────────────────────
+	// COMPACTION: compactar contexto agressivamente
+	// ─────────────────────────────────────────────
+	"compaction": {
+		// Ativa auto-compaction
+		"auto": true,
+		// Poda tool outputs grandes automaticamente
+		"prune": true,
+		// Compacta quando atingir 50% do contexto do modelo
+		// Kimi K2.6 tem 262k, então compacta por volta de ~130k
+		"threshold": 0.5,
+		// Limite máximo de contexto a usar (tokens)
+		// Mesmo que o Kimi suporte 262k, limitamos a 100k
+		// para manter custos baixos e evitar reenvio de contexto gigante
+		"maxContext": 100000
+	},
+
+	// ─────────────────────────────────────────────
+	// SNAPSHOT: manter snapshots para poder reverter
+	// ─────────────────────────────────────────────
+	"snapshot": true,
+
+	// ─────────────────────────────────────────────
+	// AUTOUPDATE
+	// ─────────────────────────────────────────────
+	"autoupdate": true,
+
+	// ─────────────────────────────────────────────
+	// MCP SERVERS: code-review-graph para exploração eficiente
+	// ─────────────────────────────────────────────
+	"mcp": {
+		"code-review-graph": {
+			"type": "local",
+			"command": ["uvx", "code-review-graph", "serve"],
+			"enabled": true,
+			"timeout": 10000
+		}
+	},
+
+	// ─────────────────────────────────────────────
+	// PERMISSÕES PADRÃO
+	// ─────────────────────────────────────────────
+	"permission": {
+		"edit": "allow",
+		"bash": "allow",
+		"read": "allow",
+		"grep": "allow",
+		"glob": "allow",
+		"todowrite": "deny",
+		"webfetch": "deny",
+		"websearch": "deny",
+
+		// MCP tools do code-review-graph: auto-allow
+		"code-review-graph_*": "allow"
+	}
+}

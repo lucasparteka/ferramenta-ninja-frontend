@@ -1,78 +1,60 @@
-# AGENTS.md — Regras de operação para agentes AI
+# Project Rules
 
-## Modelo
+## Princípios de eficiência
 
-Kimi K2.6 (thinking desabilitado) em ambos os modos.
+- **Nunca releia um arquivo que já está no contexto.** Se o conteúdo já apareceu nesta conversa, use-o diretamente.
+- **Nunca leia arquivos "por garantia".** Só leia um arquivo se precisar do conteúdo para tomar uma decisão.
+- **Seja direto.** Não explique o que vai fazer antes de fazer. Faça e explique brevemente depois.
+- **Não use todowrite.** Gerencie tarefas mentalmente sem criar tool calls extras.
 
----
+## Estratégia de exploração
 
-## Regra geral: Seja direto
+Antes de buscar arquivos com grep/glob, **sempre consulte o code-review-graph primeiro**:
 
-- Não repita análises já feitas.
-- Não explore alternativas que não foram pedidas.
-- Uma tool call por objetivo — se já obteve a informação, siga em frente.
-- Se uma tool call falhar, tente no máximo uma vez. Depois reporte o erro.
-- Nunca leia arquivos inteiros para buscar um trecho. Use grep/search primeiro.
-- Siga as convenções do CLAUDE.md na raiz do projeto.
+1. Use `get_callers`, `get_callees`, `get_impact_radius` ou `search` do MCP code-review-graph
+2. O grafo retorna a lista exata de arquivos afetados em ~700 tokens
+3. Só use grep/glob como fallback se o grafo não tiver a informação
 
----
+## Estratégia de edição em batch
 
-## Modo `plan`
+Para mudanças repetitivas em múltiplos arquivos (mesmo padrão aplicado N vezes):
 
-Objetivo: Analisar e planejar. Nenhum arquivo deve ser modificado.
+1. **Não edite arquivo por arquivo com edit/write**
+2. Gere UM script (sed, ast-grep YAML, ou jscodeshift) que aplique a mudança em todos os arquivos
+3. Execute o script via bash numa única chamada
+4. Máximo de 3 tool calls: grafo → gerar script → executar script
 
-### Ferramentas
+Exemplo de ast-grep YAML para adicionar prop:
+```yaml
+id: add-prop
+language: tsx
+rule:
+  pattern: <ComponentName $$$PROPS>
+fix: <ComponentName $$$PROPS newProp={value}>
+```
 
-| Usar               | Não usar         |
-|---------------------|------------------|
-| code-graph          | codebase-memory  |
-| context7            | bash, write, edit|
-| read, grep, glob    |                  |
+Exemplo de sed para substituição simples:
+```bash
+sed -i 's/funcaoAntiga(arg1)/funcaoNova(arg1, arg2)/g' arquivo1.tsx arquivo2.tsx
+```
 
-### Comportamento
+## Estratégia de edição com julgamento
 
-1. Use `code-graph` para localizar arquivos afetados e suas dependências.
-2. Use `context7` apenas se precisar confirmar uma API de biblioteca.
-3. Apresente o plano como lista de ações (arquivo → o que fazer).
-4. Não explique conceitos que não foram perguntados.
+Para mudanças que variam por arquivo (contexto diferente em cada um):
 
----
+1. Consulte o grafo para identificar arquivos
+2. Monte o plano COMPLETO com todos os diffs exatos numa única resposta
+3. Aplique as edições — cada edit deve ser preciso, sem releitura prévia
 
-## Modo `build`
+## Regras para o modelo
 
-Objetivo: Implementar exatamente o que foi planejado ou pedido.
+- **Não pense em voz alta.** Vá direto à ação ou à resposta.
+- **Não repita o conteúdo de arquivos** que acabou de ler. Resuma em 1 linha se necessário.
+- **Não peça confirmação** para ações triviais. Só pergunte quando houver ambiguidade real.
+- **Prefira edições cirúrgicas** (edit com old_str/new_str) a reescrever arquivos inteiros (write).
+- **Ao encontrar erro**, corrija diretamente em vez de explicar o erro e perguntar o que fazer.
 
-### Ferramentas
+## Stack do projeto
 
-| Usar               | Evitar sem necessidade |
-|---------------------|------------------------|
-| codebase-memory     | code-graph             |
-| context7            |                        |
-| bash, write, edit   |                        |
-| read, grep, glob    |                        |
-
-### Comportamento
-
-1. Consulte `codebase-memory` apenas se a tarefa depender de decisões anteriores.
-2. Implemente, confirme em uma frase o que fez, passe para o próximo item.
-3. Após mudanças significativas (novo padrão, nova dependência, decisão arquitetural), registre em `codebase-memory`.
-4. Se encontrar um problema que muda o plano, pare e avise. Não tente resolver sozinho.
-
----
-
-## Tokens — Regras de economia
-
-- Não leia arquivos só para "entender o contexto". Use grep/glob para ir direto ao ponto.
-- Não consulte `codebase-memory` ou `code-graph` no início de toda sessão. Só quando a tarefa exigir.
-- Não repita conteúdo de ferramentas na resposta. Resuma em uma frase e aja.
-- Se uma informação já está na conversa, não busque novamente.
-
-## graphify
-
-This project has a graphify knowledge graph at graphify-out/.
-
-Rules:
-- Before answering architecture or codebase questions, read graphify-out/GRAPH_REPORT.md for god nodes and community structure
-- If graphify-out/wiki/index.md exists, navigate it instead of reading raw files
-- For cross-module "how does X relate to Y" questions, prefer `graphify query "<question>"`, `graphify path "<A>" "<B>"`, or `graphify explain "<concept>"` over grep — these traverse the graph's EXTRACTED + INFERRED edges instead of scanning files
-- After modifying code files in this session, run `graphify update .` to keep the graph current (AST-only, no API cost)
+- TypeScript / React
+- Ajuste conforme o projeto real

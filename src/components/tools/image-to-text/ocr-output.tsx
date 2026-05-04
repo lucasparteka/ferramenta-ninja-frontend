@@ -31,7 +31,7 @@ export function OcrOutput({
 					Texto extraído
 				</label>
 				{result && (
-					<CopyButton text={result} label="Copiar texto" variant="outline" size="sm" />
+					<CopyButton text={result} label="Copiar texto" variant="outline" />
 				)}
 			</div>
 			<div

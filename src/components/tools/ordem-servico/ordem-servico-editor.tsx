@@ -542,7 +542,6 @@ export function OrdemServicoEditor() {
 						<Button
 							type="button"
 							variant="outline"
-							size="sm"
 							onClick={addItem}
 							className="w-full"
 						>

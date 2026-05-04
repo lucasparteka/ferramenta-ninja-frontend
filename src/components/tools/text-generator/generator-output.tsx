@@ -17,7 +17,7 @@ export function GeneratorOutput({
 				>
 					Texto gerado
 				</label>
-				<CopyButton text={value} label="Copiar" disabled={!value} variant="outline" size="sm" />
+				<CopyButton text={value} label="Copiar" disabled={!value} variant="outline" />
 			</div>
 			<Textarea
 				id="generator-output"

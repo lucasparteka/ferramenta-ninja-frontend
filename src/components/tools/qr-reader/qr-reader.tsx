@@ -136,7 +136,7 @@ export function QRReader() {
 						Conteúdo decodificado
 					</span>
 					{result && (
-						<CopyButton text={result} label="Copiar" variant="outline" size="sm" />
+						<CopyButton text={result} label="Copiar" variant="outline" />
 					)}
 				</div>
 				<div className="min-h-56 rounded-lg border border-border bg-secondary p-4">

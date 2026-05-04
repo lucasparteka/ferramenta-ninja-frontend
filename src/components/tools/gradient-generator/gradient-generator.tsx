@@ -164,11 +164,10 @@ export function GradientGenerator() {
 							variant="outline"
 							onClick={addStop}
 							disabled={stops.length >= 5}
-							size="sm"
 						>
 							Adicionar cor
 						</Button>
-						<Button variant="outline" onClick={randomize} size="sm">
+						<Button variant="outline" onClick={randomize}>
 							<Shuffle className="mr-2 h-4 w-4" />
 							Aleatório
 						</Button>
@@ -192,7 +191,7 @@ export function GradientGenerator() {
 						</label>
 					<CopyButton text={
 						`background: ${gradientCSS};`
-					} label="Copiar" variant="outline" size="sm" />
+					} label="Copiar" variant="outline" />
 					</div>
 					<pre
 						id="gradient-css"

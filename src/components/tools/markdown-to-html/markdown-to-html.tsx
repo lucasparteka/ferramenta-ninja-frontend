@@ -116,7 +116,6 @@ export function MarkdownToHtml() {
 						<Button
 							type="button"
 							variant="secondary"
-							size="sm"
 							onClick={() => setMarkdown("")}
 						>
 							<Trash />
@@ -151,8 +150,8 @@ export function MarkdownToHtml() {
 
 			{/* Toolbar below preview */}
 			<div className="flex flex-wrap items-center gap-3">
-				<CopyButton text={fullHtml} label="Copiar HTML" variant="outline" size="sm" />
-				<Button variant="outline" size="sm" onClick={handleDownload}>
+				<CopyButton text={fullHtml} label="Copiar HTML" variant="outline" />
+				<Button variant="outline" onClick={handleDownload}>
 					Baixar HTML
 				</Button>
 				<div className="flex items-center gap-2">

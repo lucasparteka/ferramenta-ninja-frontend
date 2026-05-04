@@ -277,16 +277,15 @@ export function InventarioEditor() {
 									</div>
 								))}
 							</div>
-							<Button
-								type="button"
-								variant="outline"
-								size="sm"
-								onClick={addHeaderField}
-								className="gap-1.5"
-							>
-								<Plus className="size-4" />
-								Adicionar campo
-							</Button>
+						<Button
+							type="button"
+							variant="outline"
+							onClick={addHeaderField}
+							className="gap-1.5"
+						>
+							<Plus className="size-4" />
+							Adicionar campo
+						</Button>
 						</>
 					)}
 
@@ -346,16 +345,15 @@ export function InventarioEditor() {
 									</div>
 								))}
 							</div>
-							<Button
-								type="button"
-								variant="outline"
-								size="sm"
-								onClick={addColumn}
-								className="gap-1.5"
-							>
-								<Plus className="size-4" />
-								Adicionar coluna
-							</Button>
+						<Button
+							type="button"
+							variant="outline"
+							onClick={addColumn}
+							className="gap-1.5"
+						>
+							<Plus className="size-4" />
+							Adicionar coluna
+						</Button>
 						</>
 					)}
 				</div>

@@ -17,7 +17,7 @@ export function RemoveDuplicatesOutput({
 				>
 					Lista Desduplicada
 				</label>
-				<CopyButton text={value} label="Copiar" disabled={!value} variant="outline" size="sm" />
+				<CopyButton text={value} label="Copiar" disabled={!value} variant="outline" />
 			</div>
 			<Textarea
 				id="duplicates-output"

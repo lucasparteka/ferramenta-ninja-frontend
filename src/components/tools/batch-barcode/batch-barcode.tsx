@@ -78,7 +78,7 @@ function BarcodeItem({ value, format, displayValue }: BarcodeEntry) {
 				{value}
 			</p>
 			{!error && (
-				<Button variant="outline" size="sm" onClick={handleDownload}>
+				<Button variant="outline" onClick={handleDownload}>
 					Baixar SVG
 				</Button>
 			)}

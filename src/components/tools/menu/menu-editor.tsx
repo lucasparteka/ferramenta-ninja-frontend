@@ -456,13 +456,12 @@ export function MenuEditor() {
 									<AlertDialog>
 										<AlertDialogTrigger
 											render={
-												<Button
-													type="button"
-													variant="ghost"
-													size="sm"
-													disabled={data.sections.length <= 1}
-													className="shrink-0 text-muted-foreground hover:text-destructive"
-												/>
+											<Button
+												type="button"
+												variant="ghost"
+												disabled={data.sections.length <= 1}
+												className="shrink-0 text-muted-foreground hover:text-destructive"
+											/>
 											}
 										>
 											Remover

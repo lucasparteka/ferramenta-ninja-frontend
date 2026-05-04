@@ -103,7 +103,6 @@ export function MenuControls({
 							<Button
 								type="button"
 								variant="ghost"
-								size="sm"
 								onClick={() => onRemoveSection(si)}
 								disabled={data.sections.length <= 1}
 								className="shrink-0 text-muted-foreground hover:text-destructive"
@@ -160,7 +159,6 @@ export function MenuControls({
 						<Button
 							type="button"
 							variant="outline"
-							size="sm"
 							onClick={() => onAddItem(si)}
 							className="w-full"
 						>
@@ -172,7 +170,6 @@ export function MenuControls({
 				<Button
 					type="button"
 					variant="outline"
-					size="sm"
 					onClick={onAddSection}
 					className="w-full"
 				>

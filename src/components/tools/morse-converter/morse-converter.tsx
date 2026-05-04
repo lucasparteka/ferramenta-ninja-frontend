@@ -104,7 +104,7 @@ export function MorseConverter() {
 						Resultado
 					</label>
 					{output && (
-						<CopyButton text={output} label="Copiar" variant="outline" size="sm" />
+						<CopyButton text={output} label="Copiar" variant="outline" />
 					)}
 				</div>
 				<Textarea

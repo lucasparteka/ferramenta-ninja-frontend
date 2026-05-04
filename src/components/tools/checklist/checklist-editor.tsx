@@ -515,7 +515,6 @@ export function ChecklistEditor() {
 									type="button"
 									variant="outline"
 									size="icon"
-									className="h-8 w-8 shrink-0 bg-white"
 									onClick={() =>
 										updateLayout({
 											writingLines: Math.max(0, state.layout.writingLines - 1),
@@ -532,7 +531,6 @@ export function ChecklistEditor() {
 									type="button"
 									variant="outline"
 									size="icon"
-									className="h-8 w-8 shrink-0 bg-white"
 									onClick={() =>
 										updateLayout({
 											writingLines: Math.min(20, state.layout.writingLines + 1),
@@ -637,7 +635,6 @@ export function ChecklistEditor() {
 							<Button
 								type="button"
 								variant="outline"
-								size="sm"
 								onClick={addItem}
 								className="flex-1"
 							>
@@ -647,7 +644,6 @@ export function ChecklistEditor() {
 							<Button
 								type="button"
 								variant="outline"
-								size="sm"
 								onClick={addGroup}
 								className="flex-1"
 							>
@@ -688,7 +684,7 @@ export function ChecklistEditor() {
 					<ChecklistCanvas ref={canvasRef} state={state} />
 				</div>
 				<div className="flex gap-3">
-					<Button onClick={handleExportPdf} className="flex-1">
+					<Button onClick={handleExportPdf} className="flex-1" size="lg">
 						<FileDown className="size-4" />
 						Baixar PDF
 					</Button>
@@ -696,6 +692,7 @@ export function ChecklistEditor() {
 						onClick={handleExportPng}
 						variant="outline"
 						className="flex-1"
+						size="lg"
 					>
 						<Image className="size-4" />
 						Baixar PNG

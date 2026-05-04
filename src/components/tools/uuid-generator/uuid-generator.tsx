@@ -188,7 +188,6 @@ export function UuidGenerator() {
 							<CopyButton
 								text={uuids.join("\n")}
 								label="Copiar todos"
-								size="sm"
 							/>
 						</div>
 					)}

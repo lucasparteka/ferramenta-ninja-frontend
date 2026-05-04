@@ -1,113 +1,82 @@
-# Plano de Implementação — Manter Tela Ligada
+# Plano: Remover `size="sm"` de botões de ação
 
-## Resumo
-Nova ferramenta que impede a tela do dispositivo de desligar (screen lock / sleep), com timer de sessão, Picture-in-Picture e opção de tempo programado com presets e slider customizado.
+**Critério:**
+- **REMOVER**: botões de ação (download, cópia, upload, adicionar/remover item, limpar, randomizar, exportar)
+- **MANTER**: botões de opção da ferramenta (toggles, navegação/paginação, toolbar de formatação)
+- **MANTER**: `AlertDialogContent size="sm"` (prop do dialog, não do Button)
 
-## Parte 1 — Estrutura e Rota ✅
-1. **Registrar ferramenta em `src/lib/data/tools.ts`** ✅
-   - Adicionar entrada na categoria `utilitarios` com nome, href, descrição, ícone (`Monitor` do lucide-react), tags e intent.
-   - href: `/ferramentas/manter-tela-ligada`
+---
 
-2. **Criar página da ferramenta** ✅
-   - Arquivo: `src/app/ferramentas/manter-tela-ligada/page.tsx`
-   - Seguir padrão das outras páginas: exportar `metadata`, usar `PageLayout`, incluir `RelatedTools`, SEO content e FAQ.
-   - Importar e renderizar o componente principal `<KeepAwake />`.
+## Arquivos a modificar (46 remoções em 26 arquivos)
 
-## Parte 2 — Componente Principal (`KeepAwake`) ✅
-Arquivo: `src/components/tools/keep-awake/keep-awake.tsx`
+| # | Arquivo | Linha | Contexto |
+|---|---------|-------|----------|
+| 1 | `src/components/shared/image-uploader.tsx` | 165 | Upload de arquivo | ✅ 
+| 2 | `src/components/tools/batch-barcode/batch-barcode.tsx` | 81 | Baixar SVG | ✅ 
+| 3 | `src/components/tools/binary-converter/binary-converter.tsx` | 115 | CopyButton |✅ 
+| 4 | `src/components/tools/checklist/checklist-editor.tsx` | 640 | addItem | ✅ 
+| 5 | `src/components/tools/checklist/checklist-editor.tsx` | 650 | addGroup | ✅ 
+| 6 | `src/components/tools/cnpj-generator/cnpj-list.tsx` | 17 | CopyButton "Copiar tudo" | ✅ 
+| 7 | `src/components/tools/cnpj-generator/cnpj-list.tsx` | 26 | CopyButton por item | ✅ 
+| 8 | `src/components/tools/cpf-generator/cpf-list.tsx` | 17 | CopyButton "Copiar tudo" | ✅ 
+| 9 | `src/components/tools/cpf-generator/cpf-list.tsx` | 26 | CopyButton por item | ✅ 
+| 10 | `src/components/tools/csv-to-sql/csv-to-sql.tsx` | 548 | CopyButton "Copiar SQL" | ✅ 
+| 11 | `src/components/tools/csv-to-sql/csv-to-sql.tsx` | 551 | Download SQL | ✅ 
+| 12 | `src/components/tools/curriculo/resume-pdf-button/index.tsx` | 147 | Upload de arquivo | ✅ 
+| 13 | `src/components/tools/curriculo/resume-pdf-button/index.tsx` | 154 | Baixar assim mesmo | ✅ 
+| 14 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 789 | Download PNG | ✅ 
+| 15 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 797 | Download JPEG | ✅ 
+| 16 | `src/components/tools/custom-qr-code/custom-qr-code.tsx` | 805 | Download SVG | ✅ 
+| 17 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 167 | Adicionar cor | ✅ 
+| 18 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 171 | Randomizar | ✅ 
+| 19 | `src/components/tools/gradient-generator/gradient-generator.tsx` | 194 | CopyButton | ✅ 
 
-### Funcionalidades
-- **Manter tela ligada:** usar `navigator.wakeLock.request("screen")` (Wake Lock API). Fallback: reproduzir vídeo invisível de 1px em loop (trick universal para browsers que não suportam Wake Lock). O fallback deve ser silencioso e sem impacto visual. ✅
-- **Timer de sessão:** contador que inicia quando a função é ativada e pausa quando desativada. Usar `requestAnimationFrame` ou `setInterval` (padrão do cronômetro do projeto). Formato: `HH:MM:SS`. ✅
-- **Picture-in-Picture (PiP):** botão para abrir o timer em uma janela PiP usando `documentPictureInPicture.requestWindow()` (API moderna) ou fallback para `video.requestPictureInPicture()` com um canvas animado desenhando o timer. A janela PiP deve mostrar o timer em tempo real e um botão para desativar. ✅
-- **Tempo programado:** permitir definir um tempo limite após o qual a função se desliga automaticamente. ✅
-  - Presets: 15 min, 30 min, 1 h, Customizado. ✅
-  - Slider customizado: range 1 a 10 horas, step 30 minutos (valores em minutos: 60, 90, 120, ..., 600). ✅
-  - Usar componente `Slider` existente (`src/components/shared/slider.tsx`). ✅
-  - Usar `ToggleGroup` ou botões para os presets (como já existe no projeto, verificar se há componente; senão, usar `Button` com estado ativo/inativo). ✅
+--- etapa 2
 
-### Estados
-- `isActive: boolean` — se a tela está sendo mantida ligada. ✅
-- `elapsedMs: number` — tempo ativo na sessão. ✅
-- `mode: "infinite" | "timed"` — modo atual. ✅
-- `preset: "15min" | "30min" | "1h" | "custom"` — preset selecionado. ✅
-- `customMinutes: number` — valor do slider (60–600, step 30). ✅
-- `remainingMs: number` — tempo restante no modo timed. ✅
-- `wakeLockRef: WakeLockSentinel | null` — referência do wake lock. ✅
-- `timerRef: number` — referência do interval/raf. ✅
+| 20 | `src/components/tools/image-to-text/ocr-output.tsx` | 34 | CopyButton "Copiar texto" |
+| 21 | `src/components/tools/inventario/inventario-editor.tsx` | 284 | addHeaderField |
+| 22 | `src/components/tools/inventario/inventario-editor.tsx` | 352 | addColumn |
+| 23 | `src/components/tools/loyalty-card/export-panel.tsx` | 64 | Exportar PDF (frente) |
+| 24 | `src/components/tools/loyalty-card/export-panel.tsx` | 68 | Exportar PNG (frente) |
+| 25 | `src/components/tools/loyalty-card/export-panel.tsx` | 78 | Exportar PDF (verso) |
+| 26 | `src/components/tools/loyalty-card/export-panel.tsx` | 82 | Exportar PNG (verso) |
+| 27 | `src/components/tools/loyalty-card/loyalty-card-editor.tsx` | 683 | Remover logo |
+| 28 | `src/components/tools/loyalty-card/loyalty-card-editor.tsx` | 694 | Upload de logo |
+| 29 | `src/components/tools/markdown-to-html/markdown-to-html.tsx` | 119 | Limpar markdown |
+| 30 | `src/components/tools/markdown-to-html/markdown-to-html.tsx` | 154 | CopyButton "Copiar HTML" |
+| 31 | `src/components/tools/markdown-to-html/markdown-to-html.tsx` | 155 | Baixar HTML |
+| 32 | `src/components/tools/menu/menu-controls.tsx` | 106 | Remover seção |
+| 33 | `src/components/tools/menu/menu-controls.tsx` | 164 | Adicionar item |
+| 34 | `src/components/tools/menu/menu-controls.tsx` | 175 | Adicionar seção |
+| 35 | `src/components/tools/menu/menu-editor.tsx` | 462 | Deletar seção |
+| 36 | `src/components/tools/morse-converter/morse-converter.tsx` | 107 | CopyButton |
+| 37 | `src/components/tools/number-generator/number-generator.tsx` | 192 | CopyButton "Copiar" |
+| 38 | `src/components/tools/ordem-servico/ordem-servico-editor.tsx` | 545 | addItem |
+| 39 | `src/components/tools/qr-reader/qr-reader.tsx` | 139 | CopyButton |
+| 40 | `src/components/tools/remove-duplicates/output.tsx` | 20 | CopyButton |
+| 41 | `src/components/tools/text-cipher/text-cipher.tsx` | 164 | CopyButton |
+| 42 | `src/components/tools/text-cleaner/text-cleaner-input.tsx` | 67 | Upload de arquivo |
+| 43 | `src/components/tools/text-converter/text-output.tsx` | 22 | CopyButton |
+| 44 | `src/components/tools/text-diff/diff-inputs.tsx` | 44 | Upload de arquivo |
+| 45 | `src/components/tools/text-generator/generator-output.tsx` | 20 | CopyButton |
+| 46 | `src/components/tools/uuid-generator/uuid-generator.tsx` | 191 | CopyButton "Copiar todos" |
 
-### Comportamentos
-- Ao ativar:
-  - Solicitar wake lock (ou iniciar fallback). ✅
-  - Iniciar timer de sessão. ✅
-  - Se modo timed, iniciar countdown do tempo restante. ✅
-- Ao desativar (manual ou ao fim do countdown):
-  - Liberar wake lock. ✅
-  - Parar timers. ✅
-  - Resetar elapsed/remaining se desativação manual; se fim do countdown, manter elapsed e mostrar mensagem. ✅
-- Ao trocar de aba/minimizar:
-  - Wake Lock API já lida com isso em browsers compatíveis; fallback de vídeo também continua funcionando. ✅
+--- fim etapa 2
 
-### UI
-- Layout em cards ou seções usando os padrões visuais do projeto (Tailwind utilities, tokens globais). ✅
-- Botões: `Button` do projeto (variantes: default, outline, ghost). ✅
-- Slider: `Slider` compartilhado. ✅
-- Display do timer: `ResultBox` ou texto estilizado similar ao cronômetro. ✅
-- PiP: botão com ícone `PictureInPicture` (lucide-react). ✅
+---
 
-## Parte 3 — PiP (Picture-in-Picture) ✅
-- Verificar suporte a `documentPictureInPicture` (Chrome/Edge 116+). ✅
-- Se suportado:
-  - Criar uma janela PiP pequena (300x150) via `documentPictureInPicture.requestWindow()`. ✅
-  - Renderizar nela um mini-componente React com o timer e um botão "Desligar". ✅
-  - Usar `ReactDOM.createPortal` ou renderizar manualmente no `document` da janela PiP. ✅
-  - Atualizar o conteúdo via estado compartilhado (postMessage ou referência ao estado do componente pai). ✅
-- Se não suportado:
-  - Fallback: usar `<canvas>` + `video` + `requestPictureInPicture()`. ✅
-  - Desenhar o timer no canvas a cada frame e streamar para o vídeo. ✅
-- Botão PiP desabilitado se nenhuma API estiver disponível. ✅
+## Arquivos que NÃO mudam (22 mantidos)
 
-## Parte 4 — SEO e Conteúdo ✅
-- `metadata` na página com title e description otimizados. ✅
-- Adicionado `keywords` com termos relevantes (manter tela ligada, wake lock, screen awake, etc.). ✅
-- Adicionado `openGraph` para compartilhamento em redes sociais. ✅
-- Seção de FAQ expandida para 7 perguntas: ✅
-  - Funciona em qual sistema operacional?
-  - Precisa instalar algo?
-  - O que é Picture-in-Picture?
-  - Gasta muita bateria?
-  - Funciona em segundo plano?
-  - Qual a diferença entre Wake Lock e vídeo invisível?
-  - O timer é preciso?
-- `SeoContent` explicando casos de uso (PC corporativo, apresentações, leitura longa, cozinha, estudos, monitoramento). ✅
-- Nova seção "Como funciona a ferramenta" explicando Wake Lock API, fallback de vídeo, modos infinito/programado, presets e slider. ✅
-- Nova seção "Compatibilidade de navegadores" detalhando suporte a Wake Lock e PiP em Chrome, Edge, Safari e Firefox. ✅
-
-## Parte 5 — Testes e Ajustes
-- Testar wake lock em Chrome/Edge (suporte nativo).
-- Testar fallback em Safari/Firefox.
-- Testar PiP em Chrome/Edge.
-- Verificar se o timer continua preciso ao trocar de aba.
-- Garantir que o vídeo fallback seja invisível (`width: 1px; height: 1px; opacity: 0; position: fixed; pointer-events: none`).
-- Verificar se não há erros de TypeScript (tipos da Wake Lock API podem precisar de `@types/dom-view-transitions` ou declaração manual se não estiver no TS padrão).
-
-## Dependências
-- Nenhuma lib nova necessária para wake lock (API nativa).
-- Nenhuma lib nova para PiP (API nativa).
-- Se necessário, instalar componente `Switch` ou `ToggleGroup` do shadcn/ui caso o projeto não tenha. Verificar antes se já existe.
-
-## Arquivos a criar/modificar
-| Arquivo | Ação |
-|---------|------|
-| `src/lib/data/tools.ts` | Adicionar tool na categoria `utilitarios` |
-| `src/app/ferramentas/manter-tela-ligada/page.tsx` | Criar página com metadata e layout |
-| `src/components/tools/keep-awake/keep-awake.tsx` | Criar componente principal |
-| `src/components/tools/keep-awake/pip-window.tsx` | Criar componente PiP (opcional, pode ficar no mesmo arquivo) |
-| `plan.md` | Este arquivo (já criado) |
-
-## Observações
-- O projeto usa `function` ao invés de arrow functions e `type` ao invés de `interface`.
-- UI em pt-BR, código em inglês.
-- Sem comentários no código.
-- Usar apenas Tailwind utilities + design tokens do CSS global.
-- Não expor erros internos; mensagens amigáveis em pt-BR.
+| # | Arquivo | Linha | Motivo |
+|---|---------|-------|--------|
+| 1 | `base64.tsx` | 66 | Toggle encode/decode |
+| 2 | `css-minifier.tsx` | 71 | Toggle minify/beautify |
+| 3 | `csv-to-pdf.tsx` | 143,163,174 | Paginação |
+| 4 | `csv-viewer.tsx` | 150,170,181 | Paginação |
+| 5 | `custom-qr-code.tsx` | 755 | Remover logo (limpa setting da ferramenta) |
+| 6 | `json-formatter.tsx` | 191,198 | Toggle indent 2/4 |
+| 7 | `keep-awake.tsx` | 249,256,274,282 | Toggle modo/preset |
+| 8 | `text-converter/text-actions.tsx` | 29 | Transformações de texto (toolbar) |
+| 9 | `whatsapp-formatter/formatting-toolbar.tsx` | 16,26,36,46 | Toolbar de formatação |
+| 10 | `checklist-editor.tsx` | 667 | AlertDialogContent (não é Button) |
+| 11 | `menu-editor.tsx` | 470 | AlertDialogContent (não é Button) |

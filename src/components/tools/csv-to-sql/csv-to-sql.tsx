@@ -545,10 +545,9 @@ export function CsvToSql() {
 							</span>
 						</p>
 						<div className="flex gap-2">
-							<CopyButton text={sql} label="Copiar SQL" size="sm" />
+							<CopyButton text={sql} label="Copiar SQL" />
 							<Button
 								variant="outline"
-								size="sm"
 								onClick={handleDownload}
 								className="gap-2"
 							>

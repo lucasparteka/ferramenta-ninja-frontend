@@ -87,7 +87,6 @@ export function BinaryConverter() {
 							setSeparator(e.target.value);
 							resetOutput();
 						}}
-						className="bg-input text-foreground"
 					>
 						<option value=" ">Com espaços — 01001000 01100101</option>
 						<option value="">Sem espaços — 0100100001100101</option>
@@ -97,8 +96,10 @@ export function BinaryConverter() {
 				{error && <p className="text-sm text-destructive">{error}</p>}
 
 				<div className="flex flex-wrap gap-3">
-					<Button onClick={handleEncode}>Texto → Binário</Button>
-					<Button variant="outline" onClick={handleDecode}>
+					<Button size="lg" onClick={handleEncode}>
+						Texto → Binário
+					</Button>
+					<Button size="lg" variant="outline" onClick={handleDecode}>
 						Binário → Texto
 					</Button>
 				</div>
@@ -112,7 +113,7 @@ export function BinaryConverter() {
 					>
 						Resultado
 					</label>
-					{output && <CopyButton text={output} size="sm" />}
+					{output && <CopyButton text={output} />}
 				</div>
 				<Textarea
 					rows={8}

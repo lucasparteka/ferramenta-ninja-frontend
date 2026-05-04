@@ -64,7 +64,6 @@ export function TextCleanerInput({ value, onChange }: Props) {
 
 				<Button
 					type="button"
-					size="sm"
 					onClick={() => inputRef.current?.click()}
 					className="gap-1.5"
 				>

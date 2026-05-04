@@ -61,11 +61,11 @@ export function ExportPanel({
 				<div className="space-y-2">
 					<Label>Frente</Label>
 					<div className="flex flex-wrap gap-2">
-						<Button onClick={onExportFrontPdf} variant="default" size="sm">
+						<Button onClick={onExportFrontPdf} variant="default">
 							<Download className="size-4" />
 							Exportar PDF
 						</Button>
-						<Button onClick={onExportFrontPng} variant="outline" size="sm">
+						<Button onClick={onExportFrontPng} variant="outline">
 							<Download className="size-4" />
 							Exportar PNG
 						</Button>
@@ -75,11 +75,11 @@ export function ExportPanel({
 				<div className="space-y-2">
 					<Label>Verso</Label>
 					<div className="flex flex-wrap gap-2">
-						<Button onClick={onExportBackPdf} variant="default" size="sm">
+						<Button onClick={onExportBackPdf} variant="default">
 							<Download className="size-4" />
 							Exportar PDF
 						</Button>
-						<Button onClick={onExportBackPng} variant="outline" size="sm">
+						<Button onClick={onExportBackPng} variant="outline">
 							<Download className="size-4" />
 							Exportar PNG
 						</Button>

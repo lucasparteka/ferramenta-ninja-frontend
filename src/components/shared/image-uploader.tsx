@@ -162,7 +162,6 @@ export default function ImageUploader({
 					<div className="flex gap-2">
 						<Button
 							type="button"
-							size="sm"
 							onClick={() => inputRef.current?.click()}
 							variant="outline"
 							className="rounded-sm bg-white"

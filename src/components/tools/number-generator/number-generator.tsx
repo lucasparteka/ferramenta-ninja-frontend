@@ -189,7 +189,7 @@ export function NumberGenerator() {
 								{numbers.length}{" "}
 								{numbers.length === 1 ? "número gerado" : "números gerados"}
 							</p>
-						<CopyButton text={numbers.join("\n")} label="Copiar" variant="outline" size="sm" />
+						<CopyButton text={numbers.join("\n")} label="Copiar" variant="outline" />
 						</div>
 						<div
 							className={`grid gap-2 rounded-lg border border-border bg-secondary p-4 ${COLS_CLASS[options.columns] ?? "grid-cols-1"}`}

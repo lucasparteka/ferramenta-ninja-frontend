@@ -144,14 +144,13 @@ export function ResumePdfButton({
 						</p>
 						<div className="flex gap-2 pt-1">
 							<Button
-								size="sm"
 								variant="outline"
 								className="flex-1"
 								onClick={() => setConfirming(false)}
 							>
 								Cancelar
 							</Button>
-							<Button size="sm" className="flex-1" onClick={download}>
+							<Button className="flex-1" onClick={download}>
 								Baixar assim mesmo
 							</Button>
 						</div>

@@ -677,27 +677,25 @@ export function LoyaltyCardEditor() {
 											alt="Logo carregado"
 											className="h-12 w-12 rounded border border-border object-contain"
 										/>
-										<Button
-											type="button"
-											variant="outline"
-											size="sm"
-											onClick={removeLogo}
-										>
-											<X className="size-3" />
-											Remover
-										</Button>
+									<Button
+										type="button"
+										variant="outline"
+										onClick={removeLogo}
+									>
+										<X className="size-3" />
+										Remover
+									</Button>
 									</div>
 								) : (
 									<div>
-										<Button
-											type="button"
-											variant="outline"
-											size="sm"
-											onClick={() => logoInputRef.current?.click()}
-										>
-											<Upload className="size-4" />
-											Carregar logo
-										</Button>
+									<Button
+										type="button"
+										variant="outline"
+										onClick={() => logoInputRef.current?.click()}
+									>
+										<Upload className="size-4" />
+										Carregar logo
+									</Button>
 										<input
 											ref={logoInputRef}
 											type="file"

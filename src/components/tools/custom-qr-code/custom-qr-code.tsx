@@ -787,7 +787,6 @@ export function CustomQrCode() {
 						<div className="flex flex-wrap justify-center gap-2">
 							<Button
 								variant="outline"
-								size="sm"
 								onClick={() => handleDownload("png")}
 							>
 								<Download className="mr-1.5 h-4 w-4" />
@@ -795,7 +794,6 @@ export function CustomQrCode() {
 							</Button>
 							<Button
 								variant="outline"
-								size="sm"
 								onClick={() => handleDownload("jpeg")}
 							>
 								<Download className="mr-1.5 h-4 w-4" />
@@ -803,7 +801,6 @@ export function CustomQrCode() {
 							</Button>
 							<Button
 								variant="outline"
-								size="sm"
 								onClick={() => handleDownload("svg")}
 							>
 								<Download className="mr-1.5 h-4 w-4" />

@@ -41,7 +41,6 @@ function FileUploadButton({ onLoad }: { onLoad: (content: string) => void }) {
 			<Button
 				type="button"
 				variant="outline"
-				size="sm"
 				onClick={() => inputRef.current?.click()}
 				className="gap-1.5"
 			>

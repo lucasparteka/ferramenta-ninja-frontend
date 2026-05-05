@@ -1,6 +1,6 @@
 "use client";
 
-import { Trash } from "lucide-react";
+import { Minimize2, TextAlignStart, Trash } from "lucide-react";
 import { useCallback, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
@@ -118,7 +118,6 @@ export function JsonFormatter() {
 		}
 	}
 
-
 	function handleClear() {
 		setInput("");
 		setOutput("");
@@ -166,6 +165,7 @@ export function JsonFormatter() {
 
 			<div className="flex flex-wrap items-center gap-2">
 				<Button onClick={handleFormat} disabled={!input.trim()}>
+					<TextAlignStart />
 					Formatar
 				</Button>
 				<Button
@@ -173,9 +173,9 @@ export function JsonFormatter() {
 					disabled={!input.trim()}
 					variant="secondary"
 				>
+					<Minimize2 />
 					Minificar
 				</Button>
-				<CopyButton text={output} label="Copiar" disabled={!output} variant="outline" />
 				<Button
 					onClick={handleClear}
 					disabled={!input.trim() && !output}
@@ -218,6 +218,13 @@ export function JsonFormatter() {
 						dangerouslySetInnerHTML={{
 							__html: highlightJSON(output),
 						}}
+					/>
+					<CopyButton
+						text={output}
+						label="Copiar"
+						disabled={!output}
+						variant="outline"
+						className="ml-auto flex mt-4"
 					/>
 				</div>
 			)}

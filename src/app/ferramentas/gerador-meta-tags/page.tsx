@@ -92,6 +92,7 @@ function SeoContent() {
 export default function GeradorMetaTagsPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/gerador-meta-tags"
 			title="Gerador de Meta Tags"
 			description="Gere meta tags HTML otimizadas para SEO e redes sociais. Com preview do Google e Facebook. Rápido, gratuito e sem cadastro."

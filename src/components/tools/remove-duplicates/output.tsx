@@ -5,20 +5,15 @@ type RemoveDuplicatesOutputProps = {
 	value: string;
 };
 
-export function RemoveDuplicatesOutput({
-	value,
-}: RemoveDuplicatesOutputProps) {
+export function RemoveDuplicatesOutput({ value }: RemoveDuplicatesOutputProps) {
 	return (
 		<div className="space-y-2">
-			<div className="flex items-center justify-between">
-				<label
-					htmlFor="duplicates-output"
-					className="text-sm font-medium text-foreground"
-				>
-					Lista Desduplicada
-				</label>
-				<CopyButton text={value} label="Copiar" disabled={!value} variant="outline" />
-			</div>
+			<label
+				htmlFor="duplicates-output"
+				className="text-sm font-medium text-foreground"
+			>
+				Lista Desduplicada
+			</label>
 			<Textarea
 				id="duplicates-output"
 				readOnly
@@ -26,6 +21,13 @@ export function RemoveDuplicatesOutput({
 				placeholder='Clique em "Remover duplicatas" para ver o resultado...'
 				rows={12}
 				className="resize-y"
+			/>
+			<CopyButton
+				text={value}
+				label="Copiar"
+				disabled={!value}
+				variant="outline"
+				className="flex ml-auto"
 			/>
 		</div>
 	);

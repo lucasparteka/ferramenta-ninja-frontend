@@ -16,6 +16,7 @@ type PageLayoutProps = {
 	description: string;
 	children: React.ReactNode;
 	toolHref?: string;
+	compact?: boolean;
 	faq?: FaqItem[];
 	relatedTools?: React.ReactNode;
 	extraContent?: React.ReactNode;
@@ -29,6 +30,7 @@ export function PageLayout({
 	faq,
 	relatedTools,
 	extraContent,
+	compact,
 }: PageLayoutProps) {
 	const tool = toolHref ? findToolByHref(toolHref) : undefined;
 	const category = toolHref ? findCategoryByToolHref(toolHref) : undefined;
@@ -55,7 +57,15 @@ export function PageLayout({
 			</div>
 			<Separator className="mb-5 lg:mb-7" />
 
-			{children}
+			{compact ? (
+				<div className="flex min-h-[50vh] items-center justify-center">
+					<div className="w-full md:rounded-xl md:border md:bg-card md:p-8 md:shadow-2xs">
+						{children}
+					</div>
+				</div>
+			) : (
+				children
+			)}
 
 			{toolHref && <CategoryToolsSection currentHref={toolHref} />}
 

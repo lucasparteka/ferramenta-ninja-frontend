@@ -10,7 +10,7 @@ const InventarioEditor = dynamic(
 	{
 		ssr: false,
 		loading: () => (
-			<div className="flex h-[400px] items-center justify-center rounded-lg border border-border bg-card">
+			<div className="flex h-100 items-center justify-center rounded-lg border border-border bg-card">
 				<p className="text-muted-foreground">
 					Carregando editor de controle de estoque...
 				</p>

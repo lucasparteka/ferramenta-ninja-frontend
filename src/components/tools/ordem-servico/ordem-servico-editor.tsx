@@ -86,7 +86,7 @@ function DatePicker({
 						<Button
 							type="button"
 							variant="outline"
-							className="min-w-0 flex-1 justify-start gap-2 text-left font-normal bg-white"
+							className="min-w-0 flex-1 justify-start gap-2 text-left bg-card"
 						/>
 					}
 				>

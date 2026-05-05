@@ -138,6 +138,7 @@ function SeoContent() {
 export default function ConversorTemperaturaPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/conversor-de-temperatura"
 			title="Conversor de Temperatura"
 			description="Converta entre Celsius, Fahrenheit e Kelvin instantaneamente. Veja todas as escalas e as fórmulas usadas."

@@ -32,17 +32,15 @@ function SeoContent() {
 					bancos de dados em produção.
 				</p>
 				<p className="mt-3">
-					Diferente de dados anonimizados, os dados mock são gerados do zero
-					com base em padrões e regras predefinidas, garantindo que sejam
+					Diferente de dados anonimizados, os dados mock são gerados do zero com
+					base em padrões e regras predefinidas, garantindo que sejam
 					semanticamente válidos (CPFs com dígitos corretos, emails com formato
 					válido, etc.) mas completamente artificiais.
 				</p>
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Casos de uso
-				</h2>
+				<h2 className="mb-4 text-xl font-bold text-foreground">Casos de uso</h2>
 				<div className="space-y-3">
 					<p>
 						<strong className="text-foreground">Testes de software:</strong>{" "}
@@ -50,7 +48,9 @@ function SeoContent() {
 						respostas de API sem depender de dados reais ou serviços externos.
 					</p>
 					<p>
-						<strong className="text-foreground">Prototipação de interfaces:</strong>{" "}
+						<strong className="text-foreground">
+							Prototipação de interfaces:
+						</strong>{" "}
 						preencha componentes UI com dados realistas para validar layouts,
 						tabelas e cards antes do backend estar pronto.
 					</p>
@@ -60,7 +60,9 @@ function SeoContent() {
 						(100, 500, 1000+ registros) sem precisar de um banco populado.
 					</p>
 					<p>
-						<strong className="text-foreground">Desenvolvimento de APIs:</strong>{" "}
+						<strong className="text-foreground">
+							Desenvolvimento de APIs:
+						</strong>{" "}
 						simule respostas de sucesso, erro e edge cases para testar a
 						robustez do cliente HTTP.
 					</p>
@@ -73,30 +75,30 @@ function SeoContent() {
 				</h2>
 				<div className="space-y-3">
 					<p>
-						<strong className="text-foreground">Usuário:</strong>{" "}
-						nome brasileiro completo, email válido, endereço com cidade/estado,
+						<strong className="text-foreground">Usuário:</strong> nome
+						brasileiro completo, email válido, endereço com cidade/estado,
 						níveis de permissão (admin, user, editor) e data de criação.
 					</p>
 					<p>
-						<strong className="text-foreground">Produto:</strong>{" "}
-						nome realista com categoria, preço em reais, estoque e SKU
-						formatado. Ideal para e-commerces e sistemas de inventário.
+						<strong className="text-foreground">Produto:</strong> nome realista
+						com categoria, preço em reais, estoque e SKU formatado. Ideal para
+						e-commerces e sistemas de inventário.
 					</p>
 					<p>
-						<strong className="text-foreground">API Response:</strong>{" "}
-						simule respostas completas de API REST com status, mensagem, dados
-						e timestamp. Versões de sucesso e erro disponíveis.
+						<strong className="text-foreground">API Response:</strong> simule
+						respostas completas de API REST com status, mensagem, dados e
+						timestamp. Versões de sucesso e erro disponíveis.
 					</p>
 					<p>
-						<strong className="text-foreground">Paginação:</strong>{" "}
-						estrutura completa de resposta paginada com page, limit, total e
+						<strong className="text-foreground">Paginação:</strong> estrutura
+						completa de resposta paginada com page, limit, total e
 						hasNext/hasPrev.
 					</p>
 					<p>
-						<strong className="text-foreground">Edge Cases:</strong>{" "}
-						dados extremos como objetos profundamente aninhados, caracteres
-						especiais (acentos, emojis, HTML), valores numéricos extremos e
-						diferentes formatos de data.
+						<strong className="text-foreground">Edge Cases:</strong> dados
+						extremos como objetos profundamente aninhados, caracteres especiais
+						(acentos, emojis, HTML), valores numéricos extremos e diferentes
+						formatos de data.
 					</p>
 				</div>
 			</section>
@@ -142,9 +144,9 @@ function SeoContent() {
 							Quais formatos são suportados?
 						</h3>
 						<p>
-							JSON e CSV. Para tipos de dado tabulares (usuário e produto),
-							você pode alternar entre os dois formatos. Para tipos estruturados
-							(API response, edge cases), apenas JSON está disponível.
+							JSON e CSV. Para tipos de dado tabulares (usuário e produto), você
+							pode alternar entre os dois formatos. Para tipos estruturados (API
+							response, edge cases), apenas JSON está disponível.
 						</p>
 					</div>
 					<div>
@@ -162,9 +164,8 @@ function SeoContent() {
 							Os dados são enviados para servidor?
 						</h3>
 						<p>
-							Nunca. Toda a geração acontece localmente no seu navegador.
-							Nenhum dado é enviado para servidores externos ou armazenado em
-							nuvem.
+							Nunca. Toda a geração acontece localmente no seu navegador. Nenhum
+							dado é enviado para servidores externos ou armazenado em nuvem.
 						</p>
 					</div>
 				</div>
@@ -183,6 +184,7 @@ export default function GeradorDeDadosMockPage() {
 				<RelatedTools currentHref="/ferramentas/gerador-de-dados-mock" />
 			}
 			extraContent={<SeoContent />}
+			compact
 		>
 			<MockDataGenerator />
 		</PageLayout>

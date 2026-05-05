@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { CopyButton } from "@/components/shared/copy-button";
-import { Button } from "@/components/ui/button";
+import { ResultBox } from "@/components/shared/result-box";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { numberToWords } from "@/lib/extenso/numero-extenso";
@@ -73,7 +73,7 @@ export function NumeroPorExtensoClient() {
 					</label>
 				</div>
 
-				<div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+				<div className="flex flex-wrap gap-2 text-sm text-muted-foreground items-center">
 					<span className="mr-1">Exemplos:</span>
 					{EXAMPLES.map((ex) => (
 						<button
@@ -87,16 +87,15 @@ export function NumeroPorExtensoClient() {
 					))}
 				</div>
 			</div>
-
 			{capitalized && (
-				<div className="rounded-lg border border-primary/30 bg-primary/5 p-4 space-y-3">
-					<p className="text-lg leading-relaxed text-foreground">
-						{capitalized}
-					</p>
-					<div className="flex flex-wrap gap-2">
-						<CopyButton text={capitalized} label="Copiar" variant="outline" />
-					</div>
-				</div>
+				<ResultBox value={capitalized} label="Resultado">
+					<CopyButton
+						text={capitalized}
+						label="Copiar"
+						variant="outline"
+						className="mt-4"
+					/>
+				</ResultBox>
 			)}
 		</div>
 	);

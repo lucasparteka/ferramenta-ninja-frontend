@@ -135,6 +135,7 @@ function SeoContent() {
 export default function ManterTelaLigadaPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/manter-tela-ligada"
 			title="Manter Tela Ligada"
 			description="Impeça a tela do seu dispositivo de desligar com timer programado. Rápido, gratuito e sem cadastro."

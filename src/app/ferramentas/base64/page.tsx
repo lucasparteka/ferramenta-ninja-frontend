@@ -97,6 +97,7 @@ function SeoContent() {
 export default function Base64Page() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/base64"
 			title="Base64 Encode e Decode"
 			description="Codifique e decodifique texto para Base64 online. Suporte completo a UTF-8, caracteres especiais e emojis. Rápido, gratuito e 100% no navegador."

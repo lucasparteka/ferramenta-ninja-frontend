@@ -185,6 +185,7 @@ export default function FormatadorWhatsAppPage() {
 			relatedTools={
 				<RelatedTools currentHref="/ferramentas/formatador-de-texto-whatsapp" />
 			}
+			compact
 			extraContent={<SeoContent />}
 		>
 			<WhatsAppFormatter />

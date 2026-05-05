@@ -37,17 +37,6 @@ Se a busca retornar vazio, tente sem filtro de kind antes de ir para grep.
 ## Estratégia de exploração
 
 1. Consulte o code-review-graph PRIMEIRO (0 tokens de leitura)
-2. Se o grafo não responder, justifique por que precisa do grep/glob
-3. Só leia arquivos individuais quando precisar do conteúdo exato para montar diffs
-
-## Estratégia de edição em batch
-
-Para mudanças repetitivas em múltiplos arquivos (mesmo padrão aplicado N vezes):
-
-1. **Não edite arquivo por arquivo com edit/write**
-2. Gere UM script (sed, ast-grep YAML, ou jscodeshift) que aplique a mudança em todos os arquivos
-3. Execute o script via bash numa única chamada
-4. Máximo de 3 tool calls: grafo → gerar script → executar script
 
 ## Estratégia de edição com julgamento
 

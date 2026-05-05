@@ -1,5 +1,6 @@
 "use client";
 
+import { Shuffle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -50,13 +51,18 @@ export function CnpjGenerator() {
 						checked={formatted}
 						onCheckedChange={(checked) => setFormatted(checked === true)}
 					/>
-					<label htmlFor="format-cnpj" className="cursor-pointer text-sm text-foreground">
+					<label
+						htmlFor="format-cnpj"
+						className="cursor-pointer text-sm text-foreground"
+					>
 						Formatar CNPJ (##.###.###/####-##)
 					</label>
 				</div>
 			</div>
 
-			<Button onClick={handleGenerate}>Gerar CNPJ</Button>
+			<Button onClick={handleGenerate}>
+				<Shuffle /> Gerar CNPJ
+			</Button>
 
 			{cnpjs.length > 0 && <CnpjList cnpjs={cnpjs} />}
 		</div>

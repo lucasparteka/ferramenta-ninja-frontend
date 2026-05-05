@@ -189,6 +189,7 @@ export default function GeradorDeCartaoDeCreditoPage() {
 				<RelatedTools currentHref="/ferramentas/gerador-de-cartao-de-credito" />
 			}
 			extraContent={<SeoContent />}
+			compact
 		>
 			<CreditCardGenerator />
 		</PageLayout>

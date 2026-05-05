@@ -1,6 +1,6 @@
 "use client";
 
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Shuffle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
@@ -51,8 +51,8 @@ export function CreditCardGenerator() {
 				</div>
 			</div>
 
-			<Button onClick={handleGenerate} className="gap-1.5">
-				<RefreshCw className="size-4" />
+			<Button onClick={handleGenerate}>
+				<Shuffle />
 				Gerar Cartão
 			</Button>
 
@@ -90,9 +90,16 @@ export function CreditCardGenerator() {
 										<span className="text-xs text-muted-foreground">
 											{label}
 										</span>
-										<p className="font-mono text-sm text-foreground">{value}</p>
+										<p className="font-mono font-semibold text-foreground">
+											{value}
+										</p>
 									</div>
-									<CopyButton text={raw} iconOnly size="icon-sm" />
+									<CopyButton
+										variant="secondary"
+										text={raw}
+										iconOnly
+										size="icon-sm"
+									/>
 								</li>
 							))}
 						</ul>

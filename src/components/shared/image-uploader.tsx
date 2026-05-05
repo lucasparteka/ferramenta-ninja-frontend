@@ -138,7 +138,7 @@ export default function ImageUploader({
 							<button
 								type="button"
 								onClick={removeLogo}
-								className="absolute top-0.5 right-0.5 bg-red-600 text-white rounded-full p-0.5"
+								className="absolute top-0.5 right-0.5 bg-red-600 text-white rounded-full p-0.5 cursor-pointer"
 								aria-label="Remove logo"
 							>
 								<X size={12} />
@@ -164,7 +164,6 @@ export default function ImageUploader({
 							type="button"
 							onClick={() => inputRef.current?.click()}
 							variant="outline"
-							className="rounded-sm bg-white"
 						>
 							<Upload size={14} className="mr-2" /> Selecionar
 						</Button>

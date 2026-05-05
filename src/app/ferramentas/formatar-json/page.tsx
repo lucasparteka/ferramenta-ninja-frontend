@@ -126,6 +126,7 @@ function SeoContent() {
 export default function FormatarJsonPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/formatar-json"
 			title="Formatar JSON"
 			description="Formate, valide e minifique JSON online. Destaque de sintaxe e detecção de erros com indicação exata de linha e coluna."

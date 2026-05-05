@@ -5,7 +5,6 @@ import { useCallback, useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { NativeSelect } from "@/components/ui/select-native";
-import { cn } from "@/lib/utils";
 import {
 	convertToCSV,
 	downloadFile,
@@ -17,6 +16,7 @@ import {
 	generateUsers,
 	type MockDataType,
 } from "@/lib/mock-data/generators";
+import { cn } from "@/lib/utils";
 
 const DATA_TYPES: { value: MockDataType; label: string }[] = [
 	{ value: "user", label: "Usuário" },
@@ -37,10 +37,7 @@ function highlightJSON(json: string): string {
 		.replace(/&/g, "&amp;")
 		.replace(/</g, "&lt;")
 		.replace(/>/g, "&gt;")
-		.replace(
-			/("(?:[^"\\]|\\.)*")\s*:/g,
-			(_, key) => span(key, "token-key"),
-		)
+		.replace(/("(?:[^"\\]|\\.)*")\s*:/g, (_, key) => span(key, "token-key"))
 		.replace(
 			/:\s*("(?:[^"\\]|\\.)*")/g,
 			(_, str) => `: ${span(str, "token-string")}`,
@@ -58,28 +55,43 @@ function highlightJSON(json: string): string {
 function generateData(
 	type: MockDataType,
 	count: number,
-): { json: Record<string, unknown> | Record<string, unknown>[]; format: "single" | "array" } {
+): {
+	json: Record<string, unknown> | Record<string, unknown>[];
+	format: "single" | "array";
+} {
 	switch (type) {
 		case "user": {
 			const users = generateUsers(count);
-			return { json: users as unknown as Record<string, unknown>[], format: "array" };
+			return {
+				json: users as unknown as Record<string, unknown>[],
+				format: "array",
+			};
 		}
 		case "product": {
 			const products = generateProducts(count);
-			return { json: products as unknown as Record<string, unknown>[], format: "array" };
+			return {
+				json: products as unknown as Record<string, unknown>[],
+				format: "array",
+			};
 		}
 		case "api-success": {
-			const data = type === "api-success"
-				? generateUsers(Math.min(count, 5))
-				: [];
+			const data =
+				type === "api-success" ? generateUsers(Math.min(count, 5)) : [];
 			return { json: generateApiSuccessResponse(data), format: "single" };
 		}
 		case "api-error":
 			return { json: generateApiErrorResponse(), format: "single" };
 		case "pagination": {
 			const data = generateUsers(100);
-			const paginated = generatePaginationResponse(data, 1, Math.min(count, 100));
-			return { json: paginated as unknown as Record<string, unknown>, format: "single" };
+			const paginated = generatePaginationResponse(
+				data,
+				1,
+				Math.min(count, 100),
+			);
+			return {
+				json: paginated as unknown as Record<string, unknown>,
+				format: "single",
+			};
 		}
 		case "edge-cases":
 			return { json: generateEdgeCases(), format: "single" };
@@ -119,7 +131,10 @@ export function MockDataGenerator() {
 		return 1;
 	}, [result]);
 
-	const bytes = useMemo(() => new TextEncoder().encode(output).length, [output]);
+	const bytes = useMemo(
+		() => new TextEncoder().encode(output).length,
+		[output],
+	);
 
 	const showCSV = dataType === "user" || dataType === "product";
 
@@ -166,8 +181,7 @@ export function MockDataGenerator() {
 	const isArrayType = dataType === "user" || dataType === "product";
 	const isSingleJson = dataType === "edge-cases" || dataType === "api-error";
 
-	const isSingleArray =
-		dataType === "pagination" || dataType === "api-success";
+	const isSingleArray = dataType === "pagination" || dataType === "api-success";
 
 	return (
 		<div className="space-y-6">
@@ -245,11 +259,7 @@ export function MockDataGenerator() {
 			</div>
 
 			<div className="flex flex-wrap items-center gap-2">
-				<Button
-					onClick={handleGenerate}
-					disabled={isGenerating}
-					size="lg"
-				>
+				<Button onClick={handleGenerate} disabled={isGenerating}>
 					<Shuffle />
 					{isGenerating ? "Gerando..." : "Gerar dados"}
 				</Button>
@@ -264,7 +274,9 @@ export function MockDataGenerator() {
 									try {
 										const parsed = JSON.parse(output);
 										setOutput(JSON.stringify(parsed, null, 2));
-									} catch { /* ignore */ }
+									} catch {
+										/* ignore */
+									}
 								}
 							}}
 							className={cn(
@@ -284,7 +296,9 @@ export function MockDataGenerator() {
 									try {
 										const parsed = JSON.parse(output);
 										setOutput(JSON.stringify(parsed));
-									} catch { /* ignore */ }
+									} catch {
+										/* ignore */
+									}
 								}
 							}}
 							className={cn(
@@ -301,7 +315,7 @@ export function MockDataGenerator() {
 			</div>
 
 			{generated && (
-				<div className="space-y-4">
+				<div className="space-y-2">
 					<div className="flex flex-wrap items-center justify-between gap-2">
 						<div className="flex items-center gap-3 text-sm text-muted-foreground">
 							{isArrayType && (
@@ -312,36 +326,6 @@ export function MockDataGenerator() {
 							{isArrayType && <span>·</span>}
 							<span>{formatBytes(bytes)}</span>
 						</div>
-
-						<div className="flex flex-wrap items-center gap-2">
-							<CopyButton
-								text={output}
-								label="Copiar"
-								variant="outline"
-							/>
-
-							{format === "json" && (
-								<Button
-									onClick={handleDownloadJSON}
-									variant="outline"
-									size="sm"
-								>
-									<Download />
-									Download JSON
-								</Button>
-							)}
-
-							{format === "csv" && showCSV && (
-								<Button
-									onClick={handleDownloadCSV}
-									variant="outline"
-									size="sm"
-								>
-									<Download />
-									Download CSV
-								</Button>
-							)}
-						</div>
 					</div>
 
 					<pre
@@ -349,11 +333,29 @@ export function MockDataGenerator() {
 							"max-h-96 overflow-auto rounded-lg border border-input bg-white p-4 font-mono text-sm text-foreground",
 							format === "json" && "json-formatter",
 						)}
+						// biome-ignore lint/security/noDangerouslySetInnerHtml: .
 						dangerouslySetInnerHTML={{
 							__html:
 								format === "json" ? highlightJSON(output) : escapeHtml(output),
 						}}
 					/>
+					<div className="flex flex-wrap justify-end gap-2 w-full">
+						<CopyButton text={output} label="Copiar" variant="outline" />
+
+						{format === "json" && (
+							<Button onClick={handleDownloadJSON} variant="outline">
+								<Download />
+								Download JSON
+							</Button>
+						)}
+
+						{format === "csv" && showCSV && (
+							<Button onClick={handleDownloadCSV} variant="outline">
+								<Download />
+								Download CSV
+							</Button>
+						)}
+					</div>
 				</div>
 			)}
 		</div>

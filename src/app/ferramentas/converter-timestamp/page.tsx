@@ -80,6 +80,7 @@ function SeoContent() {
 export default function ConverterTimestampPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/converter-timestamp"
 			title="Converter Timestamp"
 			description="Converta timestamp Unix para data legível e vice-versa. Suporte a segundos e milissegundos. Rápido, gratuito e 100% no navegador."

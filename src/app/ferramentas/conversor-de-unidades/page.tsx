@@ -116,6 +116,7 @@ export default function UnitConverterPage() {
 				<RelatedTools currentHref="/ferramentas/conversor-de-unidades" />
 			}
 			extraContent={<SeoContent />}
+			compact
 		>
 			<UnitConverterClient />
 		</PageLayout>

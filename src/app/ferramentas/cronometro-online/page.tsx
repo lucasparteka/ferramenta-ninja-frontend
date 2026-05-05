@@ -89,6 +89,7 @@ function SeoContent() {
 export default function CronometroOnlinePage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/cronometro-online"
 			title="Cronômetro Online"
 			description="Cronômetro online preciso com marcação de voltas. Inicie, pause e reinicie direto no navegador. Rápido, gratuito e sem cadastro."

@@ -104,6 +104,7 @@ function SeoContent() {
 export default function MinificadorCssPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/minificador-css"
 			title="Minificador de CSS, JS e HTML"
 			description="Minifique CSS, JavaScript e HTML online. Reduza o tamanho dos arquivos removendo espaços, comentários e quebras de linha. Rápido, gratuito e 100% no navegador."

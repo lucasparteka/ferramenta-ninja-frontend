@@ -1,5 +1,6 @@
 "use client";
 
+import { Shuffle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -58,7 +59,9 @@ export function CpfGenerator() {
 					</label>
 				</div>
 			</div>
-			<Button onClick={handleGenerate}>Gerar CPF</Button>
+			<Button onClick={handleGenerate}>
+				<Shuffle /> Gerar CPF
+			</Button>
 			{cpfs.length > 0 && <CpfList cpfs={cpfs} />}
 		</div>
 	);

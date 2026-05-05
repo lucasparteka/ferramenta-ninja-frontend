@@ -266,26 +266,25 @@ export function InventarioEditor() {
 										</div>
 										<Button
 											type="button"
-											variant="secondary"
+											variant="destructive"
 											onClick={() => removeHeaderField(field.id)}
 											aria-label="Remover campo"
-											className="shrink-0"
+											size="icon-lg"
 										>
-											<Trash className="size-4" />
-											Remover
+											<Trash />
 										</Button>
 									</div>
 								))}
 							</div>
-						<Button
-							type="button"
-							variant="outline"
-							onClick={addHeaderField}
-							className="gap-1.5"
-						>
-							<Plus className="size-4" />
-							Adicionar campo
-						</Button>
+							<Button
+								type="button"
+								variant="outline"
+								onClick={addHeaderField}
+								className="gap-1.5"
+							>
+								<Plus className="size-4" />
+								Adicionar campo
+							</Button>
 						</>
 					)}
 
@@ -334,26 +333,25 @@ export function InventarioEditor() {
 										</div>
 										<Button
 											type="button"
-											variant="secondary"
+											variant="destructive"
 											onClick={() => removeColumn(col.id)}
 											aria-label="Remover coluna"
-											className="shrink-0"
+											size="icon-lg"
 										>
-											<Trash className="size-4" />
-											Remover
+											<Trash />
 										</Button>
 									</div>
 								))}
 							</div>
-						<Button
-							type="button"
-							variant="outline"
-							onClick={addColumn}
-							className="gap-1.5"
-						>
-							<Plus className="size-4" />
-							Adicionar coluna
-						</Button>
+							<Button
+								type="button"
+								variant="outline"
+								onClick={addColumn}
+								className="gap-1.5"
+							>
+								<Plus className="size-4" />
+								Adicionar coluna
+							</Button>
 						</>
 					)}
 				</div>

@@ -42,6 +42,7 @@ function SeoContent() {
 export default function Page() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/remover-quebras-de-linhas"
 			title="Remover Quebras de Linha"
 			description="Una linhas quebradas e normalize seu texto automaticamente."

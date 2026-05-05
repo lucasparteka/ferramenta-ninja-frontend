@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeftRight } from "lucide-react";
+import { ArrowDownUp, ArrowLeftRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
@@ -102,10 +102,10 @@ export function UnitConverterClient() {
 				</div>
 			</div>
 
-			<div className="flex justify-center">
+			<div className="flex justify-end">
 				<Button type="button" variant="outline" onClick={swap}>
-					<ArrowLeftRight className="size-4" />
-					Inverter
+					<ArrowDownUp className="size-4" />
+					Inverter {category.label}
 				</Button>
 			</div>
 
@@ -147,13 +147,16 @@ export function UnitConverterClient() {
 			</div>
 
 			{Number.isFinite(result) && value.trim() !== "" && (
-				<ResultBox label="Conversão">
-					<p className="text-lg font-semibold text-foreground">
-						{value} {category.units.find((u) => u.id === fromId)?.label} ={" "}
-						{formatConverted(result)}{" "}
-						{category.units.find((u) => u.id === toId)?.label}
-					</p>
-				</ResultBox>
+				<ResultBox
+					label="Conversão"
+					value={
+						<>
+							{value} {category.units.find((u) => u.id === fromId)?.label} ={" "}
+							{formatConverted(result)}{" "}
+							{category.units.find((u) => u.id === toId)?.label}
+						</>
+					}
+				></ResultBox>
 			)}
 		</div>
 	);

@@ -374,12 +374,11 @@ function ExperienceCard({
 
 			<Button
 				type="button"
-				variant="secondary"
+				variant="destructive"
 				className="shrink-0"
 				onClick={handleRemove}
 			>
 				<Trash />
-				Remover
 			</Button>
 		</div>
 	);

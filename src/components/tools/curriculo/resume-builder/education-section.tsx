@@ -87,14 +87,14 @@ const EducationCardHeader = memo(function EducationCardHeader({
 			: "";
 
 	return (
-		<div className="flex items-center gap-2 w-full">
-			<div className="flex-1 min-w-0">
+		<div className="flex justify-between gap-2 w-full">
+			<div className="min-w-0">
 				<p className="text-sm font-medium truncate">
 					{summary || "Nova formação"}
 					{institution ? ` — ${institution}` : ""}
 				</p>
 				{yearRange && (
-					<p className="text-xs text-muted-foreground">{yearRange}</p>
+					<p className="text-xs text-muted-foreground text-left">{yearRange}</p>
 				)}
 			</div>
 			{isOpen ? (
@@ -106,12 +106,14 @@ const EducationCardHeader = memo(function EducationCardHeader({
 	);
 });
 
-const EducationCardForm = memo(function EducationCardForm({
+	const EducationCardForm = memo(function EducationCardForm({
 	index,
 	control,
+	onRemove,
 }: {
 	index: number;
 	control: Control<ResumeFormValues>;
+	onRemove: () => void;
 }) {
 	const {
 		register,
@@ -257,6 +259,11 @@ const EducationCardForm = memo(function EducationCardForm({
 					{...register(`education.${index}.description`)}
 				/>
 			</div>
+
+			<Button type="button" variant="destructive" onClick={onRemove}>
+				<Trash />
+				Remover
+			</Button>
 		</div>
 	);
 });
@@ -306,7 +313,7 @@ function EducationCard({
 				<button
 					type="button"
 					tabIndex={0}
-					className="flex items-center px-3 py-3 cursor-pointer select-none"
+					className="flex px-3 py-3 cursor-pointer select-none w-full"
 					onClick={handleToggle}
 					onKeyDown={(e) =>
 						(e.key === "Enter" || e.key === " ") && handleToggle()
@@ -319,17 +326,8 @@ function EducationCard({
 					/>
 				</button>
 
-				{isOpen && <EducationCardForm index={index} control={control} />}
+				{isOpen && <EducationCardForm index={index} control={control} onRemove={handleRemove} />}
 			</div>
-
-			<Button
-				type="button"
-				variant="secondary"
-				className="shrink-0"
-				onClick={handleRemove}
-			>
-				<Trash />
-			</Button>
 		</div>
 	);
 }

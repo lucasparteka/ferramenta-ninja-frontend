@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +11,12 @@ export function CpfValidator() {
 	const [result, setResult] = useState<boolean | null>(null);
 
 	function handleInput(value: string) {
-		setInput(value);
+		const digits = value.replace(/\D/g, "").slice(0, 11);
+		const masked = digits
+			.replace(/^(\d{3})(\d)/, "$1.$2")
+			.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+			.replace(/\.(\d{3})(\d)/, ".$1-$2");
+		setInput(masked);
 		setResult(null);
 	}
 
@@ -43,6 +49,7 @@ export function CpfValidator() {
 				onClick={handleValidate}
 				disabled={!input.trim()}
 			>
+				<CheckCircle size={16} />
 				Validar CPF
 			</Button>
 

@@ -77,11 +77,11 @@ export function EleganteTemplate({
 		>
 			<div className="flex items-start justify-between gap-6 mb-7">
 				{data.photoUrl ? (
-					// eslint-disable-next-line @next/next/no-img-element
+					// biome-ignore lint/performance/noImgElement: .
 					<img
 						src={data.photoUrl}
 						alt={data.name}
-						className="w-[68px] h-[68px] rounded-full object-cover border shrink-0"
+						className="size-17 rounded-full object-cover border shrink-0"
 						style={{ borderColor: "var(--accent)", opacity: 0.4 }}
 					/>
 				) : (

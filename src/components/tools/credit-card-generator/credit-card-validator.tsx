@@ -1,5 +1,6 @@
 "use client";
 
+import { CreditCard } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -18,8 +19,9 @@ export function CreditCardValidator() {
 	}
 
 	function handleChange(value: string) {
-		const digits = value.replace(/\D/g, "").slice(0, 19);
-		setInput(digits);
+		const digits = value.replace(/\D/g, "").slice(0, 16);
+		const masked = digits.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+		setInput(masked);
 		setResult(null);
 	}
 
@@ -28,7 +30,7 @@ export function CreditCardValidator() {
 			<div className="space-y-2">
 				<label
 					htmlFor="card-number-input"
-					className="text-sm font-medium text-foreground"
+					className="block text-sm font-medium text-foreground"
 				>
 					Número do cartão
 				</label>
@@ -45,6 +47,7 @@ export function CreditCardValidator() {
 			</div>
 
 			<Button onClick={handleValidate} disabled={input.length < 13}>
+				<CreditCard size={16} />
 				Validar Cartão
 			</Button>
 

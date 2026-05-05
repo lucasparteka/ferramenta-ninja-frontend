@@ -85,7 +85,7 @@ export function ModernoTemplate({
 						)}
 					</div>
 					{data.photoUrl && (
-						// eslint-disable-next-line @next/next/no-img-element
+						// biome-ignore lint/performance/noImgElement: .
 						<img
 							src={data.photoUrl}
 							alt={data.name}
@@ -115,8 +115,8 @@ export function ModernoTemplate({
 						</span>
 					)}
 					{hasSocialLinks &&
-						data.socialLinks!.map((link, i) => (
-							<span key={i} className="flex items-center gap-2">
+						data.socialLinks!.map((link) => (
+							<span key={link.url} className="flex items-center gap-2">
 								<ExternalLink size={14} style={{ color: "var(--accent)" }} />
 								{link.url.replace(/^https?:\/\/(www\.)?/, "")}
 							</span>
@@ -138,7 +138,7 @@ export function ModernoTemplate({
 						<SectionTitle title="Experiência Profissional" />
 						<div className="space-y-5">
 							{data.experiences!.map((exp, i) => (
-								<div key={i} className="pdf-item">
+								<div key={exp.endDate} className="pdf-item">
 									<div className="flex items-start justify-between gap-4">
 										<div className="min-w-0">
 											<p className="font-semibold text-base">{exp.role}</p>
@@ -162,9 +162,9 @@ export function ModernoTemplate({
 											{exp.description
 												.split("\n")
 												.filter(Boolean)
-												.map((line, j) => (
+												.map((line) => (
 													<li
-														key={j}
+														key={line}
 														className="text-sm leading-relaxed flex gap-2 opacity-90"
 													>
 														<span
@@ -190,9 +190,9 @@ export function ModernoTemplate({
 					<section className="section">
 						<SectionTitle title="Formação" />
 						<div className="space-y-4">
-							{data.education!.map((edu, i) => (
+							{data.education!.map((edu) => (
 								<div
-									key={i}
+									key={edu.startYear + edu.degree}
 									className="pdf-item flex items-start justify-between gap-4"
 								>
 									<div className="min-w-0">
@@ -233,8 +233,8 @@ export function ModernoTemplate({
 							<section className="section">
 								<SectionTitle title="Habilidades" />
 								<ul className="space-y-2 text-sm">
-									{data.skills!.map((s, i) => (
-										<li key={i} className="flex items-center gap-2">
+									{data.skills!.map((s) => (
+										<li key={s.name} className="flex items-center gap-2">
 											<span
 												className="w-1.5 h-1.5 shrink-0 rounded-sm"
 												style={{ backgroundColor: "var(--accent)" }}
@@ -249,8 +249,8 @@ export function ModernoTemplate({
 							<section className="section">
 								<SectionTitle title="Idiomas" />
 								<ul className="space-y-2 text-sm">
-									{data.languages!.map((l, i) => (
-										<li key={i} className="flex items-center gap-2">
+									{data.languages!.map((l) => (
+										<li key={l.name} className="flex items-center gap-2">
 											<span
 												className="w-1.5 h-1.5 shrink-0 rounded-sm"
 												style={{ backgroundColor: "var(--accent)" }}

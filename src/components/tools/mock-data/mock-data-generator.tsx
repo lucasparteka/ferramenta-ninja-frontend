@@ -110,7 +110,6 @@ export function MockDataGenerator() {
 	const [format, setFormat] = useState<"json" | "csv">("json");
 	const [output, setOutput] = useState("");
 	const [minified, setMinified] = useState(false);
-	const [generated, setGenerated] = useState(false);
 	const [isGenerating, setIsGenerating] = useState(false);
 
 	const result = useMemo(() => {
@@ -140,7 +139,6 @@ export function MockDataGenerator() {
 
 	function handleGenerate() {
 		setIsGenerating(true);
-		setGenerated(false);
 
 		setTimeout(() => {
 			const { json } = generateData(dataType, quantity);
@@ -154,7 +152,6 @@ export function MockDataGenerator() {
 				setOutput(JSON.stringify(json, null, space));
 			}
 
-			setGenerated(true);
 			setIsGenerating(false);
 		}, 0);
 	}
@@ -198,7 +195,6 @@ export function MockDataGenerator() {
 						value={dataType}
 						onChange={(e) => {
 							setDataType(e.target.value as MockDataType);
-							setGenerated(false);
 							setOutput("");
 						}}
 					>
@@ -222,7 +218,6 @@ export function MockDataGenerator() {
 						value={quantity}
 						onChange={(e) => {
 							setQuantity(Number(e.target.value));
-							setGenerated(false);
 							setOutput("");
 						}}
 					>
@@ -246,7 +241,6 @@ export function MockDataGenerator() {
 						value={format}
 						onChange={(e) => {
 							setFormat(e.target.value as "json" | "csv");
-							setGenerated(false);
 							setOutput("");
 						}}
 					>
@@ -264,7 +258,7 @@ export function MockDataGenerator() {
 					{isGenerating ? "Gerando..." : "Gerar dados"}
 				</Button>
 
-				{generated && format === "json" && (isArrayType || isSingleArray) && (
+				{output && format === "json" && (isArrayType || isSingleArray) && (
 					<div className="flex items-center gap-1 rounded-lg border p-1">
 						<button
 							type="button"
@@ -314,50 +308,48 @@ export function MockDataGenerator() {
 				)}
 			</div>
 
-			{generated && (
-				<div className="space-y-2">
-					<div className="flex flex-wrap items-center justify-between gap-2">
-						<div className="flex items-center gap-3 text-sm text-muted-foreground">
-							{isArrayType && (
-								<span className="font-medium text-foreground">
-									{recordCount} registro{recordCount !== 1 ? "s" : ""}
-								</span>
-							)}
-							{isArrayType && <span>·</span>}
-							<span>{formatBytes(bytes)}</span>
-						</div>
-					</div>
-
-					<pre
-						className={cn(
-							"max-h-96 overflow-auto rounded-lg border border-input bg-white p-4 font-mono text-sm text-foreground",
-							format === "json" && "json-formatter",
+			<div className="space-y-2">
+				<div className="flex flex-wrap items-center justify-between gap-2">
+					<div className="flex items-center gap-3 text-sm text-muted-foreground">
+						{isArrayType && (
+							<span className="font-medium text-foreground">
+								{recordCount} registro{recordCount !== 1 ? "s" : ""}
+							</span>
 						)}
-						// biome-ignore lint/security/noDangerouslySetInnerHtml: .
-						dangerouslySetInnerHTML={{
-							__html:
-								format === "json" ? highlightJSON(output) : escapeHtml(output),
-						}}
-					/>
-					<div className="flex flex-wrap justify-end gap-2 w-full">
-						<CopyButton text={output} label="Copiar" variant="outline" />
-
-						{format === "json" && (
-							<Button onClick={handleDownloadJSON} variant="outline">
-								<Download />
-								Download JSON
-							</Button>
-						)}
-
-						{format === "csv" && showCSV && (
-							<Button onClick={handleDownloadCSV} variant="outline">
-								<Download />
-								Download CSV
-							</Button>
-						)}
+						{isArrayType && <span>·</span>}
+						<span>{formatBytes(bytes)}</span>
 					</div>
 				</div>
-			)}
+
+				<pre
+					className={cn(
+						"max-h-96 overflow-auto rounded-lg border border-input bg-white p-4 font-mono text-sm text-foreground",
+						format === "json" && "json-formatter",
+					)}
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: .
+					dangerouslySetInnerHTML={{
+						__html:
+							format === "json" ? highlightJSON(output) : escapeHtml(output),
+					}}
+				/>
+				<div className="flex flex-wrap justify-end gap-2 w-full">
+					<CopyButton text={output} label="Copiar" variant="outline" />
+
+					{format === "json" && (
+						<Button onClick={handleDownloadJSON} variant="outline" disabled={!output}>
+							<Download />
+							Download JSON
+						</Button>
+					)}
+
+					{format === "csv" && showCSV && (
+						<Button onClick={handleDownloadCSV} variant="outline" disabled={!output}>
+							<Download />
+							Download CSV
+						</Button>
+					)}
+				</div>
+			</div>
 		</div>
 	);
 }

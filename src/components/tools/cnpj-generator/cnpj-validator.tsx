@@ -1,8 +1,10 @@
 "use client";
 
+import { CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { formatCnpjMask } from "@/lib/cnpj/lookup";
 import { validateCNPJ } from "@/lib/cnpj/validate";
 
 export function CnpjValidator() {
@@ -10,7 +12,8 @@ export function CnpjValidator() {
 	const [result, setResult] = useState<boolean | null>(null);
 
 	function handleInput(value: string) {
-		setInput(value);
+		const digits = value.replace(/\D/g, "").slice(0, 14);
+		setInput(formatCnpjMask(digits));
 		setResult(null);
 	}
 
@@ -43,6 +46,7 @@ export function CnpjValidator() {
 				onClick={handleValidate}
 				disabled={!input.trim()}
 			>
+				<CheckCircle size={16} />
 				Validar CNPJ
 			</Button>
 

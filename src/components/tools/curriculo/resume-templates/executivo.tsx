@@ -73,11 +73,11 @@ export function ExecutivoTemplate({
 				}}
 			>
 				{data.photoUrl ? (
-					// eslint-disable-next-line @next/next/no-img-element
-					<img
+					// biome-ignore lint/performance/noImgElement: .
+<img
 						src={data.photoUrl}
 						alt={data.name}
-						className="w-[72px] h-[72px] rounded-full object-cover border-2 border-white/25 shrink-0"
+						className="size-18 rounded-full object-cover border-2 border-white/25 shrink-0"
 					/>
 				) : null}
 				<div className="flex-1 min-w-0 text-white">

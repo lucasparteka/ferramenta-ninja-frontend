@@ -68,11 +68,11 @@ export function TraditionalTemplate({
 			>
 				<div className="flex items-center gap-6">
 					{data.photoUrl ? (
-						// eslint-disable-next-line @next/next/no-img-element
+						// biome-ignore lint/performance/noImgElement: .
 						<img
 							src={data.photoUrl}
 							alt={data.name}
-							className="w-[72px] h-[72px] rounded-full object-cover border-2 border-white/30 shrink-0"
+							className="size-18 rounded-full object-cover border-2 border-white/30 shrink-0"
 						/>
 					) : null}
 					<div className="flex-1 min-w-0">

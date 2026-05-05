@@ -300,7 +300,7 @@ export function OrdemServicoEditor() {
 										</Button>
 									</div>
 								) : (
-									<label className="cursor-pointer">
+									<div className="cursor-pointer">
 										<span className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-1.5 text-sm transition-colors hover:bg-muted">
 											<Upload className="size-4" />
 											Carregar imagem
@@ -314,7 +314,7 @@ export function OrdemServicoEditor() {
 												if (file) handleLogoUpload(file);
 											}}
 										/>
-									</label>
+									</div>
 								)}
 							</div>
 						</fieldset>

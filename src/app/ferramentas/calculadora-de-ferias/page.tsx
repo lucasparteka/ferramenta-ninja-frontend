@@ -130,6 +130,7 @@ function SeoContent() {
 export default function VacationCalculatorPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/calculadora-de-ferias"
 			title="Calculadora de Férias"
 			description="Calcule o valor líquido das férias com 1/3 e abono pecuniário."

@@ -3,8 +3,8 @@ import { headers } from "next/headers";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { ThemeProvider } from "@/components/theme/theme-provider";
 import { JsonLd } from "@/components/seo/json-ld";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
 import "./globals.css";
 
@@ -32,6 +32,22 @@ export const metadata: Metadata = {
 			"Ferramentas online gratuitas para desenvolvedores e profissionais. Conversores, formatadores, geradores e muito mais.",
 		images: ["/api/og"],
 	},
+	icons: [
+		{
+			rel: "icon",
+			type: "image/x-icon",
+			url: "/images/favicon.ico",
+			href: "/images/favicon.ico",
+			media: "(prefers-color-scheme: light)",
+		},
+		{
+			rel: "icon",
+			type: "image/png",
+			url: "/images/favicon-light.ico",
+			href: "/images/favicon-light.ico",
+			media: "(prefers-color-scheme: dark)",
+		},
+	],
 };
 
 export default async function RootLayout({

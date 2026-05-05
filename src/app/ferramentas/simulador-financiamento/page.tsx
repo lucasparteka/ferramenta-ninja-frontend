@@ -105,6 +105,7 @@ function SeoContent() {
 export default function LoanSimulatorPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/simulador-financiamento"
 			title="Simulador de Financiamento"
 			description="Compare SAC e Tabela Price em um único simulador com tabela completa."

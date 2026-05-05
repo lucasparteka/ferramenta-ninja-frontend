@@ -87,7 +87,7 @@ const EducationCardHeader = memo(function EducationCardHeader({
 			: "";
 
 	return (
-		<div className="flex justify-between gap-2 w-full">
+		<div className="flex items-center justify-between gap-2 w-full">
 			<div className="min-w-0">
 				<p className="text-sm font-medium truncate">
 					{summary || "Nova formação"}
@@ -106,7 +106,7 @@ const EducationCardHeader = memo(function EducationCardHeader({
 	);
 });
 
-	const EducationCardForm = memo(function EducationCardForm({
+const EducationCardForm = memo(function EducationCardForm({
 	index,
 	control,
 	onRemove,
@@ -326,7 +326,13 @@ function EducationCard({
 					/>
 				</button>
 
-				{isOpen && <EducationCardForm index={index} control={control} onRemove={handleRemove} />}
+				{isOpen && (
+					<EducationCardForm
+						index={index}
+						control={control}
+						onRemove={handleRemove}
+					/>
+				)}
 			</div>
 		</div>
 	);

@@ -106,6 +106,7 @@ function SeoContent() {
 export default function FixedIncomePage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/rendimento-cdi-selic"
 			title="Calculadora de Rendimento CDI/Selic"
 			description="Simule o rendimento líquido de CDB, LCI, LCA e Tesouro com IR regressivo."

@@ -1,6 +1,7 @@
 "use client";
 
 import { type ReactNode, useState } from "react";
+import { ResultBox } from "@/components/shared/result-box";
 import { Input } from "@/components/ui/input";
 import {
 	decreaseByPercent,
@@ -32,39 +33,14 @@ type CardProps = {
 
 function CalculatorCard({ number, sentence, result }: CardProps) {
 	return (
-		<div className="rounded-xl border border-border p-6">
+		<div className="rounded-xl border border-border bg-card p-6">
 			<p className="mb-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
 				Calculadora {number}
 			</p>
 			<div className="flex flex-wrap items-center gap-x-2 gap-y-3 text-foreground">
 				{sentence}
 			</div>
-			{result}
-		</div>
-	);
-}
-
-type ResultProps = {
-	value: string;
-	suffix?: string;
-	valueClass?: string;
-};
-
-function ResultDisplay({
-	value,
-	suffix = "",
-	valueClass = "text-primary",
-}: ResultProps) {
-	const isEmpty = value === "–";
-	return (
-		<div className="mt-5 rounded-lg border border-primary/20 bg-primary/10 px-4 py-3">
-			<p className="mb-1 text-xs text-muted-foreground">Resultado</p>
-			<p
-				className={`text-2xl font-bold ${isEmpty ? "text-muted-foreground" : valueClass}`}
-			>
-				{value}
-				{!isEmpty && suffix}
-			</p>
+			<div className="mt-4">{result}</div>
 		</div>
 	);
 }
@@ -100,7 +76,7 @@ export function PercentageCalculator() {
 	const r3 = change !== null ? (change > 0 ? "+" : "") + fmt(change) : "–";
 	const r3Class =
 		change === null
-			? "text-primary"
+			? "text-foreground"
 			: change > 0
 				? "text-success"
 				: change < 0
@@ -144,7 +120,7 @@ export function PercentageCalculator() {
 						<span>?</span>
 					</>
 				}
-				result={<ResultDisplay value={r1} />}
+				result={<ResultBox tone="primary" label="Resultado" value={r1} />}
 			/>
 
 			<CalculatorCard
@@ -172,7 +148,7 @@ export function PercentageCalculator() {
 						<span>?</span>
 					</>
 				}
-				result={<ResultDisplay value={r2} suffix="%" />}
+				result={<ResultBox tone="primary" label="Resultado" value={`${r2}%`} />}
 			/>
 
 			<CalculatorCard
@@ -200,7 +176,7 @@ export function PercentageCalculator() {
 						<span>. Qual foi a variação percentual?</span>
 					</>
 				}
-				result={<ResultDisplay value={r3} suffix="%" valueClass={r3Class} />}
+				result={<ResultBox tone="primary" label="Resultado" value={<span className={r3Class}>{r3}%</span>} />}
 			/>
 
 			<CalculatorCard
@@ -229,7 +205,7 @@ export function PercentageCalculator() {
 						<span>%. Qual é o resultado?</span>
 					</>
 				}
-				result={<ResultDisplay value={r4} />}
+				result={<ResultBox tone="primary" label="Resultado" value={r4} />}
 			/>
 
 			<CalculatorCard
@@ -258,7 +234,7 @@ export function PercentageCalculator() {
 						<span>%. Qual é o resultado?</span>
 					</>
 				}
-				result={<ResultDisplay value={r5} />}
+				result={<ResultBox tone="primary" label="Resultado" value={r5} />}
 			/>
 		</div>
 	);

@@ -195,9 +195,9 @@ export function KeepAwake() {
 	};
 
 	return (
-		<div className="space-y-8 lg:h-100">
-			<div className="flex flex-col items-center gap-6">
-				<ResultBox tone="primary" className="w-full max-w-sm text-center">
+		<div className="flex flex-col items-center justify-center w-full">
+			<div className="flex flex-col items-center gap-6 w-full">
+				<ResultBox tone="primary" className="w-full max-w-md text-center">
 					<p className="text-sm text-muted-foreground">Tempo de sessão</p>
 					<p className="text-5xl font-bold tracking-tight text-primary tabular-nums">
 						{formatMs(elapsedMs)}
@@ -240,8 +240,8 @@ export function KeepAwake() {
 				{error && <p className="text-sm text-destructive">{error}</p>}
 			</div>
 
-			<div className="mx-auto max-w-md space-y-6">
-				<div className="space-y-3 flex items-center flex-col">
+			<div className="mx-auto max-w-md space-y-6 mt-6">
+				<div className="space-y-2 flex items-center flex-col">
 					<h3 className="text-sm font-semibold text-foreground">Modo</h3>
 					<div className="flex gap-2">
 						<Button

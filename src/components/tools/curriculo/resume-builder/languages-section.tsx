@@ -72,9 +72,9 @@ function LanguageRow({
 			</div>
 			<Button
 				type="button"
-				variant="secondary"
-				className="shrink-0"
+				variant="destructive"
 				onClick={onRemove}
+				size="icon-lg"
 			>
 				<Trash />
 			</Button>

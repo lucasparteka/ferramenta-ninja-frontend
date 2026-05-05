@@ -1,118 +1,84 @@
-# Plano: Wrapper compacto para ferramentas simples
+# Plano de Melhorias — Ferramenta Ninja
 
-## Problema
-Ferramentas com pouco conteúdo (1-3 inputs, 1 botão) ficam "perdidas" na página entre o cabeçalho/separator e os cards de categoria, ocupando pouco espaço vertical.
+## Parte 1: Componente Reutilizável `OptionSwitch` ✅
 
-## Solução
-Adicionar prop `compact` ao `PageLayout`. Quando ativa, o `{children}` é envolvido num card visual centralizado com altura mínima.
+**Objetivo:** Criar `src/components/shared/option-switch.tsx` baseado no switch Formatado/Minificado do `mock-data-generator.tsx:261-307`.
 
----
-
-## ✅ Parte 1 — Adicionar prop `compact` ao PageLayout
-
-**Arquivo:** `src/components/shared/page-layout.tsx`
-
-- Adicionar `compact?: boolean` ao tipo `PageLayoutProps`
-- Substituir `{children}` por um container condicional:
-
-```tsx
-{compact ? (
-  <div className="flex min-h-[50vh] items-center justify-center">
-    <div className="w-full max-w-lg rounded-xl border bg-card p-8 shadow-sm">
-      {children}
-    </div>
-  </div>
-) : (
-  children
-)}
+**Props:**
+```ts
+type OptionSwitchProps = {
+  options: { label: string; value: string }[];
+  value: string;
+  onChange: (value: string) => void;
+};
 ```
 
----
-
-## Parte 2 — Identificar ferramentas simples (classificação)
-
-Critérios para ser classificada como **SIMPLE** (recebe `compact`):
-
-1. ≤3 elementos interativos (inputs, buttons, checkboxes, selects)
-2. Sem `type="file"` (upload de arquivo)
-3. Sem `<canvas>` / tabelas
-4. Saída é texto curto, não listas longas ou previews visuais grandes
-
-**Lista classificada (~35 ferramentas):**
-
-| Página | Componente | Motivo |
-|--------|-----------|--------|
-| base64 | 2 textareas + button | Pouco conteúdo |
-| calculadora-adicional-noturno | 2 inputs + button | Pouco conteúdo |
-| calculadora-de-idade | 2 inputs + button | Pouco conteúdo |
-| calculadora-de-imc | 2 inputs + button | Pouco conteúdo |
-| codigo-binario | 2 textareas | Pouco conteúdo |
-| codigo-morse | 2 textareas | Pouco conteúdo |
-| consulta-cep | 1 input + button | Pouco conteúdo |
-| consulta-cnpj | 1 input + button | Pouco conteúdo |
-| contador-de-caracteres | 1 textarea | Pouco conteúdo |
-| conversor-csv-json | 2 textareas + button | Pouco conteúdo |
-| conversor-de-temperatura | 3 inputs | Pouco conteúdo |
-| conversor-de-texto | 2 textareas | Pouco conteúdo |
-| conversor-timestamp | 2 inputs | Pouco conteúdo |
-| cronometro-online | 4 buttons + timer | Pouco conteúdo |
-| decodificador-pix | 1 input + button | Pouco conteúdo |
-| formatar-json | 2 textareas + buttons | Pouco conteúdo |
-| gerador-de-cnpj | 2 inputs + checkbox + button | Pouco conteúdo |
-| gerador-de-cpf | 2 inputs + checkbox + button | Pouco conteúdo |
-| gerador-de-numeros | inputs + button | Pouco conteúdo |
-| gerador-de-senha | checkboxes + slider + button | Pouco conteúdo |
-| gerador-de-texto | 1 textarea + button | Pouco conteúdo |
-| gerador-de-uuid | select + input + button | Pouco conteúdo |
-| gerador-meta-tags | 3 inputs | Pouco conteúdo |
-| limpar-texto | textarea + options | Pouco conteúdo |
-| manter-tela-ligada | 1 button | Pouco conteúdo |
-| minificador-css | 2 textareas + button | Pouco conteúdo |
-| numero-por-extenso | 1 input + button | Pouco conteúdo |
-| previa-resultado-google | 3 inputs + preview | Pouco conteúdo |
-| remover-caracteres-invisiveis | textarea + button | Pouco conteúdo |
-| remover-duplicados | textarea + button | Pouco conteúdo |
-| remover-espacos-duplicados | textarea + button | Pouco conteúdo |
-| remover-quebras-de-linhas | textarea + button | Pouco conteúdo |
-| sorteio-online | textarea + button | Pouco conteúdo |
-| validador-de-boleto | 1 input + button | Pouco conteúdo |
-| validador-de-cartao-de-credito | 1 input + button | Pouco conteúdo |
+**Estilo:** Container `flex items-center gap-1 rounded-lg border p-1`. Botão ativo `bg-primary text-primary-foreground`, inativo `text-muted-foreground hover:text-foreground`.
 
 ---
 
-## ✅ Parte 3 — Adicionar `compact` nas páginas identificadas
+## Parte 2: Adicionar `compact` a 12 páginas ✅
 
-Para cada página da lista acima, editar `src/app/ferramentas/<slug>/page.tsx`:
+Adicionar prop `compact` no `<PageLayout>` dos arquivos:
 
-**Antes:**
-```tsx
-<PageLayout toolHref=... title=... description=...>
-```
+| # | Arquivo |
+|---|---------|
+| 1 | `src/app/ferramentas/calculadora-salario-liquido/page.tsx` |
+| 2 | `src/app/ferramentas/calculadora-13-salario/page.tsx` |
+| 3 | `src/app/ferramentas/calculadora-de-hora-extra/page.tsx` |
+| 4 | `src/app/ferramentas/calculadora-de-ferias/page.tsx` |
+| 5 | `src/app/ferramentas/calculadora-de-rescisao/page.tsx` |
+| 6 | `src/app/ferramentas/simulador-financiamento/page.tsx` |
+| 7 | `src/app/ferramentas/rendimento-cdi-Selic/page.tsx` |
+| 8 | `src/app/ferramentas/calculadora-de-dias-uteis/page.tsx` |
+| 9 | `src/app/ferramentas/leitor-de-qr-code/page.tsx` |
+| 10 | `src/app/ferramentas/gerador-de-codigo-de-barras/page.tsx` |
+| 11 | `src/app/ferramentas/paleta-de-cores/page.tsx` |
+| 12 | `src/app/ferramentas/teste-digitacao/page.tsx` |
 
-**Depois:**
-```tsx
-<PageLayout compact toolHref=... title=... description=...>
-```
-
-Estratégia: script batch via sed/jscodeshift para aplicar em todos os ~35 arquivos de uma vez.
-
----
-
-## ✅ Parte 4 — Verificar build
-
-```bash
-npx tsc --noEmit          # ✅ apenas erros pré-existentes em .next
-npx biome check ./src     # ✅ apenas erros pré-existentes de formatação/imports
-```
+**Mudança:** Adicionar `compact` antes de `toolHref` em cada `<PageLayout>`.
 
 ---
 
-## Parte 5 — Revisão visual (manual)
+## Parte 3: Ajustes em Componentes Existentes (5 ferramentas) ✅
 
-Abrir no navegador ~5 ferramentas representativas:
+### 3a. `calculadora-de-porcentagem`
+- **Arquivo:** `src/components/tools/percentage-calculator/percentage-calculator.tsx`
+- `CalculatorCard`: adicionar `bg-card` na div wrapper
+- `ResultDisplay`: substituir componente interno pelo `ResultBox` importado com `tone="primary"`, label="Resultado", valor como children
 
-- **Simples com compact**: `base64`, `gerador-de-cpf`, `consultar-cep`
-- **Simples sem compact** (verificar se não foi incluída erroneamente): `calculadora-de-porcentagem`
-- **Complexa** (verificar se não pegou compact indevidamente): `simulador-de-financiamento`, `criador-de-curriculo`
+### 3b. `calculadora-de-dias-uteis`
+- **Arquivo:** `src/components/tools/business-days-calculator/business-days-calculator.tsx`
+- Substituir os dois `<button>` mode tabs (range/add) pelo `<OptionSwitch>`
+- Opções: `[{label:"Dias úteis entre datas", value:"range"}, {label:"Adicionar dias úteis", value:"add"}]`
 
-Ajustes finos no `max-w-lg` do card se necessário (algumas ferramentas podem precisar de mais largura).
+### 3c. `teste-digitacao`
+- **Arquivo:** `src/components/tools/typing-test/typing-test.tsx`
+- Botão Iniciar: adicionar `<Play>` quando idle, `<RotateCcw>` quando reiniciar
+- Duração: substituir `<NativeSelect>` pelo `<OptionSwitch>` com opções `[{label:"30s",value:"30"}, {label:"1 min",value:"60"}, {label:"2 min",value:"120"}]`
+
+### 3d. `recortar-imagem`
+- **Arquivo:** `src/components/tools/image-cropper/image-cropper.tsx`
+- Remover `max-w-2xl` da div wrapper principal (linha ~113) para card ocupar largura total
+
+### 3e. `cronometro-online`
+- **Arquivo:** `src/components/tools/stopwatch/stopwatch.tsx`
+- Adicionar centralização horizontal completa no wrapper principal
+
+---
+
+## Parte 4: Reorganização de Layout (3 ferramentas) ✅
+
+### 4a. `manter-tela-ligada`
+- **Arquivo:** `src/components/tools/keep-awake/keep-awake.tsx`
+- Trocar `space-y-8 lg:h-100` por `flex flex-col items-center justify-center` para centralizar verticalmente
+
+### 4b. `converter-markdown-para-html`
+- **Arquivo:** `src/components/tools/markdown-to-html/markdown-to-html.tsx`
+- Botão Limpar: mover do header do editor para abaixo do `<Textarea>`
+- Toolbar (Copiar HTML, Baixar, checkbox CSS): mover para dentro da coluna do preview, abaixo do container de preview
+- Garantir `min-h-[400px]` igual em editor e preview
+
+### 4c. `gerador-gradiente-css`
+- **Arquivo:** `src/components/tools/gradient-generator/gradient-generator.tsx`
+- Mover `<CopyButton>` do header `justify-between` para abaixo do `<pre>`, alinhado à direita (`flex justify-end`)

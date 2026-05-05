@@ -129,7 +129,7 @@ export function ImageCropper() {
 
 	return (
 		<div className="space-y-6">
-			<div className="max-w-2xl space-y-4">
+			<div className="space-y-4">
 				{/* Upload area */}
 				{!imgSrc && (
 					<div className="space-y-2">

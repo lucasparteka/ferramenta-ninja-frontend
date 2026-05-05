@@ -90,6 +90,7 @@ function SeoContent() {
 export default function PaletaDeCoresPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/paleta-de-cores"
 			title="Paleta de Cores"
 			description="Gere paletas de cores harmônicas a partir de uma cor base. Escolha entre complementar, análoga, triádica e monocromática. Rápido, gratuito e sem cadastro."

@@ -2,6 +2,7 @@
 
 import { Trash } from "lucide-react";
 import { useState } from "react";
+import { OptionSwitch } from "@/components/shared/option-switch";
 import { ResultGrid, ResultRow } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -121,39 +122,18 @@ export function BusinessDaysCalculator() {
 
 	return (
 		<div className="space-y-6">
-			{/* Mode tabs */}
-			<div className="flex flex-wrap gap-2">
-				<button
-					type="button"
-					onClick={() => {
-						setMode("range");
-						setResult(null);
-						setError(null);
-					}}
-					className={`inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium transition-colors ${
-						mode === "range"
-							? "border-primary bg-primary text-primary-foreground"
-							: "border-border bg-card text-foreground hover:bg-accent"
-					}`}
-				>
-					Dias úteis entre datas
-				</button>
-				<button
-					type="button"
-					onClick={() => {
-						setMode("add");
-						setResult(null);
-						setError(null);
-					}}
-					className={`inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium transition-colors ${
-						mode === "add"
-							? "border-primary bg-primary text-primary-foreground"
-							: "border-border bg-card text-foreground hover:bg-accent"
-					}`}
-				>
-					Adicionar dias úteis
-				</button>
-			</div>
+			<OptionSwitch
+				options={[
+					{ label: "Dias úteis entre datas", value: "range" },
+					{ label: "Adicionar dias úteis", value: "add" },
+				]}
+				value={mode}
+				onChange={(v) => {
+					setMode(v as TabMode);
+					setResult(null);
+					setError(null);
+				}}
+			/>
 
 			<div className="max-w-2xl space-y-4">
 				{/* Year presets - only in range mode */}

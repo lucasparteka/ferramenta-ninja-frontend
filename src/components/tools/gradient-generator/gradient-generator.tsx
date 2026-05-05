@@ -182,17 +182,9 @@ export function GradientGenerator() {
 				/>
 
 				<div className="space-y-2">
-					<div className="flex items-center justify-between">
-						<label
-							htmlFor="gradient-css"
-							className="block text-sm font-medium text-foreground"
-						>
-							Código CSS
-						</label>
-					<CopyButton text={
-						`background: ${gradientCSS};`
-					} label="Copiar" variant="outline" />
-					</div>
+					<label className="block text-sm font-medium text-foreground">
+						Código CSS
+					</label>
 					<pre
 						id="gradient-css"
 						className="overflow-x-auto rounded-lg p-4 font-mono text-sm"
@@ -200,6 +192,9 @@ export function GradientGenerator() {
 					>
 						<code>background: {gradientCSS};</code>
 					</pre>
+					<div className="flex justify-end">
+						<CopyButton text={`background: ${gradientCSS};`} label="Copiar" variant="outline" />
+					</div>
 				</div>
 			</div>
 		</div>

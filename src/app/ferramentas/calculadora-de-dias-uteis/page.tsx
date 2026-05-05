@@ -148,6 +148,7 @@ function SeoContent() {
 export default function CalculadoraDiasUteisPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/calculadora-de-dias-uteis"
 			title="Calculadora de Dias Úteis"
 			description="Calcule dias úteis entre datas ou adicione dias úteis a uma data. Inclui feriados nacionais e facultativos do Brasil."

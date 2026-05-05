@@ -66,9 +66,8 @@ export function Stopwatch() {
 	}
 
 	return (
-		<div className="space-y-6">
-			<div className="max-w-2xl space-y-6">
-				<ResultBox tone="primary" className="text-center">
+		<div className="mx-auto max-w-2xl space-y-6">
+			<ResultBox tone="primary" className="text-center">
 					<p className="font-mono text-5xl font-bold text-foreground sm:text-6xl">
 						{formatStopwatch(elapsedMs)}
 					</p>
@@ -100,10 +99,9 @@ export function Stopwatch() {
 						Reiniciar
 					</Button>
 				</div>
-			</div>
 
 			{laps.length > 0 && (
-				<div className="max-w-2xl space-y-4">
+				<div className="space-y-4">
 					<h3 className="text-sm font-medium text-foreground">Voltas</h3>
 					<div className="max-h-64 overflow-auto rounded-lg border border-border">
 						<table className="w-full text-sm">

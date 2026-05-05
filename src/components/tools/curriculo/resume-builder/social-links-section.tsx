@@ -76,8 +76,8 @@ function SocialLinkRow({
 			</div>
 			<Button
 				type="button"
-				variant="secondary"
-				className="shrink-0"
+				variant="destructive"
+				size="icon-lg"
 				onClick={onRemove}
 			>
 				<Trash />

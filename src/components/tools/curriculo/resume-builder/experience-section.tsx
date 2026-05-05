@@ -159,7 +159,7 @@ const ExperienceCardHeader = memo(function ExperienceCardHeader({
 			: "";
 
 	return (
-		<div className="flex justify-between gap-2 w-full">
+		<div className="flex items-center justify-between gap-2 w-full">
 			<div className="min-w-0">
 				<p className="text-sm font-medium truncate">
 					{role || "Nova experiência"}

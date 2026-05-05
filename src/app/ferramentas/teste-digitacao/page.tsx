@@ -96,6 +96,7 @@ function SeoContent() {
 export default function TesteDigitacaoPage() {
 	return (
 		<PageLayout
+			compact
 			toolHref="/ferramentas/teste-digitacao"
 			title="Teste de Digitação"
 			description="Meça sua velocidade de digitação em WPM e CPM. Teste em português com precisão em tempo real. Rápido, gratuito e sem cadastro."

@@ -1,7 +1,7 @@
 "use client";
 
 import DOMPurify from "dompurify";
-import { Trash } from "lucide-react";
+import { Download, Trash } from "lucide-react";
 import { marked } from "marked";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
@@ -87,7 +87,6 @@ export function MarkdownToHtml() {
 		return `<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Documento Markdown</title>\n${css}\n</head>\n<body>\n${html}\n</body>\n</html>`;
 	}, [html, includeCss]);
 
-
 	function handleDownload() {
 		const blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });
 		const url = URL.createObjectURL(blob);
@@ -106,29 +105,27 @@ export function MarkdownToHtml() {
 			<div className="grid gap-4 lg:grid-cols-2">
 				{/* Editor */}
 				<div className="space-y-2">
-					<div className="flex items-center justify-between">
-						<label
-							htmlFor="md-input"
-							className="text-sm font-medium text-foreground"
-						>
-							Markdown
-						</label>
-						<Button
-							type="button"
-							variant="secondary"
-							onClick={() => setMarkdown("")}
-						>
-							<Trash />
-							Limpar
-						</Button>
-					</div>
+					<label
+						htmlFor="md-input"
+						className="block text-sm font-medium text-foreground"
+					>
+						Markdown
+					</label>
 					<Textarea
 						id="md-input"
 						value={markdown}
 						onChange={(e) => setMarkdown(e.target.value)}
 						placeholder="Digite seu Markdown aqui..."
-						className="min-h-[400px] font-mono text-sm"
+						className="min-h-[600px] font-mono text-sm"
 					/>
+					<Button
+						type="button"
+						variant="secondary"
+						onClick={() => setMarkdown("")}
+					>
+						<Trash />
+						Limpar
+					</Button>
 				</div>
 
 				{/* Preview */}
@@ -145,24 +142,26 @@ export function MarkdownToHtml() {
 							</p>
 						)}
 					</div>
-				</div>
-			</div>
-
-			{/* Toolbar below preview */}
-			<div className="flex flex-wrap items-center gap-3">
-				<CopyButton text={fullHtml} label="Copiar HTML" variant="outline" />
-				<Button variant="outline" onClick={handleDownload}>
-					Baixar HTML
-				</Button>
-				<div className="flex items-center gap-2">
-					<Checkbox
-						id="md-css"
-						checked={includeCss}
-						onCheckedChange={(checked) => setIncludeCss(checked === true)}
-					/>
-					<label htmlFor="md-css" className="text-sm text-foreground cursor-pointer">
-						Incluir CSS básico no download
-					</label>
+					<div className="flex flex-wrap items-center gap-3">
+						<CopyButton text={fullHtml} label="Copiar HTML" variant="outline" />
+						<Button variant="outline" onClick={handleDownload}>
+							<Download />
+							Baixar HTML
+						</Button>
+						<div className="flex items-center gap-2">
+							<Checkbox
+								id="md-css"
+								checked={includeCss}
+								onCheckedChange={(checked) => setIncludeCss(checked === true)}
+							/>
+							<label
+								htmlFor="md-css"
+								className="text-sm text-foreground cursor-pointer"
+							>
+								Incluir CSS básico no download
+							</label>
+						</div>
+					</div>
 				</div>
 			</div>
 

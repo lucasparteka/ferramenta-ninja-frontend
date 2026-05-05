@@ -1,6 +1,8 @@
 "use client";
 
+import { Play, RotateCcw } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { OptionSwitch } from "@/components/shared/option-switch";
 import {
 	ResultBox,
 	ResultGrid,
@@ -8,7 +10,6 @@ import {
 } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { NativeSelect } from "@/components/ui/select-native";
 import {
 	calculateAccuracy,
 	calculateCPM,
@@ -99,26 +100,21 @@ export function TypingTest() {
 		<div className="space-y-6">
 			<div className="max-w-2xl space-y-4">
 				<div className="space-y-2">
-					<label
-						htmlFor="typing-duration"
-						className="block text-sm font-medium text-foreground"
-					>
+					<label className="block text-sm font-medium text-foreground">
 						Duração
 					</label>
-					<NativeSelect
-						id="typing-duration"
+					<OptionSwitch
+						options={[
+							{ label: "30s", value: "30" },
+							{ label: "1 min", value: "60" },
+							{ label: "2 min", value: "120" },
+						]}
 						value={String(duration)}
-						onChange={(e) => {
-							const val = Number(e.target.value);
-							setDuration(val);
+						onChange={(v) => {
+							setDuration(Number(v));
 							if (status === "idle") setElapsed(0);
 						}}
-						disabled={status === "running"}
-					>
-						<option value="30">30 segundos</option>
-						<option value="60">1 minuto</option>
-						<option value="120">2 minutos</option>
-					</NativeSelect>
+					/>
 				</div>
 
 				<div className="space-y-2">
@@ -169,7 +165,11 @@ export function TypingTest() {
 						onClick={handleRestart}
 						variant={status === "running" ? "outline" : "default"}
 					>
-						{status === "idle" ? "Iniciar" : "Reiniciar"}
+						{status === "idle" ? (
+							<><Play className="mr-2 h-4 w-4" /> Iniciar</>
+						) : (
+							<><RotateCcw className="mr-2 h-4 w-4" /> Reiniciar</>
+						)}
 					</Button>
 				</div>
 			</div>

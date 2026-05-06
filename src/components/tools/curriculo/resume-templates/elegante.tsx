@@ -128,7 +128,7 @@ export function EleganteTemplate({
 			<div className="space-y-6">
 				{hasSummary && (
 					<Section title="Resumo">
-						<p className="text-base leading-relaxed opacity-90">
+						<p className="text-sm leading-relaxed opacity-90">
 							{data.summary}
 						</p>
 					</Section>

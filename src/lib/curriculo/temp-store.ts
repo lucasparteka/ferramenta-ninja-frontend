@@ -38,7 +38,6 @@ export function setTempData(token: string, data: RenderPayload): void {
 export function getTempData(token: string): RenderPayload | null {
 	const entry = store.get(token);
 	if (!entry) return null;
-	store.delete(token);
 	if (Date.now() > entry.expiresAt) return null;
 	return entry.data;
 }

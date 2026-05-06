@@ -47,6 +47,8 @@ export function KeepAwake() {
 	const lastTsRef = useRef<number>(0);
 	const elapsedRef = useRef(0);
 	const remainingRef = useRef(0);
+	const isActiveRef = useRef(false);
+	isActiveRef.current = isActive;
 
 	const totalTimedMs =
 		mode === "timed"
@@ -60,6 +62,9 @@ export function KeepAwake() {
 				wakeLockRef.current = sentinel;
 				sentinel.addEventListener("release", () => {
 					wakeLockRef.current = null;
+					if (isActiveRef.current) {
+						requestWakeLock().catch(() => {});
+					}
 				});
 				return;
 			}
@@ -162,7 +167,23 @@ export function KeepAwake() {
 	}, [releaseWakeLock, stopTimers]);
 
 	useEffect(() => {
+		const onVisibilityChange = () => {
+			if (document.visibilityState === "visible" && isActiveRef.current) {
+				requestWakeLock();
+			}
+		};
+		document.addEventListener("visibilitychange", onVisibilityChange);
+
+		const onWindowFocus = () => {
+			if (isActiveRef.current) {
+				requestWakeLock();
+			}
+		};
+		window.addEventListener("focus", onWindowFocus);
+
 		return () => {
+			document.removeEventListener("visibilitychange", onVisibilityChange);
+			window.removeEventListener("focus", onWindowFocus);
 			releaseWakeLock();
 			stopTimers();
 			if (videoRef.current) {
@@ -170,7 +191,7 @@ export function KeepAwake() {
 				videoRef.current = null;
 			}
 		};
-	}, [releaseWakeLock, stopTimers]);
+	}, [releaseWakeLock, stopTimers, requestWakeLock]);
 
 	const handleToggle = () => {
 		if (isActive) {

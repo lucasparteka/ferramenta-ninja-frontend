@@ -209,7 +209,7 @@ export function MarkdownToHtml() {
 					 text-decoration: line-through;
 				 }
 				 .markdown-preview a {
-					 color: rgb(var(--primary));
+					 color: var(--color-primary);
 					 text-decoration: underline;
 				 }
 				 .markdown-preview ul,
@@ -231,19 +231,19 @@ export function MarkdownToHtml() {
 				 }
 				 .markdown-preview th,
 				 .markdown-preview td {
-					 border: 1px solid rgb(var(--border));
+					 border: 1px solid var(--color-border);
 					 padding: 0.5em 0.75em;
 					 text-align: left;
 				 }
 				 .markdown-preview th {
-					 background-color: rgb(var(--muted));
+					 background-color: var(--color-muted);
 					 font-weight: 600;
 				 }
 				 .markdown-preview tr:nth-child(even) {
-					 background-color: rgba(var(--muted), 0.5);
+					 background-color: color-mix(in oklab, var(--color-muted) 50%, transparent);
 				 }
 				 .markdown-preview code {
-					 background-color: rgb(var(--muted));
+					 background-color: var(--color-muted);
 					 padding: 0.15em 0.35em;
 					 border-radius: 4px;
 					 font-size: 0.875em;
@@ -263,15 +263,15 @@ export function MarkdownToHtml() {
 					 padding: 0;
 				 }
 				 .markdown-preview blockquote {
-					 border-left: 4px solid rgb(var(--border));
+					 border-left: 4px solid var(--color-border);
 					 margin: 1em 0;
 					 padding-left: 1em;
-					 color: rgb(var(--muted-foreground));
+					 color: var(--color-muted-foreground);
 					 font-style: italic;
 				 }
 				 .markdown-preview hr {
 					 border: none;
-					 border-top: 1px solid rgb(var(--border));
+					 border-top: 1px solid var(--color-border);
 					 margin: 1.5em 0;
 				 }
 			 `}</style>

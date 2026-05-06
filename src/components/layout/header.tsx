@@ -29,16 +29,20 @@ export function Header() {
 		};
 	}, [categoriesOpen]);
 
-	// Lock body scroll when mobile menu is open
+	// Lock body scroll and close on Escape when mobile menu is open
 	useEffect(() => {
 		if (mobileOpen) {
 			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "";
+			const onKeyDown = (e: KeyboardEvent) => {
+				if (e.key === "Escape") setMobileOpen(false);
+			};
+			document.addEventListener("keydown", onKeyDown);
+			return () => {
+				document.body.style.overflow = "";
+				document.removeEventListener("keydown", onKeyDown);
+			};
 		}
-		return () => {
-			document.body.style.overflow = "";
-		};
+		document.body.style.overflow = "";
 	}, [mobileOpen]);
 
 	return (
@@ -143,14 +147,16 @@ export function Header() {
 				{mobileOpen && (
 					<div className="fixed inset-0 z-[100] md:hidden">
 						{/* Backdrop */}
-						<div
-							className="absolute inset-0 bg-black/50"
+						<button
+							type="button"
+							className="absolute inset-0 cursor-default bg-black/50"
 							onClick={() => setMobileOpen(false)}
-							aria-hidden="true"
+							aria-label="Fechar menu"
+							tabIndex={-1}
 						/>
 						{/* Panel */}
-						<div className="absolute right-0 top-0 min-h-[110dvh] w-80 max-w-[85vw] overflow-y-auto bg-card shadow-xl">
-							<div className="flex h-16 items-center justify-between border-b border-border px-4">
+						<div className="absolute right-0 inset-y-0 w-80 max-w-[85vw] flex flex-col bg-card shadow-xl">
+							<div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4">
 								<span className="text-lg font-bold text-foreground">Menu</span>
 								<button
 									type="button"
@@ -161,7 +167,7 @@ export function Header() {
 									<X className="size-5" />
 								</button>
 							</div>
-							<nav aria-label="Navegação mobile" className="p-4">
+							<nav aria-label="Navegação mobile" className="min-h-0 flex-1 overflow-y-auto p-4">
 								<ul className="flex flex-col gap-2">
 									<li>
 										<Link

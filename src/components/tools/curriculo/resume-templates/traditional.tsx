@@ -117,7 +117,7 @@ export function TraditionalTemplate({
 				{hasSummary && (
 					<section className="section">
 						<SectionHeader title="Perfil Profissional" />
-						<p className="text-base leading-relaxed">{data.summary}</p>
+						<p className="text-sm leading-relaxed">{data.summary}</p>
 					</section>
 				)}
 				{hasExperiences && (

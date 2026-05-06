@@ -109,7 +109,7 @@ export function MinimalistTemplate({
 				{hasSummary && (
 					<section className="section">
 						<SectionTitle title="Perfil" />
-						<p className="text-base leading-relaxed">{data.summary}</p>
+						<p className="text-sm leading-relaxed">{data.summary}</p>
 					</section>
 				)}
 				{hasExperiences && (

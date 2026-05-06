@@ -13,10 +13,23 @@ export default function CurriculoRenderLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div
-			className={`${lora.variable} ${dmSans.variable} ${plusJakarta.variable} ${barlow.variable} ${playfair.variable} ${roboto.variable}`}
-		>
-			{children}
-		</div>
+		<>
+			<style>{`
+				body {
+					background: white !important;
+					color: black !important;
+				}
+				body > header,
+				body > footer,
+				[data-sonner-toaster] {
+					display: none !important;
+				}
+			`}</style>
+			<div
+				className={`${lora.variable} ${dmSans.variable} ${plusJakarta.variable} ${barlow.variable} ${playfair.variable} ${roboto.variable}`}
+			>
+				{children}
+			</div>
+		</>
 	);
 }

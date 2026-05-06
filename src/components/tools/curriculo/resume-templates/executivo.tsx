@@ -119,7 +119,7 @@ export function ExecutivoTemplate({
 				{hasSummary && (
 					<section className="section">
 						<SectionTitle title="Perfil Profissional" />
-						<p className="text-base leading-relaxed opacity-90">
+						<p className="text-sm leading-relaxed opacity-90">
 							{data.summary}
 						</p>
 					</section>

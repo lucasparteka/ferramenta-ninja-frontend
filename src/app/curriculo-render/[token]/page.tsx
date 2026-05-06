@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ResumeFormValues } from "@/components/tools/curriculo/resume-builder/types";
 import { RESUME_FONT_SIZE_OPTIONS } from "@/components/tools/curriculo/resume-templates/config";
@@ -6,6 +7,18 @@ import type { ResumeTemplateData } from "@/components/tools/curriculo/resume-tem
 import { getTempData } from "@/lib/curriculo/temp-store";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ token: string }>;
+}): Promise<Metadata> {
+	const { token } = await params;
+	const payload = getTempData(token);
+
+	const name = payload?.formData.name ?? "Currículo";
+	return { title: { absolute: `Currículo — ${name}` } };
+}
 
 function toTemplateData(
 	values: ResumeFormValues,

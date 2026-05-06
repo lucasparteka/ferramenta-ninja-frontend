@@ -1,13 +1,13 @@
 "use client";
 
-import { Minimize2, TextAlignStart, Trash } from "lucide-react";
-import { useCallback, useState } from "react";
+import { Minimize2, Trash } from "lucide-react";
+import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-type Status = "idle" | "valid" | "invalid" | "formatted" | "minified";
+type Status = "idle" | "invalid" | "formatted" | "minified";
 
 type ErrorInfo = {
 	message: string;
@@ -41,7 +41,7 @@ function highlightJSON(json: string): string {
 		.replace(/&/g, "&amp;")
 		.replace(/</g, "&lt;")
 		.replace(/>/g, "&gt;")
-		.replace(/("(?:[^"\\]|\\.)*")\s*:/g, (_, key) => span(key, "token-key"))
+		.replace(/("(?:[^"\\]|\\.)*")(\s*:)/g, (_, key, sep) => span(key, "token-key") + sep)
 		.replace(
 			/:\s*("(?:[^"\\]|\\.)*")/g,
 			(_: string, str: string) => `: ${span(str, "token-string")}`,
@@ -63,34 +63,9 @@ export function JsonFormatter() {
 	const [indentSize, setIndentSize] = useState<2 | 4>(2);
 	const [error, setError] = useState<ErrorInfo | null>(null);
 
-	const validateInput = useCallback((value: string) => {
-		if (!value.trim()) {
-			setStatus("idle");
-			setOutput("");
-			setError(null);
-			return;
-		}
-
+	function parseAndFormat(value: string) {
 		try {
-			JSON.parse(value);
-			setStatus("valid");
-			setError(null);
-		} catch (e) {
-			if (e instanceof SyntaxError) {
-				setStatus("invalid");
-				setError(parseErrorPosition(e, value));
-			}
-		}
-	}, []);
-
-	function handleInputChange(value: string) {
-		setInput(value);
-		validateInput(value);
-	}
-
-	function handleFormat() {
-		try {
-			const parsed = JSON.parse(input);
+			const parsed = JSON.parse(value);
 			const formatted = JSON.stringify(parsed, null, indentSize);
 			setOutput(formatted);
 			setStatus("formatted");
@@ -98,9 +73,21 @@ export function JsonFormatter() {
 		} catch (e) {
 			if (e instanceof SyntaxError) {
 				setStatus("invalid");
-				setError(parseErrorPosition(e, input));
+				setError(parseErrorPosition(e, value));
+				setOutput("");
 			}
 		}
+	}
+
+	function handleInputChange(value: string) {
+		setInput(value);
+		if (!value.trim()) {
+			setStatus("idle");
+			setOutput("");
+			setError(null);
+			return;
+		}
+		parseAndFormat(value);
 	}
 
 	function handleMinify() {
@@ -123,6 +110,19 @@ export function JsonFormatter() {
 		setOutput("");
 		setStatus("idle");
 		setError(null);
+	}
+
+	function handleIndentChange(size: 2 | 4) {
+		setIndentSize(size);
+		try {
+			const parsed = JSON.parse(input);
+			const formatted = JSON.stringify(parsed, null, size);
+			setOutput(formatted);
+			setStatus("formatted");
+			setError(null);
+		} catch {
+			// input is already known invalid — nothing to reformat
+		}
 	}
 
 	const hasResult = output.length > 0;
@@ -155,19 +155,7 @@ export function JsonFormatter() {
 				</div>
 			)}
 
-			{status === "valid" && !hasResult && (
-				<div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-4 py-3">
-					<p className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
-						JSON válido
-					</p>
-				</div>
-			)}
-
 			<div className="flex flex-wrap items-center gap-2">
-				<Button onClick={handleFormat} disabled={!input.trim()}>
-					<TextAlignStart />
-					Formatar
-				</Button>
 				<Button
 					onClick={handleMinify}
 					disabled={!input.trim()}
@@ -189,14 +177,14 @@ export function JsonFormatter() {
 					<Button
 						variant={indentSize === 2 ? "default" : "outline"}
 						size="sm"
-						onClick={() => setIndentSize(2)}
+						onClick={() => handleIndentChange(2)}
 					>
 						2
 					</Button>
 					<Button
 						variant={indentSize === 4 ? "default" : "outline"}
 						size="sm"
-						onClick={() => setIndentSize(4)}
+						onClick={() => handleIndentChange(4)}
 					>
 						4
 					</Button>
@@ -212,7 +200,7 @@ export function JsonFormatter() {
 					</div>
 					<pre
 						className={cn(
-							"json-formatter max-h-96 overflow-auto rounded-lg border border-input bg-white p-4 font-mono text-sm text-foreground",
+							"json-formatter max-h-96 overflow-auto rounded-lg border border-input bg-card p-4 font-mono text-sm text-foreground",
 						)}
 						// biome-ignore lint/security/noDangerouslySetInnerHtml: ...
 						dangerouslySetInnerHTML={{

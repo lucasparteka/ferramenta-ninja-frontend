@@ -209,13 +209,18 @@
 	}
 }
 
+.pdf-item {
+	break-inside: avoid;
+	page-break-inside: avoid;
+}
+
 @page :first {
 	margin-top: 0mm;
 }
 
 /* JSON syntax highlighting */
 .json-formatter .token-key {
-	color: rgb(var(--primary));
+	color: var(--color-primary);
 }
 
 .json-formatter .token-string {

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -42,7 +41,7 @@ export const metadata: Metadata = {
 		},
 		{
 			rel: "icon",
-			type: "image/png",
+			type: "image/x-icon",
 			url: "/images/favicon-light.ico",
 			href: "/images/favicon-light.ico",
 			media: "(prefers-color-scheme: dark)",
@@ -50,24 +49,13 @@ export const metadata: Metadata = {
 	],
 };
 
-export default async function RootLayout({
+export default function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	const headersList = await headers();
-	const isPdfRender = headersList.get("x-is-pdf-render") === "1";
-
-	if (isPdfRender) {
-		return (
-			<html lang="pt-BR" className={`antialiased bg-white`}>
-				<body className="bg-white">{children}</body>
-			</html>
-		);
-	}
-
 	return (
-		<html lang="pt-BR" className={`antialiased`}>
+		<html lang="pt-BR" className="antialiased">
 			<head>
 				<JsonLd data={organizationSchema()} />
 				<JsonLd data={websiteSchema()} />

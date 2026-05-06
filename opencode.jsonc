@@ -1,34 +1,13 @@
 {
 	"$schema": "https://opencode.ai/config.json",
-	"plugin": ["openslimedit@latest"],
-
-	// ─────────────────────────────────────────────
-	// MODELO PADRÃO
-	// O plano Go já configura o provider DeepSeek.
-	// Só precisamos definir qual modelo usar em cada agent.
-	// ─────────────────────────────────────────────
 	"model": "opencode-go/deepseek-v4-pro",
-
-	// V4 Flash para tarefas leves (título de sessão, resumo, compaction)
-	// Flash custa ~1/12 do Pro em output — ideal para tarefas mecânicas
 	"small_model": "opencode-go/deepseek-v4-flash",
-
-	// ─────────────────────────────────────────────
-	// TOOLS: desativar o que gera chamadas desnecessárias
-	// ─────────────────────────────────────────────
 	"tools": {
-		"todowrite": false,
-		"webfetch": false,
-		"websearch": false
+		"todowrite": false
 	},
-
-	// ─────────────────────────────────────────────
-	// AGENTS
-	// ─────────────────────────────────────────────
 	"agent": {
 		"plan": {
 			"mode": "primary",
-			// Pro para planejamento — precisa de raciocínio
 			"model": "opencode-go/deepseek-v4-pro",
 			"steps": 10,
 			"permission": {
@@ -41,10 +20,6 @@
 		},
 		"build": {
 			"mode": "primary",
-			// Flash para execução — edições mecânicas, não precisa de raciocínio pesado
-			// V4 Flash: $0.14/M input, $0.28/M output
-			// V4 Pro:   $0.87/M input, $3.48/M output
-			// Para 30 edições mecânicas, Flash economiza ~12x em output
 			"model": "opencode-go/deepseek-v4-flash",
 			"steps": 20,
 			"permission": {
@@ -78,28 +53,12 @@
 			}
 		}
 	},
-
-	// ─────────────────────────────────────────────
-	// COMPACTION
-	// ─────────────────────────────────────────────
 	"compaction": {
 		"auto": true,
 		"prune": true
 	},
-
-	// ─────────────────────────────────────────────
-	// SNAPSHOT
-	// ─────────────────────────────────────────────
 	"snapshot": true,
-
-	// ─────────────────────────────────────────────
-	// AUTOUPDATE
-	// ─────────────────────────────────────────────
 	"autoupdate": true,
-
-	// ─────────────────────────────────────────────
-	// MCP SERVERS
-	// ─────────────────────────────────────────────
 	"mcp": {
 		"code-review-graph": {
 			"type": "local",
@@ -108,10 +67,15 @@
 			"timeout": 10000
 		}
 	},
-
-	// ─────────────────────────────────────────────
-	// PERMISSÕES PADRÃO (fallback global)
-	// ─────────────────────────────────────────────
+	"lsp": {
+		"typescript": {
+			"command": [
+				"node_modules/.bin/typescript-language-server.CMD",
+				"--stdio"
+			],
+			"extensions": ["ts", "tsx"]
+		}
+	},
 	"permission": {
 		"edit": "allow",
 		"bash": "allow",
@@ -119,8 +83,6 @@
 		"grep": "ask",
 		"glob": "ask",
 		"todowrite": "deny",
-		"webfetch": "deny",
-		"websearch": "deny",
 		"code-review-graph_*": "allow"
 	}
 }

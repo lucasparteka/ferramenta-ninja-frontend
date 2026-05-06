@@ -3,6 +3,8 @@ import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
 import { MarkdownToHtml } from "@/components/tools/markdown-to-html/markdown-to-html";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
 	title: "Converter Markdown para HTML Online | Ferramenta Ninja",
 	description:

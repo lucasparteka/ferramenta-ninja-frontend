@@ -17,6 +17,7 @@ type ImageDropzoneProps = {
 	onDragLeave: () => void;
 	onDrop: (e: React.DragEvent<HTMLButtonElement>) => void;
 	className?: string;
+	clearButtonClassName?: string;
 };
 
 export function ImageDropzone({
@@ -31,6 +32,7 @@ export function ImageDropzone({
 	onDragLeave,
 	onDrop,
 	className,
+	clearButtonClassName = "mt-3 w-full",
 }: ImageDropzoneProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const inputId = "image-dropzone-input";
@@ -87,7 +89,11 @@ export function ImageDropzone({
 				className="hidden"
 			/>
 			{preview && (
-				<Button variant="secondary" className="mt-3 w-full" onClick={onClear}>
+				<Button
+					variant="secondary"
+					className={clearButtonClassName}
+					onClick={onClear}
+				>
 					<Trash />
 					Limpar
 				</Button>

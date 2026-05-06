@@ -25,6 +25,24 @@ Estratégia baseada na análise do cenário atual: 82 ferramentas existentes, la
   - `src/app/ferramentas/gerador-de-link-whatsapp/page.tsx` — rota + SEO
   - Registrado em `src/lib/data/tools.ts` (categoria Utilitários, ícone MessageCircle)
 
+- **1.4 Conversor Imagem para Base64** — `/ferramentas/converter-imagem-para-base64`
+  - `src/lib/encoding/image.ts` — `fileToBase64`, `urlToBase64`, `getImageSize`, `getBase64Size`, `getPureBase64`
+  - `src/components/tools/image-base64/image-to-base64.tsx` — componente React com upload (dropzone), URL remota, preview, info de tamanho, toggle base64 puro/data URI
+  - `src/app/ferramentas/converter-imagem-para-base64/page.tsx` — rota + SEO + FAQ
+  - Registrado em `src/lib/data/tools.ts` (categoria Desenvolvedor, ícone Image)
+
+- **1.5 Codificador de URL** — `/ferramentas/codificador-de-url`
+  - `src/lib/encoding/url.ts` — `encodeURL` (encodeURI / encodeURIComponent), `decodeURL` (com fallback)
+  - `src/components/tools/url-encoder/url-encoder.tsx` — componente React com OptionSwitch Codificar/Decodificar, OptionSwitch encodeURIComponent/encodeURI, conversão em tempo real, CopyButton abaixo da box alinhado à direita
+  - `src/app/ferramentas/codificador-de-url/page.tsx` — rota + SEO + FAQ (5 perguntas)
+  - Registrado em `src/lib/data/tools.ts` (categoria Desenvolvedor, ícone Link)
+
+- **2.1 Gerador de Box Shadow CSS** — `/ferramentas/gerador-de-box-shadow-css`
+  - `src/lib/color/box-shadow.ts` — tipos `ShadowLayer`, `buildLayerCSS`, `buildAllShadowsCSS`, `createDefaultLayer`, 7 presets
+  - `src/components/tools/box-shadow/box-shadow-generator.tsx` — componente consolidado com OptionSwitch de camadas, 6 sliders + color picker + inset toggle, preview (quadrado + botão), presets, CSS output + CopyButton
+  - `src/app/ferramentas/gerador-de-box-shadow-css/page.tsx` — rota + SEO + FAQ (5 perguntas)
+  - Registrado em `src/lib/data/tools.ts` (categoria Design, ícone Box)
+
 ---
 
 ## Fase 1 — Quick Wins (alta prioridade)
@@ -173,6 +191,7 @@ src/
 | **Tempo estimado** | 2h |
 | **Dependências** | Nenhuma (FileReader nativo) |
 | **Dificuldade** | ★☆☆☆☆ |
+| **Status** | ✅ Implementado |
 
 **Funcionalidades:**
 - Dropzone para imagem (reutilizar `ImageDropzone` existente)
@@ -213,6 +232,7 @@ src/
 | **Tempo estimado** | 1h |
 | **Dependências** | Nenhuma (`encodeURIComponent` nativo) |
 | **Dificuldade** | ★☆☆☆☆ |
+| **Status** | ✅ Implementado |
 
 **Funcionalidades:**
 - Input de texto
@@ -231,7 +251,7 @@ src/
   components/
     tools/
       url-encoder/
-        URLEncoder.tsx
+        url-encoder.tsx
 ```
 
 **SEO:**
@@ -254,16 +274,16 @@ Ferramentas com apelo visual/interativo, bom para engajamento e compartilhamento
 | **Tempo estimado** | 6h |
 | **Dependências** | Nenhuma (CSS inline puro) |
 | **Dificuldade** | ★★☆☆☆ |
+| **Status** | ✅ Implementado |
 
 **Funcionalidades:**
 - 6 sliders: deslocamento X, Y, blur, spread, opacidade, cor
-- Preview em tempo real em um quadrado
+- Preview em tempo real em um quadrado + botão
 - Código CSS gerado automaticamente
-- Botão copiar CSS
-- Suporte a múltiplas camadas de shadow (add/remove)
-- Opção de `inset`
-- Presets prontos (sombra suave, sombra forte, neon, etc.)
-- Preview em botão real (para testar em elemento interativo)
+- Botão copiar CSS (abaixo da box, alinhado à direita)
+- Suporte a múltiplas camadas de shadow (add/remove, máx 5)
+- Opção de `inset` via OptionSwitch
+- 7 presets prontos (sombra suave, média, forte, card elevado, inset, neon, colorida)
 - Background color selector
 
 **Estrutura de arquivos:**
@@ -271,15 +291,11 @@ Ferramentas com apelo visual/interativo, bom para engajamento e compartilhamento
 src/
   lib/
     color/
-      box-shadow.ts       # gerar string CSS box-shadow
+      box-shadow.ts       # tipos, buildLayerCSS, buildAllShadowsCSS, PRESETS
   components/
     tools/
       box-shadow/
-        BoxShadowGenerator.tsx
-        ShadowControls.tsx   # sliders + inputs numéricos
-        ShadowPreview.tsx    # preview visual
-        ShadowPresets.tsx    # presets
-        ShadowLayer.tsx      # controle de múltiplas camadas
+        box-shadow-generator.tsx   # componente principal consolidado
 ```
 
 **Dicas:** Reutilizar `Slider` component existente.

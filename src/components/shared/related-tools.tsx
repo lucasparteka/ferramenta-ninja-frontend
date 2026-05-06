@@ -88,7 +88,7 @@ export function RelatedTools({
 					<li key={tool.href}>
 						<Link
 							href={tool.href}
-							className="text-[#0000FF] underline-offset-3 underline"
+							className="text-primary underline underline-offset-4"
 						>
 							{tool.name}
 						</Link>

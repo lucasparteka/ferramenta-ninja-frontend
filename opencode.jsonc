@@ -5,6 +5,15 @@
 	"tools": {
 		"todowrite": false
 	},
+	"formatter": {
+		"biome": {
+			"command": ["npx", "biome", "format", "--write", "$FILE"],
+			"environment": {
+				"NODE_ENV": "development"
+			},
+			"extensions": [".js", ".ts", ".jsx", ".tsx"]
+		}
+	},
 	"agent": {
 		"plan": {
 			"mode": "primary",
@@ -20,7 +29,7 @@
 		},
 		"build": {
 			"mode": "primary",
-			"model": "opencode-go/deepseek-v4-flash",
+			"model": "opencode-go/kimi-k2.6",
 			"steps": 20,
 			"permission": {
 				"edit": "allow",
@@ -44,7 +53,7 @@
 		},
 		"general": {
 			"mode": "subagent",
-			"model": "opencode-go/deepseek-v4-flash",
+			"model": "opencode-go/deepseek-v4-pro",
 			"steps": 10,
 			"permission": {
 				"read": "allow",

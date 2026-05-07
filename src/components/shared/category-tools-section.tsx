@@ -15,14 +15,14 @@ export function CategoryToolsSection({
 	const others = category.tools;
 
 	return (
-		<section className="mt-12">
-			<div className="mb-4 flex items-center justify-between">
+		<section className="mt-20 lg:mt-36">
+			<div className="mb-4 flex justify-between max-md:flex-col">
 				<h2 className="text-lg font-semibold text-foreground">
-					Ferramentas da categoria {category.name}
+					Ferramentas da categoria {category.name}:
 				</h2>
 				<Link
 					href={`/categorias/${category.id}`}
-					className="text-sm font-medium text-primary hover:underline"
+					className="text-sm font-medium text-primary hover:underline max-md:my-2"
 				>
 					Ver categoria completa →
 				</Link>

@@ -1,27 +1,30 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
-	Image,
-	ArrowLeft,
-	RotateCcw,
 	AlertTriangle,
+	ArrowLeft,
+	Image,
 	Loader2,
+	RotateCcw,
 } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	FAVICON_SIZES,
-	ICO_SIZES,
+	type GeneratedFaviconFile,
 	generateFaviconPng,
 	generateIco,
-	type GeneratedFaviconFile,
+	ICO_SIZES,
 } from "@/lib/image/favicon";
 
 type Status = "loading" | "ready" | "error";
 
 interface PreviewGridProps {
 	sourceCanvas: HTMLCanvasElement;
+	renderAtSize?: (
+		size: number,
+	) => HTMLCanvasElement | Promise<HTMLCanvasElement>;
 	onBackToEditor: () => void;
 	onReset: () => void;
 	onGenerated: (files: GeneratedFaviconFile[], icoBlob: Blob) => void;
@@ -29,6 +32,7 @@ interface PreviewGridProps {
 
 export function PreviewGrid({
 	sourceCanvas,
+	renderAtSize,
 	onBackToEditor,
 	onReset,
 	onGenerated,
@@ -56,8 +60,26 @@ export function PreviewGrid({
 
 			try {
 				const pngPromises = FAVICON_SIZES.map(async (size) => {
-					const blob = await generateFaviconPng(sourceCanvas, size.width);
-					const dataUrl = URL.createObjectURL(blob);
+					let blob: Blob;
+					let dataUrl: string;
+
+					if (renderAtSize) {
+						const canvas = await renderAtSize(size.width);
+						blob = await new Promise<Blob>((resolve, reject) => {
+							canvas.toBlob((b) => {
+								if (b) resolve(b);
+								else
+									reject(
+										new Error(
+											`Falha ao gerar PNG ${size.width}x${size.height}`,
+										),
+									);
+							}, "image/png");
+						});
+					} else {
+						blob = await generateFaviconPng(sourceCanvas, size.width);
+					}
+					dataUrl = URL.createObjectURL(blob);
 					urls.push(dataUrl);
 					return {
 						name: size.filename,
@@ -104,7 +126,7 @@ export function PreviewGrid({
 				URL.revokeObjectURL(url);
 			}
 		};
-	}, [sourceCanvas, generationKey]);
+	}, [sourceCanvas, generationKey, renderAtSize]);
 
 	/* cleanup on unmount */
 	useEffect(() => {
@@ -198,7 +220,7 @@ export function PreviewGrid({
 						>
 							<div className="flex justify-center">
 								<div
-									className="relative flex items-center justify-center rounded-lg bg-muted/50"
+									className="relative flex items-center justify-center"
 									style={{ width: 80, height: 80 }}
 								>
 									<img
@@ -206,7 +228,10 @@ export function PreviewGrid({
 										alt={`Preview ${file.width}×${file.height}`}
 										className="max-h-full max-w-full object-contain"
 										style={{
-											imageRendering: file.width <= 32 ? "pixelated" : "auto",
+											imageRendering:
+												file.width <= 32
+													? "pixelated"
+													: "-webkit-optimize-contrast",
 										}}
 									/>
 								</div>

@@ -62,6 +62,9 @@ export function renderToSize(
 	const ctx = canvas.getContext("2d");
 	if (!ctx) throw new Error("Não foi possível obter contexto 2D");
 
+	ctx.imageSmoothingEnabled = true;
+	ctx.imageSmoothingQuality = "high";
+
 	const srcW = sourceCanvas.width;
 	const srcH = sourceCanvas.height;
 	const scale = Math.max(size / srcW, size / srcH);

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FileCode, Image, Smile, Type } from "lucide-react";
+import { FileCode, Image, Type } from "lucide-react";
 import type { FaviconMode } from "@/lib/image/favicon";
 
 interface ModeOption {
@@ -50,7 +50,9 @@ const MODES: ModeOption[] = [
 		mode: "emoji",
 		label: "Emoji",
 		description: "Escolha um emoji e cor de fundo",
-		icon: Smile,
+		icon: (() => (
+			<span className="text-2xl">😃</span>
+		)) as unknown as React.ElementType,
 		color: "text-amber-600 dark:text-amber-400",
 		bgColor: "bg-amber-50 dark:bg-amber-950/30",
 		borderColor: "border-amber-200 dark:border-amber-800",

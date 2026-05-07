@@ -56,7 +56,6 @@ export function PageLayout({
 				<p className="text-lg text-muted-foreground">{description}</p>
 			</div>
 			<Separator className="mb-5 lg:mb-7" />
-
 			{compact ? (
 				<div className="flex min-h-[50vh] items-center justify-center">
 					<div className="w-full md:rounded-xl md:border md:bg-card md:p-8 md:shadow-2xs">

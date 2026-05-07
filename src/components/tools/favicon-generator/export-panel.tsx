@@ -1,26 +1,27 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
-	Package,
-	Download,
-	Code,
-	FileJson,
-	Loader2,
+	Check,
 	ChevronDown,
 	ChevronUp,
-	Check,
+	Code,
+	Download,
 	FileArchive,
+	FileJson,
+	Loader2,
+	Package,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useCallback, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
+import { Button } from "@/components/ui/button";
 import {
-	createZipPackage,
 	createWebManifest,
-	generateHtmlTags,
+	createZipPackage,
 	type GeneratedFaviconFile,
+	generateHtmlTags,
 } from "@/lib/image/favicon";
+import { cn } from "@/lib/utils";
 
 interface ExportPanelProps {
 	files: GeneratedFaviconFile[];
@@ -138,7 +139,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 					Downloads individuais
 				</h3>
 				<div className="grid gap-3 sm:grid-cols-2">
-					{allFiles.map((file) => {
+					{allFiles.map((file, i) => {
 						const isDownloaded = downloadedFiles.has(file.name);
 						return (
 							<div
@@ -146,16 +147,14 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 								className="flex items-center gap-3 rounded-lg border p-3 transition-colors hover:bg-muted/50"
 							>
 								{file.dataUrl ? (
+									// biome-ignore lint/performance/noImgElement: .
 									<img
 										src={file.dataUrl}
 										alt=""
-										className="h-6 w-6 rounded object-contain"
-										style={{
-											imageRendering:
-												file.name.includes("16") || file.name.includes("32")
-													? "pixelated"
-													: "auto",
-										}}
+										className={cn(
+											"rounded object-contain",
+											i === 0 ? "size-4 mx-1" : "size-6",
+										)}
 									/>
 								) : (
 									<div className="flex h-6 w-6 items-center justify-center rounded bg-muted text-[10px] font-bold text-muted-foreground">
@@ -192,7 +191,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 					initial={{ opacity: 0, y: 12 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.3, delay: 0.3 }}
-					className="rounded-xl border bg-card p-6"
+					className="rounded-xl border bg-card p-6 overflow-x-auto"
 				>
 					<div className="mb-3 flex items-center gap-2">
 						<Code className="h-4 w-4 text-muted-foreground" />
@@ -207,7 +206,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 						</code>{" "}
 						do seu site
 					</p>
-					<div className="relative">
+					<div className="relative min-w-0">
 						<pre className="overflow-x-auto rounded-lg bg-muted p-4 text-xs text-muted-foreground">
 							<code>{htmlTags}</code>
 						</pre>
@@ -227,7 +226,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 					initial={{ opacity: 0, y: 12 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.3, delay: 0.35 }}
-					className="rounded-xl border bg-card p-6"
+					className="rounded-xl border bg-card p-6 overflow-x-auto"
 				>
 					<button
 						type="button"
@@ -258,7 +257,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 							transition={{ duration: 0.2 }}
 							className="mt-3 overflow-hidden"
 						>
-							<div className="relative">
+							<div className="relative min-w-0">
 								<pre className="overflow-x-auto rounded-lg bg-muted p-4 text-xs text-muted-foreground">
 									<code>{manifestJson}</code>
 								</pre>

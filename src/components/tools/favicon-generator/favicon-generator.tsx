@@ -41,6 +41,9 @@ export function FaviconGenerator() {
 	const [sourceCanvas, setSourceCanvas] = useState<HTMLCanvasElement | null>(
 		null,
 	);
+	const [renderAtSize, setRenderAtSize] = useState<
+		((size: number) => HTMLCanvasElement | Promise<HTMLCanvasElement>) | null
+	>(null);
 	const [generatedPackage, setGeneratedPackage] = useState<{
 		files: GeneratedFaviconFile[];
 		icoBlob: Blob;
@@ -61,16 +64,26 @@ export function FaviconGenerator() {
 		} else if (step === "edit") {
 			setMode(null);
 			setSourceCanvas(null);
+			setRenderAtSize(null);
 			setGeneratedPackage(null);
 			setStep("select-mode");
 		}
 	}, [step]);
 
-	const handleGenerate = useCallback((canvas: HTMLCanvasElement) => {
-		setDirection(1);
-		setSourceCanvas(canvas);
-		setStep("preview");
-	}, []);
+	const handleGenerate = useCallback(
+		(
+			canvas: HTMLCanvasElement,
+			renderFn?: (
+				size: number,
+			) => HTMLCanvasElement | Promise<HTMLCanvasElement>,
+		) => {
+			setDirection(1);
+			setSourceCanvas(canvas);
+			setRenderAtSize(() => renderFn ?? null);
+			setStep("preview");
+		},
+		[],
+	);
 
 	const handleGenerated = useCallback(
 		(files: GeneratedFaviconFile[], icoBlob: Blob) => {
@@ -83,6 +96,7 @@ export function FaviconGenerator() {
 		setDirection(-1);
 		setMode(null);
 		setSourceCanvas(null);
+		setRenderAtSize(null);
 		setGeneratedPackage(null);
 		setStep("select-mode");
 	}, []);
@@ -110,6 +124,7 @@ export function FaviconGenerator() {
 				)}
 			</AnimatePresence>
 
+			{/* Step 1: mode selection */}
 			<AnimatePresence mode="wait" custom={direction}>
 				{step === "select-mode" && (
 					<motion.div
@@ -123,24 +138,37 @@ export function FaviconGenerator() {
 						<ModeSelector onSelect={handleSelectMode} />
 					</motion.div>
 				)}
+			</AnimatePresence>
 
-				{step === "edit" && mode && (
-					<motion.div
-						key="edit"
-						custom={direction}
-						variants={stepVariants}
-						initial="initial"
-						animate="animate"
-						exit="exit"
-					>
-						<FaviconEditor
-							mode={mode}
-							onGenerate={handleGenerate}
-							onBack={handleBack}
-						/>
-					</motion.div>
-				)}
+			{/* Step 2: editor — always mounted while mode exists (preserves state) */}
+			{mode && (
+				<motion.div
+					initial={
+						direction > 0 ? { x: 40, opacity: 0 } : { x: -40, opacity: 0 }
+					}
+					animate={{
+						x: step === "edit" ? 0 : -40,
+						opacity: step === "edit" ? 1 : 0,
+					}}
+					transition={{
+						type: "spring" as const,
+						damping: 25,
+						stiffness: 300,
+					}}
+					style={{
+						display: step === "edit" ? "block" : "none",
+					}}
+				>
+					<FaviconEditor
+						mode={mode}
+						onGenerate={handleGenerate}
+						onBack={handleBack}
+					/>
+				</motion.div>
+			)}
 
+			{/* Step 3: preview — AnimatePresence para entrada/saída */}
+			<AnimatePresence mode="wait" custom={direction}>
 				{step === "preview" && sourceCanvas && (
 					<motion.div
 						key="preview"
@@ -152,6 +180,7 @@ export function FaviconGenerator() {
 					>
 						<FaviconPreview
 							sourceCanvas={sourceCanvas}
+							renderAtSize={renderAtSize ?? undefined}
 							generatedPackage={generatedPackage}
 							onBackToEditor={() => {
 								setDirection(-1);
@@ -177,7 +206,12 @@ function FaviconEditor({
 	onBack,
 }: {
 	mode: FaviconMode;
-	onGenerate: (canvas: HTMLCanvasElement) => void;
+	onGenerate: (
+		canvas: HTMLCanvasElement,
+		renderAtSize?: (
+			size: number,
+		) => HTMLCanvasElement | Promise<HTMLCanvasElement>,
+	) => void;
 	onBack: () => void;
 }) {
 	if (mode === "image") {
@@ -220,12 +254,16 @@ function FaviconEditor({
 
 function FaviconPreview({
 	sourceCanvas,
+	renderAtSize,
 	generatedPackage,
 	onBackToEditor,
 	onReset,
 	onGenerated,
 }: {
 	sourceCanvas: HTMLCanvasElement;
+	renderAtSize?: (
+		size: number,
+	) => HTMLCanvasElement | Promise<HTMLCanvasElement>;
 	generatedPackage: {
 		files: GeneratedFaviconFile[];
 		icoBlob: Blob;
@@ -238,6 +276,7 @@ function FaviconPreview({
 		<div className="space-y-8">
 			<PreviewGrid
 				sourceCanvas={sourceCanvas}
+				renderAtSize={renderAtSize}
 				onBackToEditor={onBackToEditor}
 				onReset={onReset}
 				onGenerated={onGenerated}

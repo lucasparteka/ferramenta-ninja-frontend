@@ -155,9 +155,16 @@ src/
 
 **Critérios de aceitação:**
 - [x] Upload funciona via drag-and-drop (desktop) e input file (mobile) ✅
-- [x] Preview mostra como ficará o favicon ✅
-- [x] Botão "Gerar" só aparece após upload válido ✅
+- [x] ~~Preview mostra como ficará o favicon~~ → **Removido**: geração automática após upload ✅
+- [x] ~~Botão "Gerar" só aparece após upload válido~~ → **Removido**: `onGenerate` chamado automaticamente no `img.onload` ✅
 - [x] Build passa sem erro ✅
+
+**Alteração pós-entrega (UX):**
+- O step intermediário de preview 320×320 + botões "Trocar imagem"/"Gerar Favicon" foi eliminado.
+- Assim que a imagem carrega (`img.onload`), `createSourceCanvas(img)` é chamado e em seguida `onGenerate(sourceCanvasRef.current)` dispara a transição automática para o `PreviewGrid`.
+- O componente foi simplificado: sem `image` state, sem `previewCanvasRef`, sem `handleReset`, sem `handleGenerateClick`.
+- O upload dropzone é sempre visível quando o componente está montado (step="edit").
+- Transição visual: spinner no dropzone durante o upload → `AnimatePresence` do pai (`favicon-generator.tsx`) transiciona `ImageEditor` → `PreviewGrid` com skeleton.
 
 ---
 
@@ -184,9 +191,17 @@ src/
 - Tamanho do textarea: mínimo 5 linhas visíveis
 
 **Critérios de aceitação:**
-- SVG de arquivo e de código produzem o mesmo resultado visual
-- Preview atualiza em tempo real (aba código) ou após upload (aba arquivo)
-- Erros de SVG inválido são exibidos de forma amigável
+- [x] SVG de arquivo e de código produzem o mesmo resultado visual ✅
+- [x] ~~Preview atualiza em tempo real (aba código) ou após upload (aba arquivo)~~ → **Removido**: preview 320×320 eliminado ✅
+- [x] Erros de SVG inválido são exibidos de forma amigável ✅
+- [x] Build passa sem erro ✅
+
+**Alteração pós-entrega (UX + Bug fix):**
+- **Bug fix**: SVGs que começam com `<!-- comentário -->`, `<?xml version="1.0" encoding="UTF-8"?>`, `<!DOCTYPE svg ...>`, ou qualquer combinação desses elementos antes do `<svg` agora são aceitos. A função `stripSvgPreamble()` remove **comentários** (`<!-- -->`), **XML declarations** (`<?xml ...?>`) e **DOCTYPE declarations** antes da validação (`validateSvg`) e antes do processamento de atributos (`prepareSvgForCanvas`). Isso evita que o regex `/^\s*<svg\b/i` falhe e que a injeção de `width`/`height`/`xmlns` seja aplicada no tag raiz correto.
+- **Mensagem de erro atualizada**: de `"O SVG deve começar com '<svg'"` para `"O documento não contém um elemento <svg> válido."`, mais precisa para usuários que colam SVGs com XML declaration.
+- **Auto-generate aba "Arquivo"**: igual ao `image-editor` — assim que o SVG é carregado e validado, `svgToCanvas(text, SOURCE_SIZE)` gera o canvas 512×512 e dispara `onGenerate(canvas)` automaticamente. Não há mais preview intermediário nem botão "Gerar Favicon" nessa aba.
+- **Aba "Código"**: textarea com validação live, sem preview canvas. O botão "Gerar Favicon" aparece apenas quando o código é válido (`svgString !== null`). Clique no botão gera o canvas e transiciona para `PreviewGrid`.
+- **Simplificações**: removidos `PREVIEW_SIZE`, `previewCanvasRef`, `drawPreview()`, `handleReset()`, `handleSvgLoaded()` (inlined em `handleFile`), bloco JSX de preview canvas + botões, e o `useEffect` de re-renderização de preview.
 
 ---
 

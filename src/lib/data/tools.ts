@@ -857,6 +857,22 @@ export const categories: ToolCategory[] = [
 				tags: ["desenvolvedor", "seo", "meta", "html"],
 				intent: "generate",
 			},
+			{
+				name: "Gerador de Favicon",
+				href: "/ferramentas/gerador-de-favicon",
+				description: "Crie favicons a partir de imagem, SVG, texto ou emoji",
+				icon: Image,
+				tags: [
+					"favicon",
+					"ico",
+					"png",
+					"icone",
+					"site",
+					"web",
+					"desenvolvedor",
+				],
+				intent: "generate",
+			},
 		],
 	},
 	{

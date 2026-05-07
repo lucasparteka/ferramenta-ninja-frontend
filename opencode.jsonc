@@ -78,11 +78,11 @@
 	},
 	"lsp": {
 		"typescript": {
-			"command": [
-				"node_modules/.bin/typescript-language-server.CMD",
-				"--stdio"
-			],
-			"extensions": ["ts", "tsx"]
+			"disabled": true
+		},
+		"tsgo": {
+			"command": ["tsgo", "--lsp", "--stdio"],
+			"extensions": [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]
 		}
 	},
 	"permission": {

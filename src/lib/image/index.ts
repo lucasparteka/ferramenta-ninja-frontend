@@ -6,3 +6,19 @@ export type { ImageInfo } from "./info";
 export { formatBytes, getFileFormat, getImageInfo } from "./info";
 export type { AspectRatioResult, ResizeMode, ResizeResult } from "./resize";
 export { calculateAspectRatio, resizeImage } from "./resize";
+export type {
+	FaviconMode,
+	FaviconPackage,
+	FaviconSize,
+	GeneratedFaviconFile,
+} from "./favicon";
+export {
+	createWebManifest,
+	createZipPackage,
+	FAVICON_SIZES,
+	generateFaviconPng,
+	generateHtmlTags,
+	generateIco,
+	ICO_SIZES,
+	renderToSize,
+} from "./favicon";

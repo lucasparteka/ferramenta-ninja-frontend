@@ -5,6 +5,7 @@ FROM base AS deps
 WORKDIR /app
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 COPY package.json pnpm-lock.yaml ./
+RUN pnpm config set ignore-scripts false
 RUN pnpm install --frozen-lockfile
 
 FROM base AS build

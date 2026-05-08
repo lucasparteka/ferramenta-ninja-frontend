@@ -1,12 +1,11 @@
 FROM node:22-alpine AS base
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
 
 FROM base AS deps
 WORKDIR /app
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm config set ignore-scripts false
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 FROM base AS build
 WORKDIR /app

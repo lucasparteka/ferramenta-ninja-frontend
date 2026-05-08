@@ -6,6 +6,7 @@ WORKDIR /app
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm config set ignore-scripts false
+RUN pnpm approve-builds canvas esbuild msw puppeteer sharp tesseract.js
 RUN pnpm install --frozen-lockfile
 
 FROM base AS build

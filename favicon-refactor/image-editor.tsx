@@ -2,20 +2,20 @@
 
 import { Loader2, RefreshCw, Upload } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
 import type { FaviconMode } from "@/lib/image/favicon";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FaviconShell } from "./favicon-shell";
 import {
 	ColorField,
-	clipFormat,
-	drawBackground,
 	type Format,
 	FormatField,
 	LivePreview,
 	ModeTabs,
 	Section,
 	SizeSlider,
+	clipFormat,
+	drawBackground,
 } from "./shared-controls";
 
 interface ImageEditorProps {
@@ -23,9 +23,7 @@ interface ImageEditorProps {
 	onChangeMode: (m: FaviconMode) => void;
 	onGenerate: (
 		canvas: HTMLCanvasElement,
-		renderAtSize?: (
-			size: number,
-		) => HTMLCanvasElement | Promise<HTMLCanvasElement>,
+		renderAtSize?: (size: number) => HTMLCanvasElement | Promise<HTMLCanvasElement>,
 	) => void;
 	footer?: React.ReactNode;
 }
@@ -178,7 +176,6 @@ export function ImageEditor({
 						/>
 					</div>
 				) : (
-					// biome-ignore lint/a11y/useSemanticElements: .
 					<div
 						className={cn(
 							"relative cursor-pointer rounded-lg border-2 border-dashed p-5 text-center transition-colors",

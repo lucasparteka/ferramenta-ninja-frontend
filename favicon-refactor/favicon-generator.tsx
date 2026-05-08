@@ -16,9 +16,7 @@ import { ExportPanel } from "./export-panel";
 import { SvgEditor } from "./svg-editor";
 import { TextEditor } from "./text-editor";
 
-type RenderFn = (
-	size: number,
-) => HTMLCanvasElement | Promise<HTMLCanvasElement>;
+type RenderFn = (size: number) => HTMLCanvasElement | Promise<HTMLCanvasElement>;
 
 export function FaviconGenerator() {
 	const [mode, setMode] = useState<FaviconMode>("image");

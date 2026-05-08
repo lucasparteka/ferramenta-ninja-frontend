@@ -23,9 +23,7 @@ interface SvgEditorProps {
 	onChangeMode: (m: FaviconMode) => void;
 	onGenerate: (
 		canvas: HTMLCanvasElement,
-		renderAtSize?: (
-			size: number,
-		) => HTMLCanvasElement | Promise<HTMLCanvasElement>,
+		renderAtSize?: (size: number) => HTMLCanvasElement | Promise<HTMLCanvasElement>,
 	) => void;
 	footer?: React.ReactNode;
 }

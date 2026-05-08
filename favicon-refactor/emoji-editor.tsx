@@ -1,21 +1,21 @@
 "use client";
 
-import { Smile } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
+import { Smile } from "lucide-react";
+import type { FaviconMode } from "@/lib/image/favicon";
 import { Input } from "@/components/ui/input";
 import { emojiCategories } from "@/lib/data/emojis";
-import type { FaviconMode } from "@/lib/image/favicon";
 import { cn } from "@/lib/utils";
 import { FaviconShell } from "./favicon-shell";
 import {
 	ColorField,
-	drawBackground,
 	type Format,
 	FormatField,
 	LivePreview,
 	ModeTabs,
 	Section,
 	SizeSlider,
+	drawBackground,
 } from "./shared-controls";
 
 interface EmojiEditorProps {
@@ -23,9 +23,7 @@ interface EmojiEditorProps {
 	onChangeMode: (m: FaviconMode) => void;
 	onGenerate: (
 		canvas: HTMLCanvasElement,
-		renderAtSize?: (
-			size: number,
-		) => HTMLCanvasElement | Promise<HTMLCanvasElement>,
+		renderAtSize?: (size: number) => HTMLCanvasElement | Promise<HTMLCanvasElement>,
 	) => void;
 	footer?: React.ReactNode;
 }
@@ -68,7 +66,10 @@ export function EmojiEditor({
 	const [activeCategory, setActiveCategory] = useState(0);
 	const [isGenerating, setIsGenerating] = useState(false);
 
-	const allEmojis = useMemo(() => emojiCategories.flatMap((c) => c.items), []);
+	const allEmojis = useMemo(
+		() => emojiCategories.flatMap((c) => c.items),
+		[],
+	);
 
 	const renderAtSize = useCallback(
 		(size: number): HTMLCanvasElement => {

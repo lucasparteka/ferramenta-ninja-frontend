@@ -21,9 +21,7 @@ type Status = "loading" | "ready" | "error";
 
 interface PreviewGridProps {
 	sourceCanvas: HTMLCanvasElement;
-	renderAtSize?: (
-		size: number,
-	) => HTMLCanvasElement | Promise<HTMLCanvasElement>;
+	renderAtSize?: (size: number) => HTMLCanvasElement | Promise<HTMLCanvasElement>;
 	onGenerated: (files: GeneratedFaviconFile[], icoBlob: Blob) => void;
 }
 

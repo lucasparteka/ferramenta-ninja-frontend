@@ -47,9 +47,7 @@ function downloadBlob(blob: Blob, filename: string) {
 export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 	const [zipLoading, setZipLoading] = useState(false);
 	const [manifestOpen, setManifestOpen] = useState(false);
-	const [downloadedFiles, setDownloadedFiles] = useState<Set<string>>(
-		new Set(),
-	);
+	const [downloadedFiles, setDownloadedFiles] = useState<Set<string>>(new Set());
 
 	const handleDownloadZip = useCallback(async () => {
 		setZipLoading(true);
@@ -197,12 +195,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 							<code>{htmlTags}</code>
 						</pre>
 						<div className="absolute right-2 top-2">
-							<CopyButton
-								text={htmlTags}
-								label="Copiar"
-								variant="secondary"
-								size="xs"
-							/>
+							<CopyButton text={htmlTags} label="Copiar" variant="secondary" size="xs" />
 						</div>
 					</div>
 				</div>

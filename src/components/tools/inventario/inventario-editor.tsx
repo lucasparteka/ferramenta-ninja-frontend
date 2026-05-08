@@ -119,7 +119,7 @@ export function InventarioEditor() {
 							key={tab.id}
 							type="button"
 							onClick={() => setActiveTab(tab.id)}
-							className={`px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
+							className={`px-4 py-2.5 text-sm font-medium transition-colors border-b -mb-px ${
 								activeTab === tab.id
 									? "border-foreground text-foreground"
 									: "border-transparent text-muted-foreground hover:text-foreground"
@@ -269,7 +269,7 @@ export function InventarioEditor() {
 											variant="destructive"
 											onClick={() => removeHeaderField(field.id)}
 											aria-label="Remover campo"
-											size="icon-lg"
+											size="icon"
 										>
 											<Trash />
 										</Button>
@@ -336,7 +336,7 @@ export function InventarioEditor() {
 											variant="destructive"
 											onClick={() => removeColumn(col.id)}
 											aria-label="Remover coluna"
-											size="icon-lg"
+											size="icon"
 										>
 											<Trash />
 										</Button>
@@ -373,8 +373,8 @@ export function InventarioEditor() {
 				</div>
 			</div>
 
-			<div className="rounded-lg border border-border bg-muted/30 p-3">
-				<p className="mb-3 text-xs font-medium text-muted-foreground uppercase tracking-wide">
+			<div className="rounded-md border border-border bg-muted/30 p-3">
+				<p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Pré-visualização
 				</p>
 				<InventarioCanvas ref={canvasRef} state={state} />

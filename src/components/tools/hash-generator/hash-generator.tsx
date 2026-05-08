@@ -79,7 +79,7 @@ export function HashGenerator() {
 			</div>
 
 			{mode === "verify" && result && (
-				<div className="rounded-lg border border-border p-4 space-y-3">
+				<div className="rounded-md border border-border p-4 space-y-3">
 					<h3 className="text-sm font-medium">Verificar Hash</h3>
 					<div className="space-y-1">
 						<label htmlFor={`${uid}-verify`} className="text-xs uppercase tracking-wider text-muted-foreground">
@@ -96,7 +96,7 @@ export function HashGenerator() {
 						Comparar
 					</Button>
 					{verifyResult !== null && (
-						<p className={`text-sm font-medium ${verifyResult ? "text-green-600" : "text-red-600"}`}>
+						<p className={`text-sm font-medium ${verifyResult ? "text-success" : "text-destructive"}`}>
 							{verifyResult ? "✓ Hash corresponde ao texto" : "✗ Hash não corresponde"}
 						</p>
 					)}

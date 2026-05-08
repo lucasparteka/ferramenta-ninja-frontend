@@ -157,7 +157,7 @@ export function MergePDF() {
 					}}
 					onDragLeave={() => setIsDragging(false)}
 					onDrop={handleDropZone}
-					className={`flex min-h-24 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+					className={`flex min-h-24 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 						isDragging
 							? "border-primary bg-primary/5"
 							: "border-border bg-secondary hover:border-primary hover:bg-primary/5"
@@ -204,11 +204,11 @@ export function MergePDF() {
 								onDragLeave={handleCardDragLeave}
 								onDrop={(e) => handleCardDrop(e, i)}
 								onDragEnd={handleCardDragEnd}
-								className={`flex flex-col overflow-hidden rounded-lg border transition-all ${
+								className={`flex flex-col overflow-hidden rounded-md border transition-all ${
 									dragIndex === i
 										? "opacity-40"
 										: dragOverIndex === i
-											? "border-primary bg-primary/5 shadow-md"
+											? "border-primary bg-primary/5"
 											: "border-border bg-card"
 								} cursor-grab active:cursor-grabbing`}
 							>

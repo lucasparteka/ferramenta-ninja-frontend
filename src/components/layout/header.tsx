@@ -47,12 +47,12 @@ export function Header() {
 
 	return (
 		<>
-			<header className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-md">
-				<div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+			<header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
+				<div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 					{/* Logo */}
 					<Link href="/" className="flex items-center">
-						<span className="text-xl font-bold text-primary">ferramenta</span>
-						<span className="text-xl font-bold text-foreground">.ninja</span>
+						<span className="text-xl font-semibold text-primary">ferramenta</span>
+						<span className="text-xl font-semibold text-foreground">.ninja</span>
 					</Link>
 
 					{/* Desktop navigation */}
@@ -156,8 +156,8 @@ export function Header() {
 						/>
 						{/* Panel */}
 						<div className="absolute right-0 inset-y-0 w-80 max-w-[85vw] flex flex-col bg-card shadow-xl">
-							<div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4">
-								<span className="text-lg font-bold text-foreground">Menu</span>
+							<div className="flex h-14 shrink-0 items-center justify-between border-b border-border px-4">
+								<span className="text-lg font-semibold text-foreground">Menu</span>
 								<button
 									type="button"
 									onClick={() => setMobileOpen(false)}

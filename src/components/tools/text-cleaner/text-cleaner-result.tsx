@@ -29,7 +29,7 @@ export function TextCleanerResult({ output }: Props) {
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
-				<span className="text-sm font-medium text-muted-foreground">
+				<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Resultado
 				</span>
 

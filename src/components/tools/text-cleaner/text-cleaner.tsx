@@ -43,7 +43,7 @@ export function TextCleaner({ defaultOptions }: Props) {
 				<>
 					<Separator />
 					<div className="flex flex-col gap-2">
-						<span className="text-sm font-medium text-muted-foreground">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Visualização de caracteres invisíveis
 						</span>
 						<TextCleanerHighlight text={input} />

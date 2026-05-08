@@ -305,7 +305,7 @@ function EducationCard({
 
 			<div
 				className={cn(
-					"flex-1 border rounded-md bg-white transition-colors overflow-hidden",
+					"flex-1 border rounded-md bg-card transition-colors overflow-hidden",
 					isDragSource && "opacity-50",
 					isDropTarget && "border-primary border-l-4 bg-primary/5",
 				)}

@@ -135,7 +135,6 @@ export function EmailSignature() {
 
 	const socials = watch("socials") || [];
 
-
 	function handleDownloadHtml() {
 		const html = generateInlineHTML(data);
 		const blob = new Blob([html], { type: "text/html" });
@@ -212,7 +211,7 @@ export function EmailSignature() {
 						key={s.id}
 						type="button"
 						onClick={() => setActiveSection(s.id)}
-						className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+						className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
 							activeSection === s.id
 								? "bg-primary text-primary-foreground"
 								: "bg-secondary text-secondary-foreground hover:bg-secondary/80"
@@ -311,7 +310,7 @@ export function EmailSignature() {
 										onClick={() =>
 											active ? removeSocial(n.id) : addSocial(n.id)
 										}
-										className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+										className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
 											active
 												? "bg-primary text-primary-foreground"
 												: "bg-secondary text-secondary-foreground hover:bg-secondary/80"
@@ -352,7 +351,7 @@ export function EmailSignature() {
 										key={id}
 										type="button"
 										onClick={() => setValue("template", id)}
-										className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+										className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
 											watch("template") === id
 												? "bg-primary text-primary-foreground"
 												: "bg-secondary text-secondary-foreground hover:bg-secondary/80"
@@ -372,10 +371,10 @@ export function EmailSignature() {
 										key={color}
 										type="button"
 										onClick={() => setValue("primaryColor", color)}
-										className={`h-8 w-8 rounded border-2 transition-all ${
+										className={`h-8 w-8 rounded border transition-all ${
 											watch("primaryColor") === color
-												? "border-foreground scale-110"
-												: "border-transparent hover:scale-105"
+												? "border-foreground"
+												: "border-transparent"
 										}`}
 										style={{ backgroundColor: color }}
 										aria-label={`Cor ${color}`}
@@ -398,10 +397,10 @@ export function EmailSignature() {
 										key={color}
 										type="button"
 										onClick={() => setValue("secondaryColor", color)}
-										className={`h-8 w-8 rounded border-2 transition-all ${
+										className={`h-8 w-8 rounded border transition-all ${
 											watch("secondaryColor") === color
-												? "border-foreground scale-110"
-												: "border-transparent hover:scale-105"
+												? "border-foreground"
+												: "border-transparent"
 										}`}
 										style={{ backgroundColor: color }}
 										aria-label={`Cor ${color}`}
@@ -440,7 +439,7 @@ export function EmailSignature() {
 										key={s}
 										type="button"
 										onClick={() => setValue("spacing", s)}
-										className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors capitalize ${
+										className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors capitalize ${
 											watch("spacing") === s
 												? "bg-primary text-primary-foreground"
 												: "bg-secondary text-secondary-foreground hover:bg-secondary/80"
@@ -485,7 +484,7 @@ export function EmailSignature() {
 								<img
 									src={watch("photoUrl")}
 									alt="Preview"
-									className="h-16 w-16 rounded-full object-cover"
+									className="h-16 w-16 rounded-md object-cover"
 								/>
 							)}
 						</div>
@@ -610,7 +609,7 @@ export function EmailSignature() {
 					<button
 						type="button"
 						onClick={() => setDarkBg(!darkBg)}
-						className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground hover:bg-secondary/80"
+						className="flex items-center gap-1.5 rounded-md bg-secondary px-3 py-1 text-xs text-secondary-foreground hover:bg-secondary/80"
 					>
 						{darkBg ? (
 							<Sun className="h-3.5 w-3.5" />
@@ -625,7 +624,11 @@ export function EmailSignature() {
 
 			{/* Ações */}
 			<div className="flex flex-wrap gap-2">
-				<CopyButton text={generateInlineHTML(data)} label="Copiar HTML" variant="outline" />
+				<CopyButton
+					text={generateInlineHTML(data)}
+					label="Copiar HTML"
+					variant="outline"
+				/>
 				<Button type="button" onClick={handleDownloadHtml} variant="outline">
 					<Mail className="mr-2 h-4 w-4" />
 					Baixar HTML
@@ -639,7 +642,7 @@ export function EmailSignature() {
 			{/* Código HTML */}
 			<div className="space-y-2">
 				<p className="text-sm font-medium text-foreground">HTML Gerado</p>
-				<pre className="max-h-48 overflow-auto rounded-lg bg-zinc-900 p-4 font-mono text-xs text-zinc-100">
+				<pre className="max-h-48 overflow-auto rounded-md bg-muted p-4 font-mono text-xs text-foreground">
 					{generateInlineHTML(data)}
 				</pre>
 			</div>

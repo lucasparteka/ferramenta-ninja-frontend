@@ -521,7 +521,7 @@ export const BackCanvas = forwardRef<CanvasHandle, BackCanvasProps>(
 
 		return (
 			<div
-				className="rounded-lg border border-border shadow-sm"
+				className="rounded-md border border-border"
 				style={{ display: "inline-block" }}
 			>
 				<canvas

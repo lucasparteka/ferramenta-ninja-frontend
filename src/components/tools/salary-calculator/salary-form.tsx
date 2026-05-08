@@ -90,7 +90,7 @@ export function SalaryCalculatorForm(props: SalaryCalculatorFormProps) {
 							<div className="flex items-center justify-between">
 								<FormLabel>Salário Bruto*</FormLabel>
 								<Popover>
-									<PopoverTrigger className="text-gray-500">
+									<PopoverTrigger className="text-muted-foreground">
 										<Info size={16} />
 									</PopoverTrigger>
 									<PopoverContent className="w-60 text-sm">
@@ -127,7 +127,7 @@ export function SalaryCalculatorForm(props: SalaryCalculatorFormProps) {
 							<div className="flex items-center justify-between">
 								<FormLabel>Número de dependentes</FormLabel>
 								<Popover>
-									<PopoverTrigger className="text-gray-500">
+									<PopoverTrigger className="text-muted-foreground">
 										<Info size={16} />
 									</PopoverTrigger>
 									<PopoverContent className="w-60 text-sm">
@@ -152,7 +152,7 @@ export function SalaryCalculatorForm(props: SalaryCalculatorFormProps) {
 							<div className="flex items-center justify-between">
 								<FormLabel>Outros descontos</FormLabel>
 								<Popover>
-									<PopoverTrigger className="text-gray-500">
+									<PopoverTrigger className="text-muted-foreground">
 										<Info size={16} />
 									</PopoverTrigger>
 									<PopoverContent className="w-60 text-sm">
@@ -189,7 +189,7 @@ export function SalaryCalculatorForm(props: SalaryCalculatorFormProps) {
 							<div className="flex items-center justify-between">
 								<FormLabel>Benefícios</FormLabel>
 								<Popover>
-									<PopoverTrigger className="text-gray-500">
+									<PopoverTrigger className="text-muted-foreground">
 										<Info size={16} />
 									</PopoverTrigger>
 									<PopoverContent className="w-60 text-sm">

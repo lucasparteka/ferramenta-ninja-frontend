@@ -246,14 +246,14 @@ export function CompressImage() {
 								<ResultRow
 									label="Tamanho comprimido"
 									value={
-										<span className="text-green-700 dark:text-green-400">
+										<span className="text-success">
 											{formatBytes(resultSize)}
 										</span>
 									}
 								/>
 
 								<ResultBox tone="primary">
-									<p className="text-3xl font-bold">
+									<p className="text-2xl font-semibold font-mono">
 										-{reduction}%
 									</p>
 									<p className="mt-1 text-sm">
@@ -263,7 +263,7 @@ export function CompressImage() {
 								</ResultBox>
 
 								{resultDataUrl && (
-									<div className="flex justify-center rounded-lg border border-border bg-card p-4">
+									<div className="flex justify-center rounded-md border border-border bg-card p-4">
 										{/* biome-ignore lint/performance/noImgElement: blob URLs requerem img nativo */}
 										<img
 											src={resultDataUrl}

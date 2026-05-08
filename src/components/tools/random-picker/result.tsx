@@ -15,9 +15,9 @@ export function RandomPickerResult({ winners }: RandomPickerResultProps) {
 					// biome-ignore lint/suspicious/noArrayIndexKey: winners may not be unique
 					<li
 						key={index}
-						className="flex items-center gap-3 rounded-lg border border-primary/30 bg-primary/10 p-3"
+						className="flex items-center gap-3 rounded-md border border-primary/30 bg-primary/10 p-3"
 					>
-						<span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+						<span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
 							{index + 1}
 						</span>
 						<span className="font-medium text-foreground">{winner}</span>

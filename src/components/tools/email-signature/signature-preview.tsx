@@ -13,8 +13,8 @@ export const SignaturePreview = forwardRef<HTMLDivElement, Props>(
 	function SignaturePreview({ data, darkBg }, ref) {
 		return (
 			<div
-				className={`rounded-lg border border-border p-6 ${
-					darkBg ? "bg-neutral-900" : "bg-white"
+				className={`rounded-md border border-border p-5 ${
+					darkBg ? "bg-card" : "bg-background"
 				}`}
 			>
 				<div ref={ref} className="inline-block">

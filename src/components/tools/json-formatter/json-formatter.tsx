@@ -147,7 +147,7 @@ export function JsonFormatter() {
 			</div>
 
 			{status === "invalid" && error && (
-				<div className="rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-3">
+				<div className="rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3">
 					<p className="text-sm font-medium text-destructive">
 						Erro na linha {error.line}, coluna {error.column}
 					</p>
@@ -200,7 +200,7 @@ export function JsonFormatter() {
 					</div>
 					<pre
 						className={cn(
-							"json-formatter max-h-96 overflow-auto rounded-lg border border-input bg-card p-4 font-mono text-sm text-foreground",
+							"json-formatter max-h-96 overflow-auto rounded-md border border-input bg-card p-4 font-mono text-sm text-foreground",
 						)}
 						// biome-ignore lint/security/noDangerouslySetInnerHtml: ...
 						dangerouslySetInnerHTML={{

@@ -475,7 +475,7 @@ export function CsvViewer() {
 						</div>
 					</div>
 
-					<div className="overflow-x-auto rounded-lg border border-border">
+					<div className="overflow-x-auto rounded-md border border-border">
 						<table className="min-w-full divide-y divide-border text-sm">
 							<thead>
 								<tr>

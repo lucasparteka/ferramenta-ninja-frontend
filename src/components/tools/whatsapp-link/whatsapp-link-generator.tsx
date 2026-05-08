@@ -88,10 +88,10 @@ export function WhatsAppLinkGenerator() {
 						setQrDataUrl("");
 					}}
 					placeholder="(11) 91234-5678"
-					className={rawPhone && !phoneValidation.valid ? "border-red-500" : ""}
+					className={rawPhone && !phoneValidation.valid ? "border-destructive" : ""}
 				/>
 				{phoneValidation.error && (
-					<p className="text-xs text-red-500">{phoneValidation.error}</p>
+					<p className="text-xs text-destructive">{phoneValidation.error}</p>
 				)}
 			</div>
 
@@ -156,7 +156,7 @@ export function WhatsAppLinkGenerator() {
 							alt="QR Code do link WhatsApp"
 							width={280}
 							height={280}
-							className="rounded-lg border border-border bg-white"
+							className="rounded-md border border-border bg-card"
 						/>
 						<Button type="button" variant="outline" size="sm" onClick={handleDownloadQr}>
 							<svg

@@ -116,7 +116,7 @@ function AgeMode(props: {
 			{result && (
 				<div className="space-y-4">
 					<ResultBox label="Idade">
-						<p className="text-2xl font-bold text-foreground">
+						<p className="text-2xl font-semibold text-foreground">
 							{result.years} {result.years === 1 ? "ano" : "anos"},{" "}
 							{result.months} {result.months === 1 ? "mês" : "meses"} e{" "}
 							{result.days} {result.days === 1 ? "dia" : "dias"}
@@ -143,7 +143,7 @@ function AgeMode(props: {
 					</dl>
 
 					{result.nextBirthday && (
-						<div className="rounded-lg border border-border bg-card p-3 text-sm text-foreground">
+						<div className="rounded-md border border-border bg-card p-3 text-sm text-foreground">
 							Próximo aniversário em{" "}
 							<strong>
 								{result.nextBirthday.daysUntil}{" "}
@@ -206,7 +206,7 @@ function DiffMode(props: {
 			{result && (
 				<div className="space-y-4">
 					<ResultBox label="Diferença">
-						<p className="text-2xl font-bold text-foreground">
+						<p className="text-2xl font-semibold text-foreground">
 							{result.years} {result.years === 1 ? "ano" : "anos"},{" "}
 							{result.months} {result.months === 1 ? "mês" : "meses"} e{" "}
 							{result.days} {result.days === 1 ? "dia" : "dias"}
@@ -230,7 +230,7 @@ function DiffMode(props: {
 
 function Stat({ label, value }: { label: string; value: string }) {
 	return (
-		<div className="rounded-lg border border-border bg-card p-3">
+		<div className="rounded-md border border-border bg-card p-3">
 			<dt className="text-xs text-muted-foreground">{label}</dt>
 			<dd className="mt-1 text-base font-semibold text-foreground">{value}</dd>
 		</div>

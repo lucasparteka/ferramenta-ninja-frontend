@@ -22,11 +22,11 @@ export function Footer() {
 	return (
 		<footer className="mt-auto border-t border-border bg-card">
 			<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-				<div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+				<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
 					<div>
 						<Link href="/" className="flex items-center">
-							<span className="text-lg font-bold text-primary">ferramenta</span>
-							<span className="text-lg font-bold text-foreground">.ninja</span>
+							<span className="text-lg font-semibold text-primary">ferramenta</span>
+							<span className="text-lg font-semibold text-foreground">.ninja</span>
 						</Link>
 						<p className="mt-3 text-sm text-muted-foreground">
 							Ferramentas online gratuitas para todos.
@@ -34,10 +34,10 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-sm font-semibold text-foreground">
+						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Categorias
 						</h2>
-						<ul className="space-y-2 text-sm">
+						<ul className="space-y-2 text-xs">
 							{categories.map((cat) => (
 								<li key={cat.id}>
 									<Link
@@ -52,10 +52,10 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-sm font-semibold text-foreground">
+						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Ferramentas populares
 						</h2>
-						<ul className="space-y-2 text-sm">
+						<ul className="space-y-2 text-xs">
 							{popular.map((tool) => (
 								<li key={tool.href}>
 									<Link
@@ -70,10 +70,10 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-sm font-semibold text-foreground">
+						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Recursos
 						</h2>
-						<ul className="space-y-2 text-sm">
+						<ul className="space-y-2 text-xs">
 							<li>
 								<Link
 									href="/ferramentas"
@@ -102,10 +102,10 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-sm font-semibold text-foreground">
+						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Sobre
 						</h2>
-						<ul className="space-y-2 text-sm">
+						<ul className="space-y-2 text-xs">
 							<li>
 								<Link
 									href="/sobre"
@@ -150,7 +150,7 @@ export function Footer() {
 					</div>
 				</div>
 
-				<div className="mt-10 flex flex-col items-center justify-between gap-2 border-t border-border pt-6 sm:flex-row">
+				<div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-border pt-6 sm:flex-row">
 					<p className="text-sm text-muted-foreground">
 						© {currentYear} Ferramenta Ninja. Todos os direitos reservados.
 					</p>

@@ -27,7 +27,7 @@ export function PhotoTemplate(data: EmailSignatureData) {
 					<img
 						src={data.photoUrl}
 						alt=""
-						className="h-16 w-16 shrink-0 rounded-full object-cover"
+						className="h-16 w-16 shrink-0 rounded-md object-cover"
 					/>
 				)}
 				<div>

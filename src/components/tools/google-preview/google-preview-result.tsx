@@ -85,7 +85,7 @@ function GoogleSnippet({
 
 	return (
 		<div
-			className="rounded-xl border border-[#dfe1e5] bg-white p-4 shadow-sm"
+			className="rounded-lg border border-[#dfe1e5] bg-white p-4"
 			style={{
 				maxWidth: mobile ? 360 : 600,
 				fontFamily: "arial, sans-serif",

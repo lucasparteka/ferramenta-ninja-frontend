@@ -102,7 +102,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 				initial={{ opacity: 0, y: 8 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.25 }}
-				className="flex flex-col items-center gap-3 rounded-xl border bg-background p-5 sm:flex-row sm:text-left"
+				className="flex flex-col items-center gap-3 rounded-lg border bg-background p-5 sm:flex-row sm:text-left"
 			>
 				<div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
 					<Package className="h-5 w-5" />
@@ -149,7 +149,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 										)}
 									/>
 								) : (
-									<div className="flex h-5 w-5 items-center justify-center rounded bg-muted text-[9px] font-bold text-muted-foreground">
+									<div className="flex h-5 w-5 items-center justify-center rounded bg-muted text-[9px] font-semibold text-muted-foreground">
 										ICO
 									</div>
 								)}
@@ -181,7 +181,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 
 			{/* HTML + manifest */}
 			<div className="grid gap-4 lg:grid-cols-2">
-				<div className="rounded-xl border bg-background p-4">
+				<div className="rounded-lg border bg-background p-4">
 					<div className="mb-2 flex items-center gap-2">
 						<Code className="h-4 w-4 text-muted-foreground" />
 						<h3 className="text-sm font-semibold text-foreground">Tags HTML</h3>
@@ -207,7 +207,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 					</div>
 				</div>
 
-				<div className="rounded-xl border bg-background p-4">
+				<div className="rounded-lg border bg-background p-4">
 					<button
 						type="button"
 						onClick={() => setManifestOpen((o) => !o)}

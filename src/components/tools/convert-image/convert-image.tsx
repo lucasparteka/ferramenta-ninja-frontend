@@ -187,7 +187,7 @@ export function ConvertImage() {
 						)}
 
 						{showTransparencyWarning && (
-							<div className="flex items-start gap-2 rounded-lg border border-warning/40 bg-warning/10 px-3 py-2">
+							<div className="flex items-start gap-2 rounded-md border border-warning/40 bg-warning/10 px-3 py-2">
 								<AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
 								<p className="text-xs text-warning">
 									A transparência será removida. O fundo ficará branco.
@@ -211,7 +211,7 @@ export function ConvertImage() {
 								<ResultRow
 									label="Formato convertido"
 									value={
-										<span className="text-green-700 dark:text-green-400">
+										<span className="text-success">
 											{targetLabel}
 										</span>
 									}
@@ -220,14 +220,14 @@ export function ConvertImage() {
 								<ResultRow
 									label="Novo tamanho"
 									value={
-										<span className="text-green-700 dark:text-green-400">
+										<span className="text-success">
 											{formatBytes(resultSize)}
 										</span>
 									}
 								/>
 
 								<ResultBox tone="primary">
-									<p className="text-3xl font-bold">
+									<p className="text-2xl font-semibold">
 										{info.format} → {targetLabel}
 									</p>
 									<p className="mt-1 text-sm">
@@ -236,7 +236,7 @@ export function ConvertImage() {
 								</ResultBox>
 
 								{resultDataUrl && (
-									<div className="flex justify-center rounded-lg border border-border bg-card p-4">
+									<div className="flex justify-center rounded-md border border-border bg-card p-4">
 										{/* biome-ignore lint/performance/noImgElement: blob URLs requerem img nativo */}
 										<img
 											src={resultDataUrl}

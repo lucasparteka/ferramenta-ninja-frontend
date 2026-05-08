@@ -139,7 +139,7 @@ function PixResult({ result, onCopy, copied }: PixResultProps) {
 					.map((row) => (
 						<div
 							key={row.key}
-							className="rounded-lg border border-border bg-card p-3"
+							className="rounded-md border border-border bg-card p-3"
 						>
 							<dt className="text-xs font-medium text-muted-foreground">
 								{row.label}

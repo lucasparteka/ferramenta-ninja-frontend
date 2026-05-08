@@ -339,6 +339,32 @@ botões **não levam sombra**.
 
 **Nunca:** sombra em card, painel, input, botão, badge, tab.
 
+### 6.4 Painéis conectados vs. cards flutuantes
+
+Painéis que compõem uma mesma ferramenta formam um instrumento único, não uma coleção de cards independentes. A regra:
+
+O container externo tem border border-border rounded-lg overflow-hidden
+Divisões internas usam border-r, border-b ou divide-* — nunca gap com bordas individuais em cada painel
+gap-* entre painéis de uma ferramenta é proibido — gap cria separação física entre objetos; border cria compartimentos dentro de um objeto
+
+```tsx
+{/* ✅ Correto — instrumento */}
+<div className="rounded-lg border border-border overflow-hidden grid grid-cols-[280px_1fr_300px]">
+  <div className="border-r border-border p-4">...</div>
+  <div className="border-r border-border p-4">...</div>
+  <div className="p-4">...</div>
+</div>
+
+{/* ❌ Errado — brinquedo */}
+<div className="grid grid-cols-[280px_1fr_300px] gap-4">
+  <div className="rounded-lg border border-border p-4">...</div>
+  <div className="rounded-lg border border-border p-4">...</div>
+  <div className="rounded-lg border border-border p-4">...</div>
+</div>
+```
+
+A única exceção é o layout B (calculadoras) onde o painel de resultado pode ser um card separado quando há hierarquia clara de principal → complementar.
+
 ---
 
 ## 7. Iconografia

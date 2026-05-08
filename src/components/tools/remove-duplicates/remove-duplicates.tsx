@@ -76,9 +76,9 @@ export function RemoveDuplicates() {
 					].map((stat) => (
 						<div
 							key={stat.label}
-							className="rounded-lg border border-border bg-secondary p-3 text-center"
+							className="rounded-md border border-border bg-secondary p-3 text-center"
 						>
-							<p className="text-xl font-bold text-primary">{stat.value}</p>
+							<p className="text-xl font-semibold font-mono text-primary">{stat.value}</p>
 							<p className="text-xs text-muted-foreground">{stat.label}</p>
 						</div>
 					))}

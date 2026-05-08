@@ -23,9 +23,9 @@ export function ExportPanel({
 	onExportBackPng,
 }: ExportPanelProps) {
 	return (
-		<div className="space-y-4 rounded-lg border border-border bg-card p-4">
+		<div className="space-y-4 rounded-md border border-border bg-card p-4">
 			<div>
-				<h3 className="mb-1 font-semibold text-foreground">
+				<h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Exportar para impressão
 				</h3>
 				<p className="text-sm text-muted-foreground">

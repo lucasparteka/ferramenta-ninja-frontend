@@ -127,7 +127,7 @@ export function CompressPDF() {
 					}}
 					onDragLeave={() => setIsDragging(false)}
 					onDrop={handleDrop}
-					className={`flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+					className={`flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 						isDragging
 							? "border-primary bg-primary/5"
 							: "border-border bg-secondary hover:border-primary hover:bg-primary/5"
@@ -223,7 +223,7 @@ export function CompressPDF() {
 			{state === "done" && result && (
 				<div
 					aria-live="polite"
-					className="grid grid-cols-3 gap-4 rounded-lg border border-border bg-secondary p-4 text-center"
+					className="grid grid-cols-3 gap-4 rounded-md border border-border bg-secondary p-4 text-center"
 				>
 					<div>
 						<p className="text-xs text-muted-foreground">Tamanho original</p>

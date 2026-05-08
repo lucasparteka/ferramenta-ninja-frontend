@@ -99,7 +99,7 @@ export function ColorPalette() {
 						return (
 							<div
 								key={hex}
-								className="overflow-hidden rounded-lg border border-border"
+								className="overflow-hidden rounded-md border border-border"
 							>
 								<div className="h-20 w-full" style={{ backgroundColor: hex }} />
 								<div className="space-y-1.5 p-2">

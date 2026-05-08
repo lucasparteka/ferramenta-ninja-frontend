@@ -109,7 +109,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 				className="space-y-6 max-w-2xl"
 			>
 				<div className="space-y-4">
-					<h3 className="text-lg font-semibold">Dados do Funcionário</h3>
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Dados do Funcionário</p>
 
 					<FormField
 						control={form.control}
@@ -119,7 +119,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Salário Bruto*</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">
@@ -156,7 +156,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Horas Contratuais*</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">
@@ -181,7 +181,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Tipo de Hora*</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">
@@ -212,7 +212,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Horas Trabalhadas*</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">
@@ -237,7 +237,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Minutos</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">
@@ -261,7 +261,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Dias Úteis no Mês*</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">
@@ -286,7 +286,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Domingos e Feriados no Mês</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">
@@ -311,7 +311,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Trabalhador Rural*</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">
@@ -342,7 +342,7 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								<div className="flex items-center justify-between">
 									<FormLabel>Percentual do Adicional Noturno*</FormLabel>
 									<Popover>
-										<PopoverTrigger className="text-gray-500">
+										<PopoverTrigger className="text-muted-foreground">
 											<Info size={16} />
 										</PopoverTrigger>
 										<PopoverContent className="w-60 text-sm">

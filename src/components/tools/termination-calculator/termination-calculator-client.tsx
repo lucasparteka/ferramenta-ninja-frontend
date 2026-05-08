@@ -303,7 +303,7 @@ function ResultCard({ result }: { result: TerminationResult }) {
 			</dl>
 
 			{result.fgtsWithdrawable > 0 && (
-				<div className="rounded-lg border border-border bg-card p-3 text-sm">
+				<div className="rounded-md border border-border bg-card p-3 text-sm">
 					<p className="text-muted-foreground">FGTS sacável</p>
 					<p className="font-semibold text-foreground">
 						{brl(result.fgtsWithdrawable)}

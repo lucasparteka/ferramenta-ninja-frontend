@@ -33,8 +33,8 @@ type CardProps = {
 
 function CalculatorCard({ number, sentence, result }: CardProps) {
 	return (
-		<div className="rounded-xl border border-border bg-card p-6">
-			<p className="mb-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+		<div className="rounded-lg border border-border bg-card p-6">
+			<p className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
 				Calculadora {number}
 			</p>
 			<div className="flex flex-wrap items-center gap-x-2 gap-y-3 text-foreground">

@@ -160,11 +160,11 @@ export function MetaTagGenerator() {
 
 			{(title || description) && (
 				<div className="max-w-2xl space-y-4">
-					<h3 className="text-sm font-medium text-foreground">Previews</h3>
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Previews</p>
 
 					<div className="space-y-2">
 						<p className="text-xs text-muted-foreground">Google</p>
-						<div className="rounded-lg border border-border bg-card p-4">
+						<div className="rounded-md border border-border bg-card p-4">
 							<p className="truncate text-lg text-[#1a0dab] dark:text-[#8ab4f8]">
 								{title || "Título da página"}
 							</p>
@@ -181,7 +181,7 @@ export function MetaTagGenerator() {
 						<p className="text-xs text-muted-foreground">
 							Facebook / Open Graph
 						</p>
-						<div className="max-w-sm overflow-hidden rounded-lg border border-border">
+						<div className="max-w-sm overflow-hidden rounded-md border border-border">
 							{image ? (
 								// biome-ignore lint/performance/noImgElement: preview
 								<img

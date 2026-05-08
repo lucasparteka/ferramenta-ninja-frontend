@@ -191,7 +191,7 @@ function SystemCard({
 
 function Schedule({ result }: { result: AmortizationResult }) {
 	return (
-		<details className="rounded-lg border border-border bg-card p-3">
+		<details className="rounded-md border border-border bg-card p-3">
 			<summary className="cursor-pointer text-sm font-medium text-foreground">
 				Tabela de amortização ({result.system === "sac" ? "SAC" : "Price"})
 			</summary>

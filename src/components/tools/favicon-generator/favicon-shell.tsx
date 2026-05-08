@@ -49,7 +49,7 @@ export function FaviconShell({
 	return (
 		<div className="space-y-6">
 			{/* Header sticky */}
-			<header className="sticky top-0 z-20 -mx-4 flex flex-wrap items-center justify-between gap-3 border-b bg-background/85 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/70 sm:mx-0 sm:rounded-xl sm:border sm:px-5">
+			<header className="sticky top-0 z-20 -mx-4 flex flex-wrap items-center justify-between gap-3 border-b bg-background/85 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/70 sm:mx-0 sm:rounded-lg sm:border sm:px-5">
 				<div>
 					<h2 className="text-lg font-semibold tracking-tight text-foreground">
 						Gerador de Favicon
@@ -92,15 +92,15 @@ export function FaviconShell({
 					"lg:grid-cols-[280px_minmax(0,1fr)_320px]",
 				)}
 			>
-				<aside className="space-y-4 rounded-xl border bg-card p-4">
+				<aside className="space-y-4 rounded-lg border bg-card p-4">
 					{left}
 				</aside>
 
-				<section className="rounded-xl border bg-background p-5">
+				<section className="rounded-lg border bg-background p-5">
 					{center}
 				</section>
 
-				<aside className="space-y-5 rounded-xl border bg-card p-4">
+				<aside className="space-y-5 rounded-lg border bg-card p-4">
 					{right}
 				</aside>
 			</div>

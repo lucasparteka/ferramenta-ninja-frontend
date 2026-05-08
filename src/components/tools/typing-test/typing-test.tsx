@@ -123,7 +123,7 @@ export function TypingTest() {
 					</p>
 					<button
 						type="button"
-						className="min-h-[120px] w-full rounded-lg border border-border bg-card p-4 text-left text-lg leading-relaxed text-foreground"
+						className="min-h-[120px] w-full rounded-md border border-border bg-card p-4 text-left text-lg leading-relaxed text-foreground"
 						onClick={handleFocus}
 						onKeyDown={() => inputRef.current?.focus()}
 					>
@@ -194,7 +194,7 @@ export function TypingTest() {
 
 					{status === "finished" && (
 						<ResultBox tone="primary">
-							<p className="text-3xl font-bold">{wpm} WPM</p>
+							<p className="text-2xl font-semibold font-mono">{wpm} WPM</p>
 							<p className="mt-1 text-sm">
 								{accuracy}% de precisão · {cpm} CPM · {elapsed}s
 							</p>

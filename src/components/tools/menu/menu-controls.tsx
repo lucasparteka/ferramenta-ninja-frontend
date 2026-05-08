@@ -48,9 +48,9 @@ export function MenuControls({
 	return (
 		<div className="space-y-6">
 			<div className="space-y-3">
-				<h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Template
-				</h2>
+				</p>
 				<TemplateSelector
 					templates={MENU_TEMPLATES}
 					selectedId={template.id}
@@ -59,9 +59,9 @@ export function MenuControls({
 			</div>
 
 			<div className="space-y-3">
-				<h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Cabeçalho
-				</h2>
+				</p>
 				<div className="space-y-2">
 					<Label htmlFor="menu-title">Título</Label>
 					<Input
@@ -85,9 +85,9 @@ export function MenuControls({
 			</div>
 
 			<div className="space-y-3">
-				<h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Seções e Itens
-				</h2>
+				</p>
 				{data.sections.map((section, si) => (
 					<div
 						key={si}
@@ -178,9 +178,9 @@ export function MenuControls({
 			</div>
 
 			<div className="space-y-3">
-				<h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Estilo
-				</h2>
+				</p>
 				<div className="grid grid-cols-2 gap-3">
 					<div className="space-y-2">
 						<Label htmlFor="primary-color">Cor principal</Label>

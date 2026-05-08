@@ -35,10 +35,10 @@ export function DiffResult({
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex gap-4 text-sm">
-				<span className="font-medium" style={{ color: "#1a7f37" }}>
+				<span className="font-medium text-success">
 					+{additions} {additions === 1 ? "adição" : "adições"}
 				</span>
-				<span className="font-medium" style={{ color: "#a10000" }}>
+				<span className="font-medium text-destructive">
 					-{removals} {removals === 1 ? "remoção" : "remoções"}
 				</span>
 			</div>

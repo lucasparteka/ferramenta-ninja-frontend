@@ -122,7 +122,7 @@ export function WifiQR() {
 							<button
 								type="button"
 								onClick={() => setShowPassword((v) => !v)}
-								className="shrink-0 rounded-lg border border-border bg-input px-3 py-2 text-sm text-muted-foreground hover:bg-muted"
+								className="shrink-0 rounded-md border border-border bg-input px-3 py-2 text-sm text-muted-foreground hover:bg-muted"
 							>
 								{showPassword ? "Ocultar" : "Exibir"}
 							</button>
@@ -162,7 +162,7 @@ export function WifiQR() {
 							alt="QR Code Wi-Fi"
 							width={300}
 							height={300}
-							className="rounded-lg border border-border bg-white"
+							className="rounded-lg border border-border bg-card"
 						/>
 						<Button variant="outline" onClick={handleDownload}>
 							{downloaded ? "Baixado!" : "Baixar PNG"}

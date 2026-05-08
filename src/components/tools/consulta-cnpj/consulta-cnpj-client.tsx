@@ -128,7 +128,7 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 					.map((r) => (
 						<div
 							key={r.label}
-							className="rounded-lg border border-border bg-card p-3"
+							className="rounded-md border border-border bg-card p-3"
 						>
 							<dt className="text-xs font-medium text-muted-foreground">
 								{r.label}
@@ -162,14 +162,14 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 
 			{data.partners.length > 0 && (
 				<div>
-					<h3 className="mb-2 text-sm font-semibold text-foreground">
+					<p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Quadro de Sócios e Administradores
-					</h3>
+					</p>
 					<ul className="space-y-2">
 						{data.partners.map((p) => (
 							<li
 								key={`${p.name}-${p.role ?? ""}`}
-								className="rounded-lg border border-border bg-card p-3 text-sm"
+								className="rounded-md border border-border bg-card p-3 text-sm"
 							>
 								<p className="font-medium text-foreground">{p.name}</p>
 								{p.role && (

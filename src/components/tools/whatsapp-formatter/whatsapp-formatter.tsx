@@ -88,7 +88,7 @@ export function WhatsAppFormatter() {
 					</div>
 				</div>
 				<div className="space-y-2">
-					<p className="text-sm font-medium text-foreground">
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Pré-visualização
 					</p>
 					<WhatsAppPreview text={whatsAppText} />

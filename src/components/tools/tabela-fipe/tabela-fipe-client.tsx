@@ -192,9 +192,9 @@ function PricesResult({ prices }: { prices: FipePrice[] }) {
 
 			{prices.length > 1 && (
 				<div>
-					<h3 className="mb-2 text-sm font-semibold text-foreground">
+					<p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Variações por ano e combustível
-					</h3>
+					</p>
 					<dl className="space-y-2 text-sm">
 						{prices.map((p) => (
 							<ResultRow

@@ -315,7 +315,7 @@ export function CsvToPdf() {
 				}}
 				onDragLeave={() => setIsDragging(false)}
 				onDrop={handleDrop}
-				className={`flex min-h-36 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+				className={`flex min-h-36 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 					isDragging
 						? "border-primary bg-primary/5"
 						: "border-border bg-secondary hover:border-primary hover:bg-primary/5"
@@ -336,7 +336,7 @@ export function CsvToPdf() {
 								e.stopPropagation();
 								handleClear();
 							}}
-							className="rounded-full p-1 text-muted-foreground hover:bg-destructive/10 hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+							className="rounded p-1 text-muted-foreground hover:bg-destructive/10 hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 						>
 							<X className="h-4 w-4" />
 						</button>
@@ -451,7 +451,7 @@ export function CsvToPdf() {
 						)}
 					</div>
 
-					<div className="overflow-x-auto rounded-lg border border-border">
+					<div className="overflow-x-auto rounded-md border border-border">
 						<table className="min-w-full divide-y divide-border text-sm">
 							<thead>
 								<tr>

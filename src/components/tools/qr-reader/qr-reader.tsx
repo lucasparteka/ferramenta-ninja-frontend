@@ -68,7 +68,7 @@ export function QRReader() {
 		<div className="flex flex-col gap-6 sm:flex-row">
 			<div className="sm:flex-1">
 				<div className="space-y-1">
-					<span className="flex w-full text-sm font-medium text-foreground">
+					<span className="flex w-full text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Imagem com QR Code
 					</span>
 					{/** biome-ignore lint/a11y/noStaticElementInteractions: ... */}
@@ -132,14 +132,14 @@ export function QRReader() {
 
 			<div className="space-y-1 sm:flex-1">
 				<div className="flex items-center justify-between">
-					<span className="text-sm font-medium text-foreground">
+					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Conteúdo decodificado
 					</span>
 					{result && (
 						<CopyButton text={result} label="Copiar" variant="outline" />
 					)}
 				</div>
-				<div className="min-h-56 rounded-lg border border-border bg-secondary p-4">
+				<div className="min-h-56 rounded-md border border-border bg-secondary p-4">
 					{state === "idle" && (
 						<p className="text-sm text-muted-foreground">
 							O conteúdo do QR Code aparecerá aqui após o carregamento da

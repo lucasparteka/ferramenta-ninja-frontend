@@ -23,7 +23,7 @@ export function TemplateSelector({
 						type="button"
 						onClick={() => onSelect(template.id)}
 						aria-pressed={isSelected}
-						className={`rounded-full border px-3 py-1 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+						className={`rounded-md border px-3 py-1 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 							isSelected
 								? "border-primary bg-primary text-primary-foreground"
 								: "border-border bg-card text-foreground hover:bg-muted"

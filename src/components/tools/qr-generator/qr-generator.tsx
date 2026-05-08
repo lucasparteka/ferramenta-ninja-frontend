@@ -124,7 +124,7 @@ export function QRGenerator() {
 							alt="QR Code gerado"
 							width={state.size}
 							height={state.size}
-							className="rounded-lg border border-border bg-white"
+							className="rounded-lg border border-border bg-card"
 						/>
 						<Button variant="outline" onClick={handleDownload}>
 							{downloaded ? "Baixado!" : "Baixar PNG"}

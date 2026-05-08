@@ -164,7 +164,7 @@ export function SplitPDF() {
 					}}
 					onDragLeave={() => setIsDragging(false)}
 					onDrop={handleDrop}
-					className={`flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+					className={`flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 						isDragging
 							? "border-primary bg-primary/5"
 							: "border-border bg-secondary hover:border-primary hover:bg-primary/5"
@@ -294,10 +294,10 @@ export function SplitPDF() {
 									type="button"
 									disabled={mode === "all"}
 									onClick={() => mode === "extract" && togglePage(i)}
-									className={`group relative flex flex-col overflow-hidden rounded-lg border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+									className={`group relative flex flex-col overflow-hidden rounded-md border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 										mode === "extract"
 											? selected
-												? "border-primary shadow-sm"
+												? "border-primary"
 												: "border-border hover:border-primary/50"
 											: "cursor-default border-border"
 									}`}

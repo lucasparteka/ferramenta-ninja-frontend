@@ -192,12 +192,12 @@ export function NumberGenerator() {
 						<CopyButton text={numbers.join("\n")} label="Copiar" variant="outline" />
 						</div>
 						<div
-							className={`grid gap-2 rounded-lg border border-border bg-secondary p-4 ${COLS_CLASS[options.columns] ?? "grid-cols-1"}`}
+							className={`grid gap-2 rounded-md border border-border bg-secondary p-4 ${COLS_CLASS[options.columns] ?? "grid-cols-1"}`}
 						>
 							{numbers.map((num, i) => (
 								<div
 									key={i}
-									className="rounded-lg bg-card px-3 py-2 text-center font-mono text-foreground"
+									className="rounded-md bg-card px-3 py-2 text-center font-mono text-foreground"
 								>
 									{num}
 								</div>

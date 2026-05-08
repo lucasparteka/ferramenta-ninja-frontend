@@ -39,7 +39,7 @@ export function CreditCardGenerator() {
 							key={key}
 							type="button"
 							onClick={() => setSelectedBrand(key)}
-							className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+							className={`rounded px-4 py-1.5 text-sm font-medium transition-colors ${
 								selectedBrand === key
 									? "bg-primary text-primary-foreground"
 									: "border border-border bg-background text-foreground hover:bg-secondary"
@@ -84,7 +84,7 @@ export function CreditCardGenerator() {
 							].map(({ label, value, raw }) => (
 								<li
 									key={label}
-									className="flex items-center justify-between gap-3 rounded-lg border border-border bg-secondary px-4 py-3"
+									className="flex items-center justify-between gap-3 rounded-md border border-border bg-secondary px-4 py-3"
 								>
 									<div>
 										<span className="text-xs text-muted-foreground">

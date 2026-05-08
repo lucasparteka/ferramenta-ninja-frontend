@@ -81,7 +81,7 @@ export function RelatedTools({
 
 	return (
 		<section>
-			<h2 className="mb-4 text-xl font-bold text-foreground">Veja também</h2>
+			<h2 className="mb-4 text-base font-semibold text-foreground">Veja também</h2>
 
 			<ul className="flex flex-col gap-2">
 				{related.map((tool) => (

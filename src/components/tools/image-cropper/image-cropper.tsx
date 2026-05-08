@@ -161,7 +161,7 @@ export function ImageCropper() {
 				{imgSrc && (
 					<>
 						<div className="space-y-2">
-							<p className="text-sm font-medium text-foreground">Proporção</p>
+							<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Proporção</p>
 							<div className="flex flex-wrap gap-2">
 								{Object.keys(ASPECT_RATIOS).map((key) => (
 									<button
@@ -243,8 +243,8 @@ export function ImageCropper() {
 				{/* Resultado */}
 				{resultUrl && (
 					<div className="space-y-2">
-						<p className="text-sm font-medium text-foreground">Resultado</p>
-						<div className="flex justify-center rounded-lg border border-border bg-card p-4">
+						<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Resultado</p>
+						<div className="flex justify-center rounded-md border border-border bg-card p-4">
 							{/* biome-ignore lint/performance/noImgElement: blob URLs */}
 							<img
 								src={resultUrl}

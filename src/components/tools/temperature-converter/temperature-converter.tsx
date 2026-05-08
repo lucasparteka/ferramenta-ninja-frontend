@@ -179,14 +179,14 @@ export function TemperatureConverter() {
 			{/* All scales table */}
 			{allResults && (
 				<div className="max-w-2xl space-y-3">
-					<h3 className="text-sm font-semibold text-foreground">
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Todas as escalas
-					</h3>
+					</p>
 					<div className="grid gap-2 sm:grid-cols-3">
 						{scales.map((s) => (
 							<div
 								key={s}
-								className={`rounded-lg border px-3 py-2 text-center ${
+								className={`rounded-md border px-3 py-2 text-center ${
 									s === toScale
 										? "border-primary/30 bg-primary/5"
 										: "border-border bg-card"

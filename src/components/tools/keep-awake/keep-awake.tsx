@@ -220,7 +220,7 @@ export function KeepAwake() {
 			<div className="flex flex-col items-center gap-6 w-full">
 				<ResultBox tone="primary" className="w-full max-w-md text-center">
 					<p className="text-sm text-muted-foreground">Tempo de sessão</p>
-					<p className="text-5xl font-bold tracking-tight text-primary tabular-nums">
+					<p className="text-4xl font-semibold font-mono tabular-nums text-primary">
 						{formatMs(elapsedMs)}
 					</p>
 					{mode === "timed" && isActive && (
@@ -263,7 +263,7 @@ export function KeepAwake() {
 
 			<div className="mx-auto max-w-md space-y-6 mt-6">
 				<div className="space-y-2 flex items-center flex-col">
-					<h3 className="text-sm font-semibold text-foreground">Modo</h3>
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Modo</p>
 					<div className="flex gap-2">
 						<Button
 							variant={mode === "infinite" ? "default" : "outline"}
@@ -284,7 +284,7 @@ export function KeepAwake() {
 
 				{mode === "timed" && (
 					<div className="space-y-3 flex flex-col items-center">
-						<h3 className="text-sm font-semibold text-foreground">Tempo</h3>
+						<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Tempo</p>
 						<div className="flex flex-wrap gap-2">
 							{(
 								Object.keys(PRESET_MINUTES) as Array<Exclude<Preset, "custom">>

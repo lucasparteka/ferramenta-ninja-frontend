@@ -71,7 +71,7 @@ export function PasswordOptions({ config, onChange }: PasswordOptionsProps) {
 			{checkboxOptions.map((option) => (
 				<div
 					key={option.key}
-					className="flex items-center gap-2 rounded-lg border border-border bg-secondary p-3 transition-colors hover:border-primary"
+					className="flex items-center gap-2 rounded-md border border-border bg-secondary p-3 transition-colors hover:border-primary"
 				>
 					<Checkbox
 						id={`password-opt-${option.key}`}

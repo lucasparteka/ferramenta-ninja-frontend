@@ -45,7 +45,7 @@ export function TemplateSelector({
 							type="button"
 							onClick={() => onTemplateChange(id)}
 							className={cn(
-								"text-xs px-3 py-1.5 rounded-full font-medium border transition-colors",
+								"text-xs px-3 py-1.5 rounded-md font-medium border transition-colors",
 								templateId === id
 									? "bg-primary text-primary-foreground border-primary"
 									: "bg-background text-muted-foreground border-border hover:border-primary/50",
@@ -64,10 +64,8 @@ export function TemplateSelector({
 						title={ACCENT_COLOR_LABELS[c]}
 						onClick={() => onColorChange(c)}
 						className={cn(
-							"w-5 h-5 rounded-full border-2 transition-transform hover:scale-110",
-							color === c
-								? "border-foreground scale-110"
-								: "border-transparent",
+							"w-5 h-5 rounded border transition-colors",
+							color === c ? "border-foreground" : "border-transparent",
 						)}
 						style={{ backgroundColor: c }}
 					/>

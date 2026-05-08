@@ -47,7 +47,7 @@ export function SkillsSection() {
 					{fields.map((field, index) => (
 						<span
 							key={field.id}
-							className="flex items-center gap-1.5 bg-primary/10 text-primary text-sm px-3 py-1.5 rounded-full"
+							className="flex items-center gap-1.5 bg-primary/10 text-primary text-sm px-3 py-1.5 rounded"
 						>
 							{field.name}
 							<button

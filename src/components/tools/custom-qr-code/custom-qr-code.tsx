@@ -593,7 +593,7 @@ export function CustomQrCode() {
 
 					{/* Styling controls */}
 					<div className="space-y-4 rounded-lg border border-border bg-card p-4">
-						<h4 className="text-sm font-semibold text-foreground">
+						<h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Personalização
 						</h4>
 

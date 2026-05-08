@@ -1,7 +1,8 @@
 "use client";
 
+import { AlertTriangle } from "lucide-react";
 import { useEffect } from "react";
-import { RotateCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Error({
 	error,
@@ -15,22 +16,15 @@ export default function Error({
 	}, [error]);
 
 	return (
-		<div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 text-center">
-			<h1 className="text-6xl font-bold text-destructive">500</h1>
-			<h2 className="text-2xl font-semibold text-foreground">
-				Algo deu errado
-			</h2>
-			<p className="max-w-md text-muted-foreground">
-				Ocorreu um erro inesperado. Tente novamente ou volte mais tarde.
+		<div className="mx-auto flex min-h-[60vh] max-w-md flex-col items-center justify-center gap-3 px-4 text-center">
+			<AlertTriangle className="h-5 w-5 text-destructive" strokeWidth={1.75} />
+			<h1 className="text-2xl font-semibold tracking-tight">Algo deu errado</h1>
+			<p className="text-sm text-muted-foreground">
+				Não foi possível carregar esta página. Tente novamente.
 			</p>
-			<button
-				type="button"
-				onClick={reset}
-				className="mt-4 inline-flex cursor-pointer items-center gap-2 rounded-lg bg-primary px-6 py-2 font-medium text-primary-foreground transition-opacity hover:opacity-90"
-			>
-				<RotateCcw className="size-4" />
+			<Button onClick={reset} className="mt-2">
 				Tentar novamente
-			</button>
+			</Button>
 		</div>
 	);
 }

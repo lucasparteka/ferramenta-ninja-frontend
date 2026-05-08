@@ -47,7 +47,7 @@ export function CanvasArea({ onReady, isGridEnabled }: CanvasAreaProps) {
 	return (
 		<div
 			ref={containerRef}
-			className="relative flex-1 overflow-hidden rounded-lg border border-border"
+			className="relative flex-1 overflow-hidden rounded-md border border-border"
 		>
 			<canvas
 				ref={elementRef}

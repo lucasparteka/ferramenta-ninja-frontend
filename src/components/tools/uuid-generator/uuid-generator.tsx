@@ -101,7 +101,7 @@ export function UuidGenerator() {
 				</div>
 
 				{needsNameInput && (
-					<div className="space-y-4 rounded-lg border border-border p-4">
+					<div className="space-y-4 rounded-md border border-border p-4">
 						<div className="space-y-2">
 							<Label>Namespace</Label>
 							<div className="flex flex-wrap gap-2">
@@ -195,7 +195,7 @@ export function UuidGenerator() {
 						{uuids.map((uuid) => (
 							<li
 								key={uuid}
-								className="flex items-center justify-between gap-3 rounded-lg border border-border bg-secondary/40 px-4 py-2.5"
+								className="flex items-center justify-between gap-3 rounded-md border border-border bg-secondary/40 px-4 py-2.5"
 							>
 								<span className="font-mono text-sm text-foreground">
 									{uuid}

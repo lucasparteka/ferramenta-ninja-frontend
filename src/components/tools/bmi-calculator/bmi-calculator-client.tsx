@@ -114,7 +114,7 @@ export function BmiCalculatorClient() {
 				>
 					<div>
 						<p className="text-sm text-muted-foreground">Seu IMC</p>
-						<p className="text-3xl font-bold text-foreground">
+						<p className="text-2xl font-semibold font-mono text-foreground">
 							{result.value.toFixed(1)}
 						</p>
 						<p className="text-base font-medium text-foreground">
@@ -131,7 +131,7 @@ export function BmiCalculatorClient() {
 				</ResultBox>
 			)}
 
-			<div className="rounded-lg border border-border bg-card p-4">
+			<div className="rounded-md border border-border bg-card p-4">
 				<h3 className="mb-3 text-sm font-semibold text-foreground">
 					Tabela de classificação OMS
 				</h3>

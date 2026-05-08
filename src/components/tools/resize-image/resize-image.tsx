@@ -232,7 +232,7 @@ export function ResizeImage() {
 				<div className="flex flex-col gap-6 sm:flex-row">
 					<div className="w-full space-y-5 sm:w-72 sm:shrink-0">
 						<div className="space-y-2">
-							<div className="block text-sm font-medium text-foreground">
+							<div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Presets
 							</div>
 							<div className="grid grid-cols-2 gap-1.5">
@@ -372,14 +372,14 @@ export function ResizeImage() {
 							<span>
 								Original: {info.width} × {info.height}
 							</span>
-							<span className="font-medium text-green-700 dark:text-green-400">
+							<span className="font-medium text-success">
 								{targetWidth} × {targetHeight}
 							</span>
 						</div>
 
 						<div
 							className={cn(
-								"relative mx-auto overflow-hidden rounded-lg border border-border",
+								"relative mx-auto overflow-hidden rounded-md border border-border",
 								showCheckerboard && "checkerboard-bg",
 							)}
 							style={{

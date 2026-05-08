@@ -27,7 +27,7 @@ export function TemplateSelector({
 						className={cn(
 							"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 							isSelected
-								? "border-primary bg-primary text-white"
+								? "border-primary bg-primary text-primary-foreground"
 								: "border-border bg-background text-foreground hover:border-primary",
 						)}
 					>

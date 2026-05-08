@@ -16,7 +16,7 @@ export function ReceiptPreview({ values }: ReceiptPreviewProps) {
 
 	if (isEmpty) {
 		return (
-			<div className="flex min-h-100 items-center justify-center rounded-lg border border-dashed border-border bg-muted/30 p-8">
+			<div className="flex min-h-100 items-center justify-center rounded-md border border-dashed border-border bg-muted/30 p-8">
 				<p className="text-sm text-muted-foreground">
 					Preencha os campos obrigatórios para visualizar o recibo
 				</p>

@@ -188,7 +188,7 @@ export function ImageToBase64() {
 					<div className="grid gap-4 sm:grid-cols-2">
 						<div className="space-y-2">
 							<p className="text-sm font-medium text-foreground">Preview</p>
-							<div className="flex min-h-50 items-center justify-center rounded-lg border bg-card p-4">
+							<div className="flex min-h-50 items-center justify-center rounded-md border bg-card p-4">
 								{/* biome-ignore lint/performance/noImgElement: data URI requires native img */}
 								<img
 									src={preview || ""}
@@ -199,7 +199,7 @@ export function ImageToBase64() {
 						</div>
 						<div className="space-y-2">
 							<p className="text-sm font-medium text-foreground">Informações</p>
-							<div className="space-y-2 rounded-lg border bg-card p-4 text-sm lg:h-83.5">
+							<div className="space-y-2 rounded-md border bg-card p-4 text-sm lg:h-83.5">
 								<div className="flex justify-between">
 									<span className="text-muted-foreground">Nome:</span>
 									<span className="font-medium line-clamp-1 ml-3">

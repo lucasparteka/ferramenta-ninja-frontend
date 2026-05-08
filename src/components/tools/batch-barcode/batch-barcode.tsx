@@ -63,7 +63,7 @@ function BarcodeItem({ value, format, displayValue }: BarcodeEntry) {
 	}
 
 	return (
-		<div className="flex flex-col items-center gap-2 rounded-lg border border-border bg-card p-3">
+		<div className="flex flex-col items-center gap-2 rounded-md border border-border bg-card p-3">
 			{error ? (
 				<div className="flex h-20 w-full items-center justify-center">
 					<p className="text-center text-xs text-destructive">{error}</p>

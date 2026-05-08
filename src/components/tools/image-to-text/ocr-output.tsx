@@ -37,7 +37,7 @@ export function OcrOutput({
 			<div
 				aria-live="polite"
 				aria-atomic="true"
-				className="flex min-h-56 flex-1 flex-col rounded-lg border border-border bg-secondary"
+				className="flex min-h-56 flex-1 flex-col rounded-md border border-border bg-secondary"
 			>
 				{state === "idle" && (
 					<p className="p-4 text-sm text-muted-foreground">

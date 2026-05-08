@@ -23,7 +23,7 @@ export function ProfessionalTemplate(data: EmailSignatureData) {
 				<p className="mb-2 text-muted-foreground">{data.greeting}</p>
 			)}
 			<div
-				className="rounded-lg bg-card p-4"
+				className="rounded-md bg-card p-4"
 				style={{ borderLeft: `4px solid ${data.primaryColor}` }}
 			>
 				<div style={{ marginBottom: sp }}>

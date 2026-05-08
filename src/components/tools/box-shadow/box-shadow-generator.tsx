@@ -400,17 +400,17 @@ box-shadow: ${shadowCSS};`
 
 			{/* Presets */}
 			<div className="space-y-3">
-				<p className="text-sm font-medium text-foreground">Presets</p>
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Presets</p>
 				<div className="flex flex-wrap gap-3">
 					{PRESETS.map((preset) => (
 						<button
 							key={preset.name}
 							type="button"
 							onClick={() => applyPreset(preset.layers)}
-							className="flex flex-col items-center gap-2 rounded-lg border p-3 transition-colors hover:bg-muted"
+							className="flex flex-col items-center gap-2 rounded-md border p-3 transition-colors hover:bg-muted"
 						>
 							<div
-								className="h-12 w-12 rounded-md border bg-white"
+								className="h-12 w-12 rounded-md border bg-card"
 								style={{
 									boxShadow: buildAllShadowsCSS(preset.layers),
 								}}
@@ -426,7 +426,7 @@ box-shadow: ${shadowCSS};`
 			{/* CSS Output */}
 			<div className="space-y-2">
 				<div className="flex items-center justify-between">
-					<p className="text-sm font-medium text-foreground">Código gerado</p>
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Código gerado</p>
 					<OptionSwitch
 						options={[
 							{ label: "CSS", value: "css" },

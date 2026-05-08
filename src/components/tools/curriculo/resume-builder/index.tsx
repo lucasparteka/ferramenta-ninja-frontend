@@ -56,7 +56,9 @@ function SectionCard({
 		<div className="space-y-5">
 			<div className="flex items-center gap-2">
 				{Icon && <Icon size={18} className="text-primary shrink-0" />}
-				<h2 className="text-xl font-semibold">{title}</h2>
+				<h2 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+					{title}
+				</h2>
 			</div>
 			{children}
 		</div>
@@ -83,7 +85,7 @@ function LivePreviewPanel({
 			color={color}
 			fontVar={fontVar}
 			fontZoom={fontZoom}
-			className="shadow-xl ring-1 ring-black/5 rounded-sm"
+			className="ring-1 ring-border rounded-md"
 		/>
 	);
 }
@@ -400,8 +402,8 @@ export function ResumeBuilder() {
 			<Separator />
 			<div className="hidden lg:flex flex-col gap-2 pt-6 pb-8">
 				{hasPendingChanges && (
-					<p className="flex items-center justify-end gap-1.5 text-sm text-amber-600 w-full ml-auto mb-2 italic">
-						<span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
+					<p className="flex items-center justify-end gap-1.5 text-sm text-warning w-full ml-auto mb-2 italic">
+						<span className="w-2 h-2 rounded-full bg-warning animate-pulse shrink-0" />
 						Alterações não salvas
 					</p>
 				)}
@@ -461,24 +463,24 @@ export function ResumeBuilder() {
 			<form onSubmit={form.handleSubmit(handleSubmit, scrollToFirstError)}>
 				<div className="hidden lg:flex gap-8 items-start">
 					<div className="w-120 xl:w-160 shrink-0">{formContent}</div>
-					<div className="flex-1 sticky top-22 min-w-0 shadow">
-						<div className="bg-slate-100">
+					<div className="flex-1 sticky top-22 min-w-0">
+						<div className="bg-muted">
 							<div className="flex items-center justify-between px-2 py-1.5">
 								<div className="flex items-center gap-2">
 									<p className="text-xs font-medium text-muted-foreground">
 										Pré-visualização
 									</p>
 									<span
-										className={`ml-2 flex items-center gap-1 text-xs text-amber-600 italic transition-opacity duration-300 ${hasPendingChanges ? "opacity-100" : "opacity-0"}`}
+										className={`ml-2 flex items-center gap-1 text-xs text-warning italic transition-opacity duration-300 ${hasPendingChanges ? "opacity-100" : "opacity-0"}`}
 									>
-										<span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+										<span className="w-1.5 h-1.5 rounded-full bg-warning animate-pulse" />
 										Alterações não salvas
 									</span>
 								</div>
 								<button
 									type="button"
 									onClick={() => setPreviewOpen(true)}
-									className="flex items-center justify-center w-6 h-6 rounded text-muted-foreground hover:text-foreground hover:bg-black/10 transition-colors"
+									className="flex items-center justify-center w-6 h-6 rounded text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
 									title="Expandir pré-visualização"
 								>
 									<Maximize2 className="h-3.5 w-3.5" />
@@ -497,15 +499,15 @@ export function ResumeBuilder() {
 					</div>
 				</div>
 				<div className="lg:hidden">{formContent}</div>
-				<div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t px-4 py-3 flex flex-col gap-3 shadow-[0_-4px_12px_rgba(0,0,0,0.08)]">
-					{hasPendingChanges && hasSavedData && (
-						<div className="flex items-center justify-between gap-3">
-							<p className="flex items-center gap-1.5 text-xs text-amber-600 italic">
-								<span className="size-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
+				<div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t px-4 py-3 flex flex-col gap-3">
+					<div className="flex items-center justify-between">
+						{hasPendingChanges && (
+							<p className="flex items-center gap-1.5 text-xs text-warning italic">
+								<span className="size-2 rounded-full bg-warning animate-pulse shrink-0" />
 								Alterações não salvas
 							</p>
-						</div>
-					)}
+						)}
+					</div>
 					<div className="flex gap-3">
 						<Button
 							type="button"

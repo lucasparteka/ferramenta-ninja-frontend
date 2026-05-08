@@ -186,7 +186,7 @@ export function TimestampConverter() {
 			</div>
 
 			{error && (
-				<div className="max-w-2xl rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-3">
+				<div className="max-w-2xl rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3">
 					<p className="text-sm font-medium text-destructive">{error}</p>
 				</div>
 			)}

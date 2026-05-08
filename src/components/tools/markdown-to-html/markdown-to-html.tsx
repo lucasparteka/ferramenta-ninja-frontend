@@ -133,7 +133,7 @@ export function MarkdownToHtml() {
 					<span className="block text-sm font-medium text-foreground">
 						Preview
 					</span>
-					<div className="min-h-[400px] max-h-[600px] overflow-auto rounded-lg border border-border bg-card p-4">
+					<div className="min-h-[400px] max-h-[600px] overflow-auto rounded-md border border-border bg-card p-4">
 						{html ? (
 							<SanitizedHtml html={html} className="markdown-preview" />
 						) : (

@@ -116,7 +116,7 @@ export function GradientGenerator() {
 				)}
 
 				<div className="space-y-3">
-					<p className="text-sm font-medium text-foreground">Cores</p>
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Cores</p>
 					{stops.map((stop, i) => (
 						<div key={stop.id} className="flex items-center gap-3">
 							<Input
@@ -177,7 +177,7 @@ export function GradientGenerator() {
 
 			<div className="max-w-2xl space-y-4">
 				<div
-					className="h-48 w-full rounded-lg border-2 border-border shadow-sm"
+					className="h-48 w-full rounded-lg border-2 border-border"
 					style={{ background: gradientCSS }}
 				/>
 

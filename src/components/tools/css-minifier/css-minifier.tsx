@@ -121,14 +121,14 @@ export function CssMinifier() {
 						</label>
 						<pre
 							id="minifier-output"
-							className="overflow-x-auto rounded-lg border bg-white border-input p-4 font-mono text-sm"
+							className="overflow-x-auto rounded-md border bg-card border-input p-4 font-mono text-sm"
 						>
 							<code>{output}</code>
 						</pre>
 					</div>
 
 					<ResultBox tone="primary">
-						<p className="text-3xl font-bold">
+						<p className="text-2xl font-semibold font-mono">
 							-{stats.reduction}%
 						</p>
 						<p className="mt-1 text-sm">

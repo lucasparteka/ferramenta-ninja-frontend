@@ -181,7 +181,7 @@ function ResultCard({ result }: { result: CompoundInterestResult }) {
 				<ResultRow label="Total em juros" value={brl(result.totalInterest)} />
 			</ResultGrid>
 
-			<details className="rounded-lg border border-border bg-card p-3">
+			<details className="rounded-md border border-border bg-card p-3">
 				<summary className="cursor-pointer text-sm font-medium text-foreground">
 					Ver evolução mês a mês
 				</summary>

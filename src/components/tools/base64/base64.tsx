@@ -114,7 +114,7 @@ export function Base64Tool() {
 			</div>
 
 			{error && (
-				<div className="max-w-4xl rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-3">
+				<div className="max-w-4xl rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3">
 					<p className="text-sm font-medium text-destructive">{error}</p>
 				</div>
 			)}
@@ -130,7 +130,7 @@ export function Base64Tool() {
 						</label>
 						<pre
 							id="base64-output"
-							className="overflow-x-auto rounded-lg border bg-white border-input p-4 font-mono text-sm"
+							className="overflow-x-auto rounded-md border bg-card border-input p-4 font-mono text-sm"
 						>
 							<code>{output}</code>
 						</pre>

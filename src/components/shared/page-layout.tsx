@@ -7,7 +7,6 @@ import {
 	faqSchema,
 	webApplicationSchema,
 } from "@/lib/seo/jsonld";
-import { Separator } from "../ui/separator";
 import { Breadcrumb } from "./breadcrumb";
 import { CategoryToolsSection } from "./category-tools-section";
 
@@ -46,19 +45,19 @@ export function PageLayout({
 		: [];
 
 	return (
-		<div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+		<div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 			{tool && breadcrumbs.length > 0 && <Breadcrumb items={breadcrumbs} />}
 
-			<div className="mb-8 max-w-2xl">
-				<h1 className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+			<div className="mb-6 space-y-1">
+				<h1 className="text-2xl font-semibold tracking-tight text-foreground">
 					{title}
 				</h1>
-				<p className="text-lg text-muted-foreground">{description}</p>
+				<p className="text-sm text-muted-foreground">{description}</p>
 			</div>
-			<Separator className="mb-5 lg:mb-7" />
+			<div className="border-t border-border my-6" />
 			{compact ? (
 				<div className="flex min-h-[50vh] items-center justify-center">
-					<div className="w-full md:rounded-xl md:border md:bg-card md:p-8 md:shadow-2xs">
+					<div className="w-full md:rounded-lg md:border md:bg-card md:p-5">
 						{children}
 					</div>
 				</div>
@@ -99,7 +98,7 @@ export function PageLayout({
 function FaqSection({ items }: { items: FaqItem[] }) {
 	return (
 		<section className="mt-12 space-y-6">
-			<h2 className="text-xl font-bold text-foreground">
+			<h2 className="text-base font-semibold text-foreground">
 				Perguntas frequentes
 			</h2>
 			<div className="space-y-6">

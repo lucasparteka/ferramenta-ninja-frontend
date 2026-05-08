@@ -259,7 +259,7 @@ export function MockDataGenerator() {
 				</Button>
 
 				{output && format === "json" && (isArrayType || isSingleArray) && (
-					<div className="flex items-center gap-1 rounded-lg border p-1">
+					<div className="flex items-center gap-1 rounded-md border p-1">
 						<button
 							type="button"
 							onClick={() => {
@@ -323,7 +323,7 @@ export function MockDataGenerator() {
 
 				<pre
 					className={cn(
-						"max-h-96 overflow-auto rounded-lg border border-input bg-white p-4 font-mono text-sm text-foreground",
+						"max-h-96 overflow-auto rounded-md border border-input bg-card p-4 font-mono text-sm text-foreground",
 						format === "json" && "json-formatter",
 					)}
 					// biome-ignore lint/security/noDangerouslySetInnerHtml: .
@@ -336,14 +336,22 @@ export function MockDataGenerator() {
 					<CopyButton text={output} label="Copiar" variant="outline" />
 
 					{format === "json" && (
-						<Button onClick={handleDownloadJSON} variant="outline" disabled={!output}>
+						<Button
+							onClick={handleDownloadJSON}
+							variant="outline"
+							disabled={!output}
+						>
 							<Download />
 							Download JSON
 						</Button>
 					)}
 
 					{format === "csv" && showCSV && (
-						<Button onClick={handleDownloadCSV} variant="outline" disabled={!output}>
+						<Button
+							onClick={handleDownloadCSV}
+							variant="outline"
+							disabled={!output}
+						>
 							<Download />
 							Download CSV
 						</Button>

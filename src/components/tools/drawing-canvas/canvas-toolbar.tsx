@@ -57,7 +57,7 @@ export function CanvasToolbar({
 		"flex items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 	return (
-		<div className="flex flex-row flex-wrap gap-4 rounded-lg border border-border bg-card p-3 lg:w-52 lg:shrink-0 lg:flex-col">
+		<div className="flex flex-row flex-wrap gap-4 rounded-md border border-border bg-card p-3 lg:w-52 lg:shrink-0 lg:flex-col">
 			<div className="flex flex-row flex-wrap gap-2 lg:flex-col">
 				<p className="hidden w-full text-xs font-medium text-muted-foreground lg:block">
 					Ferramentas

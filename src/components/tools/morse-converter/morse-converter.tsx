@@ -72,7 +72,7 @@ export function MorseConverter() {
 					/>
 				</div>
 
-				<div className="rounded-lg border border-border bg-secondary p-3 text-xs text-muted-foreground">
+				<div className="rounded-md border border-border bg-secondary p-3 text-xs text-muted-foreground">
 					<p className="font-medium text-foreground">
 						Formato do código Morse:
 					</p>

@@ -5,7 +5,12 @@ import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
-import { calculateDay, calculateWeek, formatMinutes, formatDecimal } from "@/lib/work-hours";
+import {
+	calculateDay,
+	calculateWeek,
+	formatMinutes,
+	formatDecimal,
+} from "@/lib/work-hours";
 import type { DayEntry } from "@/lib/work-hours";
 
 const DAY_LABELS = [
@@ -31,7 +36,11 @@ function useWorkHoursState() {
 		DAY_LABELS.map(emptyEntry),
 	);
 
-	function update(index: number, field: keyof DayEntry, value: string | number) {
+	function update(
+		index: number,
+		field: keyof DayEntry,
+		value: string | number,
+	) {
 		setEntries((prev) =>
 			prev.map((e, i) => (i === index ? { ...e, [field]: value } : e)),
 		);
@@ -81,7 +90,7 @@ export function WorkHoursCalculator() {
 			</div>
 
 			<ResultBox label="Total da Semana">
-				<p className="text-3xl font-bold text-foreground">
+				<p className="text-2xl font-semibold font-mono text-foreground">
 					{weekResult.weeklyTotalFormatted}
 				</p>
 				<p className="text-sm text-muted-foreground">
@@ -109,9 +118,9 @@ export function WorkHoursCalculator() {
 				/>
 				<Stat
 					label="Dias trabalhados na semana"
-					value={
-						weekResult.days.filter((d) => d.totalMinutes > 0).length.toString()
-					}
+					value={weekResult.days
+						.filter((d) => d.totalMinutes > 0)
+						.length.toString()}
 				/>
 				<Stat
 					label="Total em horas decimais"
@@ -138,7 +147,7 @@ function DayRow({
 
 	return (
 		<div
-			className={`rounded-lg border p-3 ${
+			className={`rounded-md border p-3 ${
 				isWeekend ? "border-dashed border-border/60" : "border-border"
 			}`}
 		>
@@ -163,7 +172,7 @@ function DayRow({
 				<div className="space-y-1">
 					<label
 						htmlFor={`${uid}-break`}
-						className="block text-[10px] uppercase tracking-wider text-muted-foreground"
+						className="block text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"
 					>
 						Intervalo
 					</label>
@@ -189,7 +198,7 @@ function DayRow({
 								<p className="text-sm font-semibold text-foreground">
 									{result.formatted}
 								</p>
-								<p className="text-[10px] text-muted-foreground">
+								<p className="text-[11px] text-muted-foreground">
 									{formatDecimal(result.totalMinutes)}h
 								</p>
 							</>
@@ -218,18 +227,23 @@ function TimeInput({
 		<div className="space-y-1">
 			<label
 				htmlFor={id}
-				className="block text-[10px] uppercase tracking-wider text-muted-foreground"
+				className="block text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"
 			>
 				{label}
 			</label>
-			<Input id={id} type="time" value={value} onChange={(e) => onChange(e.target.value)} />
+			<Input
+				id={id}
+				type="time"
+				value={value}
+				onChange={(e) => onChange(e.target.value)}
+			/>
 		</div>
 	);
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
 	return (
-		<div className="rounded-lg border border-border bg-card p-3">
+		<div className="rounded-md border border-border bg-card p-3">
 			<dt className="text-xs text-muted-foreground">{label}</dt>
 			<dd className="mt-1 text-base font-semibold text-foreground">{value}</dd>
 		</div>

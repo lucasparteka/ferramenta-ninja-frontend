@@ -139,7 +139,7 @@ export function BusinessDaysCalculator() {
 				{/* Year presets - only in range mode */}
 				{mode === "range" && (
 					<div className="space-y-2">
-						<span className="block text-sm font-medium text-foreground">
+						<span className="block text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Ano completo
 						</span>
 						<div className="flex flex-wrap gap-2">
@@ -265,14 +265,14 @@ export function BusinessDaysCalculator() {
 
 					{result.range.holidays.length > 0 && (
 						<div className="space-y-2">
-							<h4 className="text-sm font-semibold text-foreground">
+							<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Feriados no período
-							</h4>
+							</p>
 							<div className="grid gap-2">
 								{result.range.holidays.map((h) => (
 									<div
 										key={h.date}
-										className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2 text-sm"
+										className="flex items-center justify-between rounded-md border border-border bg-card px-3 py-2 text-sm"
 									>
 										<span className="text-muted-foreground">
 											{formatFullDate(new Date(h.date + "T12:00:00"))}

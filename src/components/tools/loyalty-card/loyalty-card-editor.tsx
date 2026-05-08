@@ -84,7 +84,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 	return (
 		<div className="space-y-3">
 			<Label>Cor de Fundo</Label>
-			<div className="flex gap-1 rounded-lg border border-border bg-muted p-1">
+			<div className="flex gap-1 rounded-md border border-border bg-muted p-1">
 				{(["solid", "gradient", "texture"] as const).map((type) => (
 					<button
 						key={type}
@@ -123,7 +123,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 						}}
 						className={`flex-1 rounded px-2 py-1 text-xs font-medium transition-colors ${
 							value.type === type
-								? "bg-background text-foreground shadow-sm"
+								? "bg-background text-foreground"
 								: "text-muted-foreground hover:text-foreground"
 						}`}
 					>
@@ -233,7 +233,7 @@ function BackgroundPicker({ value, onChange }: BackgroundPickerProps) {
 								className={cn(
 									"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 									value.texture === tex.value
-										? "border-primary bg-primary text-white"
+										? "border-primary bg-primary text-primary-foreground"
 										: "border-border bg-background text-foreground hover:border-primary",
 								)}
 							>
@@ -362,7 +362,7 @@ export function LoyaltyCardEditor() {
 					onClick={() => setActiveTab("frente")}
 					className={`px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 						activeTab === "frente"
-							? "border-b-2 border-primary text-primary"
+							? "border-b border-primary text-primary"
 							: "text-muted-foreground hover:text-foreground"
 					}`}
 				>
@@ -373,7 +373,7 @@ export function LoyaltyCardEditor() {
 					onClick={() => setActiveTab("verso")}
 					className={`px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 						activeTab === "verso"
-							? "border-b-2 border-primary text-primary"
+							? "border-b border-primary text-primary"
 							: "text-muted-foreground hover:text-foreground"
 					}`}
 				>
@@ -448,7 +448,7 @@ export function LoyaltyCardEditor() {
 													className={cn(
 														"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 														frontData.socialIconStyle === s
-															? "border-primary bg-primary text-white"
+															? "border-primary bg-primary text-primary-foreground"
 															: "border-border bg-background text-foreground hover:border-primary",
 													)}
 												>
@@ -520,7 +520,7 @@ export function LoyaltyCardEditor() {
 													className={cn(
 														"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 														frontData.socialIconStyle === s
-															? "border-primary bg-primary text-white"
+															? "border-primary bg-primary text-primary-foreground"
 															: "border-border bg-background text-foreground hover:border-primary",
 													)}
 												>
@@ -576,7 +576,7 @@ export function LoyaltyCardEditor() {
 													className={cn(
 														"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 														frontData.socialIconStyle === s
-															? "border-primary bg-primary text-white"
+															? "border-primary bg-primary text-primary-foreground"
 															: "border-border bg-background text-foreground hover:border-primary",
 													)}
 												>
@@ -677,25 +677,25 @@ export function LoyaltyCardEditor() {
 											alt="Logo carregado"
 											className="h-12 w-12 rounded border border-border object-contain"
 										/>
-									<Button
-										type="button"
-										variant="outline"
-										onClick={removeLogo}
-									>
-										<X className="size-3" />
-										Remover
-									</Button>
+										<Button
+											type="button"
+											variant="outline"
+											onClick={removeLogo}
+										>
+											<X className="size-3" />
+											Remover
+										</Button>
 									</div>
 								) : (
 									<div>
-									<Button
-										type="button"
-										variant="outline"
-										onClick={() => logoInputRef.current?.click()}
-									>
-										<Upload className="size-4" />
-										Carregar logo
-									</Button>
+										<Button
+											type="button"
+											variant="outline"
+											onClick={() => logoInputRef.current?.click()}
+										>
+											<Upload className="size-4" />
+											Carregar logo
+										</Button>
 										<input
 											ref={logoInputRef}
 											type="file"
@@ -729,7 +729,7 @@ export function LoyaltyCardEditor() {
 											className={cn(
 												"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 												backData.stampCount === count
-													? "border-primary bg-primary text-white"
+													? "border-primary bg-primary text-primary-foreground"
 													: "border-border bg-background text-foreground hover:border-primary",
 											)}
 										>
@@ -753,7 +753,7 @@ export function LoyaltyCardEditor() {
 											className={cn(
 												"rounded-md border px-3 py-1.5 text-sm font-medium transition-colors",
 												backData.stampStyle === style
-													? "border-primary bg-primary text-white"
+													? "border-primary bg-primary text-primary-foreground"
 													: "border-border bg-background text-foreground hover:border-primary",
 											)}
 										>

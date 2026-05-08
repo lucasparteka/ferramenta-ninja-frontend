@@ -1,62 +1,57 @@
-# AGENTS.md – Frontend Development Guide
+## Visual Design — Required Reading
 
-## Project Overview
+**Before** planning any UI implementation or refactor, read:
 
-Next.js application focused on building SEO-driven utility tools.
+1. [`DESIGN.md`](./DESIGN.md) — visual manifesto (philosophy, tokens,
+   components, layouts, anti-patterns, checklists). The single source of
+   truth for how the site and tools should look.
+2. [`REFACTOR.md`](./REFACTOR.md) — migration plan. Required when
+   touching existing code; describes phases, primitive overrides, and
+   per-tool roadmap.
 
-### Stack
+**After** implementing, run the post-implementation checklist in
+`DESIGN.md` §15.
 
-- Next.js (App Router)
-- TypeScript
-- Tailwind CSS (v4)
-- shadcn/ui
-- React Hook Form + Zod
-- pnpm
-- Biome
-- lucide-react
+If `DESIGN.md` and `audit/02-design-system.md` conflict, `DESIGN.md`
+wins. The `audit/02` document describes the **previous** state and is
+historical.
 
----
-
-## Core Principles
-
-1. **Simplicity first** — prefer simple solutions, avoid premature optimization
-2. **Performance by default** — prefer Server Components, avoid unnecessary state and effects
-3. **SEO-first** — every page follows the defined structure (see `/app/AGENTS.md`)
-4. **Accessibility first** — semantic HTML, keyboard navigation, ARIA when needed
-5. **Consistency over preference** — follow existing patterns strictly
+The aesthetic target is **precision instrument** (Figma, Linear, Vercel,
+Raycast), not "friendly SaaS". See `DESIGN.md` §1 for the full
+philosophy and §13 for the soft-SaaS detector.
 
 ---
+```
 
-## Code Style
+## Alterações nas sub-AGENTS.md (opcionais)
 
-- Language: **English** (UI labels in **pt-BR**)
-- No comments, no emojis
-- Prefer `type` over `interface`
-- Prefer `function` over arrow functions
-- Components: PascalCase | Functions: camelCase | Files: kebab-case
-- Use descriptive names, avoid abbreviations
+### `src/app/AGENTS.md`
 
----
+Adicione no final:
 
-## What NOT to Do
+```markdown
+## Visual rules
 
-- Do not add comments in code
-- Do not add extra empty lines between html tags
-- Do not introduce new libraries without clear need
-- Do not break existing patterns
-- Do not hardcode styles outside design tokens
-- Do not use inline styles
-- Do not expose env variables in code
-- Do not expose internal errors to users
+Page chrome (h1, description, layout containers) follows
+[`/DESIGN.md`](../../DESIGN.md) §11. In particular: H1 is `text-2xl
+font-semibold tracking-tight`, description is `text-sm
+text-muted-foreground`, page padding is `py-8` (not `py-12`).
+```
 
----
+### `src/components/AGENTS.md`
 
-## Expected Behavior
+Adicione no final:
 
-When generating code:
+```markdown
+## Visual rules
 
-- Follow all rules in this document and in subdirectory AGENTS.md files
-- Produce complete, working, production-ready code
-- Avoid overengineering — prefer clarity over cleverness
-- No unnecessary explanation unless requested
-- If any requirement is unclear: default to simplicity, follow existing patterns
+All component visual decisions (tokens, spacing, radii, shadows) follow
+[`/DESIGN.md`](../../DESIGN.md). Key shortcuts:
+
+- No shadows on cards, panels, inputs, buttons. Only popover/dialog/toast.
+- Border radius max `rounded-lg` (8px). Default for inputs/buttons:
+  `rounded-md` (6px).
+- Section headers: `text-[11px] font-semibold uppercase tracking-wider
+  text-muted-foreground`.
+- Numbers/dimensions/IDs: `font-mono`.
+- One `<Button variant="default">` per screen.

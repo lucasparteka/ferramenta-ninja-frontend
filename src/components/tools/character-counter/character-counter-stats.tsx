@@ -25,14 +25,19 @@ export function CharacterCounterStats({ stats }: CharacterCounterStatsProps) {
 	];
 
 	return (
-		<div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+		<div className="p-4 space-y-2">
+			<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+				Contagens
+			</h3>
 			{items.map((item) => (
 				<div
 					key={item.label}
-					className="rounded-md border border-border bg-card p-4 text-center"
+					className="flex items-center justify-between py-0.5"
 				>
-					<p className="text-2xl font-semibold font-mono text-primary">{item.value}</p>
-					<p className="mt-1 text-xs text-muted-foreground">{item.label}</p>
+					<span className="text-xs text-muted-foreground">{item.label}</span>
+					<span className="font-mono text-xs font-medium tabular-nums">
+						{item.value}
+					</span>
 				</div>
 			))}
 		</div>

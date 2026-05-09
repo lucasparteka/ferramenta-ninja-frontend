@@ -6,7 +6,7 @@ import { URLEncoder } from "@/components/tools/url-encoder/url-encoder";
 export const metadata: Metadata = {
 	title: "Codificador de URL Online Grátis | Ferramenta Ninja",
 	description:
-		"Codifique e decodifique URLs online com encodeURIComponent e encodeURI. Suporte a caracteres especiais, emojis e acentos. Ferramenta 100% gratuita.",
+		"Codifique e decodifique URLs online. Suporte a parâmetros, caracteres especiais, emojis e acentos. Ferramenta 100% gratuita.",
 };
 
 const faq = [
@@ -16,19 +16,19 @@ const faq = [
 			"A codificação de URL converte caracteres especiais, acentos, espaços e emojis em uma sequência segura de caracteres ASCII usando o formato percent-encoding (ex: espaço vira %20, ç vira %C3%A7). Isso garante que a URL seja interpretada corretamente por navegadores e servidores.",
 	},
 	{
-		question: "Qual a diferença entre encodeURI e encodeURIComponent?",
+		question: "Qual a diferença entre os modos de codificação?",
 		answer:
-			"encodeURIComponent codifica TUDO, incluindo caracteres estruturais da URL como ://, /, ?, &, = e #. Já encodeURI preserva esses caracteres, mantendo a estrutura da URL intacta. Use encodeURIComponent para query parameters e partes individuais de uma URL. Use encodeURI quando precisar codificar uma URL completa.",
+			"O modo Parâmetro codifica tudo, incluindo os sinais estruturais da URL como ://, /, ?, & e =. Use para valores de formulários, query strings e qualquer texto que será inserido dentro de uma URL. O modo URL Completa preserva a estrutura da URL e codifica apenas acentos, espaços e emojis — ideal para codificar uma URL já formada sem quebrar sua estrutura.",
 	},
 	{
-		question: "Quando devo usar encodeURIComponent?",
+		question: "Quando devo usar o modo Parâmetro?",
 		answer:
-			"Use encodeURIComponent quando precisar codificar um valor que será inserido em uma URL, como parâmetros de query string (?nome=João), valores de formulários ou qualquer texto que pode conter caracteres especiais. Ele garante que caracteres como /, ?, & e = não quebrem a estrutura da URL.",
+			"Use o modo Parâmetro quando precisar codificar um valor que será inserido em uma URL, como parâmetros de query string (?nome=João), valores de formulários ou qualquer texto que pode conter caracteres especiais. Ele garante que caracteres como /, ?, & e = não quebrem a estrutura da URL.",
 	},
 	{
 		question: "Posso codificar uma URL inteira?",
 		answer:
-			"Sim! Para codificar uma URL completa (ex: https://exemplo.com/caminho?param=valor), use o modo encodeURI. Ele preserva os caracteres estruturais (:, /, ?, &, =) e codifica apenas os caracteres que precisam de escape, como espaços, acentos e emojis.",
+			"Sim! Para codificar uma URL completa (ex: https://exemplo.com/caminho?param=valor), use o modo URL Completa. Ele preserva os caracteres estruturais (:, /, ?, &, =) e codifica apenas os caracteres que precisam de escape, como espaços, acentos e emojis.",
 	},
 	{
 		question: "É seguro decodificar URLs?",
@@ -47,9 +47,9 @@ function SeoContent() {
 				Esta ferramenta permite codificar e decodificar URLs de forma rápida e
 				segura. Escolha entre codificar (converter caracteres especiais) ou
 				decodificar (reverter para o texto original). No modo de codificação,
-				você pode escolher entre <strong>encodeURIComponent</strong> (para query
-				parameters e partes de URL) ou <strong>encodeURI</strong> (para URLs
-				completas).
+				você pode escolher entre o modo <strong>Parâmetro</strong> (para valores
+				e partes de URL) ou <strong>URL Completa</strong> (para codificar uma
+				URL já formada).
 			</p>
 
 			<h2 className="text-2xl font-bold text-foreground">
@@ -67,11 +67,11 @@ function SeoContent() {
 				Diferença entre os modos de codificação
 			</h2>
 			<p className="text-muted-foreground">
-				O <strong>encodeURIComponent</strong> é o mais comum e codifica todos os
-				caracteres, tornando-o ideal para valores de parâmetros. O{" "}
-				<strong>encodeURI</strong> preserva a estrutura da URL, sendo indicado
-				quando você tem uma URL completa e quer apenas garantir que os
-				caracteres de conteúdo sejam seguros.
+				O modo <strong>Parâmetro</strong> é o mais comum e codifica todos os
+				caracteres, incluindo os estruturais, tornando-o ideal para valores de
+				parâmetros. O modo <strong>URL Completa</strong> preserva a estrutura da
+				URL, sendo indicado quando você tem uma URL pronta e quer apenas
+				garantir que acentos, espaços e emojis sejam seguros.
 			</p>
 		</section>
 	);
@@ -83,7 +83,7 @@ export default function CodificadorURLPage() {
 			compact
 			toolHref="/ferramentas/codificador-de-url"
 			title="Codificador de URL Online Grátis"
-			description="Codifique e decodifique URLs online com encodeURIComponent e encodeURI. Suporte a caracteres especiais, emojis e acentos."
+			description="Codifique e decodifique URLs online. Suporte a parâmetros, caracteres especiais, emojis e acentos."
 			faq={faq}
 			relatedTools={
 				<RelatedTools currentHref="/ferramentas/codificador-de-url" />

@@ -318,9 +318,32 @@ o texto em outro formato.
 
 ### Grid
 
+> **Use o componente `<LayoutD>` em vez de escrever o grid manualmente.**
+> Ele está em `@/components/shared/layout-d` e encapsula o container,
+> o header e a sidebar. Veja a API abaixo.
+
 ```tsx
-<div className="rounded-lg border border-border overflow-hidden
-                flex flex-col md:grid md:grid-cols-[1fr_240px]">
+import { LayoutD } from "@/components/shared/layout-d";
+
+<LayoutD
+  header={<>
+    <div className="flex items-center gap-3">{/* título + badge */}</div>
+    <div className="flex items-center gap-1.5">{/* ações */}</div>
+  </>}
+  sidebar={<>{/* seções da sidebar */}</>}
+  sidebarWidth={240}        {/* opcional — default 240 */}
+  mainAreaClassName=""      {/* opcional — ex: "relative" */}
+>
+  {/* área principal + toolbar inferior */}
+</LayoutD>
+```
+
+O grid bruto equivalente, para referência:
+
+```tsx
+<div className="rounded-sm border border-border overflow-hidden
+                flex flex-col md:grid"
+     style={{ gridTemplateColumns: "1fr 240px" }}>
 ```
 
 ### Área principal

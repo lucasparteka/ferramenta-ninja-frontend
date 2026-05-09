@@ -9,9 +9,9 @@ type CategoryContent = {
 export const categoryContent: Record<string, CategoryContent> = {
 	texto: {
 		intro:
-			"Ferramentas para manipular, contar, limpar e formatar texto direto no navegador.",
+			"Ferramentas para manipular, contar, limpar, formatar e gerar texto direto no navegador.",
 		longDescription:
-			"Lidar com texto bruto consome tempo: contar palavras de uma redação, remover linhas duplicadas em uma lista, limpar caracteres invisíveis colados de um e-mail, formatar mensagens para o WhatsApp ou comparar duas versões de um documento. Reunimos aqui as ferramentas de texto mais usadas no dia a dia, todas funcionando 100% no seu navegador. Nada é enviado para servidores — privacidade total. Use sem cadastro, sem instalação e quantas vezes precisar.",
+			"Lidar com texto bruto consome tempo: contar palavras de uma redação, remover linhas duplicadas em uma lista, limpar caracteres invisíveis colados de um e-mail, formatar mensagens para o WhatsApp, comparar duas versões de um documento ou gerar Lorem Ipsum para protótipos. Reunimos aqui as ferramentas de texto mais usadas no dia a dia, todas funcionando 100% no seu navegador. Nada é enviado para servidores — privacidade total. Use sem cadastro, sem instalação e quantas vezes precisar.",
 		faq: [
 			{
 				question: "Meus textos são salvos em algum servidor?",
@@ -25,46 +25,29 @@ export const categoryContent: Record<string, CategoryContent> = {
 			},
 		],
 	},
-	"geradores-texto": {
-		intro: "Gere conteúdo de texto para protótipos, testes e inspiração.",
-		longDescription:
-			"Lorem Ipsum, frases aleatórias e geradores temáticos são úteis em maquetes, layouts e testes de campo. Em vez de inventar conteúdo na hora, use um gerador para preencher rápido e focar no design ou na lógica. As ferramentas funcionam offline no navegador — basta abrir e copiar.",
-	},
 	dados: {
 		intro:
-			"Conversores e codificadores: binário, base64, hash, código Morse, unidades.",
+			"Conversores, formatadores e visualizadores de dados: CSV, JSON, binário, base64, hash, código Morse, unidades.",
 		longDescription:
-			"Converter dados entre formatos é tarefa recorrente: gerar hash MD5/SHA, codificar em base64, traduzir um número decimal para binário, ou simplesmente converter quilômetros para milhas. Centralizamos os conversores mais usados, todos client-side. Sem rede, sem upload, sem espera.",
+			"Converter dados entre formatos é tarefa recorrente: gerar hash MD5/SHA, codificar em base64, traduzir um número decimal para binário, converter quilômetros para milhas, visualizar CSV como tabela ou transformar planilhas em JSON/SQL/PDF. Centralizamos os conversores e processadores de dados mais usados, todos client-side. Sem rede, sem upload, sem espera.",
 		faq: [
 			{
 				question: "Os hashes gerados são confiáveis para uso em segurança?",
 				answer:
 					"Os algoritmos seguem padrões públicos (RFC), mas para uso crítico (autenticação, criptografia) sempre valide com bibliotecas auditadas no seu backend.",
 			},
-		],
-	},
-	csv: {
-		intro: "Visualize, converta e transforme arquivos CSV sem instalar nada.",
-		longDescription:
-			"CSV é o formato universal de planilhas, mas trabalhar com arquivos grandes ou converter para JSON, SQL ou PDF normalmente exige scripts. Aqui você arrasta o arquivo, vê o resultado e baixa — tudo sem upload para servidor. Útil para analistas, desenvolvedores e qualquer um que precise extrair valor rápido de uma planilha.",
-		faq: [
 			{
-				question: "Os arquivos são enviados para algum servidor?",
+				question: "Os arquivos CSV são enviados para algum servidor?",
 				answer:
 					"Não. O parsing acontece inteiramente no navegador. Seus dados não saem do seu computador.",
-			},
-			{
-				question: "Qual o tamanho máximo de arquivo CSV suportado?",
-				answer:
-					"Depende da memória disponível no navegador. Arquivos até algumas dezenas de megabytes funcionam bem na maioria dos dispositivos.",
 			},
 		],
 	},
 	documentos: {
 		intro:
-			"Crie currículos, recibos, ordens de serviço e outros documentos prontos para imprimir.",
+			"Crie currículos, cardápios, recibos, ordens de serviço e outros documentos prontos para imprimir.",
 		longDescription:
-			"Documentos práticos sem precisar de Word ou Google Docs: monte um currículo profissional, gere um recibo formal, emita uma ordem de serviço, crie um cartão fidelidade ou monte um cardápio digital. Cada ferramenta gera PDF pronto para impressão ou compartilhamento. Sem cadastro, sem watermark, sem limite de uso.",
+			"Documentos práticos sem precisar de Word ou Google Docs: monte um currículo profissional, gere um recibo formal, emita uma ordem de serviço, crie um cartão fidelidade, monte um cardápio digital ou configure uma assinatura de email profissional. Cada ferramenta gera PDF pronto para impressão ou compartilhamento. Sem cadastro, sem watermark, sem limite de uso.",
 		faq: [
 			{
 				question: "Posso usar comercialmente os documentos gerados?",
@@ -72,6 +55,25 @@ export const categoryContent: Record<string, CategoryContent> = {
 					"Sim. Os PDFs são seus, sem watermark e sem restrição de uso. Use livremente para fins pessoais ou comerciais.",
 			},
 		],
+	},
+	identificadores: {
+		intro:
+			"Gere e valide CPF, CNPJ e cartões de crédito para testes e desenvolvimento.",
+		longDescription:
+			"Geradores e validadores de documentos brasileiros (CPF, CNPJ) e cartões de crédito para uso em desenvolvimento e testes de software. Os documentos gerados são matematicamente válidos mas fictícios — destinam-se exclusivamente a testes e nunca devem ser usados para fraude.",
+		faq: [
+			{
+				question: "Posso usar os CPF/CNPJ gerados para algum cadastro real?",
+				answer:
+					"Não. Os documentos são fictícios e existem apenas para teste de software. Usar para fraude é crime previsto no Código Penal.",
+			},
+		],
+	},
+	"consultas-brasil": {
+		intro:
+			"Consulte CEP, CNPJ, tabela FIPE, decodifique PIX e valide boletos brasileiros.",
+		longDescription:
+			"Ferramentas de consulta a serviços e dados brasileiros: busca de endereço por CEP via ViaCEP, dados cadastrais de empresa na Receita Federal, preço médio de veículos na tabela FIPE, decodificação de strings PIX copia e cola, e validação de boletos bancários. As consultas usam APIs públicas e funcionam direto no navegador.",
 	},
 	calculadoras: {
 		intro:
@@ -96,33 +98,33 @@ export const categoryContent: Record<string, CategoryContent> = {
 			},
 		],
 	},
-	sorteios: {
-		intro: "Sorteios e geradores de números aleatórios para qualquer ocasião.",
+	utilitarios: {
+		intro:
+			"Ferramentas úteis do dia a dia: cronômetro, sorteios, teste de digitação e mais.",
 		longDescription:
-			"Precisa sortear um vencedor, distribuir tarefas ou gerar números aleatórios para teste? Use nossos sorteios online — funcionam no navegador, sem cadastro, sem login. Resultado imediato e auditável.",
+			"Utilitários rápidos para o dia a dia: meça sua velocidade de digitação, use um cronômetro preciso, impeça a tela de desligar, gere links diretos para WhatsApp, sorteie listas ou gere números aleatórios. Tudo funciona no navegador, sem cadastro, sem instalação.",
 	},
 	seguranca: {
-		intro:
-			"Geradores e validadores de senhas, UUIDs, CPF, CNPJ e cartões para teste.",
+		intro: "Geradores e validadores de senhas, UUIDs, criptografia e hashes.",
 		longDescription:
-			"Geradores de senhas seguras com tamanho e composição configuráveis, UUIDs para sistemas, e validadores/geradores de documentos brasileiros (CPF, CNPJ) para uso em desenvolvimento. Importante: os documentos gerados são matematicamente válidos mas fictícios — destinam-se exclusivamente a testes e nunca devem ser usados para fraude.",
+			"Geradores de senhas seguras com tamanho e composição configuráveis, UUIDs para sistemas, criptografia de texto (AES, Base64, ROT13) e geradores de hash (MD5, SHA-1, SHA-256, SHA-512). Ferramentas client-side que não enviam dados para servidores.",
 		faq: [
 			{
 				question: "As senhas geradas são realmente aleatórias?",
 				answer:
 					"Sim. Usamos a Web Crypto API do navegador (crypto.getRandomValues), que é criptograficamente segura.",
 			},
-			{
-				question: "Posso usar os CPF/CNPJ gerados para algum cadastro real?",
-				answer:
-					"Não. Os documentos são fictícios e existem apenas para teste de software. Usar para fraude é crime previsto no Código Penal.",
-			},
 		],
+	},
+	codigos: {
+		intro: "Gere e leia QR codes, códigos de barras e códigos em lote.",
+		longDescription:
+			"Geradores de QR codes personalizados (com cores, logo, Wi-Fi, PIX), leitor de QR por imagem, gerador de códigos de barras em diversos formatos e geração em lote. Tudo funciona localmente no navegador — seus dados nunca saem do dispositivo.",
 	},
 	imagens: {
 		intro: "Editores e processadores de imagem direto no navegador.",
 		longDescription:
-			"Reduza, converta e edite imagens sem instalar Photoshop. Tudo funciona localmente — suas imagens nunca são enviadas a servidores. Ideal para tarefas rápidas: comprimir uma foto antes de enviar por e-mail, converter PNG para JPG, ou fazer um desenho rápido.",
+			"Reduza, converta, recorte e edite imagens sem instalar Photoshop. Inclui OCR para extrair texto de imagens e desenho livre no navegador. Tudo funciona localmente — suas imagens nunca são enviadas a servidores. Ideal para tarefas rápidas: comprimir uma foto antes de enviar por e-mail, converter PNG para JPG, ou fazer um desenho rápido.",
 	},
 	pdf: {
 		intro: "Junte, comprima e manipule arquivos PDF sem upload.",
@@ -141,5 +143,10 @@ export const categoryContent: Record<string, CategoryContent> = {
 			"Emojis, símbolos especiais e emoticons prontos para copiar e colar.",
 		longDescription:
 			"Coleções organizadas de emojis, símbolos Unicode e emoticons. Encontre rápido o caractere que precisa, clique e cole onde quiser. Útil para mensagens, redes sociais, design e documentação.",
+	},
+	desenvolvedor: {
+		intro: "Ferramentas para desenvolvimento web, programação e design CSS.",
+		longDescription:
+			"Codificação e decodificação de Base64 e URL, conversão de timestamps, minificação de CSS/JS/HTML, conversão de Markdown para HTML, geração de meta tags e favicons, paletas de cores, gradientes CSS e box shadows. Tudo que um desenvolvedor front-end precisa para prototipar e otimizar rapidamente.",
 	},
 };

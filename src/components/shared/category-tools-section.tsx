@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { findCategoryByToolHref } from "@/lib/data/tools";
 import { cn } from "@/lib/utils";
@@ -15,16 +16,17 @@ export function CategoryToolsSection({
 	const others = category.tools;
 
 	return (
-		<section className="mt-20 lg:mt-36">
+		<section className="mt-12 lg:mt-16">
 			<div className="mb-4 flex justify-between max-md:flex-col">
-				<h2 className="text-lg font-semibold text-foreground">
-					Ferramentas da categoria {category.name}:
+				<h2 className="text-base font-semibold">
+					Ferramentas da categoria {category.name}
 				</h2>
 				<Link
 					href={`/categorias/${category.id}`}
-					className="text-sm font-medium text-primary hover:underline max-md:my-2"
+					className="flex items-center text-sm text-foreground transition-colors hover:text-primary max-md:my-2"
 				>
-					Ver categoria completa →
+					Ver categoria completa
+					<ArrowRight className="ml-1 h-3 w-3" />
 				</Link>
 			</div>
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -34,15 +36,15 @@ export function CategoryToolsSection({
 						<div
 							key={tool.href}
 							className={cn(
-								"rounded-lg border p-3 transition-colors",
+								"rounded-sm border p-3 transition-colors",
 								isCurrent
-									? "border-primary/30 bg-primary/5"
-									: "border-border bg-card hover:bg-accent",
+									? "border-foreground/30 bg-muted"
+									: "border-border bg-card hover:bg-muted",
 							)}
 						>
 							{isCurrent ? (
 								<div className="flex items-start gap-2">
-									<span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
+									<span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
 									<div>
 										<p className="text-sm font-semibold text-foreground">
 											{tool.name}
@@ -54,7 +56,7 @@ export function CategoryToolsSection({
 								</div>
 							) : (
 								<Link href={tool.href} className="flex items-start gap-2">
-									<span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-muted-foreground/40" />
+									<span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-muted-foreground/40" />
 									<div>
 										<p className="text-sm font-semibold text-foreground">
 											{tool.name}

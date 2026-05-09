@@ -1,144 +1,181 @@
 "use client";
 
-import { useState } from "react";
+import { ArrowLeftRight, Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
-import { OptionSwitch } from "@/components/shared/option-switch";
-import { Textarea } from "@/components/ui/textarea";
-import { encodeURL, decodeURL } from "@/lib/encoding/url";
-import { Info } from "lucide-react";
+import { LayoutC } from "@/components/shared/layout-c";
+import { Button } from "@/components/ui/button";
+import { decodeURL, encodeURL } from "@/lib/encoding/url";
+
+type Direction = "encode" | "decode";
+type EncMode = "component" | "full";
 
 export function URLEncoder() {
-	const [direction, setDirection] = useState<"encode" | "decode">("encode");
-	const [mode, setMode] = useState<"component" | "full">("component");
 	const [input, setInput] = useState("");
-	const [output, setOutput] = useState("");
-	const [error, setError] = useState("");
+	const [direction, setDirection] = useState<Direction>("encode");
+	const [encMode, setEncMode] = useState<EncMode>("component");
 
-	function process(
-		value: string,
-		dir: "encode" | "decode",
-		encMode: "component" | "full",
-	) {
-		setError("");
-		if (!value.trim()) {
-			setOutput("");
-			return;
-		}
+	const result = useMemo(() => {
+		if (!input.trim()) return { output: "", error: null };
 		try {
-			if (dir === "encode") {
-				setOutput(encodeURL(value, encMode));
-			} else {
-				setOutput(decodeURL(value));
-			}
+			const output =
+				direction === "encode"
+					? encodeURL(input, encMode)
+					: decodeURL(input);
+			return { output, error: null };
 		} catch (e) {
-			setError(e instanceof Error ? e.message : "Erro na conversão.");
-			setOutput("");
+			return {
+				output: "",
+				error: e instanceof Error ? e.message : "Erro desconhecido.",
+			};
+		}
+	}, [input, direction, encMode]);
+
+	function handleSwap() {
+		if (result.output) {
+			setInput(result.output);
+			setDirection(direction === "encode" ? "decode" : "encode");
 		}
 	}
 
-	function handleInputChange(value: string) {
-		setInput(value);
-		process(value, direction, mode);
+	function handleClear() {
+		setInput("");
 	}
 
-	function handleDirectionChange(newDir: "encode" | "decode") {
-		setDirection(newDir);
-		process(input, newDir, mode);
-	}
-
-	function handleModeChange(newMode: "component" | "full") {
-		setMode(newMode);
-		if (direction === "encode") {
-			process(input, direction, newMode);
-		}
-	}
+	const inputLen = input.length;
+	const outputLen = result.output.length;
 
 	return (
-		<div className="space-y-6">
-			<OptionSwitch
-				options={[
-					{ label: "Codificar", value: "encode" },
-					{ label: "Decodificar", value: "decode" },
-				]}
-				value={direction}
-				onChange={(v) => handleDirectionChange(v as "encode" | "decode")}
-			/>
-
-			{direction === "encode" && (
-				<div className="space-y-3">
-					<OptionSwitch
-						options={[
-							{ label: "encodeURIComponent", value: "component" },
-							{ label: "encodeURI (URL inteira)", value: "full" },
-						]}
-						value={mode}
-						onChange={(v) => handleModeChange(v as "component" | "full")}
-					/>
-					<div className="flex items-start gap-2 rounded-md border border-border bg-secondary p-3 text-xs text-muted-foreground">
-						<Info className="mt-0.5 h-4 w-4 shrink-0" />
-						<div className="space-y-1">
-							<p>
-								<strong>encodeURIComponent:</strong> codifica TUDO incluindo
-								caracteres especiais como <code>://</code>, <code>/</code>,{" "}
-								<code>?</code>, <code>&amp;</code>, <code>=</code>. Use para{" "}
-								<strong>query parameters</strong> e partes de URL.
-							</p>
-							<p>
-								<strong>encodeURI:</strong> preserva a estrutura da URL (
-								<code>://</code>, <code>/</code>, <code>?</code>,{" "}
-								<code>&amp;</code>, <code>=</code>, <code>#</code>). Use para
-								codificar uma <strong>URL completa</strong>.
-							</p>
+		<LayoutC
+			left={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Entrada
+						</span>
+						<div className="flex items-center gap-1">
+							{(["encode", "decode"] as const).map((d) => (
+								<button
+									key={d}
+									type="button"
+									onClick={() => setDirection(d)}
+									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+										direction === d
+											? "bg-foreground/10 font-medium text-foreground"
+											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+									}`}
+								>
+									{d === "encode" ? "Codificar" : "Decodificar"}
+								</button>
+							))}
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleSwap}
+								disabled={!result.output}
+								aria-label="Trocar entrada e saída"
+							>
+								<ArrowLeftRight className="h-3.5 w-3.5" />
+							</Button>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleClear}
+								disabled={!input}
+								aria-label="Limpar"
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
 						</div>
 					</div>
-				</div>
-			)}
 
-			<div className="flex flex-col gap-6 sm:flex-row">
-				<div className="space-y-1 sm:flex-1">
-					<label
-						htmlFor="url-input"
-						className="text-sm font-medium text-foreground"
-					>
-						{direction === "encode"
-							? "Texto ou URL para codificar"
-							: "URL codificada para decodificar"}
-					</label>
-					<Textarea
-						id="url-input"
-						rows={8}
+					{direction === "encode" && (
+						<div className="flex items-center justify-between border-b border-border px-3 py-2">
+							<span className="text-[11px] text-muted-foreground">Modo</span>
+							<div className="flex items-center gap-1">
+								{(
+									[
+										{ label: "Parâmetro", value: "component" },
+										{ label: "URL completa", value: "full" },
+									] as const
+								).map((opt) => (
+									<button
+										key={opt.value}
+										type="button"
+										onClick={() => setEncMode(opt.value)}
+										className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+											encMode === opt.value
+												? "bg-foreground/10 font-medium text-foreground"
+												: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+										}`}
+									>
+										{opt.label}
+									</button>
+								))}
+							</div>
+						</div>
+					)}
+
+					<textarea
+						value={input}
+						onChange={(e) => setInput(e.target.value)}
 						placeholder={
 							direction === "encode"
 								? "Digite o texto ou cole a URL aqui..."
 								: "Cole a URL codificada aqui..."
 						}
-						value={input}
-						onChange={(e) => handleInputChange(e.target.value)}
-						className="resize-none"
+						className="flex-1 min-h-[280px] resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+						spellCheck={false}
 					/>
-				</div>
-				<div className="space-y-1 sm:flex-1">
-					<label
-						htmlFor="url-output"
-						className="text-sm font-medium text-foreground"
-					>
-						Resultado
-					</label>
-					<Textarea
-						id="url-output"
-						rows={8}
-						readOnly
-						value={output}
-						placeholder="O resultado aparecerá aqui..."
-						className="resize-none"
-					/>
-					<div className="flex justify-end">
-						<CopyButton text={output} label="Copiar" disabled={!output} />
+				</>
+			}
+			right={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Saída
+						</span>
+						<CopyButton
+							text={result.output}
+							disabled={!result.output}
+							variant="ghost"
+							size="icon-sm"
+							iconOnly
+						/>
 					</div>
-				</div>
-			</div>
 
-			{error && <p className="text-sm text-destructive">{error}</p>}
-		</div>
+					<div className="flex-1 min-h-[280px] bg-muted/20 p-3">
+						{result.error ? (
+							<p className="text-xs text-destructive">{result.error}</p>
+						) : result.output ? (
+							<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
+								{result.output}
+							</pre>
+						) : null}
+					</div>
+				</>
+			}
+			footer={
+				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+					<span className="inline-flex items-center gap-1.5">
+						<span
+							className={`h-1.5 w-1.5 rounded-full ${result.output ? "bg-green-600" : result.error ? "bg-destructive" : "bg-foreground/30"}`}
+						/>
+						<span className="text-[11px] text-muted-foreground">
+							{result.output
+								? "Convertido"
+								: result.error
+									? "Erro"
+									: "Aguardando"}
+						</span>
+					</span>
+					{(inputLen > 0 || outputLen > 0) && (
+						<span className="font-mono text-[11px] text-muted-foreground">
+							{inputLen} chars → {outputLen} chars
+						</span>
+					)}
+				</div>
+			}
+		/>
 	);
 }

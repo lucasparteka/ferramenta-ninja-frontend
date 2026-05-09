@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { findCategoryByToolHref } from "@/lib/data/tools";
 import { cn } from "@/lib/utils";
 
@@ -15,13 +16,16 @@ export function ToolSidebar({ currentHref }: ToolSidebarProps) {
 	return (
 		<aside className="lg:sticky lg:top-20 lg:self-start">
 			<details
-				className="group rounded-lg border border-border bg-card lg:open"
+				className="group rounded-md border border-border bg-card lg:open"
 				open
 			>
-				<summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-muted lg:cursor-default lg:hover:bg-card [&::-webkit-details-marker]:hidden">
-					<span>{category.name}</span>
-					<span className="text-xs font-normal text-muted-foreground">
-						{others.length} {others.length === 1 ? "ferramenta" : "ferramentas"}
+				<summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 transition-colors hover:bg-muted lg:cursor-default lg:hover:bg-card [&::-webkit-details-marker]:hidden">
+					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						{category.name}
+					</span>
+					<span className="text-[11px] text-muted-foreground">
+						<span className="font-mono">{others.length}</span>{" "}
+						{others.length === 1 ? "ferramenta" : "ferramentas"}
 					</span>
 				</summary>
 				<nav
@@ -36,7 +40,7 @@ export function ToolSidebar({ currentHref }: ToolSidebarProps) {
 									{isCurrent ? (
 										<span
 											aria-current="page"
-											className="block rounded-sm bg-muted px-3 py-2 text-sm font-medium text-foreground"
+											className="block rounded-sm bg-muted px-3 py-2.5 text-sm font-medium text-foreground"
 										>
 											{tool.name}
 										</span>
@@ -44,7 +48,7 @@ export function ToolSidebar({ currentHref }: ToolSidebarProps) {
 										<Link
 											href={tool.href}
 											className={cn(
-												"block rounded-sm px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
+												"block rounded-sm px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
 											)}
 										>
 											{tool.name}
@@ -58,9 +62,10 @@ export function ToolSidebar({ currentHref }: ToolSidebarProps) {
 				<div className="border-t border-border p-2">
 					<Link
 						href={`/categorias/${category.id}`}
-						className="block rounded-sm px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-muted"
+						className="flex items-center rounded-sm px-3 py-2.5 text-sm text-foreground transition-colors hover:bg-muted hover:text-primary"
 					>
-						Ver categoria completa →
+						Ver categoria completa
+						<ArrowRight className="ml-1 h-3 w-3" />
 					</Link>
 				</div>
 			</details>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Calculadora de Rescisão Trabalhista — ferramenta.ninja</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --bg: #fafafa;
+    --canvas: #f4f4f5;
+    --surface: #ffffff;
+    --surface-2: #fafafa;
+    --surface-3: #f6f7f9;
+    --border: #e6e6e8;
+    --border-strong: #d4d4d8;
+    --fg: #0a0a0a;
+    --fg-strong: #09090b;
+    --fg-muted: #5b5b63;
+    --fg-subtle: #8a8a93;
+    --primary: #2563eb;
+    --primary-fg: #ffffff;
+    --primary-soft: #eff4ff;
+    --primary-strong: #1d4ed8;
+    --danger: #dc2626;
+    --danger-soft: #fef2f2;
+    --warning: #b45309;
+    --warning-soft: #fffbeb;
+    --success: #047857;
+    --success-soft: #ecfdf5;
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, .04);
+    --shadow-md: 0 1px 2px rgba(15, 23, 42, .04), 0 6px 16px -6px rgba(15, 23, 42, .06);
+    --r-xs: 4px;
+    --r-sm: 6px;
+    --r-md: 8px;
+    --r-lg: 10px;
+    --bg-translucent: rgba(250,250,250,0.85);
+  }
+  [data-theme="dark"] {
+    --bg: #0b0b0d;
+    --canvas: #131316;
+    --surface: #18181b;
+    --surface-2: #131316;
+    --surface-3: #1f1f23;
+    --border: #26262b;
+    --border-strong: #3a3a40;
+    --fg: #f4f4f5;
+    --fg-strong: #fafafa;
+    --fg-muted: #a1a1aa;
+    --fg-subtle: #71717a;
+    --primary: #3b82f6;
+    --primary-fg: #ffffff;
+    --primary-soft: rgba(59,130,246,.14);
+    --primary-strong: #60a5fa;
+    --danger: #f87171;
+    --danger-soft: rgba(248,113,113,.12);
+    --warning: #fbbf24;
+    --warning-soft: rgba(251,191,36,.12);
+    --success: #34d399;
+    --success-soft: rgba(52,211,153,.12);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+    --shadow-md: 0 1px 2px rgba(0,0,0,.4), 0 6px 20px -6px rgba(0,0,0,.5);
+    --bg-translucent: rgba(11,11,13,0.78);
+  }
+
+  * { box-sizing: border-box; }
+  html, body, #root { min-height: 100%; }
+  html { background: var(--bg); }
+  body {
+    margin: 0;
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; font-feature-settings: 'tnum'; }
+
+  button, input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 8px; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-track { background: transparent; }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="rescisao.jsx"></script>
+</body>
+</html>

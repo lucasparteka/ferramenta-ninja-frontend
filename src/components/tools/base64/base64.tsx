@@ -1,86 +1,96 @@
 "use client";
 
-import { Trash } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeftRight, Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
-import { ResultGrid, ResultRow } from "@/components/shared/result-box";
+import { LayoutC } from "@/components/shared/layout-c";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { decodeBase64, encodeBase64 } from "@/lib/encoding/base64";
 
-const MODES = [
-	{ value: "encode", label: "Codificar" },
-	{ value: "decode", label: "Decodificar" },
-] as const;
+type Mode = "encode" | "decode";
 
 export function Base64Tool() {
-	const [mode, setMode] = useState<(typeof MODES)[number]["value"]>("encode");
 	const [input, setInput] = useState("");
-	const [output, setOutput] = useState("");
-	const [error, setError] = useState<string | null>(null);
-	const [stats, setStats] = useState({ inputChars: 0, outputChars: 0 });
+	const [mode, setMode] = useState<Mode>("encode");
 
-	function handleConvert() {
-		setError(null);
-		if (!input) {
-			setOutput("");
-			setStats({ inputChars: 0, outputChars: 0 });
-			return;
-		}
+	const result = useMemo(() => {
+		if (!input.trim()) return { output: "", error: null };
 		try {
-			const result =
-				mode === "encode" ? encodeBase64(input) : decodeBase64(input);
-			setOutput(result);
-			setStats({ inputChars: input.length, outputChars: result.length });
+			return {
+				output: mode === "encode" ? encodeBase64(input) : decodeBase64(input),
+				error: null,
+			};
 		} catch (e) {
-			setOutput("");
-			setStats({ inputChars: input.length, outputChars: 0 });
-			setError(e instanceof Error ? e.message : "Erro desconhecido.");
+			return {
+				output: "",
+				error: e instanceof Error ? e.message : "Erro desconhecido.",
+			};
+		}
+	}, [input, mode]);
+
+	function handleSwap() {
+		if (result.output) {
+			setInput(result.output);
+			setMode(mode === "encode" ? "decode" : "encode");
 		}
 	}
 
 	function handleClear() {
 		setInput("");
-		setOutput("");
-		setError(null);
-		setStats({ inputChars: 0, outputChars: 0 });
 	}
 
-	function handleModeChange(newMode: (typeof MODES)[number]["value"]) {
-		setMode(newMode);
-		setOutput("");
-		setError(null);
-	}
+	const inputLen = input.length;
+	const outputLen = result.output.length;
+	const ratio =
+		inputLen > 0 && outputLen > 0
+			? (outputLen / inputLen).toFixed(2)
+			: null;
+	const ratioLabel = mode === "encode" ? "expansão" : "redução";
 
 	return (
-		<div className="space-y-6">
-			<div className="max-w-4xl space-y-4">
-				<div className="space-y-2">
-					<p className="text-sm font-medium text-foreground">Modo</p>
-					<div className="flex flex-wrap gap-2">
-						{MODES.map((m) => (
+		<LayoutC
+			left={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Entrada
+						</span>
+						<div className="flex items-center gap-1">
+							{(["encode", "decode"] as const).map((m) => (
+								<button
+									key={m}
+									type="button"
+									onClick={() => setMode(m)}
+									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+										mode === m
+											? "bg-foreground/10 font-medium text-foreground"
+											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+									}`}
+								>
+									{m === "encode" ? "Codificar" : "Decodificar"}
+								</button>
+							))}
 							<Button
-								key={m.value}
-								type="button"
-								variant={mode === m.value ? "default" : "outline"}
-								size="sm"
-								onClick={() => handleModeChange(m.value)}
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleSwap}
+								disabled={!result.output}
+								aria-label="Trocar entrada e saída"
 							>
-								{m.label}
+								<ArrowLeftRight className="h-3.5 w-3.5" />
 							</Button>
-						))}
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleClear}
+								disabled={!input}
+								aria-label="Limpar"
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
+						</div>
 					</div>
-				</div>
-
-				<div className="space-y-2">
-					<label
-						htmlFor="base64-input"
-						className="block text-sm font-medium text-foreground"
-					>
-						{mode === "encode" ? "Texto original" : "Texto em Base64"}
-					</label>
-					<Textarea
-						id="base64-input"
+					<textarea
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						placeholder={
@@ -88,60 +98,53 @@ export function Base64Tool() {
 								? "Digite o texto aqui..."
 								: "Cole o Base64 aqui..."
 						}
-						className="min-h-[300px] font-mono"
+						className="flex-1 min-h-[280px] resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
 						spellCheck={false}
 					/>
-				</div>
-
-				<div className="flex flex-wrap gap-2">
-					<Button onClick={handleConvert} disabled={!input.trim()}>
-						{mode === "encode" ? "Codificar" : "Decodificar"}
-					</Button>
-					<CopyButton
-						text={output}
-						label="Copiar resultado"
-						disabled={!output}
-					/>
-					<Button
-						onClick={handleClear}
-						disabled={!input && !output}
-						variant="secondary"
-					>
-						<Trash />
-						Limpar
-					</Button>
-				</div>
-			</div>
-
-			{error && (
-				<div className="max-w-4xl rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3">
-					<p className="text-sm font-medium text-destructive">{error}</p>
-				</div>
-			)}
-
-			{output && !error && (
-				<div className="max-w-4xl space-y-4">
-					<div className="space-y-2">
-						<label
-							htmlFor="base64-output"
-							className="block text-sm font-medium text-foreground"
-						>
-							{mode === "encode" ? "Resultado em Base64" : "Texto decodificado"}
-						</label>
-						<pre
-							id="base64-output"
-							className="overflow-x-auto rounded-md border bg-card border-input p-4 font-mono text-sm"
-						>
-							<code>{output}</code>
-						</pre>
+				</>
+			}
+			right={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Saída
+						</span>
+						<CopyButton
+							text={result.output}
+							disabled={!result.output}
+							variant="ghost"
+							size="icon-sm"
+							iconOnly
+						/>
 					</div>
-
-					<ResultGrid>
-						<ResultRow label="Caracteres de entrada" value={stats.inputChars} />
-						<ResultRow label="Caracteres de saída" value={stats.outputChars} />
-					</ResultGrid>
+					<div className="flex-1 min-h-[280px] bg-muted/20 p-3">
+						{result.error ? (
+							<p className="text-xs text-destructive">{result.error}</p>
+						) : result.output ? (
+							<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
+								{result.output}
+							</pre>
+						) : null}
+					</div>
+				</>
+			}
+			footer={
+				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+					<span className="inline-flex items-center gap-1.5">
+						<span
+							className={`h-1.5 w-1.5 rounded-full ${result.output ? "bg-green-600" : "bg-foreground/30"}`}
+						/>
+						<span className="text-[11px] text-muted-foreground">
+							{result.output ? "Convertido" : result.error ? "Erro" : "Aguardando"}
+						</span>
+					</span>
+					{ratio && (
+						<span className="font-mono text-[11px] text-muted-foreground">
+							{inputLen} chars → {outputLen} chars · {ratio}× {ratioLabel}
+						</span>
+					)}
 				</div>
-			)}
-		</div>
+			}
+		/>
 	);
 }

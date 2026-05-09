@@ -28,15 +28,20 @@ export function TextCleanerOptions({ options, onChange }: Props) {
 	}
 
 	return (
-		<div className="flex flex-wrap gap-4">
+		<div className="space-y-3">
 			{items.map(({ key, label }) => (
-				<div key={key} className="flex items-center gap-2">
+				<div key={key} className="flex items-center justify-between">
+					<Label
+						htmlFor={key}
+						className="cursor-pointer text-xs text-muted-foreground"
+					>
+						{label}
+					</Label>
 					<Checkbox
+						id={key}
 						checked={options[key]}
 						onCheckedChange={(v) => handleChange(key, v === true)}
-						id={key}
 					/>
-					<Label htmlFor={key}>{label}</Label>
 				</div>
 			))}
 		</div>

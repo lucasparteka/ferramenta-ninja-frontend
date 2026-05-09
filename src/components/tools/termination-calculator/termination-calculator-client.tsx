@@ -5,7 +5,8 @@ import { useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
-import { ResultBox, ResultRow } from "@/components/shared/result-box";
+import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutB } from "@/components/shared/layout-b";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DateInput } from "@/components/ui/date-input";
@@ -60,6 +61,38 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
+function SectionHeader({ children }: { children: React.ReactNode }) {
+	return (
+		<p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+			{children}
+		</p>
+	);
+}
+
+function brl(value: number): string {
+	return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+function buildSummary(r: TerminationResult): string {
+	const lines = [
+		`Rescisão — Total líquido: ${brl(r.netTotal)}`,
+		`Bruto: ${brl(r.grossTotal)} · INSS: ${brl(r.inss)} · IRRF: ${brl(r.irrf)}`,
+		"",
+		...r.lines.map((l) => `${l.label}: ${brl(l.amount)}`),
+	];
+	if (r.fgtsWithdrawable > 0) {
+		lines.push(`FGTS sacável: ${brl(r.fgtsWithdrawable)}`);
+	}
+	lines.push(
+		"",
+		`Tempo de empresa: ${r.yearsAtCompany}a ${r.monthsAtCompany % 12}m · Aviso: ${r.noticeDays} dias`,
+		r.unemploymentInsuranceEligible
+			? "Possível direito ao seguro-desemprego"
+			: "Sem direito a seguro-desemprego",
+	);
+	return lines.join("\n");
+}
+
 export function TerminationCalculatorClient() {
 	const [result, setResult] = useState<TerminationResult | null>(null);
 	const [error, setError] = useState<string | null>(null);
@@ -82,10 +115,7 @@ export function TerminationCalculatorClient() {
 		const admission = new Date(`${data.admissionDate}T00:00:00Z`);
 		const termination = new Date(`${data.terminationDate}T00:00:00Z`);
 
-		if (
-			Number.isNaN(admission.getTime()) ||
-			Number.isNaN(termination.getTime())
-		) {
+		if (Number.isNaN(admission.getTime()) || Number.isNaN(termination.getTime())) {
 			setError("Datas inválidas.");
 			setResult(null);
 			return;
@@ -110,232 +140,266 @@ export function TerminationCalculatorClient() {
 		setResult(r);
 	}
 
-	return (
-		<div className="space-y-6">
-			<Form {...form}>
-				<form
-					onSubmit={form.handleSubmit(onSubmit)}
-					className="space-y-6 max-w-xl"
-				>
-					<FormField
-						control={form.control}
-						name="salary"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Salário bruto mensal</FormLabel>
-								<FormControl>
-									<CurrencyInput
-										value={field.value}
-										onChangeValue={(_, __, masked) =>
-											field.onChange(masked as string)
-										}
-										InputElement={
-											<Input type="text" placeholder="R$ 0,00" {...field} />
-										}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<div className="grid gap-4 sm:grid-cols-2">
-						<FormField
-							control={form.control}
-							name="admissionDate"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Data de admissão</FormLabel>
-									<FormControl>
-										<DateInput value={field.value} onChange={field.onChange} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="terminationDate"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Data de rescisão</FormLabel>
-									<FormControl>
-										<DateInput value={field.value} onChange={field.onChange} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-
-					<FormField
-						control={form.control}
-						name="type"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Motivo da rescisão</FormLabel>
-								<FormControl>
-									<NativeSelect {...field}>
-										{TERMINATION_TYPES.map((t) => (
-											<option key={t.value} value={t.value}>
-												{t.label}
-											</option>
-										))}
-									</NativeSelect>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="noticePolicy"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Aviso prévio</FormLabel>
-								<FormControl>
-									<NativeSelect {...field}>
-										{NOTICE_POLICIES.map((n) => (
-											<option key={n.value} value={n.value}>
-												{n.label}
-											</option>
-										))}
-									</NativeSelect>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<div className="grid gap-4 sm:grid-cols-2">
-						<FormField
-							control={form.control}
-							name="fgtsBalance"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Saldo do FGTS (opcional)</FormLabel>
-									<FormControl>
-										<CurrencyInput
-											value={field.value}
-											onChangeValue={(_, __, masked) =>
-												field.onChange(masked as string)
-											}
-											InputElement={
-												<Input type="text" placeholder="R$ 0,00" {...field} />
-											}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="dependents"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Dependentes</FormLabel>
-									<FormControl>
-										<Input type="number" min={0} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-
-					<FormField
-						control={form.control}
-						name="hasExpiredVacation"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center gap-2">
-									<Checkbox
-										id="has-expired-vacation"
-										checked={field.value}
-										onCheckedChange={field.onChange}
-									/>
-									<label
-										htmlFor="has-expired-vacation"
-										className="cursor-pointer text-sm text-foreground"
-									>
-										Possui férias vencidas (período aquisitivo completo não
-										usufruído)
-									</label>
-								</div>
-							</FormItem>
-						)}
-					/>
-
-					<Button type="submit">Calcular rescisão</Button>
-				</form>
-			</Form>
+	const resultPanel = (
+		<>
+			{!result && !error && (
+				<div className="rounded-md border border-dashed border-border p-6 text-center">
+					<p className="text-sm text-muted-foreground">
+						Preencha os dados e calcule para ver o resultado
+					</p>
+				</div>
+			)}
 
 			{error && (
-				<ResultBox tone="destructive">
-					<p className="text-sm text-foreground">{error}</p>
-				</ResultBox>
+				<p className="text-sm text-destructive">{error}</p>
 			)}
 
-			{result && <ResultCard result={result} />}
-		</div>
-	);
-}
+			{result && (
+				<>
+					<div>
+						<SectionHeader>Total líquido a receber</SectionHeader>
+						<p className="text-2xl font-semibold font-mono text-foreground">
+							{brl(result.netTotal)}
+						</p>
+						<p className="mt-1 text-xs text-muted-foreground">
+							Bruto: {brl(result.grossTotal)} · INSS: {brl(result.inss)} · IRRF:{" "}
+							{brl(result.irrf)}
+						</p>
+					</div>
 
-function ResultCard({ result }: { result: TerminationResult }) {
+					<div>
+						<SectionHeader>Detalhamento</SectionHeader>
+						<div className="divide-y divide-border">
+							{result.lines.map((line) => (
+								<div
+									key={line.label}
+									className="flex items-center justify-between py-2"
+								>
+									<span className="text-xs text-muted-foreground">{line.label}</span>
+									<span className="font-mono text-xs tabular-nums text-foreground">
+										{brl(line.amount)}
+									</span>
+								</div>
+							))}
+						</div>
+					</div>
+
+					{result.fgtsWithdrawable > 0 && (
+						<div className="flex items-center justify-between border-t border-border pt-3">
+							<span className="text-xs text-muted-foreground">FGTS sacável</span>
+							<span className="font-mono text-xs font-semibold tabular-nums text-foreground">
+								{brl(result.fgtsWithdrawable)}
+							</span>
+						</div>
+					)}
+
+					<div className="space-y-1 border-t border-border pt-3 text-xs text-muted-foreground">
+						<p>
+							Tempo de empresa:{" "}
+							<span className="font-medium text-foreground">
+								{result.yearsAtCompany}a {result.monthsAtCompany % 12}m
+							</span>{" "}
+							· Aviso:{" "}
+							<span className="font-medium text-foreground">
+								{result.noticeDays} dias
+							</span>
+						</p>
+						<p className={result.unemploymentInsuranceEligible ? "text-green-600" : ""}>
+							{result.unemploymentInsuranceEligible
+								? "✓ Possível direito ao seguro-desemprego"
+								: "Sem direito a seguro-desemprego"}
+						</p>
+					</div>
+
+					<div className="border-t border-border pt-3">
+						<CopyButton
+							text={buildSummary(result)}
+							label="Copiar resumo"
+							variant="outline"
+							size="sm"
+							className="w-full"
+						/>
+					</div>
+				</>
+			)}
+		</>
+	);
+
 	return (
-		<div className="space-y-4">
-			<ResultBox
-				label="Total líquido a receber"
-				value={brl(result.netTotal)}
-				hint={`Bruto: ${brl(result.grossTotal)} · INSS: ${brl(result.inss)} · IRRF: ${brl(result.irrf)}`}
-			/>
+		<LayoutB
+			result={resultPanel}
+			form={
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+						<div className="space-y-3">
+							<SectionHeader>Vínculo empregatício</SectionHeader>
 
-			<dl className="space-y-2 text-sm">
-				{result.lines.map((line) => (
-					<ResultRow
-						key={line.label}
-						label={line.label}
-						value={brl(line.amount)}
-					/>
-				))}
-			</dl>
+							<FormField
+								control={form.control}
+								name="salary"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Salário bruto mensal</FormLabel>
+										<FormControl>
+											<CurrencyInput
+												value={field.value}
+												onChangeValue={(_, __, masked) =>
+													field.onChange(masked as string)
+												}
+												InputElement={
+													<Input type="text" placeholder="R$ 0,00" {...field} />
+												}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 
-			{result.fgtsWithdrawable > 0 && (
-				<div className="rounded-md border border-border bg-card p-3 text-sm">
-					<p className="text-muted-foreground">FGTS sacável</p>
-					<p className="font-semibold text-foreground">
-						{brl(result.fgtsWithdrawable)}
-					</p>
-				</div>
-			)}
+							<div className="grid gap-4 sm:grid-cols-2">
+								<FormField
+									control={form.control}
+									name="admissionDate"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Data de admissão</FormLabel>
+											<FormControl>
+												<DateInput value={field.value} onChange={field.onChange} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="terminationDate"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Data de rescisão</FormLabel>
+											<FormControl>
+												<DateInput value={field.value} onChange={field.onChange} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+						</div>
 
-			<div className="rounded-lg border border-border bg-card p-3 text-sm text-foreground">
-				Tempo de empresa: <strong>{result.yearsAtCompany}</strong> anos e{" "}
-				<strong>{result.monthsAtCompany % 12}</strong> meses · Aviso prévio:{" "}
-				<strong>{result.noticeDays}</strong> dias
-			</div>
+						<div className="space-y-3">
+							<SectionHeader>Rescisão</SectionHeader>
 
-			{result.unemploymentInsuranceEligible ? (
-				<ResultBox>
-					<p className="text-sm text-foreground">
-						Possível direito ao seguro-desemprego (verifique requisitos no
-						gov.br).
-					</p>
-				</ResultBox>
-			) : (
-				<div className="rounded-lg border border-border bg-card p-3 text-sm text-muted-foreground">
-					Modalidade sem direito a seguro-desemprego.
-				</div>
-			)}
-		</div>
+							<FormField
+								control={form.control}
+								name="type"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Motivo da rescisão</FormLabel>
+										<FormControl>
+											<NativeSelect {...field}>
+												{TERMINATION_TYPES.map((t) => (
+													<option key={t.value} value={t.value}>
+														{t.label}
+													</option>
+												))}
+											</NativeSelect>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name="noticePolicy"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Aviso prévio</FormLabel>
+										<FormControl>
+											<NativeSelect {...field}>
+												{NOTICE_POLICIES.map((n) => (
+													<option key={n.value} value={n.value}>
+														{n.label}
+													</option>
+												))}
+											</NativeSelect>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+
+						<div className="space-y-3">
+							<SectionHeader>Informações adicionais</SectionHeader>
+
+							<div className="grid gap-4 sm:grid-cols-2">
+								<FormField
+									control={form.control}
+									name="fgtsBalance"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Saldo do FGTS (opcional)</FormLabel>
+											<FormControl>
+												<CurrencyInput
+													value={field.value}
+													onChangeValue={(_, __, masked) =>
+														field.onChange(masked as string)
+													}
+													InputElement={
+														<Input type="text" placeholder="R$ 0,00" {...field} />
+													}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="dependents"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Dependentes</FormLabel>
+											<FormControl>
+												<Input type="number" min={0} {...field} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+
+							<FormField
+								control={form.control}
+								name="hasExpiredVacation"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex items-center gap-2">
+											<Checkbox
+												id="has-expired-vacation"
+												checked={field.value}
+												onCheckedChange={field.onChange}
+											/>
+											<label
+												htmlFor="has-expired-vacation"
+												className="cursor-pointer text-sm text-foreground"
+											>
+												Possui férias vencidas (período aquisitivo completo não
+												usufruído)
+											</label>
+										</div>
+									</FormItem>
+								)}
+							/>
+						</div>
+
+						<Button type="submit" className="w-full">
+							Calcular rescisão
+						</Button>
+					</form>
+				</Form>
+			}
+		/>
 	);
-}
-
-function brl(value: number): string {
-	return value.toLocaleString("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	});
 }

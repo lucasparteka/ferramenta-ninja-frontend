@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { ArrowLeftRight, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutC } from "@/components/shared/layout-c";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { NativeSelect } from "@/components/ui/select-native";
-import { Textarea } from "@/components/ui/textarea";
 import type { Algorithm } from "@/lib/crypto/cipher";
 import {
 	decodeBase64,
@@ -15,163 +14,233 @@ import {
 	rot13,
 } from "@/lib/crypto/cipher";
 
+type Mode = "encrypt" | "decrypt";
+
+const ALGO_LABELS: Record<Algorithm, string> = {
+	"aes-gcm": "AES-256",
+	base64: "Base64",
+	rot13: "ROT13",
+};
+
 export function TextCipher() {
-	const [algorithm, setAlgorithm] = useState<Algorithm>("aes-gcm");
 	const [input, setInput] = useState("");
+	const [mode, setMode] = useState<Mode>("encrypt");
+	const [algorithm, setAlgorithm] = useState<Algorithm>("aes-gcm");
 	const [password, setPassword] = useState("");
 	const [output, setOutput] = useState("");
-	const [error, setError] = useState("");
+	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
 
-	function resetOutput() {
-		setOutput("");
-		setError("");
-	}
-
-	async function handleEncrypt() {
-		setError("");
+	useEffect(() => {
 		if (!input.trim()) {
-			setError("Digite o texto de entrada.");
+			setOutput("");
+			setError(null);
 			return;
 		}
 		if (algorithm === "aes-gcm" && !password) {
-			setError("Digite a senha para criptografar.");
+			setOutput("");
+			setError(null);
 			return;
 		}
+
+		let cancelled = false;
 		setLoading(true);
-		try {
-			let result = "";
-			if (algorithm === "aes-gcm") result = await encryptAES(input, password);
-			else if (algorithm === "base64") result = encodeBase64(input);
-			else result = rot13(input);
-			setOutput(result);
-		} catch (e) {
-			setError(e instanceof Error ? e.message : "Erro ao cifrar o texto.");
+
+		(async () => {
+			try {
+				let result: string;
+				if (algorithm === "aes-gcm") {
+					result =
+						mode === "encrypt"
+							? await encryptAES(input, password)
+							: await decryptAES(input, password);
+				} else if (algorithm === "base64") {
+					result =
+						mode === "encrypt" ? encodeBase64(input) : decodeBase64(input);
+				} else {
+					result = rot13(input);
+				}
+				if (!cancelled) {
+					setOutput(result);
+					setError(null);
+				}
+			} catch (e) {
+				if (!cancelled) {
+					setOutput("");
+					setError(e instanceof Error ? e.message : "Erro desconhecido.");
+				}
+			} finally {
+				if (!cancelled) setLoading(false);
+			}
+		})();
+
+		return () => {
+			cancelled = true;
+		};
+	}, [input, mode, algorithm, password]);
+
+	function handleSwap() {
+		if (output) {
+			setInput(output);
+			setMode(mode === "encrypt" ? "decrypt" : "encrypt");
 		}
-		setLoading(false);
 	}
 
-	async function handleDecrypt() {
-		setError("");
-		if (!input.trim()) {
-			setError("Digite o texto de entrada.");
-			return;
-		}
-		if (algorithm === "aes-gcm" && !password) {
-			setError("Digite a senha para descriptografar.");
-			return;
-		}
-		setLoading(true);
-		try {
-			let result = "";
-			if (algorithm === "aes-gcm") result = await decryptAES(input, password);
-			else if (algorithm === "base64") result = decodeBase64(input);
-			else result = rot13(input);
-			setOutput(result);
-		} catch (e) {
-			setError(e instanceof Error ? e.message : "Erro ao decifrar o texto.");
-		}
-		setLoading(false);
+	function handleClear() {
+		setInput("");
+		setPassword("");
 	}
 
+	const inputLen = input.length;
+	const outputLen = output.length;
 
 	return (
-		<div className="flex flex-col gap-6 sm:flex-row">
-			<div className="space-y-4 sm:flex-1">
-				<div className="space-y-1">
-					<label
-						htmlFor="cipher-input"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
-						Texto de entrada
-					</label>
-					<Textarea
-						id="cipher-input"
-						rows={8}
-						placeholder="Digite ou cole o texto aqui..."
+		<LayoutC
+			left={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Entrada
+						</span>
+						<div className="flex items-center gap-1">
+							{(["encrypt", "decrypt"] as const).map((m) => (
+								<button
+									key={m}
+									type="button"
+									onClick={() => setMode(m)}
+									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+										mode === m
+											? "bg-foreground/10 font-medium text-foreground"
+											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+									}`}
+								>
+									{m === "encrypt" ? "Cifrar" : "Decifrar"}
+								</button>
+							))}
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleSwap}
+								disabled={!output}
+								aria-label="Trocar entrada e saída"
+							>
+								<ArrowLeftRight className="h-3.5 w-3.5" />
+							</Button>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleClear}
+								disabled={!input}
+								aria-label="Limpar"
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
+						</div>
+					</div>
+
+					<div className="flex items-center justify-between border-b border-border px-3 py-2">
+						<span className="text-[11px] text-muted-foreground">
+							Algoritmo
+						</span>
+						<div className="flex items-center gap-1">
+							{(["aes-gcm", "base64", "rot13"] as const).map((alg) => (
+								<button
+									key={alg}
+									type="button"
+									onClick={() => setAlgorithm(alg)}
+									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+										algorithm === alg
+											? "bg-foreground/10 font-medium text-foreground"
+											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+									}`}
+								>
+									{ALGO_LABELS[alg]}
+								</button>
+							))}
+						</div>
+					</div>
+
+					{algorithm === "aes-gcm" && (
+						<div className="flex items-center gap-2 border-b border-border px-3 py-2">
+							<span className="shrink-0 text-[11px] text-muted-foreground">
+								Senha
+							</span>
+							<input
+								type="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								placeholder="Digite a senha..."
+								className="flex-1 bg-transparent text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
+							/>
+						</div>
+					)}
+
+					<textarea
 						value={input}
-						onChange={(e) => {
-							setInput(e.target.value);
-							resetOutput();
-						}}
-						className="resize-none text-foreground"
+						onChange={(e) => setInput(e.target.value)}
+						placeholder="Digite ou cole o texto aqui..."
+						className="flex-1 min-h-[280px] resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+						spellCheck={false}
 					/>
-				</div>
-
-				<div className="space-y-1">
-					<label
-						htmlFor="cipher-algorithm"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
-						Algoritmo
-					</label>
-					<NativeSelect
-						id="cipher-algorithm"
-						value={algorithm}
-						onChange={(e) => {
-							setAlgorithm(e.target.value as Algorithm);
-							resetOutput();
-						}}
-						className="text-foreground"
-					>
-						<option value="aes-gcm">
-							AES-256-GCM — criptografia com senha
-						</option>
-						<option value="base64">Base64 — codificação</option>
-						<option value="rot13">ROT13 — cifra de substituição</option>
-					</NativeSelect>
-				</div>
-
-				{algorithm === "aes-gcm" && (
-					<div className="space-y-1">
-						<label
-							htmlFor="cipher-password"
-							className="flex w-full text-sm font-medium text-foreground"
-						>
-							Senha
-						</label>
-						<Input
-							id="cipher-password"
-							type="password"
-							placeholder="Digite a senha..."
-							value={password}
-							onChange={(e) => {
-								setPassword(e.target.value);
-								resetOutput();
-							}}
+				</>
+			}
+			right={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Saída
+						</span>
+						<CopyButton
+							text={output}
+							disabled={!output}
+							variant="ghost"
+							size="icon-sm"
+							iconOnly
 						/>
 					</div>
-				)}
 
-				{error && <p className="text-sm text-destructive">{error}</p>}
-
-				<div className="flex gap-3">
-					<Button onClick={handleEncrypt} disabled={loading}>
-						{loading ? "Processando..." : "Cifrar"}
-					</Button>
-					<Button variant="outline" onClick={handleDecrypt} disabled={loading}>
-						{loading ? "Processando..." : "Decifrar"}
-					</Button>
-				</div>
-			</div>
-
-			<div className="space-y-1 sm:flex-1">
-				<div className="flex items-center justify-between">
-					<label className="text-sm font-medium text-foreground">
-						Resultado
-					</label>
-					{output && (
-						<CopyButton text={output} label="Copiar" variant="outline" />
+					<div className="flex-1 min-h-[280px] bg-muted/20 p-3">
+						{error ? (
+							<p className="text-xs text-destructive">{error}</p>
+						) : output ? (
+							<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
+								{output}
+							</pre>
+						) : null}
+					</div>
+				</>
+			}
+			footer={
+				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+					<span className="inline-flex items-center gap-1.5">
+						<span
+							className={`h-1.5 w-1.5 rounded-full ${
+								loading
+									? "animate-pulse bg-amber-500"
+									: output
+										? "bg-green-600"
+										: error
+											? "bg-destructive"
+											: "bg-foreground/30"
+							}`}
+						/>
+						<span className="text-[11px] text-muted-foreground">
+							{loading
+								? "Processando..."
+								: output
+									? "Concluído"
+									: error
+										? "Erro"
+										: "Aguardando"}
+						</span>
+					</span>
+					{(inputLen > 0 || outputLen > 0) && !loading && (
+						<span className="font-mono text-[11px] text-muted-foreground">
+							{inputLen} chars → {outputLen} chars
+						</span>
 					)}
 				</div>
-				<Textarea
-					rows={8}
-					readOnly
-					value={output}
-					placeholder="O resultado aparecerá aqui..."
-					className="resize-none"
-				/>
-			</div>
-		</div>
+			}
+		/>
 	);
 }

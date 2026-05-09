@@ -33,17 +33,20 @@ export function DiffOptions({ options, onChange }: DiffOptionsProps) {
 	}
 
 	return (
-		<div className="flex flex-wrap gap-x-6 gap-y-3">
+		<div className="space-y-3">
 			{optionItems.map(({ key, label }) => (
-				<div key={key} className="flex items-center gap-2">
+				<div key={key} className="flex items-center justify-between">
+					<Label
+						htmlFor={key}
+						className="cursor-pointer text-xs font-normal text-muted-foreground"
+					>
+						{label}
+					</Label>
 					<Checkbox
 						id={key}
 						checked={options[key]}
 						onCheckedChange={(checked) => handleChange(key, checked === true)}
 					/>
-					<Label htmlFor={key} className="cursor-pointer text-sm font-normal">
-						{label}
-					</Label>
 				</div>
 			))}
 		</div>

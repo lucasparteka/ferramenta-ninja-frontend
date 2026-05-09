@@ -1,153 +1,125 @@
 "use client";
 
-import { Trash } from "lucide-react";
-import { useState } from "react";
-import {
-	ResultBox,
-	ResultGrid,
-	ResultRow,
-} from "@/components/shared/result-box";
+import { Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutC } from "@/components/shared/layout-c";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import type { MinifierType } from "@/lib/text/minifier";
 import { minify } from "@/lib/text/minifier";
 
 const TYPES: { value: MinifierType; label: string }[] = [
 	{ value: "css", label: "CSS" },
-	{ value: "js", label: "JavaScript" },
+	{ value: "js", label: "JS" },
 	{ value: "html", label: "HTML" },
 ];
 
 export function CssMinifier() {
 	const [type, setType] = useState<MinifierType>("css");
 	const [input, setInput] = useState("");
-	const [output, setOutput] = useState("");
-	const [stats, setStats] = useState({
-		original: 0,
-		minified: 0,
-		reduction: 0,
-	});
 
-	function handleMinify() {
-		if (!input.trim()) {
-			setOutput("");
-			setStats({ original: 0, minified: 0, reduction: 0 });
-			return;
-		}
-		const result = minify(input, type);
-		setOutput(result);
+	const result = useMemo(() => {
+		if (!input.trim()) return { output: "", original: 0, minified: 0, reduction: 0 };
+		const output = minify(input, type);
 		const original = new Blob([input]).size;
-		const minified = new Blob([result]).size;
-		const reduction =
-			original > 0 ? Math.round((1 - minified / original) * 100) : 0;
-		setStats({ original, minified, reduction });
-	}
-
-
-	function handleClear() {
-		setInput("");
-		setOutput("");
-		setStats({ original: 0, minified: 0, reduction: 0 });
-	}
+		const minified = new Blob([output]).size;
+		const reduction = original > 0 ? Math.round((1 - minified / original) * 100) : 0;
+		return { output, original, minified, reduction };
+	}, [input, type]);
 
 	function handleTypeChange(newType: MinifierType) {
 		setType(newType);
-		setOutput("");
-		setStats({ original: 0, minified: 0, reduction: 0 });
+	}
+
+	function handleClear() {
+		setInput("");
 	}
 
 	return (
-		<div className="space-y-6">
-			<div className="max-w-4xl space-y-4">
-				<div className="space-y-2">
-					<p className="text-sm font-medium text-foreground">Tipo</p>
-					<div className="flex flex-wrap gap-2">
-						{TYPES.map((t) => (
+		<LayoutC
+			left={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Entrada
+						</span>
+						<div className="flex items-center gap-1">
+							{TYPES.map((t) => (
+								<button
+									key={t.value}
+									type="button"
+									onClick={() => handleTypeChange(t.value)}
+									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+										type === t.value
+											? "bg-foreground/10 font-medium text-foreground"
+											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+									}`}
+								>
+									{t.label}
+								</button>
+							))}
 							<Button
-								key={t.value}
-								type="button"
-								variant={type === t.value ? "default" : "outline"}
-								size="sm"
-								onClick={() => handleTypeChange(t.value)}
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleClear}
+								disabled={!input}
+								aria-label="Limpar"
 							>
-								{t.label}
+								<Trash2 className="h-3.5 w-3.5" />
 							</Button>
-						))}
+						</div>
 					</div>
-				</div>
 
-				<div className="space-y-2">
-					<label
-						htmlFor="minifier-input"
-						className="block text-sm font-medium text-foreground"
-					>
-						Código original
-					</label>
-					<Textarea
-						id="minifier-input"
+					<textarea
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						placeholder={`Cole seu ${type.toUpperCase()} aqui...`}
-						className="min-h-[400px] font-mono text-foreground"
+						className="flex-1 min-h-[280px] resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
 						spellCheck={false}
 					/>
-				</div>
-
-				<div className="flex flex-wrap gap-2">
-					<Button onClick={handleMinify} disabled={!input.trim()}>
-						Minificar
-					</Button>
-					<CopyButton text={output} label="Copiar resultado" disabled={!output} variant="outline" />
-					<Button
-						onClick={handleClear}
-						disabled={!input && !output}
-						variant="secondary"
-					>
-						<Trash />
-						Limpar
-					</Button>
-				</div>
-			</div>
-
-			{output && (
-				<div className="max-w-4xl space-y-4">
-					<div className="space-y-2">
-						<label
-							htmlFor="minifier-output"
-							className="block text-sm font-medium text-foreground"
-						>
-							Código minificado
-						</label>
-						<pre
-							id="minifier-output"
-							className="overflow-x-auto rounded-md border bg-card border-input p-4 font-mono text-sm"
-						>
-							<code>{output}</code>
-						</pre>
+				</>
+			}
+			right={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Minificado
+						</span>
+						<CopyButton
+							text={result.output}
+							disabled={!result.output}
+							variant="ghost"
+							size="icon-sm"
+							iconOnly
+						/>
 					</div>
 
-					<ResultBox tone="primary">
-						<p className="text-2xl font-semibold font-mono">
-							-{stats.reduction}%
-						</p>
-						<p className="mt-1 text-sm">
-							Redução de {stats.original} bytes para {stats.minified} bytes
-						</p>
-					</ResultBox>
-
-					<ResultGrid>
-						<ResultRow
-							label="Tamanho original"
-							value={`${stats.original} bytes`}
+					<div className="flex-1 min-h-[280px] bg-muted/20 p-3">
+						{result.output ? (
+							<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
+								{result.output}
+							</pre>
+						) : null}
+					</div>
+				</>
+			}
+			footer={
+				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+					<span className="inline-flex items-center gap-1.5">
+						<span
+							className={`h-1.5 w-1.5 rounded-full ${result.output ? "bg-green-600" : "bg-foreground/30"}`}
 						/>
-						<ResultRow
-							label="Tamanho minificado"
-							value={`${stats.minified} bytes`}
-						/>
-					</ResultGrid>
+						<span className="text-[11px] text-muted-foreground">
+							{result.output ? "Minificado" : "Aguardando"}
+						</span>
+					</span>
+					{result.output && (
+						<span className="font-mono text-[11px] text-muted-foreground">
+							{result.original}B → {result.minified}B · -{result.reduction}%
+						</span>
+					)}
 				</div>
-			)}
-		</div>
+			}
+		/>
 	);
 }

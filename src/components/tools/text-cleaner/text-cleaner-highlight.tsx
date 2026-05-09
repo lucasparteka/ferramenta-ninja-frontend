@@ -16,8 +16,8 @@ export function TextCleanerHighlight({ text }: Props) {
 	const formatted = highlight(text);
 
 	return (
-		<div className="rounded-md border p-4">
-			<pre className="whitespace-pre-wrap font-mono text-sm text-muted-foreground">
+		<div className="rounded-md border">
+			<pre className="whitespace-pre-wrap font-mono text-sm text-muted-foreground p-4">
 				{formatted}
 			</pre>
 		</div>

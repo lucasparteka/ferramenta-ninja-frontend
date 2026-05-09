@@ -64,11 +64,13 @@ export function TextCleanerInput({ value, onChange }: Props) {
 
 				<Button
 					type="button"
+					variant="outline"
+					size="sm"
 					onClick={() => inputRef.current?.click()}
 					className="gap-1.5"
 				>
 					<Upload className="size-3.5" />
-					Carregar arquivo
+					Carregar
 				</Button>
 			</div>
 			<section

@@ -1,13 +1,12 @@
 "use client";
 
 import DOMPurify from "dompurify";
-import { Download, Trash } from "lucide-react";
+import { Download, Trash2 } from "lucide-react";
 import { marked } from "marked";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutC } from "@/components/shared/layout-c";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
 
 const SAMPLE_MARKDOWN = `# Título Principal
 
@@ -52,18 +51,10 @@ const BASIC_CSS = `<style>
   a { color: #7c3aed; }
 </style>`;
 
-function SanitizedHtml({
-	html,
-	className,
-}: {
-	html: string;
-	className?: string;
-}) {
+function SanitizedHtml({ html, className }: { html: string; className?: string }) {
 	const ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {
-		if (ref.current) {
-			ref.current.innerHTML = html;
-		}
+		if (ref.current) ref.current.innerHTML = html;
 	}, [html]);
 	return <div ref={ref} className={className} />;
 }
@@ -74,11 +65,7 @@ export function MarkdownToHtml() {
 
 	const html = useMemo(() => {
 		if (!markdown.trim()) return "";
-		const raw = marked.parse(markdown, {
-			async: false,
-			gfm: true,
-			breaks: true,
-		});
+		const raw = marked.parse(markdown, { async: false, gfm: true, breaks: true });
 		return DOMPurify.sanitize(raw as string);
 	}, [markdown]);
 
@@ -100,181 +87,118 @@ export function MarkdownToHtml() {
 	}
 
 	return (
-		<div className="space-y-4">
-			{/* Split screen */}
-			<div className="grid gap-4 lg:grid-cols-2">
-				{/* Editor */}
-				<div className="space-y-2">
-					<label
-						htmlFor="md-input"
-						className="block text-sm font-medium text-foreground"
-					>
-						Markdown
-					</label>
-					<Textarea
-						id="md-input"
-						value={markdown}
-						onChange={(e) => setMarkdown(e.target.value)}
-						placeholder="Digite seu Markdown aqui..."
-						className="min-h-[600px] font-mono text-sm"
-					/>
-					<Button
-						type="button"
-						variant="secondary"
-						onClick={() => setMarkdown("")}
-					>
-						<Trash />
-						Limpar
-					</Button>
-				</div>
-
-				{/* Preview */}
-				<div className="space-y-2">
-					<span className="block text-sm font-medium text-foreground">
-						Preview
-					</span>
-					<div className="min-h-[400px] max-h-[600px] overflow-auto rounded-md border border-border bg-card p-4">
-						{html ? (
-							<SanitizedHtml html={html} className="markdown-preview" />
-						) : (
-							<p className="text-sm text-muted-foreground">
-								O preview aparecerá aqui...
-							</p>
-						)}
-					</div>
-					<div className="flex flex-wrap items-center gap-3">
-						<CopyButton text={fullHtml} label="Copiar HTML" variant="outline" />
-						<Button variant="outline" onClick={handleDownload}>
-							<Download />
-							Baixar HTML
-						</Button>
-						<div className="flex items-center gap-2">
-							<Checkbox
-								id="md-css"
-								checked={includeCss}
-								onCheckedChange={(checked) => setIncludeCss(checked === true)}
-							/>
-							<label
-								htmlFor="md-css"
-								className="text-sm text-foreground cursor-pointer"
+		<>
+			<LayoutC
+				left={
+					<>
+						<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Markdown
+							</span>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={() => setMarkdown("")}
+								disabled={!markdown}
+								aria-label="Limpar"
 							>
-								Incluir CSS básico no download
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
+						</div>
+
+						<textarea
+							value={markdown}
+							onChange={(e) => setMarkdown(e.target.value)}
+							placeholder="Digite seu Markdown aqui..."
+							className="flex-1 min-h-[400px] resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+							spellCheck={false}
+						/>
+					</>
+				}
+				right={
+					<>
+						<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Preview HTML
+							</span>
+							<CopyButton
+								text={fullHtml}
+								disabled={!html}
+								variant="ghost"
+								size="icon-sm"
+								iconOnly
+							/>
+						</div>
+
+						<div className="flex-1 min-h-[400px] overflow-auto bg-card p-4">
+							{html ? (
+								<SanitizedHtml html={html} className="markdown-preview" />
+							) : (
+								<p className="text-sm text-muted-foreground">
+									O preview aparecerá aqui...
+								</p>
+							)}
+						</div>
+					</>
+				}
+				footer={
+					<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+						<span className="inline-flex items-center gap-1.5">
+							<span
+								className={`h-1.5 w-1.5 rounded-full ${html ? "bg-green-600" : "bg-foreground/30"}`}
+							/>
+							<span className="text-[11px] text-muted-foreground">
+								{html ? "Renderizado" : "Aguardando"}
+							</span>
+						</span>
+						<div className="flex items-center gap-2">
+							<label className="flex items-center gap-1.5 cursor-pointer">
+								<input
+									type="checkbox"
+									checked={includeCss}
+									onChange={(e) => setIncludeCss(e.target.checked)}
+									className="h-3 w-3"
+								/>
+								<span className="text-[11px] text-muted-foreground">CSS no download</span>
 							</label>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={handleDownload}
+								disabled={!html}
+								className="h-6 gap-1 px-2 text-[11px]"
+							>
+								<Download className="h-3 w-3" />
+								Baixar HTML
+							</Button>
 						</div>
 					</div>
-				</div>
-			</div>
+				}
+			/>
 
-			{/* Scoped CSS for markdown preview */}
 			<style>{`
-				 .markdown-preview h1 {
-					 font-size: 1.875rem;
-					 font-weight: 700;
-					 margin-top: 1.5em;
-					 margin-bottom: 0.5em;
-					 color: inherit;
-				 }
-				 .markdown-preview h2 {
-					 font-size: 1.5rem;
-					 font-weight: 700;
-					 margin-top: 1.5em;
-					 margin-bottom: 0.5em;
-					 color: inherit;
-				 }
-				 .markdown-preview h3 {
-					 font-size: 1.25rem;
-					 font-weight: 600;
-					 margin-top: 1.5em;
-					 margin-bottom: 0.5em;
-					 color: inherit;
-				 }
-				 .markdown-preview h4 {
-					 font-size: 1.125rem;
-					 font-weight: 600;
-					 margin-top: 1.5em;
-					 margin-bottom: 0.5em;
-					 color: inherit;
-				 }
-				 .markdown-preview p {
-					 margin-bottom: 0.75em;
-					 line-height: 1.6;
-				 }
-				 .markdown-preview strong {
-					 font-weight: 700;
-				 }
-				 .markdown-preview em {
-					 font-style: italic;
-				 }
-				 .markdown-preview del {
-					 text-decoration: line-through;
-				 }
-				 .markdown-preview a {
-					 color: var(--color-primary);
-					 text-decoration: underline;
-				 }
-				 .markdown-preview ul,
-				 .markdown-preview ol {
-					 padding-left: 1.5em;
-					 margin-bottom: 0.75em;
-				 }
-				 .markdown-preview li {
-					 margin-bottom: 0.25em;
-				 }
-				 .markdown-preview input[type="checkbox"] {
-					 margin-right: 0.5em;
-				 }
-				 .markdown-preview table {
-					 border-collapse: collapse;
-					 width: 100%;
-					 margin: 1em 0;
-					 font-size: 0.875rem;
-				 }
-				 .markdown-preview th,
-				 .markdown-preview td {
-					 border: 1px solid var(--color-border);
-					 padding: 0.5em 0.75em;
-					 text-align: left;
-				 }
-				 .markdown-preview th {
-					 background-color: var(--color-muted);
-					 font-weight: 600;
-				 }
-				 .markdown-preview tr:nth-child(even) {
-					 background-color: color-mix(in oklab, var(--color-muted) 50%, transparent);
-				 }
-				 .markdown-preview code {
-					 background-color: var(--color-muted);
-					 padding: 0.15em 0.35em;
-					 border-radius: 4px;
-					 font-size: 0.875em;
-					 font-family: ui-monospace, monospace;
-				 }
-				 .markdown-preview pre {
-					 background-color: var(--color-code-bg);
-					 color: var(--color-code-text);
-					 padding: 1em;
-					 border-radius: 8px;
-					 overflow-x: auto;
-					 margin: 1em 0;
-				 }
-				 .markdown-preview pre code {
-					 background-color: transparent;
-					 color: inherit;
-					 padding: 0;
-				 }
-				 .markdown-preview blockquote {
-					 border-left: 4px solid var(--color-border);
-					 margin: 1em 0;
-					 padding-left: 1em;
-					 color: var(--color-muted-foreground);
-					 font-style: italic;
-				 }
-				 .markdown-preview hr {
-					 border: none;
-					 border-top: 1px solid var(--color-border);
-					 margin: 1.5em 0;
-				 }
-			 `}</style>
-		</div>
+				.markdown-preview h1 { font-size: 1.875rem; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; color: inherit; }
+				.markdown-preview h2 { font-size: 1.5rem; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; color: inherit; }
+				.markdown-preview h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5em; margin-bottom: 0.5em; color: inherit; }
+				.markdown-preview h4 { font-size: 1.125rem; font-weight: 600; margin-top: 1.5em; margin-bottom: 0.5em; color: inherit; }
+				.markdown-preview p { margin-bottom: 0.75em; line-height: 1.6; }
+				.markdown-preview strong { font-weight: 700; }
+				.markdown-preview em { font-style: italic; }
+				.markdown-preview del { text-decoration: line-through; }
+				.markdown-preview a { color: var(--color-primary); text-decoration: underline; }
+				.markdown-preview ul, .markdown-preview ol { padding-left: 1.5em; margin-bottom: 0.75em; }
+				.markdown-preview li { margin-bottom: 0.25em; }
+				.markdown-preview input[type="checkbox"] { margin-right: 0.5em; }
+				.markdown-preview table { border-collapse: collapse; width: 100%; margin: 1em 0; font-size: 0.875rem; }
+				.markdown-preview th, .markdown-preview td { border: 1px solid var(--color-border); padding: 0.5em 0.75em; text-align: left; }
+				.markdown-preview th { background-color: var(--color-muted); font-weight: 600; }
+				.markdown-preview tr:nth-child(even) { background-color: color-mix(in oklab, var(--color-muted) 50%, transparent); }
+				.markdown-preview code { background-color: var(--color-muted); padding: 0.15em 0.35em; border-radius: 4px; font-size: 0.875em; font-family: ui-monospace, monospace; }
+				.markdown-preview pre { background-color: var(--color-code-bg); color: var(--color-code-text); padding: 1em; border-radius: 8px; overflow-x: auto; margin: 1em 0; }
+				.markdown-preview pre code { background-color: transparent; color: inherit; padding: 0; }
+				.markdown-preview blockquote { border-left: 4px solid var(--color-border); margin: 1em 0; padding-left: 1em; color: var(--color-muted-foreground); font-style: italic; }
+				.markdown-preview hr { border: none; border-top: 1px solid var(--color-border); margin: 1.5em 0; }
+			`}</style>
+		</>
 	);
 }

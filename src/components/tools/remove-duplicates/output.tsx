@@ -1,4 +1,3 @@
-import { CopyButton } from "@/components/shared/copy-button";
 import { Textarea } from "@/components/ui/textarea";
 
 type RemoveDuplicatesOutputProps = {
@@ -21,13 +20,6 @@ export function RemoveDuplicatesOutput({ value }: RemoveDuplicatesOutputProps) {
 				placeholder='Clique em "Remover duplicatas" para ver o resultado...'
 				rows={12}
 				className="resize-y"
-			/>
-			<CopyButton
-				text={value}
-				label="Copiar"
-				disabled={!value}
-				variant="outline"
-				className="flex ml-auto"
 			/>
 		</div>
 	);

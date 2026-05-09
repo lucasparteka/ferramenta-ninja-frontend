@@ -1,18 +1,18 @@
 "use client";
 
-import { Trash } from "lucide-react";
-import { useState } from "react";
-import { ResultGrid, ResultRow } from "@/components/shared/result-box";
+import { ArrowLeftRight, Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutC } from "@/components/shared/layout-c";
 import { Button } from "@/components/ui/button";
-import { DateInput } from "@/components/ui/date-input";
-import { Input } from "@/components/ui/input";
-import { NativeSelect } from "@/components/ui/select-native";
 import type { TimestampUnit } from "@/lib/date/timestamp";
 import {
 	formatTimestampToDate,
 	getCurrentTimestamp,
 	parseDateToTimestamp,
 } from "@/lib/date/timestamp";
+
+type Direction = "ts-to-date" | "date-to-ts";
 
 function buildIsoDateTime(date: string, time: string): string {
 	if (!date) return "";
@@ -22,193 +22,230 @@ function buildIsoDateTime(date: string, time: string): string {
 
 export function TimestampConverter() {
 	const [unit, setUnit] = useState<TimestampUnit>("seconds");
+	const [direction, setDirection] = useState<Direction>("ts-to-date");
 	const [timestampInput, setTimestampInput] = useState("");
 	const [dateInput, setDateInput] = useState("");
 	const [timeInput, setTimeInput] = useState("");
-	const [resultDate, setResultDate] = useState<string | null>(null);
-	const [resultTimestamp, setResultTimestamp] = useState<number | null>(null);
-	const [error, setError] = useState<string | null>(null);
 
-	function handleTimestampToDate() {
-		setError(null);
-		setResultDate(null);
-		setResultTimestamp(null);
-		if (!timestampInput.trim()) return;
-
-		const num = Number(timestampInput.trim());
-		if (Number.isNaN(num)) {
-			setError("Timestamp deve ser um número válido.");
-			return;
+	const result = useMemo(() => {
+		if (direction === "ts-to-date") {
+			if (!timestampInput.trim()) return { output: "", error: null };
+			const num = Number(timestampInput.trim());
+			if (Number.isNaN(num)) return { output: "", error: "Timestamp deve ser um número." };
+			const formatted = formatTimestampToDate(num, unit);
+			if (!formatted) return { output: "", error: "Valor inválido para o timestamp." };
+			return { output: formatted, error: null };
+		} else {
+			if (!dateInput.trim()) return { output: "", error: null };
+			const iso = buildIsoDateTime(dateInput, timeInput);
+			const ts = parseDateToTimestamp(iso, unit);
+			if (ts === null) return { output: "", error: "Data inválida." };
+			return { output: String(ts), error: null };
 		}
-
-		const formatted = formatTimestampToDate(num, unit);
-		if (!formatted) {
-			setError("Não foi possível converter o timestamp. Verifique o valor.");
-			return;
-		}
-		setResultDate(formatted);
-	}
-
-	function handleDateToTimestamp() {
-		setError(null);
-		setResultDate(null);
-		setResultTimestamp(null);
-		if (!dateInput.trim()) return;
-
-		const iso = buildIsoDateTime(dateInput, timeInput);
-		const ts = parseDateToTimestamp(iso, unit);
-		if (ts === null) {
-			setError("Data inválida. Selecione uma data válida.");
-			return;
-		}
-		setResultTimestamp(ts);
-	}
+	}, [direction, timestampInput, dateInput, timeInput, unit]);
 
 	function handleNow() {
 		const now = new Date();
-		const nowTs = getCurrentTimestamp(unit);
-		setTimestampInput(String(nowTs));
+		setTimestampInput(String(getCurrentTimestamp(unit)));
 		setDateInput(now.toISOString().slice(0, 10));
 		setTimeInput(now.toTimeString().slice(0, 5));
-		setError(null);
-		setResultDate(null);
-		setResultTimestamp(null);
+	}
+
+	function handleSwap() {
+		if (!result.output) return;
+		if (direction === "ts-to-date") {
+			// result is a formatted date string like "dd/MM/yyyy HH:mm:ss"
+			// we need to swap: put timestamp in output into date field
+			// but we can't easily parse back "dd/MM/yyyy HH:mm:ss" — skip swap for this direction
+			// Instead, just flip the direction and clear
+			setDirection("date-to-ts");
+			setDateInput("");
+			setTimeInput("");
+		} else {
+			// result is a timestamp string
+			setTimestampInput(result.output);
+			setDirection("ts-to-date");
+		}
 	}
 
 	function handleClear() {
 		setTimestampInput("");
 		setDateInput("");
 		setTimeInput("");
-		setResultDate(null);
-		setResultTimestamp(null);
-		setError(null);
 	}
 
+	const hasInput =
+		direction === "ts-to-date" ? !!timestampInput : !!dateInput;
+
 	return (
-		<div className="space-y-6">
-			<div className="max-w-2xl space-y-4">
-				<div className="space-y-2">
-					<label
-						htmlFor="timestamp-unit"
-						className="block text-sm font-medium text-foreground"
-					>
-						Unidade
-					</label>
-					<NativeSelect
-						id="timestamp-unit"
-						value={unit}
-						onChange={(e) => {
-							setUnit(e.target.value as TimestampUnit);
-							setResultDate(null);
-							setResultTimestamp(null);
-							setError(null);
-						}}
-					>
-						<option value="seconds">Segundos</option>
-						<option value="milliseconds">Milissegundos</option>
-					</NativeSelect>
-				</div>
-
-				<div className="space-y-2">
-					<label
-						htmlFor="timestamp-input"
-						className="block text-sm font-medium text-foreground"
-					>
-						Timestamp Unix ({unit === "seconds" ? "segundos" : "milissegundos"})
-					</label>
-					<Input
-						id="timestamp-input"
-						type="text"
-						value={timestampInput}
-						onChange={(e) => setTimestampInput(e.target.value)}
-						placeholder="Ex: 1700000000"
-						className="font-mono"
-					/>
-					<Button
-						onClick={handleTimestampToDate}
-						disabled={!timestampInput.trim()}
-					>
-						Converter para data
-					</Button>
-				</div>
-
-				<div className="space-y-2">
-					<label
-						htmlFor="date-input"
-						className="block text-sm font-medium text-foreground"
-					>
-						Data
-					</label>
-					<DateInput
-						id="date-input"
-						value={dateInput}
-						onChange={setDateInput}
-					/>
-					<div className="grid gap-4 sm:grid-cols-[200px_1fr]">
-						<div className="space-y-2">
-							<label
-								htmlFor="time-input"
-								className="block text-sm font-medium text-foreground"
-							>
-								Hora
-							</label>
-							<Input
-								id="time-input"
-								type="time"
-								value={timeInput}
-								onChange={(e) => setTimeInput(e.target.value)}
-							/>
-						</div>
-						<div className="flex items-end">
+		<LayoutC
+			left={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Entrada
+						</span>
+						<div className="flex items-center gap-1">
+							{(["ts-to-date", "date-to-ts"] as const).map((d) => (
+								<button
+									key={d}
+									type="button"
+									onClick={() => setDirection(d)}
+									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+										direction === d
+											? "bg-foreground/10 font-medium text-foreground"
+											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+									}`}
+								>
+									{d === "ts-to-date" ? "Timestamp → Data" : "Data → Timestamp"}
+								</button>
+							))}
 							<Button
-								onClick={handleDateToTimestamp}
-								disabled={!dateInput.trim()}
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleSwap}
+								disabled={!result.output || direction === "ts-to-date"}
+								aria-label="Usar resultado como entrada"
 							>
-								Converter para timestamp
+								<ArrowLeftRight className="h-3.5 w-3.5" />
+							</Button>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleClear}
+								disabled={!hasInput}
+								aria-label="Limpar"
+							>
+								<Trash2 className="h-3.5 w-3.5" />
 							</Button>
 						</div>
 					</div>
-				</div>
 
-				<div className="flex flex-wrap gap-2">
-					<Button variant="outline" onClick={handleNow}>
-						Agora
-					</Button>
-					<Button
-						variant="secondary"
-						onClick={handleClear}
-						disabled={!timestampInput && !dateInput}
-					>
-						<Trash />
-						Limpar
-					</Button>
-				</div>
-			</div>
+					<div className="flex items-center justify-between border-b border-border px-3 py-2">
+						<span className="text-[11px] text-muted-foreground">Unidade</span>
+						<div className="flex items-center gap-1">
+							{(["seconds", "milliseconds"] as const).map((u) => (
+								<button
+									key={u}
+									type="button"
+									onClick={() => setUnit(u)}
+									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+										unit === u
+											? "bg-foreground/10 font-medium text-foreground"
+											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
+									}`}
+								>
+									{u === "seconds" ? "Segundos" : "Milissegundos"}
+								</button>
+							))}
+						</div>
+					</div>
 
-			{error && (
-				<div className="max-w-2xl rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3">
-					<p className="text-sm font-medium text-destructive">{error}</p>
-				</div>
-			)}
+					{direction === "ts-to-date" ? (
+						<div className="flex flex-col gap-4 p-4">
+							<div className="flex flex-col gap-1.5">
+								<span className="text-[11px] text-muted-foreground">
+									Timestamp Unix ({unit === "seconds" ? "s" : "ms"})
+								</span>
+								<input
+									type="text"
+									value={timestampInput}
+									onChange={(e) => setTimestampInput(e.target.value)}
+									placeholder="Ex: 1700000000"
+									className="w-full rounded border border-border bg-transparent px-2 py-1.5 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+									spellCheck={false}
+								/>
+							</div>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={handleNow}
+								className="w-fit text-[11px]"
+							>
+								Agora
+							</Button>
+						</div>
+					) : (
+						<div className="flex flex-col gap-4 p-4">
+							<div className="flex flex-col gap-1.5">
+								<span className="text-[11px] text-muted-foreground">Data</span>
+								<input
+									type="date"
+									value={dateInput}
+									onChange={(e) => setDateInput(e.target.value)}
+									className="w-full rounded border border-border bg-transparent px-2 py-1.5 text-sm text-foreground focus:outline-none"
+								/>
+							</div>
+							<div className="flex flex-col gap-1.5">
+								<span className="text-[11px] text-muted-foreground">Hora</span>
+								<input
+									type="time"
+									value={timeInput}
+									onChange={(e) => setTimeInput(e.target.value)}
+									className="w-full rounded border border-border bg-transparent px-2 py-1.5 text-sm text-foreground focus:outline-none"
+								/>
+							</div>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={handleNow}
+								className="w-fit text-[11px]"
+							>
+								Agora
+							</Button>
+						</div>
+					)}
+				</>
+			}
+			right={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							{direction === "ts-to-date" ? "Data e Hora" : "Timestamp Unix"}
+						</span>
+						<CopyButton
+							text={result.output}
+							disabled={!result.output}
+							variant="ghost"
+							size="icon-sm"
+							iconOnly
+						/>
+					</div>
 
-			{(resultDate || resultTimestamp !== null) && (
-				<div className="max-w-2xl space-y-4">
-					<ResultGrid>
-						{resultDate && (
-							<ResultRow
-								label="Data convertida"
-								value={<span className="text-primary">{resultDate}</span>}
-							/>
-						)}
-						{resultTimestamp !== null && (
-							<ResultRow
-								label="Timestamp convertido"
-								value={<span className="text-primary">{resultTimestamp}</span>}
-							/>
-						)}
-					</ResultGrid>
+					<div className="flex-1 min-h-[200px] bg-muted/20 p-4">
+						{result.error ? (
+							<p className="text-xs text-destructive">{result.error}</p>
+						) : result.output ? (
+							<p className="font-mono text-lg text-foreground select-all">
+								{result.output}
+							</p>
+						) : null}
+					</div>
+				</>
+			}
+			footer={
+				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+					<span className="inline-flex items-center gap-1.5">
+						<span
+							className={`h-1.5 w-1.5 rounded-full ${
+								result.error
+									? "bg-destructive"
+									: result.output
+										? "bg-green-600"
+										: "bg-foreground/30"
+							}`}
+						/>
+						<span className="text-[11px] text-muted-foreground">
+							{result.error ? "Erro" : result.output ? "Convertido" : "Aguardando"}
+						</span>
+					</span>
+					{result.output && (
+						<span className="font-mono text-[11px] text-muted-foreground">
+							{direction === "ts-to-date" ? "Timestamp → Data" : "Data → Timestamp"}
+						</span>
+					)}
 				</div>
-			)}
-		</div>
+			}
+		/>
 	);
 }

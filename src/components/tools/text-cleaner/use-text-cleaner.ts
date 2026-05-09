@@ -68,6 +68,10 @@ export function useTextCleaner(initialOptions?: Partial<TextCleanerOptions>) {
 	}
 	const issues = detectIssues(input);
 
+	function clearAll() {
+		setInput("");
+	}
+
 	return {
 		input,
 		output,
@@ -75,5 +79,6 @@ export function useTextCleaner(initialOptions?: Partial<TextCleanerOptions>) {
 		issues,
 		setInput,
 		setOptions,
+		clearAll,
 	};
 }

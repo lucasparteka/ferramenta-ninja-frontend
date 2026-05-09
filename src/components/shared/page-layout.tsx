@@ -55,15 +55,10 @@ export function PageLayout({
 				<p className="text-sm text-muted-foreground">{description}</p>
 			</div>
 			<div className="border-t border-border my-6" />
-			{compact ? (
-				<div className="flex min-h-[50vh] items-center justify-center">
-					<div className="w-full md:rounded-lg md:border md:bg-card md:p-5">
-						{children}
-					</div>
-				</div>
-			) : (
-				children
-			)}
+			{compact
+				? //
+					children
+				: children}
 
 			{toolHref && <CategoryToolsSection currentHref={toolHref} />}
 

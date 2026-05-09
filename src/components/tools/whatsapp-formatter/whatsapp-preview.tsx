@@ -51,7 +51,8 @@ function parseInline(text: string): React.ReactNode[] {
 function renderWhatsAppText(text: string): React.ReactNode {
 	const lines = text.split("\n");
 	return lines.map((line, index) => (
-		<span key={line}>
+		// biome-ignore lint/suspicious/noArrayIndexKey: text lines may repeat
+		<span key={index}>
 			{parseInline(line)}
 			{index < lines.length - 1 && <br />}
 		</span>

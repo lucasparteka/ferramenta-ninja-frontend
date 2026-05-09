@@ -1,206 +1,282 @@
 "use client";
 
+import { Trash2 } from "lucide-react";
 import { useId, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { NativeSelect } from "@/components/ui/select-native";
-import { ResultBox } from "@/components/shared/result-box";
 import { CopyButton } from "@/components/shared/copy-button";
-import { hashText, hashFile, hmacText, hmacFile, ALGORITHM_LABELS, type HashAlgorithm } from "@/lib/crypto/hash";
-
-type Mode = "hash" | "verify";
+import { LayoutC } from "@/components/shared/layout-c";
+import { Button } from "@/components/ui/button";
+import {
+	ALGORITHM_LABELS,
+	type HashAlgorithm,
+	hashFile,
+	hashText,
+	hmacFile,
+	hmacText,
+} from "@/lib/crypto/hash";
 
 export function HashGenerator() {
 	const uid = useId();
-	const [mode, setMode] = useState<Mode>("hash");
 	const [input, setInput] = useState("");
 	const [algo, setAlgo] = useState<HashAlgorithm>("sha256");
 	const [useHmac, setUseHmac] = useState(false);
 	const [secretKey, setSecretKey] = useState("");
 	const [file, setFile] = useState<File | null>(null);
-	const [result, setResult] = useState("");
+	const [hashResult, setHashResult] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [verifyHash, setVerifyHash] = useState("");
 	const [verifyResult, setVerifyResult] = useState<boolean | null>(null);
 
 	async function compute() {
-		setResult("");
+		setHashResult("");
+		setVerifyResult(null);
 		setLoading(true);
 		try {
-			let hex: string;
-			if (file) {
-				hex = useHmac
+			const hex = file
+				? useHmac
 					? await hmacFile(file, algo, secretKey || "")
-					: await hashFile(file, algo);
-			} else {
-				hex = useHmac
+					: await hashFile(file, algo)
+				: useHmac
 					? await hmacText(input, algo, secretKey || "")
 					: await hashText(input, algo);
-			}
-			setResult(hex);
+			setHashResult(hex);
 		} catch {
-			setResult("Erro ao calcular hash");
+			setHashResult("Erro ao calcular hash");
 		} finally {
 			setLoading(false);
 		}
 	}
 
 	function handleVerify() {
-		setVerifyResult(result.toLowerCase() === verifyHash.toLowerCase().trim());
+		setVerifyResult(
+			hashResult.toLowerCase() === verifyHash.toLowerCase().trim(),
+		);
 	}
 
 	function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
 		const f = e.target.files?.[0] ?? null;
 		setFile(f);
-		setResult("");
+		setHashResult("");
 		setVerifyResult(null);
 	}
 
+	function handleClear() {
+		setInput("");
+		setFile(null);
+		setHashResult("");
+		setVerifyResult(null);
+		setVerifyHash("");
+	}
+
 	return (
-		<div className="space-y-6">
-			<div className="flex flex-wrap gap-2">
-				<Button
-					type="button"
-					variant={mode === "hash" ? "default" : "outline"}
-					size="sm"
-					onClick={() => { setMode("hash"); setVerifyResult(null); }}
-				>
-					Gerar Hash
-				</Button>
-				<Button
-					type="button"
-					variant={mode === "verify" ? "default" : "outline"}
-					size="sm"
-					onClick={() => { setMode("verify"); setVerifyResult(null); }}
-				>
-					Verificar
-				</Button>
-			</div>
-
-			{mode === "verify" && result && (
-				<div className="rounded-md border border-border p-4 space-y-3">
-					<h3 className="text-sm font-medium">Verificar Hash</h3>
-					<div className="space-y-1">
-						<label htmlFor={`${uid}-verify`} className="text-xs uppercase tracking-wider text-muted-foreground">
-							Hash para comparar
-						</label>
-						<Input
-							id={`${uid}-verify`}
-							value={verifyHash}
-							onChange={(e) => { setVerifyHash(e.target.value); setVerifyResult(null); }}
-							placeholder="Cole o hash aqui..."
-						/>
+		<LayoutC
+			left={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Entrada
+						</span>
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							onClick={handleClear}
+							disabled={!input && !file}
+							aria-label="Limpar"
+						>
+							<Trash2 className="h-3.5 w-3.5" />
+						</Button>
 					</div>
-					<Button type="button" size="sm" onClick={handleVerify} disabled={!verifyHash}>
-						Comparar
-					</Button>
-					{verifyResult !== null && (
-						<p className={`text-sm font-medium ${verifyResult ? "text-success" : "text-destructive"}`}>
-							{verifyResult ? "✓ Hash corresponde ao texto" : "✗ Hash não corresponde"}
-						</p>
-					)}
-				</div>
-			)}
 
-			<div className="grid gap-4 sm:grid-cols-2">
-				<div className="space-y-1">
-					<label htmlFor={`${uid}-algo`} className="text-xs uppercase tracking-wider text-muted-foreground">
-						Algoritmo
-					</label>
-					<NativeSelect
-						id={`${uid}-algo`}
-						value={algo}
-						onChange={(e) => { setAlgo(e.target.value as HashAlgorithm); setResult(""); setVerifyResult(null); }}
-					>
-						{Object.entries(ALGORITHM_LABELS).map(([value, label]) => (
-							<option key={value} value={value}>{label}</option>
-						))}
-					</NativeSelect>
-				</div>
+					<div className="flex items-center justify-between border-b border-border px-3 py-2">
+						<span className="text-[11px] text-muted-foreground">
+							Algoritmo
+						</span>
+						<select
+							value={algo}
+							onChange={(e) => {
+								setAlgo(e.target.value as HashAlgorithm);
+								setHashResult("");
+								setVerifyResult(null);
+							}}
+							className="bg-transparent text-[11px] text-foreground focus:outline-none"
+						>
+							{Object.entries(ALGORITHM_LABELS).map(([value, label]) => (
+								<option key={value} value={value}>
+									{label}
+								</option>
+							))}
+						</select>
+					</div>
 
-				<div className="flex items-end pb-1">
-					<label className="flex items-center gap-2 text-sm">
+					<div className="flex items-center justify-between border-b border-border px-3 py-2">
+						<label
+							htmlFor={`${uid}-hmac`}
+							className="text-[11px] text-muted-foreground"
+						>
+							HMAC com chave secreta
+						</label>
 						<input
+							id={`${uid}-hmac`}
 							type="checkbox"
 							checked={useHmac}
-							onChange={(e) => { setUseHmac(e.target.checked); setResult(""); setVerifyResult(null); }}
-							className="h-4 w-4 rounded"
+							onChange={(e) => {
+								setUseHmac(e.target.checked);
+								setHashResult("");
+								setVerifyResult(null);
+							}}
+							className="h-3.5 w-3.5"
 						/>
-						HMAC (com chave secreta)
-					</label>
-				</div>
-			</div>
-
-			{useHmac && (
-				<div className="space-y-1">
-					<label htmlFor={`${uid}-key`} className="text-xs uppercase tracking-wider text-muted-foreground">
-						Chave secreta
-					</label>
-					<Input
-						id={`${uid}-key`}
-						value={secretKey}
-						onChange={(e) => { setSecretKey(e.target.value); setResult(""); }}
-						placeholder="Digite a chave secreta..."
-					/>
-				</div>
-			)}
-
-			<div className="space-y-1">
-				<label htmlFor={`${uid}-input`} className="text-xs uppercase tracking-wider text-muted-foreground">
-					Texto de entrada
-				</label>
-				<Textarea
-					id={`${uid}-input`}
-					value={input}
-					onChange={(e) => { setInput(e.target.value); setResult(""); setVerifyResult(null); }}
-					placeholder="Digite o texto para gerar o hash..."
-					rows={4}
-					disabled={!!file}
-				/>
-			</div>
-
-			<div className="space-y-1">
-				<label htmlFor={`${uid}-file`} className="text-xs uppercase tracking-wider text-muted-foreground">
-					Ou escolha um arquivo
-				</label>
-				<div className="flex items-center gap-3">
-					<Input
-						id={`${uid}-file`}
-						type="file"
-						onChange={handleFileChange}
-						className="cursor-pointer"
-						disabled={!!input}
-					/>
-					{file && (
-						<button
-							type="button"
-							onClick={() => { setFile(null); setResult(""); setVerifyResult(null); }}
-							className="text-xs text-muted-foreground underline"
-						>
-							Remover
-						</button>
-					)}
-				</div>
-				{file && (
-					<p className="text-xs text-muted-foreground">{file.name} ({(file.size / 1024).toFixed(1)} KB)</p>
-				)}
-			</div>
-
-			<Button type="button" onClick={compute} disabled={loading || (!input && !file)}>
-				{loading ? "Calculando..." : "Calcular Hash"}
-			</Button>
-
-			{result && (
-				<ResultBox label={useHmac ? "HMAC" : "Hash"}>
-					<div className="flex items-start gap-2">
-						<code className="flex-1 break-all rounded bg-muted px-3 py-2 text-sm font-mono">
-							{result}
-						</code>
-						<CopyButton text={result} />
 					</div>
-				</ResultBox>
-			)}
-		</div>
+
+					{useHmac && (
+						<div className="flex items-center gap-2 border-b border-border px-3 py-2">
+							<span className="shrink-0 text-[11px] text-muted-foreground">
+								Chave
+							</span>
+							<input
+								id={`${uid}-key`}
+								value={secretKey}
+								onChange={(e) => {
+									setSecretKey(e.target.value);
+									setHashResult("");
+								}}
+								placeholder="Digite a chave secreta..."
+								className="flex-1 bg-transparent text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
+							/>
+						</div>
+					)}
+
+					<textarea
+						id={`${uid}-input`}
+						value={input}
+						onChange={(e) => {
+							setInput(e.target.value);
+							setHashResult("");
+							setVerifyResult(null);
+						}}
+						placeholder="Digite o texto para gerar o hash..."
+						disabled={!!file}
+						className="flex-1 min-h-[200px] resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none disabled:opacity-40"
+						spellCheck={false}
+					/>
+
+					<div className="flex items-center gap-3 border-t border-border px-3 py-2">
+						<span className="shrink-0 text-[11px] text-muted-foreground">
+							Arquivo
+						</span>
+						<input
+							id={`${uid}-file`}
+							type="file"
+							onChange={handleFileChange}
+							disabled={!!input}
+							className="flex-1 cursor-pointer text-[11px] text-foreground disabled:opacity-40"
+						/>
+						{file && (
+							<button
+								type="button"
+								onClick={() => {
+									setFile(null);
+									setHashResult("");
+									setVerifyResult(null);
+								}}
+								className="shrink-0 text-[11px] text-muted-foreground underline"
+							>
+								Remover
+							</button>
+						)}
+					</div>
+				</>
+			}
+			right={
+				<>
+					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Hash
+						</span>
+						<CopyButton
+							text={hashResult}
+							disabled={!hashResult || loading}
+							variant="ghost"
+							size="icon-sm"
+							iconOnly
+						/>
+					</div>
+
+					<div className="flex-1 min-h-[200px] bg-muted/20 p-3">
+						{hashResult ? (
+							<code className="break-all font-mono text-sm text-foreground select-all">
+								{hashResult}
+							</code>
+						) : null}
+					</div>
+
+					{hashResult && (
+						<div className="border-t border-border px-3 py-3 space-y-2">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Verificar
+							</span>
+							<div className="flex items-center gap-2">
+								<input
+									value={verifyHash}
+									onChange={(e) => {
+										setVerifyHash(e.target.value);
+										setVerifyResult(null);
+									}}
+									placeholder="Cole o hash para comparar..."
+									className="flex-1 rounded border border-border bg-transparent px-2 py-1 font-mono text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
+								/>
+								<Button
+									type="button"
+									size="sm"
+									variant="outline"
+									onClick={handleVerify}
+									disabled={!verifyHash}
+								>
+									Comparar
+								</Button>
+							</div>
+							{verifyResult !== null && (
+								<p
+									className={`text-xs font-medium ${verifyResult ? "text-green-600" : "text-destructive"}`}
+								>
+									{verifyResult
+										? "✓ Hash corresponde"
+										: "✗ Hash não corresponde"}
+								</p>
+							)}
+						</div>
+					)}
+				</>
+			}
+			footer={
+				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
+					<span className="inline-flex items-center gap-1.5">
+						<span
+							className={`h-1.5 w-1.5 rounded-full ${
+								loading
+									? "animate-pulse bg-amber-500"
+									: hashResult
+										? "bg-green-600"
+										: "bg-foreground/30"
+							}`}
+						/>
+						<span className="text-[11px] text-muted-foreground">
+							{loading
+								? "Calculando..."
+								: hashResult
+									? `${ALGORITHM_LABELS[algo]} · ${hashResult.length} chars`
+									: "Aguardando"}
+						</span>
+					</span>
+					<Button
+						type="button"
+						size="sm"
+						onClick={compute}
+						disabled={loading || (!input && !file)}
+					>
+						{loading ? "Calculando..." : "Calcular Hash"}
+					</Button>
+				</div>
+			}
+		/>
 	);
 }

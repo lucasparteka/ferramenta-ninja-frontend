@@ -96,7 +96,7 @@ export const categories: ToolCategory[] = [
 	{
 		id: "texto",
 		name: "Texto",
-		description: "Manipulação, limpeza e formatação de texto",
+		description: "Manipulação, limpeza, formatação e geração de texto",
 		tools: [
 			{
 				name: "Contador de Caracteres",
@@ -171,12 +171,6 @@ export const categories: ToolCategory[] = [
 				tags: ["texto", "limpeza"],
 				intent: "format",
 			},
-		],
-	},
-	{
-		id: "geradores-texto",
-		name: "Geradores de Texto",
-		tools: [
 			{
 				name: "Gerador de Texto",
 				href: "/ferramentas/gerador-de-texto",
@@ -189,7 +183,8 @@ export const categories: ToolCategory[] = [
 	},
 	{
 		id: "dados",
-		name: "Dados e Conversões",
+		name: "Dados e Tabelas",
+		description: "Conversores, formatadores e visualizadores de dados",
 		tools: [
 			{
 				name: "Converter CSV para JSON",
@@ -270,12 +265,6 @@ export const categories: ToolCategory[] = [
 				intent: "generate",
 				weight: 2,
 			},
-		],
-	},
-	{
-		id: "csv",
-		name: "CSV e Tabelas",
-		tools: [
 			{
 				name: "Visualizador de CSV",
 				href: "/ferramentas/visualizador-de-csv",
@@ -296,7 +285,8 @@ export const categories: ToolCategory[] = [
 	},
 	{
 		id: "documentos",
-		name: "Documentos",
+		name: "Docs e Formulários",
+		description: "Documentos prontos para imprimir e exportar",
 		tools: [
 			{
 				name: "Criador de Currículo",
@@ -361,6 +351,23 @@ export const categories: ToolCategory[] = [
 				intent: "generate",
 			},
 			{
+				name: "Assinatura de Email",
+				href: "/ferramentas/assinatura-de-email",
+				description:
+					"Crie assinaturas de email profissionais com templates e exportação HTML",
+				icon: Mail,
+				tags: ["email", "assinatura", "profissional", "documento"],
+				intent: "generate",
+				weight: 2,
+			},
+		],
+	},
+	{
+		id: "identificadores",
+		name: "Identificadores e Validação",
+		description: "Gere e valide CPF, CNPJ e cartões",
+		tools: [
+			{
 				name: "Gerador de CPF",
 				href: "/ferramentas/gerador-de-cpf",
 				description: "Gere e valide CPFs",
@@ -392,6 +399,13 @@ export const categories: ToolCategory[] = [
 				tags: ["cartao", "validacao"],
 				intent: "validate",
 			},
+		],
+	},
+	{
+		id: "consultas-brasil",
+		name: "Consultas Brasil",
+		description: "Consultas a dados e serviços brasileiros",
+		tools: [
 			{
 				name: "Decodificador PIX Copia e Cola",
 				href: "/ferramentas/decodificador-pix",
@@ -435,24 +449,6 @@ export const categories: ToolCategory[] = [
 				icon: Receipt,
 				tags: ["boleto", "linha digitavel", "brasil"],
 				intent: "validate",
-				weight: 2,
-			},
-			{
-				name: "Prévia Resultado Google",
-				href: "/ferramentas/previa-resultado-google",
-				description: "Visualize como sua página aparece no Google",
-				icon: LayoutList,
-				tags: ["seo", "documento"],
-				intent: "analyze",
-			},
-			{
-				name: "Assinatura de Email",
-				href: "/ferramentas/assinatura-de-email",
-				description:
-					"Crie assinaturas de email profissionais com templates e exportação HTML",
-				icon: Mail,
-				tags: ["email", "assinatura", "profissional", "documento"],
-				intent: "generate",
 				weight: 2,
 			},
 		],
@@ -588,9 +584,42 @@ export const categories: ToolCategory[] = [
 		],
 	},
 	{
-		id: "sorteios",
-		name: "Sorteios",
+		id: "utilitarios",
+		name: "Utilitários",
+		description: "Ferramentas úteis para o dia a dia",
 		tools: [
+			{
+				name: "Teste de Digitação",
+				href: "/ferramentas/teste-digitacao",
+				description: "Meça sua velocidade de digitação em WPM e CPM",
+				icon: Keyboard,
+				tags: ["utilitarios", "produtividade", "texto"],
+				intent: "analyze",
+			},
+			{
+				name: "Cronômetro Online",
+				href: "/ferramentas/cronometro-online",
+				description: "Cronômetro preciso com marcação de voltas",
+				icon: Timer,
+				tags: ["utilitarios", "tempo", "produtividade"],
+				intent: "analyze",
+			},
+			{
+				name: "Manter Tela Ligada",
+				href: "/ferramentas/manter-tela-ligada",
+				description: "Impeça a tela de desligar com timer e Picture-in-Picture",
+				icon: Monitor,
+				tags: ["utilitarios", "tela", "produtividade", "timer"],
+				intent: "generate",
+			},
+			{
+				name: "Gerador de Link WhatsApp",
+				href: "/ferramentas/gerador-de-link-whatsapp",
+				description: "Links wa.me com mensagem e QR Code",
+				icon: MessageCircle,
+				tags: ["whatsapp", "utilidades", "comunicacao"],
+				intent: "generate",
+			},
 			{
 				name: "Sorteio Online",
 				href: "/ferramentas/sorteio-online",
@@ -649,8 +678,9 @@ export const categories: ToolCategory[] = [
 		],
 	},
 	{
-		id: "imagens",
-		name: "Imagens",
+		id: "codigos",
+		name: "Códigos e QR",
+		description: "QR codes, códigos de barras e leitores",
 		tools: [
 			{
 				name: "Gerador de QR Code",
@@ -695,14 +725,6 @@ export const categories: ToolCategory[] = [
 				intent: "analyze",
 			},
 			{
-				name: "Converter Imagem em Texto",
-				href: "/ferramentas/converter-imagem-em-texto",
-				description: "OCR no navegador",
-				icon: ScanText,
-				tags: ["imagem", "ocr"],
-				intent: "convert",
-			},
-			{
 				name: "Gerador de Código de Barras",
 				href: "/ferramentas/gerador-de-codigo-de-barras",
 				description: "Gere códigos de barras personalizados",
@@ -717,6 +739,21 @@ export const categories: ToolCategory[] = [
 				icon: Barcode,
 				tags: ["barcode", "imagem"],
 				intent: "generate",
+			},
+		],
+	},
+	{
+		id: "imagens",
+		name: "Imagens",
+		description: "Editores e processadores de imagem direto no navegador",
+		tools: [
+			{
+				name: "Converter Imagem em Texto",
+				href: "/ferramentas/converter-imagem-em-texto",
+				description: "OCR no navegador",
+				icon: ScanText,
+				tags: ["imagem", "ocr"],
+				intent: "convert",
 			},
 			{
 				name: "Desenhar Online",
@@ -796,7 +833,8 @@ export const categories: ToolCategory[] = [
 	{
 		id: "desenvolvedor",
 		name: "Desenvolvedor",
-		description: "Ferramentas para desenvolvimento web e programação",
+		description:
+			"Ferramentas para desenvolvimento web, programação e design CSS",
 		tools: [
 			{
 				name: "Base64 Encode/Decode",
@@ -810,7 +848,7 @@ export const categories: ToolCategory[] = [
 				name: "Codificador de URL",
 				href: "/ferramentas/codificador-de-url",
 				description:
-					"Codifique e decodifique URLs com encodeURIComponent e encodeURI",
+					"Codifique e decodifique URLs, parâmetros e caracteres especiais",
 				icon: Link,
 				tags: ["desenvolvedor", "url", "encode", "decode", "codificacao"],
 				intent: "convert",
@@ -873,52 +911,6 @@ export const categories: ToolCategory[] = [
 				],
 				intent: "generate",
 			},
-		],
-	},
-	{
-		id: "utilitarios",
-		name: "Utilitários",
-		description: "Ferramentas úteis para o dia a dia",
-		tools: [
-			{
-				name: "Teste de Digitação",
-				href: "/ferramentas/teste-digitacao",
-				description: "Meça sua velocidade de digitação em WPM e CPM",
-				icon: Keyboard,
-				tags: ["utilitarios", "produtividade", "texto"],
-				intent: "analyze",
-			},
-			{
-				name: "Cronômetro Online",
-				href: "/ferramentas/cronometro-online",
-				description: "Cronômetro preciso com marcação de voltas",
-				icon: Timer,
-				tags: ["utilitarios", "tempo", "produtividade"],
-				intent: "analyze",
-			},
-			{
-				name: "Manter Tela Ligada",
-				href: "/ferramentas/manter-tela-ligada",
-				description: "Impeça a tela de desligar com timer e Picture-in-Picture",
-				icon: Monitor,
-				tags: ["utilitarios", "tela", "produtividade", "timer"],
-				intent: "generate",
-			},
-			{
-				name: "Gerador de Link WhatsApp",
-				href: "/ferramentas/gerador-de-link-whatsapp",
-				description: "Links wa.me com mensagem e QR Code",
-				icon: MessageCircle,
-				tags: ["whatsapp", "utilidades", "comunicacao"],
-				intent: "generate",
-			},
-		],
-	},
-	{
-		id: "design",
-		name: "Design",
-		description: "Ferramentas para criação e edição visual",
-		tools: [
 			{
 				name: "Paleta de Cores",
 				href: "/ferramentas/paleta-de-cores",
@@ -945,11 +937,20 @@ export const categories: ToolCategory[] = [
 				tags: ["design", "css", "box-shadow", "sombra", "frontend"],
 				intent: "generate",
 			},
+			{
+				name: "Prévia Resultado Google",
+				href: "/ferramentas/previa-resultado-google",
+				description: "Visualize como sua página aparece no Google",
+				icon: LayoutList,
+				tags: ["seo", "documento"],
+				intent: "analyze",
+			},
 		],
 	},
 	{
 		id: "colecoes",
 		name: "Coleções",
+		description: "Emojis, símbolos especiais e emoticons prontos para copiar",
 		tools: [
 			{
 				name: "Emojis",

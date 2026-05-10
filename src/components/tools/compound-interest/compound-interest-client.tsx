@@ -1,218 +1,336 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { AlertTriangle, Info, RotateCcw } from "lucide-react";
+import { useMemo, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
-import { type Resolver, useForm } from "react-hook-form";
-import { z } from "zod";
-import {
-	ResultBox,
-	ResultGrid,
-	ResultRow,
-} from "@/components/shared/result-box";
+import { CopyButton } from "@/components/shared/copy-button";
+import { Chip } from "@/components/shared/layout-b/chip";
+import { ResultRow } from "@/components/shared/layout-b/result-row";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
-import {
-	type CompoundInterestResult,
-	calculateCompoundInterest,
-} from "@/lib/finance/compound-interest";
-import { parseCurrencyToNumber } from "@/utils/number";
+import { calculateCompoundInterest } from "@/lib/finance/compound-interest";
 
-const schema = z.object({
-	principal: z.string(),
-	monthlyContribution: z.string(),
-	annualRate: z.coerce.number().min(0, "Taxa mínima 0%"),
-	months: z.coerce.number().min(1, "Mínimo 1 mês").max(600, "Máximo 50 anos"),
-	contributionTiming: z.enum(["begin", "end"]),
-});
+interface CompoundInterestFormState {
+	principal: number;
+	monthlyContribution: number;
+	annualRate: number;
+	months: number;
+	contributionTiming: "begin" | "end";
+}
 
-type FormValues = z.infer<typeof schema>;
+const DEFAULTS: CompoundInterestFormState = {
+	principal: 0,
+	monthlyContribution: 0,
+	annualRate: 12,
+	months: 60,
+	contributionTiming: "end",
+};
+
+function splitBRL(value: number): { integer: string; cents: string } {
+	const [integer = "0", cents = "00"] = value
+		.toLocaleString("pt-BR", {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		})
+		.split(",");
+	return { integer, cents };
+}
+
+function fmt(value: number): string {
+	return value.toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+}
 
 export function CompoundInterestClient() {
-	const [result, setResult] = useState<CompoundInterestResult | null>(null);
+	const [state, setState] = useState<CompoundInterestFormState>(DEFAULTS);
 
-	const form = useForm<FormValues>({
-		resolver: zodResolver(schema) as Resolver<FormValues>,
-		defaultValues: {
-			principal: "",
-			monthlyContribution: "",
-			annualRate: 12,
-			months: 60,
-			contributionTiming: "end",
-		},
-	});
+	function set<K extends keyof CompoundInterestFormState>(key: K) {
+		return (value: CompoundInterestFormState[K]) =>
+			setState((s) => ({ ...s, [key]: value }));
+	}
 
-	function onSubmit(data: FormValues) {
-		const r = calculateCompoundInterest({
-			principal: parseCurrencyToNumber(data.principal),
-			monthlyContribution: parseCurrencyToNumber(data.monthlyContribution),
-			annualRate: data.annualRate / 100,
-			months: data.months,
-			contributionTiming: data.contributionTiming,
+	const result = useMemo(() => {
+		if (state.principal <= 0 && state.monthlyContribution <= 0) return null;
+		return calculateCompoundInterest({
+			principal: state.principal,
+			monthlyContribution: state.monthlyContribution,
+			annualRate: state.annualRate / 100,
+			months: state.months,
+			contributionTiming: state.contributionTiming,
 		});
-		setResult(r);
+	}, [state]);
+
+	const split = result ? splitBRL(result.finalBalance) : null;
+
+	function buildSummary(): string {
+		if (!result) return "";
+		const lines = [
+			`Montante final: R$ ${fmt(result.finalBalance)}`,
+			`Total investido: R$ ${fmt(result.totalInvested)}`,
+			`Total em juros: R$ ${fmt(result.totalInterest)}`,
+			`Taxa mensal: ${(result.monthlyRate * 100).toFixed(4)}%`,
+		];
+		return lines.join("\n");
 	}
 
 	return (
-		<div className="space-y-6">
-			<Form {...form}>
-				<form
-					onSubmit={form.handleSubmit(onSubmit)}
-					className="space-y-6 max-w-xl"
-				>
-					<FormField
-						control={form.control}
-						name="principal"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Aporte inicial</FormLabel>
-								<FormControl>
-									<CurrencyInput
-										value={field.value}
-										onChangeValue={(_, __, masked) =>
-											field.onChange(masked as string)
-										}
-										InputElement={
-											<Input type="text" placeholder="R$ 0,00" {...field} />
-										}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="monthlyContribution"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Aporte mensal</FormLabel>
-								<FormControl>
-									<CurrencyInput
-										value={field.value}
-										onChangeValue={(_, __, masked) =>
-											field.onChange(masked as string)
-										}
-										InputElement={
-											<Input type="text" placeholder="R$ 0,00" {...field} />
-										}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<div className="grid gap-4 sm:grid-cols-2">
-						<FormField
-							control={form.control}
-							name="annualRate"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Taxa de juros anual (%)</FormLabel>
-									<FormControl>
-										<Input type="number" step="0.01" min={0} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="months"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Período (meses)</FormLabel>
-									<FormControl>
-										<Input type="number" min={1} max={600} {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+		<div className="grid grid-cols-1 items-start lg:grid-cols-[1fr_360px] border rounded-md overflow-hidden">
+			{/* Coluna esquerda — formulário */}
+			<div className="bg-card flex flex-col h-full">
+				<div className="divide-y divide-border">
+					<div className="p-5">
+						<SectionLabel>Investimento</SectionLabel>
+						<div className="space-y-3.5">
+							<div>
+								<label
+									htmlFor="principal"
+									className="mb-1.5 block text-xs font-medium text-foreground"
+								>
+									Aporte inicial
+								</label>
+								<CurrencyInput
+									value={state.principal > 0 ? state.principal : undefined}
+									onChangeValue={(_, num) =>
+										set("principal")((num as number) ?? 0)
+									}
+									InputElement={
+										<Input
+											id="principal"
+											type="text"
+											placeholder="R$ 0,00"
+											inputMode="decimal"
+											autoComplete="off"
+										/>
+									}
+								/>
+							</div>
+							<div>
+								<label
+									htmlFor="monthlyContribution"
+									className="mb-1.5 block text-xs font-medium text-foreground"
+								>
+									Aporte mensal
+								</label>
+								<CurrencyInput
+									value={
+										state.monthlyContribution > 0
+											? state.monthlyContribution
+											: undefined
+									}
+									onChangeValue={(_, num) =>
+										set("monthlyContribution")((num as number) ?? 0)
+									}
+									InputElement={
+										<Input
+											id="monthlyContribution"
+											type="text"
+											placeholder="R$ 0,00"
+											inputMode="decimal"
+											autoComplete="off"
+										/>
+									}
+								/>
+							</div>
+						</div>
 					</div>
 
-					<FormField
-						control={form.control}
-						name="contributionTiming"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Quando o aporte é feito</FormLabel>
-								<FormControl>
-									<NativeSelect {...field}>
-										<option value="end">Fim do mês (padrão)</option>
-										<option value="begin">Início do mês</option>
-									</NativeSelect>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<Button type="submit">Calcular juros compostos</Button>
-				</form>
-			</Form>
-
-			{result && <ResultCard result={result} />}
-		</div>
-	);
-}
-
-function ResultCard({ result }: { result: CompoundInterestResult }) {
-	return (
-		<div className="space-y-4">
-			<ResultBox
-				label="Montante final"
-				value={brl(result.finalBalance)}
-				hint={`Taxa mensal equivalente: ${(result.monthlyRate * 100).toFixed(4)}%`}
-			/>
-			<ResultGrid>
-				<ResultRow label="Total investido" value={brl(result.totalInvested)} />
-				<ResultRow label="Total em juros" value={brl(result.totalInterest)} />
-			</ResultGrid>
-
-			<details className="rounded-md border border-border bg-card p-3">
-				<summary className="cursor-pointer text-sm font-medium text-foreground">
-					Ver evolução mês a mês
-				</summary>
-				<div className="mt-3 max-h-96 overflow-auto">
-					<table className="w-full text-sm">
-						<thead className="sticky top-0 bg-background text-left">
-							<tr>
-								<th className="px-2 py-1">Mês</th>
-								<th className="px-2 py-1">Juros</th>
-								<th className="px-2 py-1">Saldo</th>
-							</tr>
-						</thead>
-						<tbody>
-							{result.schedule.map((e) => (
-								<tr key={e.month} className="border-t border-border">
-									<td className="px-2 py-1">{e.month}</td>
-									<td className="px-2 py-1">{brl(e.interest)}</td>
-									<td className="px-2 py-1">{brl(e.balance)}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
+					<div className="p-5">
+						<SectionLabel>Parâmetros</SectionLabel>
+						<div className="space-y-3.5">
+							<div className="grid grid-cols-2 gap-3.5">
+								<div>
+									<label
+										htmlFor="annualRate"
+										className="mb-1.5 block text-xs font-medium text-foreground"
+									>
+										Taxa de juros anual (%)
+									</label>
+									<Input
+										id="annualRate"
+										type="number"
+										step={0.01}
+										min={0}
+										value={state.annualRate}
+										onChange={(e) =>
+											set("annualRate")(Number(e.target.value))
+										}
+									/>
+								</div>
+								<div>
+									<label
+										htmlFor="months"
+										className="mb-1.5 block text-xs font-medium text-foreground"
+									>
+										Período
+									</label>
+									<Input
+										id="months"
+										type="number"
+										min={1}
+										max={600}
+										value={state.months}
+										onChange={(e) => set("months")(Number(e.target.value))}
+									/>
+									<p className="mt-1 text-[11px] text-muted-foreground">
+										meses (máx. 50 anos)
+									</p>
+								</div>
+							</div>
+							<div>
+								<label
+									htmlFor="contributionTiming"
+									className="mb-1.5 block text-xs font-medium text-foreground"
+								>
+									Quando o aporte é feito
+								</label>
+								<NativeSelect
+									id="contributionTiming"
+									value={state.contributionTiming}
+									onChange={(e) =>
+										set("contributionTiming")(
+											e.target.value as "begin" | "end",
+										)
+									}
+								>
+									<option value="end">Fim do mês (padrão)</option>
+									<option value="begin">Início do mês</option>
+								</NativeSelect>
+							</div>
+						</div>
+					</div>
 				</div>
-			</details>
+
+				<div className="flex items-center justify-between border-t border-border bg-muted px-5 py-3 mt-auto">
+					<div className="flex items-center gap-1.5 text-[11.5px] text-muted-foreground">
+						<Info size={12} />O cálculo é atualizado automaticamente
+					</div>
+					<Button
+						type="button"
+						variant="ghost"
+						size="sm"
+						onClick={() => setState(DEFAULTS)}
+					>
+						<RotateCcw className="mr-1.5 h-3 w-3" />
+						Resetar
+					</Button>
+				</div>
+			</div>
+
+			{/* Coluna direita — resultado */}
+			<aside className="flex h-full lg:border-l max-lg:border-t flex-col gap-3">
+				<div className="flex-1">
+					{!result || !split ? (
+						<div className="flex flex-col items-center justify-center gap-2 p-6 text-center">
+							<p className="text-sm text-muted-foreground">
+								Informe o aporte inicial ou mensal para ver o resultado
+							</p>
+						</div>
+					) : (
+						<>
+							<div className="p-4.5 bg-card border-b">
+								<div className="mb-2 flex items-center justify-between">
+									<span className="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+										Montante final
+									</span>
+									<Chip tone="success">Simulação</Chip>
+								</div>
+								<div className="flex items-baseline gap-1 font-mono">
+									<span className="text-sm font-medium text-muted-foreground">
+										R$
+									</span>
+									<span className="text-[32px] font-semibold leading-none tracking-tight text-foreground">
+										{split.integer}
+									</span>
+									<span className="text-lg font-medium leading-none text-muted-foreground">
+										,{split.cents}
+									</span>
+								</div>
+								<div className="mt-2 text-[11.5px] text-muted-foreground">
+									Taxa mensal:{" "}
+									<span className="font-mono tabular-nums text-foreground">
+										{(result.monthlyRate * 100).toFixed(4)}%
+									</span>
+								</div>
+							</div>
+							<div className="px-4.5 py-3">
+								<p className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+									Detalhamento
+								</p>
+								<ResultRow
+									label="Total investido"
+									value={result.totalInvested}
+								/>
+								<ResultRow
+									label="Total em juros"
+									value={result.totalInterest}
+								/>
+								<div className="my-2 h-px bg-border" />
+								<ResultRow
+									label="Montante final"
+									value={result.finalBalance}
+									strong
+								/>
+							</div>
+							<div className="flex gap-2 border-t border-border p-3">
+								<CopyButton
+									text={buildSummary()}
+									label="Copiar resumo"
+									feedbackText="Copiado"
+									variant="outline"
+								/>
+							</div>
+							<details className="border-t border-border">
+								<summary className="cursor-pointer select-none px-4.5 py-3 text-[11.5px] font-medium text-muted-foreground hover:text-foreground">
+									Ver evolução mês a mês
+								</summary>
+								<div className="max-h-72 overflow-auto">
+									<table className="w-full text-[11.5px]">
+										<thead className="sticky top-0 bg-card border-b border-border">
+											<tr>
+												<th className="px-4.5 py-1.5 text-left font-medium text-muted-foreground">
+													Mês
+												</th>
+												<th className="px-2 py-1.5 text-right font-medium text-muted-foreground">
+													Juros
+												</th>
+												<th className="px-4.5 py-1.5 text-right font-medium text-muted-foreground">
+													Saldo
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											{result.schedule.map((e) => (
+												<tr
+													key={e.month}
+													className="border-t border-border font-mono tabular-nums"
+												>
+													<td className="px-4.5 py-1.5 text-muted-foreground">
+														{e.month}
+													</td>
+													<td className="px-2 py-1.5 text-right">
+														{fmt(e.interest)}
+													</td>
+													<td className="px-4.5 py-1.5 text-right">
+														{fmt(e.balance)}
+													</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							</details>
+						</>
+					)}
+				</div>
+				<div className="flex items-start gap-2 border-t border-warning-line bg-warning-surface px-4.5 py-3 text-[11.5px] leading-relaxed text-muted-foreground">
+					<AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0 text-warning" />
+					<span>
+						Simulação sem desconto de imposto de renda. Para renda fixa com IR
+						progressivo e IOF, use a Calculadora de Rendimento CDI/Selic.
+					</span>
+				</div>
+			</aside>
 		</div>
 	);
-}
-
-function brl(value: number): string {
-	return value.toLocaleString("pt-BR", {
-		style: "currency",
-		currency: "BRL",
-	});
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
-import { VacationCalculatorClient } from "@/components/tools/vacation-calculator/vacation-calculator-client";
+import { VacationClient } from "@/components/tools/vacation-calculator/vacation-client";
 
 export const metadata: Metadata = {
 	title: "Calculadora de Férias 2026 | Ferramenta Ninja",
@@ -139,7 +139,7 @@ export default function VacationCalculatorPage() {
 			}
 			extraContent={<SeoContent />}
 		>
-			<VacationCalculatorClient />
+			<VacationClient />
 		</PageLayout>
 	);
 }

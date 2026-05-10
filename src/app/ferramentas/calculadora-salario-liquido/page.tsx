@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
-import { SalaryContent } from "@/components/tools/salary-calculator/salary-content";
+import { SalaryClient } from "@/components/tools/salary-calculator/salary-client";
 
 export const metadata: Metadata = {
 	title: "Calculadora de Salário Líquido | Ferramenta Ninja",
@@ -254,7 +254,7 @@ export default function CalculadoraSalarioLiquidoPage() {
 			}
 			extraContent={<SeoContent />}
 		>
-			<SalaryContent />
+			<SalaryClient />
 		</PageLayout>
 	);
 }

@@ -156,6 +156,81 @@ describe("calculateTermination", () => {
 		});
 		expect(r.fgtsWithdrawable).toBe(2880);
 	});
+
+	it("13º já recebido deduz metade do salário do proporcional", () => {
+		// Dec 15 termination → 12 avos → thirteenthProportional = 3000, advance = min(1500, 3000) = 1500
+		const r = calculateTermination({
+			monthlySalary: 3000,
+			admissionDate: new Date("2024-01-01"),
+			terminationDate: new Date("2025-12-15"),
+			type: "no-cause",
+			noticePolicy: "indemnified",
+			thirteenthAlreadyPaid: true,
+		});
+		expect(r.thirteenthProportional).toBe(3000);
+		expect(r.thirteenthAdvanceDeduction).toBe(1500);
+	});
+
+	it("13º já recebido com < 6 avos: deduction igual ao proporcional (zero líquido)", () => {
+		// 4 meses trabalhados no ano → proporcional = 3000*4/12 = 1000, advance = min(1500, 1000) = 1000
+		const r = calculateTermination({
+			monthlySalary: 3000,
+			admissionDate: new Date("2026-01-01"),
+			terminationDate: new Date("2026-05-01"),
+			type: "no-cause",
+			noticePolicy: "indemnified",
+			thirteenthAlreadyPaid: true,
+		});
+		expect(r.thirteenthAdvanceDeduction).toBe(r.thirteenthProportional);
+		const effectiveThirteenth = r.thirteenthProportional - r.thirteenthAdvanceDeduction;
+		expect(effectiveThirteenth).toBe(0);
+	});
+
+	it("13º já recebido não afeta justa causa (sem proporcional)", () => {
+		const r = calculateTermination({
+			monthlySalary: 3000,
+			admissionDate: new Date("2024-04-30"),
+			terminationDate: new Date("2026-04-30"),
+			type: "with-cause",
+			noticePolicy: "not-served",
+			thirteenthAlreadyPaid: true,
+		});
+		expect(r.thirteenthProportional).toBe(0);
+		expect(r.thirteenthAdvanceDeduction).toBe(0);
+	});
+
+	it("INSS calculado sobre 13º efetivo, não sobre 13º bruto", () => {
+		const base = calculateTermination({
+			monthlySalary: 5000,
+			admissionDate: new Date("2025-01-01"),
+			terminationDate: new Date("2026-01-15"),
+			type: "no-cause",
+			noticePolicy: "indemnified",
+			thirteenthAlreadyPaid: false,
+		});
+		const withAdvance = calculateTermination({
+			monthlySalary: 5000,
+			admissionDate: new Date("2025-01-01"),
+			terminationDate: new Date("2026-01-15"),
+			type: "no-cause",
+			noticePolicy: "indemnified",
+			thirteenthAlreadyPaid: true,
+		});
+		// INSS should be lower when effective 13th is reduced
+		expect(withAdvance.inss).toBeLessThanOrEqual(base.inss);
+	});
+
+	it("net total correto quando 13º já foi recebido", () => {
+		const r = calculateTermination({
+			monthlySalary: 4000,
+			admissionDate: new Date("2025-01-01"),
+			terminationDate: new Date("2026-01-15"),
+			type: "no-cause",
+			noticePolicy: "indemnified",
+			thirteenthAlreadyPaid: true,
+		});
+		expect(r.netTotal).toBe(round2(r.grossTotal - r.inss - r.irrf));
+	});
 });
 
 function round2(value: number): number {

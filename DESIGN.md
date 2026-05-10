@@ -125,6 +125,8 @@ A primária é **discreta** e usada com parcimônia. Não é "marca", é "ação
 | `--destructive-foreground` | `oklch(0.99 0.01 27)` | Texto sobre destructive |
 | `--success` | `oklch(0.56 0.13 150)` | Confirmação ("Copiado!", "Salvo") |
 | `--warning` | `oklch(0.65 0.13 75)` | Atenção, valores próximos a limite |
+| `--warning-surface` | light: `oklch(0.976 0.016 72)` / dark: `oklch(0.215 0.024 76)` | Fundo de banners de aviso — creme quente (light) / escuro quente (dark) |
+| `--warning-line` | light: `oklch(0.862 0.038 72)` / dark: `oklch(0.462 0.082 78)` | Borda de banners de aviso — pedra quente (light) / âmbar médio (dark) |
 | `--info` | `oklch(0.55 0.13 220)` | (opcional) — evite, prefira muted |
 
 > Os tokens `success` e `warning` **devem existir** em `globals.css` —
@@ -152,6 +154,7 @@ o background (não pode inverter a relação).
 | CTA único da tela | `bg-primary text-primary-foreground` | gradiente, neon |
 | Erro inline | `text-destructive border-destructive/40 bg-destructive/5` | `bg-red-100` |
 | Confirmação ephemeral | `text-success` | `bg-green-100` |
+| Fundo/borda de banner de aviso | `bg-warning-surface border-warning-line` | `bg-warning/5 border-warning/30`, `bg-amber-*` |
 
 ### 3.5 O que **nunca** fazer com cor
 
@@ -170,20 +173,16 @@ o background (não pode inverter a relação).
 
 ### 4.1 Família
 
-```css
---font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-             "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
---font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco,
-             Consolas, "Liberation Mono", "Courier New", monospace;
-```
+Duas famílias, carregadas via `next/font/google` (não via `<link>`):
 
-Sem web fonts. Sem `Inter`, sem `Geist`, sem `Roboto` carregada. System UI
-só. Razão: ferramentas precisam de FCP rápido e o resultado já é
-profissional o suficiente.
+- **Inter** — sans-serif para todo o chrome (títulos, labels, botões, prose)
+- **JetBrains Mono** — para números, métricas, códigos, hashes, IDs
 
-> Exceção única: **Fonte selecionável dentro de uma ferramenta** (ex: o
-> editor de texto do gerador de favicon). Aí carrega Google Fonts via
-> `<link rel="stylesheet">` — mas é conteúdo da ferramenta, não chrome.
+Configuradas em `app/layout.tsx` como CSS variables `--font-sans` e `--font-mono`. O `globals.css` declara apenas os fallbacks de sistema, que entram em ação se o Google Fonts falhar.
+
+> Razão: ferramentas precisam de FCP rápido. `next/font` faz self-hosting com font-display swap, então não há FOIT nem round-trip pro CDN do Google.
+
+> Exceção: **fontes selecionáveis dentro de uma ferramenta** (ex: editor de texto do gerador de favicon). Aí carrega via `<link>` — é conteúdo da ferramenta, não chrome.
 
 ### 4.2 Escala (pixel-exact)
 
@@ -215,6 +214,9 @@ profissional o suficiente.
   hashes, contadores, percentuais ao lado de sliders.
 - `text-pretty` em parágrafos longos (descrições, FAQ).
 - `text-wrap: balance` em títulos de página (`h1`).
+- **Sempre** use mono para conteúdo cujo valor primário é numérico, código ou identificador técnico — ver § 4.5 abaixo.
+- **Sempre** acompanhar mono de `tabular-nums` (já garantido globalmente em `.font-mono`). Sem isso, o ganho de mono é metade.
+- **Nunca** use mono em labels, hints, opções de seleção, status humanizado, botões ou prose.
 
 ### 4.4 Hierarquia em uma ferramenta — exemplo
 
@@ -242,6 +244,30 @@ profissional o suficiente.
   512×512 · 24KB
 </span>
 ```
+
+### 4.5 Regra dos números
+
+| Categoria | Mono? | Exemplos |
+|---|---|---|
+| Valores monetários | ✅ | `R$ 8.800,00`, `R$ 26.671,33` |
+| Métricas e contadores | ✅ | `52 chars`, `142 palavras`, `+37%` |
+| Tempos e durações | ✅ | `90 dias`, `2.1ms`, `20a 0m` |
+| Datas em formato curto | ✅ | `01/01/2026`, `2026-05-09` |
+| Dimensões e tamanhos | ✅ | `512×512`, `24KB` |
+| Códigos e normas | ✅ | `RFC 4648`, `sha256:a7f3…`, `cs:fa3b` |
+| Conteúdo técnico em I/O | ✅ | texto base64, URL-encoded, JSON |
+| Adornos numéricos em inputs | ✅ | `R$` à esquerda do campo |
+| Labels de campos | ❌ | "Salário bruto mensal" |
+| Opções de select/radio | ❌ | "Demissão sem justa causa" |
+| Status humano | ❌ | "Com direito", "Pronto", "Aguardando" |
+| Hints e descrições | ❌ | "Em branco usa estimativa de 8%" |
+| Botões | ❌ | "Copiar resumo", "Gerar texto" |
+
+**Inputs**: `type="number"`, `type="date"`, `type="time"` e `inputmode="decimal|numeric"` recebem `font-family: var(--font-mono)` automaticamente via seletor global em `globals.css`. Você não precisa adicionar `font-mono` manualmente nesses casos.
+
+**Casos limítrofes**:
+- Tabela com muitos valores numéricos em prose: pode usar `Inter + tabular-nums` se o mono "roubar personalidade" — escolha estética. Mantenha consistência dentro da mesma tabela.
+- Quantidade isolada em meio a texto ("3 parágrafos" em legenda): mono se for o foco, sans se for prosa fluida.
 
 ---
 

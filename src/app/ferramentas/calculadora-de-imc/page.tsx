@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
-import { BmiCalculatorClient } from "@/components/tools/bmi-calculator/bmi-calculator-client";
+import { BmiClient } from "@/components/tools/bmi-calculator/bmi-client";
 
 export const metadata: Metadata = {
 	title: "Calculadora de IMC Online | Ferramenta Ninja",
@@ -101,7 +101,7 @@ export default function BmiCalculatorPage() {
 			}
 			extraContent={<SeoContent />}
 		>
-			<BmiCalculatorClient />
+			<BmiClient />
 		</PageLayout>
 	);
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
-import { ChristmasBonusCalculatorClient } from "@/components/tools/christmas-bonus-calculator/christmas-bonus-calculator-client";
+import { ChristmasBonusClient } from "@/components/tools/christmas-bonus-calculator/christmas-bonus-client";
 
 export const metadata: Metadata = {
 	title: "Calculadora de 13º Salário 2026 | Ferramenta Ninja",
@@ -120,7 +120,7 @@ export default function ChristmasBonusPage() {
 			}
 			extraContent={<SeoContent />}
 		>
-			<ChristmasBonusCalculatorClient />
+			<ChristmasBonusClient />
 		</PageLayout>
 	);
 }

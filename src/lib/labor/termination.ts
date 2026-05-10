@@ -22,6 +22,7 @@ export type TerminationInput = {
 	hasExpiredVacation?: boolean;
 	fgtsBalance?: number;
 	dependents?: number;
+	thirteenthAlreadyPaid?: boolean;
 };
 
 export type TerminationLine = {
@@ -40,6 +41,7 @@ export type TerminationResult = {
 	salaryBalance: number;
 	noticeIndemnified: number;
 	thirteenthProportional: number;
+	thirteenthAdvanceDeduction: number;
 	expiredVacation: number;
 	expiredVacationOneThird: number;
 	proportionalVacation: number;
@@ -141,6 +143,12 @@ export function calculateTermination(
 		? round2((salary * avos13th) / 12)
 		: 0;
 
+	const thirteenthAdvanceDeduction =
+		input.thirteenthAlreadyPaid && showProportional13
+			? Math.min(round2(salary / 2), thirteenthProportional)
+			: 0;
+	const effectiveThirteenth = thirteenthProportional - thirteenthAdvanceDeduction;
+
 	const expiredVacation = showExpiredVac ? round2(salary) : 0;
 	const expiredVacationOneThird = showExpiredVac ? round2(salary / 3) : 0;
 
@@ -163,7 +171,7 @@ export function calculateTermination(
 	const fgtsWithdrawable = round2(fgtsBalance * withdrawShare);
 
 	const inssBaseSalary = calculateInss(salaryBalance).amount;
-	const inss13 = calculateInss(thirteenthProportional).amount;
+	const inss13 = calculateInss(effectiveThirteenth).amount;
 	const inss = round2(inssBaseSalary + inss13);
 
 	const irrfSalary = calculateIrrf({
@@ -173,7 +181,7 @@ export function calculateTermination(
 		applyRedutor: false,
 	}).amount;
 	const irrf13 = calculateIrrf({
-		grossIncome: thirteenthProportional,
+		grossIncome: effectiveThirteenth,
 		inssDeducted: inss13,
 		dependents: input.dependents ?? 0,
 		applyRedutor: false,
@@ -183,7 +191,7 @@ export function calculateTermination(
 	const grossTotal = round2(
 		salaryBalance +
 			noticeFinal +
-			thirteenthProportional +
+			effectiveThirteenth +
 			expiredVacation +
 			expiredVacationOneThird +
 			proportionalVacation +
@@ -196,12 +204,13 @@ export function calculateTermination(
 		{ label: "Saldo de salário", amount: salaryBalance },
 		{ label: "Aviso prévio indenizado", amount: noticeFinal },
 		{ label: "13º proporcional", amount: thirteenthProportional },
+		{ label: "(−) Adiantamento 13º", amount: -thirteenthAdvanceDeduction },
 		{ label: "Férias vencidas", amount: expiredVacation },
 		{ label: "1/3 férias vencidas", amount: expiredVacationOneThird },
 		{ label: "Férias proporcionais", amount: proportionalVacation },
 		{ label: "1/3 férias proporcionais", amount: proportionalVacationOneThird },
 		{ label: "Multa FGTS", amount: fgtsFine },
-	].filter((l) => l.amount > 0);
+	].filter((l) => l.amount !== 0);
 
 	return {
 		yearsAtCompany: years,
@@ -213,6 +222,7 @@ export function calculateTermination(
 		salaryBalance,
 		noticeIndemnified: noticeFinal,
 		thirteenthProportional,
+		thirteenthAdvanceDeduction,
 		expiredVacation,
 		expiredVacationOneThird,
 		proportionalVacation,

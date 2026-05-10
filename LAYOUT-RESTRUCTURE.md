@@ -809,3 +809,7 @@ Para cada ferramenta reestruturada, confirme:
 - [ ] Ações secundárias no header do card (não botões soltos no meio do conteúdo)
 - [ ] Resultado visível sem scroll enquanto o usuário ainda edita input
 - [ ] Um desenvolvedor externo diria "parece Linear/Vercel/Figma"
+- [ ] Inputs com valor numérico estão em mono?
+- [ ] Resultados/totais estão em mono com tabular-nums?
+- [ ] Status bar e métricas técnicas estão em mono?
+- [ ] Prose (labels, hints, botões) não está em mono?

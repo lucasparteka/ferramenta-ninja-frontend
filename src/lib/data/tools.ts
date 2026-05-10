@@ -32,6 +32,7 @@ import {
 	LayoutList,
 	LineDotRightHorizontal,
 	Link,
+	type LucideProps,
 	Mail,
 	MapPin,
 	Maximize2,
@@ -67,7 +68,6 @@ import {
 	TrendingUp,
 	Type,
 	Wallet,
-	type LucideProps,
 } from "lucide-react";
 import type { ForwardRefExoticComponent, RefAttributes } from "react";
 
@@ -518,13 +518,13 @@ export const categories: ToolCategory[] = [
 				weight: 2,
 			},
 			{
-				name: "Calculadora de Rescisão",
+				name: "Calculadora de Rescisão Trabalhista",
 				href: "/ferramentas/calculadora-de-rescisao",
-				description: "Aviso, 13º, férias e multa do FGTS",
+				description: "Verbas rescisórias com cálculo em tempo real",
 				icon: FileX,
-				tags: ["rescisao", "verbas rescisorias", "trabalhista"],
+				tags: ["rescisao", "verbas rescisorias", "trabalhista", "fgts"],
 				intent: "analyze",
-				weight: 2,
+				weight: 3,
 			},
 			{
 				name: "Calculadora de Juros Compostos",
@@ -980,18 +980,14 @@ export const categories: ToolCategory[] = [
 	},
 ];
 
+export function getAllTools(): Tool[] {
+	return categories.flatMap((c) => c.tools);
+}
+
 export function findToolByHref(href: string): Tool | undefined {
-	for (const cat of categories) {
-		const found = cat.tools.find((t) => t.href === href);
-		if (found) return found;
-	}
-	return undefined;
+	return getAllTools().find((t) => t.href === href);
 }
 
 export function findCategoryByToolHref(href: string): ToolCategory | undefined {
-	return categories.find((cat) => cat.tools.some((t) => t.href === href));
-}
-
-export function getAllTools(): Tool[] {
-	return categories.flatMap((c) => c.tools);
+	return categories.find((c) => c.tools.some((t) => t.href === href));
 }

@@ -91,7 +91,7 @@ export function CharacterCounter() {
 			<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
 				<div className="flex items-center gap-2">
 					<span className="inline-flex items-center gap-1.5">
-						<span className="h-1.5 w-1.5 rounded-full bg-green-600" />
+						<span className="h-1.5 w-1.5 rounded-full bg-success" />
 						<span className="text-[11px] text-muted-foreground">
 							Em tempo real
 						</span>

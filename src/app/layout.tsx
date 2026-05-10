@@ -5,7 +5,20 @@ import { Header } from "@/components/layout/header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
 	metadataBase: new URL("https://ferramenta.ninja"),
@@ -60,7 +73,9 @@ export default function RootLayout({
 				<JsonLd data={organizationSchema()} />
 				<JsonLd data={websiteSchema()} />
 			</head>
-			<body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
+			<body
+				className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen`}
+			>
 				<ThemeProvider>
 					<Header />
 					<main className="flex-1">{children}</main>

@@ -68,14 +68,6 @@
 	},
 	"snapshot": true,
 	"autoupdate": true,
-	"mcp": {
-		"code-review-graph": {
-			"type": "local",
-			"command": ["uvx", "code-review-graph", "serve"],
-			"enabled": true,
-			"timeout": 10000
-		}
-	},
 	"lsp": {
 		"typescript": {
 			"disabled": true

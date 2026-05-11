@@ -1,29 +1,33 @@
 "use client";
 
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Clock } from "lucide-react";
 import { useState } from "react";
 import type { CalculateNightAllowanceResult } from "./types";
 import { NightAllowanceCalculatorForm } from "./night-allowance-form";
 import { NightAllowanceResultCard } from "./night-allowance-result";
 
 export function NightAllowanceContent() {
-	const [result, setResult] = useState<CalculateNightAllowanceResult | null>(null);
+	const [result, setResult] = useState<CalculateNightAllowanceResult | null>(
+		null,
+	);
 
 	return (
 		<div className="grid grid-cols-1 items-start lg:grid-cols-[1fr_360px] border border-border rounded-md overflow-hidden">
 			{/* Coluna esquerda — formulário */}
 			<div className="bg-card flex flex-col h-full">
-				<NightAllowanceCalculatorForm onCalculate={setResult} />
+				<NightAllowanceCalculatorForm onCalculate={(data) => setResult(data)} />
 			</div>
 
 			{/* Coluna direita — resultado */}
 			<aside className="flex h-full lg:border-l max-lg:border-t border-border flex-col">
 				{result ? (
-					<div className="flex-1 overflow-y-auto p-4">
-						<NightAllowanceResultCard result={result} />
-					</div>
+					<NightAllowanceResultCard result={result} />
 				) : (
-					<div className="flex flex-1 flex-col items-center justify-center gap-2 p-6 text-center">
+					<div className="flex flex-1 flex-col items-center justify-center gap-2 p-6 text-center min-h-[300px]">
+						<Clock
+							className="h-5 w-5 text-muted-foreground"
+							strokeWidth={1.75}
+						/>
 						<p className="text-sm text-muted-foreground">
 							Preencha os dados para calcular o adicional noturno
 						</p>

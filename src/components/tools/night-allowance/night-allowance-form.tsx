@@ -1,82 +1,87 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Info } from "lucide-react";
+import { RotateCcw } from "lucide-react";
+import { useEffect } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { type Resolver, useForm } from "react-hook-form";
 import { z } from "zod";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { OptionSwitch } from "@/components/shared/option-switch";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
 import { NativeSelect } from "@/components/ui/select-native";
 import { parseCurrencyToNumber } from "@/utils/number";
 import type { CalculateNightAllowanceResult } from "./types";
 import { calculateNightAllowance } from "./utils";
 
-const nightAllowanceFormSchema = z.object({
+const schema = z.object({
 	grossSalary: z.string().min(1, "Informe o salário bruto"),
 	contractualHours: z.coerce
 		.number({ message: "Informe as horas contratuais" })
 		.min(1, "O valor mínimo é 1"),
-	workedHours: z.coerce
-		.number({ message: "Informe as horas trabalhadas" })
-		.min(0, "O valor mínimo é 0"),
-	minutes: z.coerce
-		.number({ message: "Informe os minutos" })
-		.min(0, "O valor mínimo é 0")
-		.max(59, "O valor máximo é 59"),
+	workedHours: z.coerce.number().min(0, "Mínimo 0"),
+	minutes: z.coerce.number().min(0).max(59, "Máximo 59"),
 	percentageAllowance: z.coerce
 		.number({ message: "Informe o percentual" })
-		.min(0, "O valor mínimo é 0"),
-	usefulDays: z.coerce
-		.number({ message: "Informe os dias úteis" })
-		.min(1, "O valor mínimo é 1"),
-	holidaysAndSundays: z.coerce
-		.number({ message: "Informe os dias" })
-		.min(0, "O valor mínimo é 0"),
+		.min(0, "Mínimo 0"),
+	usefulDays: z.coerce.number().min(1, "Mínimo 1"),
+	holidaysAndSundays: z.coerce.number().min(0, "Mínimo 0"),
 	isRural: z.enum(["yes", "no"]),
 	isNighttimeWork: z.enum(["yes", "no"]),
 });
 
+type FormValues = z.infer<typeof schema>;
+
 type NightAllowanceFormProps = {
-	onCalculate: (data: CalculateNightAllowanceResult) => void;
+	onCalculate: (data: CalculateNightAllowanceResult | null) => void;
 };
 
-type NightAllowanceFormValues = z.infer<typeof nightAllowanceFormSchema>;
+function getAutoPct(isRural: string): number {
+	return isRural === "yes" ? 25 : 20;
+}
+
+function formatHours(value: number): string {
+	return `${value.toFixed(2).replace(".", ",")}h`;
+}
 
 export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 	const { onCalculate } = props;
 
-	const form = useForm<NightAllowanceFormValues>({
-		resolver: zodResolver(
-			nightAllowanceFormSchema,
-		) as Resolver<NightAllowanceFormValues>,
+	const form = useForm<FormValues>({
+		resolver: zodResolver(schema) as Resolver<FormValues>,
 		defaultValues: {
 			grossSalary: "",
-			contractualHours: 0,
+			contractualHours: 220,
 			workedHours: 0,
 			minutes: 0,
-			percentageAllowance: 0,
-			usefulDays: 0,
-			holidaysAndSundays: 0,
+			percentageAllowance: 20,
+			usefulDays: 22,
+			holidaysAndSundays: 4,
 			isRural: "no",
 			isNighttimeWork: "no",
 		},
 	});
 
-	function onSubmit(data: NightAllowanceFormValues) {
+	const watchedIsRural = form.watch("isRural");
+	const watchedIsNighttimeWork = form.watch("isNighttimeWork");
+	const watchedWorkedHours = form.watch("workedHours");
+	const watchedMinutes = form.watch("minutes");
+
+	// Auto-update percentage when rural changes
+	useEffect(() => {
+		const auto = getAutoPct(watchedIsRural);
+		form.setValue("percentageAllowance", auto);
+	}, [watchedIsRural, form]);
+
+	function onSubmit(data: FormValues) {
 		const grossSalary = parseCurrencyToNumber(data.grossSalary);
 
 		const result = calculateNightAllowance({
@@ -94,273 +99,362 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 		onCalculate(result);
 	}
 
-	function handleCurrencyInputChange(
-		name: keyof NightAllowanceFormValues,
-		_numberValue: number,
-		maskedValue: string,
-	) {
-		form.setValue(name, maskedValue, { shouldValidate: true });
+	function handleReset() {
+		form.reset();
+		onCalculate(null);
 	}
+
+	// Derived: equivalent night hours
+	function getEquivalentNightHours(): number {
+		const h = Number(watchedWorkedHours) || 0;
+		const m = Number(watchedMinutes) || 0;
+		const totalMin = h * 60 + m;
+		if (watchedIsNighttimeWork === "yes") {
+			return totalMin / 60;
+		}
+		if (watchedIsRural === "yes") {
+			return totalMin / 60;
+		}
+		return totalMin / 52.5;
+	}
+
+	const showConverted = watchedIsNighttimeWork === "no";
+	const convertedHours = getEquivalentNightHours();
+
+	const hourTypeHint =
+		watchedIsNighttimeWork === "no"
+			? watchedIsRural === "yes"
+				? "Horas diurnas serão usadas diretamente (rural não aplica redução noturna)."
+				: "Horas diurnas serão convertidas para noturnas (urbano: 52min30s = 1h noturna)."
+			: "Horas já computadas em regime noturno — sem conversão.";
 
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="space-y-6 max-w-2xl"
+				className="flex flex-col h-full"
 			>
-				<div className="space-y-4">
-					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Dados do Funcionário</p>
+				<div className="divide-y divide-border">
+					{/* ── Funcionário ── */}
+					<div className="p-5">
+						<SectionLabel>Funcionário</SectionLabel>
+						<div className="space-y-3.5">
+							<FormField
+								control={form.control}
+								name="grossSalary"
+								render={({ field }) => (
+									<FormItem>
+										<label
+											htmlFor="na-salary"
+											className="block text-xs font-medium text-foreground"
+										>
+											Salário bruto
+										</label>
+										<FormControl>
+											<div className="relative">
+												<span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground">
+													R$
+												</span>
+												<CurrencyInput
+													value={field.value}
+													onChangeValue={(_, __, masked) =>
+														field.onChange(masked as string)
+													}
+													InputElement={
+														<Input
+															id="na-salary"
+															type="text"
+															placeholder="0,00"
+															className="pl-8 font-mono"
+															{...field}
+														/>
+													}
+												/>
+											</div>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<div className="grid grid-cols-2 items-start gap-3.5">
+								<FormField
+									control={form.control}
+									name="contractualHours"
+									render={({ field }) => (
+										<FormItem>
+											<label
+												htmlFor="na-hours"
+												className="block text-xs font-medium text-foreground"
+											>
+												Horas contratuais
+											</label>
+											<FormControl>
+												<div className="relative">
+													<Input
+														id="na-hours"
+														type="number"
+														min={1}
+														className="pr-8 font-mono"
+														{...field}
+													/>
+													<span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground">
+														h
+													</span>
+												</div>
+											</FormControl>
+											<p className="mt-1 text-xs text-muted-foreground">
+												Padrão: 220 h/mês
+											</p>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="isRural"
+									render={({ field }) => (
+										<FormItem>
+											<label
+												htmlFor="na-rural"
+												className="block text-xs font-medium text-foreground"
+											>
+												Categoria
+											</label>
+											<FormControl>
+												<NativeSelect
+													id="na-rural"
+													value={field.value}
+													onChange={(e) => field.onChange(e.target.value)}
+												>
+													<option value="no">Urbano (20%)</option>
+													<option value="yes">Rural (25%)</option>
+												</NativeSelect>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
+						</div>
+					</div>
 
-					<FormField
-						control={form.control}
-						name="grossSalary"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Salário Bruto*</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Valor total do salário antes de quaisquer descontos. É o
-											valor do salário registrado em carteira.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<CurrencyInput
-										onChangeValue={(_, numberValue, maskedValue) =>
-											handleCurrencyInputChange(
-												"grossSalary",
-												numberValue as number,
-												maskedValue as string,
-											)
-										}
-										value={form.getValues("grossSalary")}
-										InputElement={
-											<Input type="text" placeholder="R$" {...field} />
-										}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+					{/* ── Jornada noturna ── */}
+					<div className="p-5">
+						<SectionLabel>Jornada noturna</SectionLabel>
+						<div className="space-y-3.5">
+							<FormField
+								control={form.control}
+								name="isNighttimeWork"
+								render={({ field }) => (
+									<FormItem>
+										<span className="block text-xs font-medium text-foreground">
+											Tipo de hora informada
+										</span>
+										<FormControl>
+											<OptionSwitch
+												options={[
+													{
+														label: "Diurnas",
+														value: "no",
+													},
+													{
+														label: "Noturnas",
+														value: "yes",
+													},
+												]}
+												value={field.value}
+												onChange={field.onChange}
+												fullWidth
+											/>
+										</FormControl>
+										<p className="mt-1.5 text-xs text-muted-foreground">
+											{hourTypeHint}
+										</p>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<div className="grid grid-cols-2 items-start gap-3.5">
+								<FormField
+									control={form.control}
+									name="workedHours"
+									render={({ field }) => (
+										<FormItem>
+											<label
+												htmlFor="na-worked"
+												className="block text-xs font-medium text-foreground"
+											>
+												Horas trabalhadas
+											</label>
+											<FormControl>
+												<div className="relative">
+													<Input
+														id="na-worked"
+														type="number"
+														min={0}
+														className="pr-8 font-mono"
+														{...field}
+													/>
+													<span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground">
+														h
+													</span>
+												</div>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="minutes"
+									render={({ field }) => (
+										<FormItem>
+											<label
+												htmlFor="na-minutes"
+												className="block text-xs font-medium text-foreground"
+											>
+												Minutos adicionais
+											</label>
+											<FormControl>
+												<div className="relative">
+													<Input
+														id="na-minutes"
+														type="number"
+														min={0}
+														max={59}
+														className="pr-10 font-mono"
+														{...field}
+													/>
+													<span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground">
+														min
+													</span>
+												</div>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
 
-					<FormField
-						control={form.control}
-						name="contractualHours"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Horas Contratuais*</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Total de horas mensais contratadas. O padrão é 220 horas
-											por mês (8h por dia, 44h por semana).
-										</PopoverContent>
-									</Popover>
+							{showConverted && (
+								<div className="flex items-center justify-between rounded-md bg-muted px-3 py-2">
+									<span className="text-xs text-muted-foreground">
+										Horas noturnas equivalentes
+									</span>
+									<span className="font-mono text-xs tabular-nums text-foreground">
+										{formatHours(convertedHours)}
+									</span>
 								</div>
-								<FormControl>
-									<Input type="tel" min={1} {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+							)}
+						</div>
+					</div>
 
-					<FormField
-						control={form.control}
-						name="isNighttimeWork"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Tipo de Hora*</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Selecione se as horas informadas já são noturnas ou se são
-											diurnas que precisam ser convertidas.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<NativeSelect
-										value={field.value}
-										onChange={(e) => field.onChange(e.target.value)}
-									>
-										<option value="no">Diurnas</option>
-										<option value="yes">Noturnas</option>
-									</NativeSelect>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+					{/* ── Parâmetros do mês ── */}
+					<div className="p-5">
+						<SectionLabel>Parâmetros do mês</SectionLabel>
+						<div className="space-y-3.5">
+							<div className="grid grid-cols-2 items-start gap-3.5">
+								<FormField
+									control={form.control}
+									name="usefulDays"
+									render={({ field }) => (
+										<FormItem>
+											<label
+												htmlFor="na-useful"
+												className="block text-xs font-medium text-foreground"
+											>
+												Dias úteis
+											</label>
+											<FormControl>
+												<Input
+													id="na-useful"
+													type="number"
+													min={1}
+													max={31}
+													className="font-mono"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="holidaysAndSundays"
+									render={({ field }) => (
+										<FormItem>
+											<label
+												htmlFor="na-rest"
+												className="block text-xs font-medium text-foreground"
+											>
+												Dom. e feriados
+											</label>
+											<FormControl>
+												<Input
+													id="na-rest"
+													type="number"
+													min={0}
+													max={31}
+													className="font-mono"
+													{...field}
+												/>
+											</FormControl>
+											<p className="mt-1 text-xs text-muted-foreground">
+												Para cálculo do RSR/DSR
+											</p>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</div>
 
-					<FormField
-						control={form.control}
-						name="workedHours"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Horas Trabalhadas*</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Total de horas trabalhadas no período a ser convertido em
-											horas noturnas, se aplicável.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<Input type="tel" min={0} {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="minutes"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Minutos</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Minutos adicionais para complementar as horas trabalhadas.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<Input type="tel" min={0} max={59} {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="usefulDays"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Dias Úteis no Mês*</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Total de dias úteis no mês, excluindo fins de semana e
-											feriados.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<Input type="tel" min={1} {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="holidaysAndSundays"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Domingos e Feriados no Mês</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Quantidade de domingos e feriados no mês para cálculo de
-											RSR/DSR.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<Input type="tel" min={0} {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="isRural"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Trabalhador Rural*</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Trabalhadores rurais têm direito a adicional noturno de
-											25%. Urbanos recebem 20%. Selecione conforme o caso.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<NativeSelect
-										value={field.value}
-										onChange={(e) => field.onChange(e.target.value)}
-									>
-										<option value="no">Não</option>
-										<option value="yes">Sim</option>
-									</NativeSelect>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-
-					<FormField
-						control={form.control}
-						name="percentageAllowance"
-						render={({ field }) => (
-							<FormItem>
-								<div className="flex items-center justify-between">
-									<FormLabel>Percentual do Adicional Noturno*</FormLabel>
-									<Popover>
-										<PopoverTrigger className="text-muted-foreground">
-											<Info size={16} />
-										</PopoverTrigger>
-										<PopoverContent className="w-60 text-sm">
-											Percentual do adicional noturno. Urbano: 20%, Rural: 25%.
-											Esse valor será aplicado sobre o valor da hora.
-										</PopoverContent>
-									</Popover>
-								</div>
-								<FormControl>
-									<Input type="tel" min={0} {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+							<FormField
+								control={form.control}
+								name="percentageAllowance"
+								render={({ field }) => (
+									<FormItem>
+										<label
+											htmlFor="na-pct"
+											className="block text-xs font-medium text-foreground"
+										>
+											Percentual do adicional
+										</label>
+										<FormControl>
+											<div className="relative">
+												<Input
+													id="na-pct"
+													type="number"
+													min={0}
+													max={100}
+													step="0.01"
+													className="pr-8 font-mono"
+													{...field}
+												/>
+												<span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground">
+													%
+												</span>
+											</div>
+										</FormControl>
+										<p className="mt-1 text-xs text-muted-foreground">
+											Urbano: 20% · Rural: 25% · Pode ser ajustado manualmente.
+										</p>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+					</div>
 				</div>
 
-				<Button type="submit">Calcular Adicional Noturno</Button>
+				{/* ── Footer ── */}
+				<div className="flex items-center justify-between border-t border-border bg-muted px-5 py-3 mt-auto">
+					<Button type="button" variant="ghost" size="sm" onClick={handleReset}>
+						<RotateCcw className="mr-1.5 h-3 w-3" />
+						Resetar
+					</Button>
+					<Button type="submit">Calcular adicional noturno</Button>
+				</div>
 			</form>
 		</Form>
 	);

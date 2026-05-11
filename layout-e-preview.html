@@ -1,0 +1,845 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head><script data-od-sandbox-shim>(function(){
+  function makeStore(){
+    var data = {};
+    var api = {
+      getItem: function(k){ return Object.prototype.hasOwnProperty.call(data, k) ? data[k] : null; },
+      setItem: function(k, v){ data[k] = String(v); },
+      removeItem: function(k){ delete data[k]; },
+      clear: function(){ data = {}; },
+      key: function(i){ return Object.keys(data)[i] || null; }
+    };
+    Object.defineProperty(api, 'length', { get: function(){ return Object.keys(data).length; } });
+    return api;
+  }
+  function tryShim(name){
+    var works = false;
+    try { works = !!window[name] && typeof window[name].getItem === 'function'; void window[name].length; }
+    catch (_) { works = false; }
+    if (works) return;
+    try { Object.defineProperty(window, name, { configurable: true, value: makeStore() }); }
+    catch (_) { try { window[name] = makeStore(); } catch (__) {} }
+  }
+  tryShim('localStorage');
+  tryShim('sessionStorage');
+})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout E — Preview melhorado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Design tokens ─────────────────────────────────────────────────── */
+    :root {
+      --bg:         #FCFCFC;
+      --fg:         #1A1A1A;
+      --muted:      #F4F4F5;
+      --muted-fg:   #6B6B6E;
+      --card:       #FFFFFF;
+      --border:     #E5E5E7;
+      --primary:    #4B5CC4;
+      --primary-fg: #FAFAFF;
+      --success:    #1F8C50;
+      --success-bg: #F0FAF5;
+      --success-bd: #A8DFC2;
+      --warning:    #996B00;
+      --warning-bg: #FEFAED;
+      --warning-bd: #E6CF80;
+      --destruct:   #B83232;
+      --destruct-bg:#FDF3F3;
+      --destruct-bd:#E8AAAA;
+      --ring:       #4B5CC4;
+      --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--fg);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ─── Page shell ─────────────────────────────────────────────────────── */
+    .page { max-width: 840px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    .page-kicker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-fg);
+      margin-bottom: 40px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ─── Tool section wrapper ───────────────────────────────────────────── */
+    .tool-section { margin-bottom: 48px; }
+    .tool-section + .tool-section { border-top: 1px solid var(--border); padding-top: 48px; }
+
+    .tool-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+
+    .tool-name {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--muted-fg);
+    }
+
+    .state-pills { display: flex; gap: 4px; }
+    .sp {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+      padding: 2px 8px; border: 1px solid var(--border); border-radius: 4px;
+      background: var(--bg); color: var(--muted-fg); cursor: pointer;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+      letter-spacing: 0.03em;
+    }
+    .sp:hover { background: var(--muted); color: var(--fg); }
+    .sp.active { background: var(--fg); color: var(--card); border-color: var(--fg); }
+
+    /* ─── Layout E — connected instrument container ──────────────────────── */
+    .layout-e {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--card);
+    }
+
+    /* Search bar strip */
+    .le-search {
+      background: color-mix(in srgb, var(--muted) 70%, var(--card) 30%);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+    }
+    .le-search-row { display: flex; gap: 8px; align-items: flex-start; }
+    .le-search-col { display: flex; flex-direction: column; gap: 10px; }
+
+    /* Empty state */
+    .le-empty {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px; min-height: 172px; padding: 32px; text-align: center;
+    }
+    .le-empty-icon { color: var(--muted-fg); margin-bottom: 2px; }
+    .le-empty-title { font-size: 14px; color: var(--fg); }
+    .le-empty-sub { font-size: 12px; color: var(--muted-fg); }
+
+    /* Loading state */
+    .le-loading {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 172px;
+      background: color-mix(in srgb, var(--muted) 20%, var(--card) 80%);
+    }
+    .spinner { color: var(--muted-fg); animation: spin 0.9s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Error state */
+    .le-error { padding: 16px; }
+    .le-error-box {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 12px 14px; border: 1px solid var(--destruct-bd);
+      border-radius: 6px; background: var(--destruct-bg);
+    }
+    .le-error-box svg { flex-shrink: 0; margin-top: 1px; color: var(--destruct); }
+    .le-error-box p { font-size: 12px; color: var(--destruct); }
+
+    /* ─── Result Sheet — connected grid (no gap, borders as dividers) ────── */
+    .result-sheet { display: grid; grid-template-columns: 1fr 1fr; }
+    .result-sheet.cols-1 { grid-template-columns: 1fr; }
+
+    .rs-section { border-bottom: 1px solid var(--border); }
+    .rs-section:nth-child(odd) { border-right: 1px solid var(--border); }
+    .rs-section:last-child,
+    .rs-section:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+
+    .rs-head {
+      display: flex; align-items: center;
+      padding: 7px 16px; border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--muted) 55%, var(--card) 45%);
+    }
+    .rs-head h3 {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg);
+    }
+
+    .rs-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 9px 16px; border-bottom: 1px solid var(--border);
+    }
+    .rs-row:last-child { border-bottom: none; }
+
+    .rs-label { font-size: 12px; color: var(--muted-fg); min-width: 108px; padding-right: 12px; }
+    .rs-value { font-size: 12px; text-align: right; color: var(--fg); }
+    .rs-value.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+    .rs-value.muted { color: var(--muted-fg); }
+
+    /* Result footer (actions bar) */
+    .le-result-actions {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      padding: 10px 16px; border-top: 1px solid var(--border);
+      background: color-mix(in srgb, var(--muted) 40%, var(--card) 60%);
+    }
+
+    /* Result status header */
+    .le-result-status {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--muted) 30%, var(--card) 70%);
+    }
+    .rss-label { font-size: 11px; color: var(--muted-fg); margin-bottom: 2px; }
+    .rss-value { font-size: 13px; font-weight: 600; }
+    .rss-success { color: var(--success); }
+    .rss-error   { color: var(--destruct); }
+
+    /* ─── Form controls ──────────────────────────────────────────────────── */
+    .input {
+      flex: 1; height: 36px; padding: 0 12px;
+      font-family: var(--font-sans); font-size: 14px;
+      color: var(--fg); background: var(--card);
+      border: 1px solid var(--border); border-radius: 6px;
+      outline: none; transition: border-color 0.12s, box-shadow 0.12s; min-width: 0;
+    }
+    .input.mono { font-family: var(--font-mono); font-size: 13px; }
+    .input:focus {
+      border-color: var(--ring);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 25%, transparent);
+    }
+    .input::placeholder { color: var(--muted-fg); }
+
+    .textarea {
+      width: 100%; min-height: 112px; padding: 10px 12px;
+      font-family: var(--font-mono); font-size: 13px;
+      color: var(--fg); background: var(--card);
+      border: 1px solid var(--border); border-radius: 6px;
+      outline: none; resize: vertical;
+      transition: border-color 0.12s, box-shadow 0.12s;
+    }
+    .textarea:focus {
+      border-color: var(--ring);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 25%, transparent);
+    }
+    .textarea::placeholder { color: var(--muted-fg); }
+
+    .select {
+      height: 36px; padding: 0 30px 0 12px;
+      font-family: var(--font-sans); font-size: 14px;
+      color: var(--fg); background: var(--card);
+      border: 1px solid var(--border); border-radius: 6px;
+      outline: none; appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6B6E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 9px center;
+      cursor: pointer; transition: border-color 0.12s, box-shadow 0.12s; min-width: 0;
+    }
+    .select:focus {
+      border-color: var(--ring);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 25%, transparent);
+    }
+    .select:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .input-label { font-size: 12px; font-weight: 500; color: var(--muted-fg); margin-bottom: 5px; display: block; }
+    .input-hint { font-size: 12px; color: var(--muted-fg); margin-top: 4px; }
+
+    /* ─── Buttons ──────────────────────────────────────────────────────────*/
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      height: 36px; padding: 0 14px;
+      font-family: var(--font-sans); font-size: 14px; font-weight: 500;
+      border-radius: 6px; border: 1px solid transparent;
+      cursor: pointer; white-space: nowrap; text-decoration: none; flex-shrink: 0;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+    }
+    .btn:disabled { opacity: 0.5; pointer-events: none; }
+    .btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    .btn-default { background: var(--primary); color: var(--primary-fg); border-color: var(--primary); }
+    .btn-default:hover { background: color-mix(in srgb, var(--primary) 85%, #000 15%); }
+    .btn-outline { background: var(--card); color: var(--fg); border-color: var(--border); }
+    .btn-outline:hover { background: var(--muted); }
+    .btn-ghost { background: transparent; color: var(--muted-fg); border-color: transparent; }
+    .btn-ghost:hover { background: var(--muted); color: var(--fg); }
+    .btn-sm { height: 32px; padding: 0 12px; font-size: 13px; }
+    .btn-sm svg { width: 12px; height: 12px; }
+
+    /* ─── Badges ───────────────────────────────────────────────────────────*/
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 9px; border: 1px solid; border-radius: 6px;
+      font-size: 11px; font-weight: 600;
+    }
+    .badge-success { background: var(--success-bg); color: var(--success); border-color: var(--success-bd); }
+    .badge-warning  { background: var(--warning-bg);  color: var(--warning);  border-color: var(--warning-bd); }
+    .badge-destruct { background: var(--destruct-bg); color: var(--destruct); border-color: var(--destruct-bd); }
+
+    /* ─── Check rows ───────────────────────────────────────────────────────*/
+    .check-ok   { font-size: 12px; font-weight: 600; color: var(--success); }
+    .check-fail { font-size: 12px; font-weight: 600; color: var(--destruct); }
+
+    /* ─── FIPE price table ─────────────────────────────────────────────────*/
+    .fipe-table-head {
+      display: grid; grid-template-columns: 100px 1fr 130px;
+      padding: 7px 16px; border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--muted) 55%, var(--card) 45%);
+    }
+    .fipe-table-head span {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--muted-fg);
+    }
+    .fipe-table-head span:last-child { text-align: right; }
+
+    .fipe-row { display: grid; grid-template-columns: 100px 1fr 130px; padding: 9px 16px; border-bottom: 1px solid var(--border); }
+    .fipe-row:last-child { border-bottom: none; }
+    .fipe-row span { font-size: 12px; color: var(--fg); }
+    .fipe-row span:first-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+    .fipe-row span:last-child  { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+
+    /* ─── FIPE selector grid ───────────────────────────────────────────────*/
+    .fipe-selectors { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; align-items: flex-end; }
+    .fipe-sel-group { display: flex; flex-direction: column; }
+
+    /* ─── PIX code header ──────────────────────────────────────────────────*/
+    .pix-search-header {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--muted-fg); margin-bottom: 8px;
+    }
+
+    /* ─── Responsive ───────────────────────────────────────────────────────*/
+    @media (max-width: 600px) {
+      .result-sheet { grid-template-columns: 1fr; }
+      .rs-section:nth-child(odd) { border-right: none; border-bottom: 1px solid var(--border); }
+      .rs-section:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+      .fipe-selectors { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── Utilities ────────────────────────────────────────────────────────*/
+    .hidden { display: none !important; }
+    .mono   { font-family: var(--font-mono); }
+    .muted  { color: var(--muted-fg); }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <p class="page-kicker">Layout E — Inspector · Preview melhorado · 6 ferramentas</p>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       1. CONSULTA CEP
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="tool-section" id="cep">
+    <div class="tool-meta">
+      <span class="tool-name">Consulta CEP</span>
+      <div class="state-pills">
+        <button class="sp" onclick="setState('cep','empty')">Vazio</button>
+        <button class="sp" onclick="setState('cep','loading')">Carga</button>
+        <button class="sp active" onclick="setState('cep','result')">Resultado</button>
+        <button class="sp" onclick="setState('cep','error')">Erro</button>
+      </div>
+    </div>
+
+    <div class="layout-e">
+      <div class="le-search">
+        <div class="le-search-row">
+          <input class="input mono" type="text" placeholder="00000-000" value="01310-100" maxlength="9" style="max-width:180px">
+          <button class="btn btn-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            Consultar
+          </button>
+        </div>
+      </div>
+
+      <div id="cep-empty" class="le-empty hidden">
+        <svg class="le-empty-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <p class="le-empty-title">Digite um CEP para consultar</p>
+        <p class="le-empty-sub">Dados do ViaCEP · atualização diária</p>
+      </div>
+
+      <div id="cep-loading" class="le-loading hidden">
+        <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+      </div>
+
+      <div id="cep-error" class="le-error hidden">
+        <div class="le-error-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          <p>CEP não encontrado. Verifique o número e tente novamente.</p>
+        </div>
+      </div>
+
+      <div id="cep-result">
+        <div class="result-sheet">
+          <div class="rs-section">
+            <div class="rs-head"><h3>Endereço</h3></div>
+            <div class="rs-row"><span class="rs-label">CEP</span><span class="rs-value mono">01310-100</span></div>
+            <div class="rs-row"><span class="rs-label">Logradouro</span><span class="rs-value">Avenida Paulista</span></div>
+            <div class="rs-row"><span class="rs-label">Complemento</span><span class="rs-value muted">—</span></div>
+            <div class="rs-row"><span class="rs-label">Bairro</span><span class="rs-value">Bela Vista</span></div>
+          </div>
+          <div class="rs-section">
+            <div class="rs-head"><h3>Localização</h3></div>
+            <div class="rs-row"><span class="rs-label">Cidade</span><span class="rs-value">São Paulo</span></div>
+            <div class="rs-row"><span class="rs-label">Estado</span><span class="rs-value">SP</span></div>
+            <div class="rs-row"><span class="rs-label">DDD</span><span class="rs-value mono">11</span></div>
+            <div class="rs-row"><span class="rs-label">IBGE</span><span class="rs-value mono">3550308</span></div>
+          </div>
+        </div>
+        <div class="le-result-actions">
+          <button class="btn btn-outline btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copiar endereço
+          </button>
+          <button class="btn btn-outline btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            Ver no Google Maps
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       2. CONSULTA CNPJ
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="tool-section" id="cnpj">
+    <div class="tool-meta">
+      <span class="tool-name">Consulta CNPJ</span>
+      <div class="state-pills">
+        <button class="sp" onclick="setState('cnpj','empty')">Vazio</button>
+        <button class="sp" onclick="setState('cnpj','loading')">Carga</button>
+        <button class="sp active" onclick="setState('cnpj','result')">Resultado</button>
+        <button class="sp" onclick="setState('cnpj','error')">Erro</button>
+      </div>
+    </div>
+
+    <div class="layout-e">
+      <div class="le-search">
+        <div class="le-search-row">
+          <input class="input mono" type="text" placeholder="00.000.000/0000-00" value="60.746.948/0001-12">
+          <button class="btn btn-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            Consultar
+          </button>
+        </div>
+      </div>
+
+      <div id="cnpj-empty" class="le-empty hidden">
+        <svg class="le-empty-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <p class="le-empty-title">Digite um CNPJ para consultar</p>
+        <p class="le-empty-sub">Dados fornecidos pela Receita Federal</p>
+      </div>
+
+      <div id="cnpj-loading" class="le-loading hidden">
+        <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+      </div>
+
+      <div id="cnpj-error" class="le-error hidden">
+        <div class="le-error-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          <p>CNPJ não encontrado ou inválido. Verifique os dígitos.</p>
+        </div>
+      </div>
+
+      <div id="cnpj-result">
+        <div class="result-sheet">
+          <div class="rs-section">
+            <div class="rs-head"><h3>Identificação</h3></div>
+            <div class="rs-row"><span class="rs-label">CNPJ</span><span class="rs-value mono">60.746.948/0001-12</span></div>
+            <div class="rs-row"><span class="rs-label">Razão social</span><span class="rs-value">Banco Bradesco S.A.</span></div>
+            <div class="rs-row"><span class="rs-label">Nome fantasia</span><span class="rs-value">Bradesco</span></div>
+            <div class="rs-row"><span class="rs-label">Situação</span><span class="rs-value">Ativa</span></div>
+            <div class="rs-row"><span class="rs-label">Data de abertura</span><span class="rs-value mono">10/03/1943</span></div>
+          </div>
+          <div class="rs-section">
+            <div class="rs-head"><h3>Localização</h3></div>
+            <div class="rs-row"><span class="rs-label">Logradouro</span><span class="rs-value">Cidade de Deus, S/N</span></div>
+            <div class="rs-row"><span class="rs-label">Complemento</span><span class="rs-value">Prédio Amarelo 2° Andar</span></div>
+            <div class="rs-row"><span class="rs-label">Bairro</span><span class="rs-value">Vila Yara</span></div>
+            <div class="rs-row"><span class="rs-label">Cidade/UF</span><span class="rs-value">Osasco — SP</span></div>
+            <div class="rs-row"><span class="rs-label">CEP</span><span class="rs-value mono">06029-900</span></div>
+          </div>
+          <div class="rs-section">
+            <div class="rs-head"><h3>Atividade</h3></div>
+            <div class="rs-row"><span class="rs-label">Principal</span><span class="rs-value">Banco Múltiplo, com carteira comercial</span></div>
+            <div class="rs-row"><span class="rs-label">Natureza jurídica</span><span class="rs-value">Sociedade Anônima</span></div>
+            <div class="rs-row"><span class="rs-label">Porte</span><span class="rs-value">Demais</span></div>
+          </div>
+          <div class="rs-section">
+            <div class="rs-head"><h3>Capital e Contato</h3></div>
+            <div class="rs-row"><span class="rs-label">Capital social</span><span class="rs-value mono">R$ 72.015.659.695,00</span></div>
+            <div class="rs-row"><span class="rs-label">Telefone</span><span class="rs-value mono">(11) 2178-5000</span></div>
+            <div class="rs-row"><span class="rs-label">E-mail</span><span class="rs-value muted">—</span></div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--border); padding:10px 16px; display:flex; gap:8px;">
+          <span class="badge badge-success">Optante Simples Nacional</span>
+        </div>
+        <div style="border-top:1px solid var(--border);">
+          <div class="rs-head"><h3>Sócios e Administradores</h3></div>
+          <div class="rs-row"><span class="rs-label">Fulano de Tal</span><span class="rs-value">Sócio-Administrador</span></div>
+          <div class="rs-row"><span class="rs-label">Sicrano da Silva</span><span class="rs-value">Diretor</span></div>
+        </div>
+        <div class="le-result-actions">
+          <button class="btn btn-outline btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copiar dados
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       3. DECODIFICADOR PIX
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="tool-section" id="pix">
+    <div class="tool-meta">
+      <span class="tool-name">Decodificador PIX</span>
+      <div class="state-pills">
+        <button class="sp" onclick="setState('pix','empty')">Vazio</button>
+        <button class="sp active" onclick="setState('pix','result')">Resultado</button>
+        <button class="sp" onclick="setState('pix','warning')">Aviso</button>
+      </div>
+    </div>
+
+    <div class="layout-e">
+      <div class="le-search">
+        <div class="le-search-col">
+          <div>
+            <p class="pix-search-header">Código PIX</p>
+            <textarea class="textarea" placeholder="00020126580014br.gov.bcb.pix...">00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-42665544000052040000530398654071500.005802BR5913Lucas Parteka6009Sao Paulo62070503***630463D2</textarea>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-default">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/></svg>
+              Decodificar
+            </button>
+            <button class="btn btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+              Limpar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="pix-empty" class="le-empty hidden">
+        <svg class="le-empty-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/></svg>
+        <p class="le-empty-title">Cole um código PIX para decodificar</p>
+        <p class="le-empty-sub">Suporta todos os tipos de chave</p>
+      </div>
+
+      <div id="pix-warning" class="hidden">
+        <div style="border-bottom:1px solid var(--border); padding:10px 16px; display:flex; align-items:center; gap:10px; background:color-mix(in srgb, var(--muted) 30%, var(--card) 70%);">
+          <span class="badge badge-warning">Atenção</span>
+          <span class="mono muted" style="font-size:11px;">CRC A1B2 (calculado C3D4)</span>
+        </div>
+        <div style="padding:12px 16px; border-bottom:1px solid var(--border);">
+          <div style="border:1px solid var(--warning-bd); background:var(--warning-bg); border-radius:6px; padding:10px 14px;">
+            <ul style="list-style:disc; padding-left:18px;"><li style="font-size:12px; color:var(--warning);">CRC divergente — código pode ter sido alterado</li></ul>
+          </div>
+        </div>
+        <div class="result-sheet">
+          <div class="rs-section">
+            <div class="rs-head"><h3>Dados da Transferência</h3></div>
+            <div class="rs-row"><span class="rs-label">Beneficiário</span><span class="rs-value">Lucas Parteka</span></div>
+            <div class="rs-row"><span class="rs-label">Chave PIX (e-mail)</span><span class="rs-value mono">lucas@example.com</span></div>
+            <div class="rs-row"><span class="rs-label">Valor</span><span class="rs-value mono">R$ 150,00</span></div>
+            <div class="rs-row"><span class="rs-label">Cidade</span><span class="rs-value">São Paulo</span></div>
+          </div>
+          <div class="rs-section">
+            <div class="rs-head"><h3>Informações Técnicas</h3></div>
+            <div class="rs-row"><span class="rs-label">TxID</span><span class="rs-value mono">***</span></div>
+            <div class="rs-row"><span class="rs-label">CRC fornecido</span><span class="rs-value mono">A1B2</span></div>
+            <div class="rs-row"><span class="rs-label">CRC calculado</span><span class="rs-value mono">C3D4</span></div>
+          </div>
+        </div>
+        <div class="le-result-actions">
+          <button class="btn btn-outline btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copiar chave PIX
+          </button>
+        </div>
+      </div>
+
+      <div id="pix-result">
+        <div style="border-bottom:1px solid var(--border); padding:10px 16px; display:flex; align-items:center; gap:10px; background:color-mix(in srgb, var(--muted) 30%, var(--card) 70%);">
+          <span class="badge badge-success">Código válido</span>
+          <span class="mono muted" style="font-size:11px;">CRC 63D2 (calculado 63D2)</span>
+        </div>
+        <div class="result-sheet">
+          <div class="rs-section">
+            <div class="rs-head"><h3>Dados da Transferência</h3></div>
+            <div class="rs-row"><span class="rs-label">Beneficiário</span><span class="rs-value">Lucas Parteka</span></div>
+            <div class="rs-row"><span class="rs-label">Chave PIX (e-mail)</span><span class="rs-value mono">lucas@gmail.com</span></div>
+            <div class="rs-row"><span class="rs-label">Valor</span><span class="rs-value mono">R$ 150,00</span></div>
+            <div class="rs-row"><span class="rs-label">Cidade</span><span class="rs-value">São Paulo</span></div>
+            <div class="rs-row"><span class="rs-label">PSP / Instituição</span><span class="rs-value">Banco do Brasil</span></div>
+          </div>
+          <div class="rs-section">
+            <div class="rs-head"><h3>Informações Técnicas</h3></div>
+            <div class="rs-row"><span class="rs-label">TxID</span><span class="rs-value mono">***</span></div>
+            <div class="rs-row"><span class="rs-label">CRC</span><span class="rs-value mono">63D2</span></div>
+            <div class="rs-row"><span class="rs-label">Tipo de chave</span><span class="rs-value">E-mail</span></div>
+          </div>
+        </div>
+        <div class="le-result-actions">
+          <button class="btn btn-outline btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copiar chave PIX
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       4. VALIDADOR DE BOLETO
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="tool-section" id="boleto">
+    <div class="tool-meta">
+      <span class="tool-name">Validador de Boleto</span>
+      <div class="state-pills">
+        <button class="sp" onclick="setState('boleto','empty')">Vazio</button>
+        <button class="sp active" onclick="setState('boleto','result')">Válido</button>
+        <button class="sp" onclick="setState('boleto','error-result')">Inválido</button>
+      </div>
+    </div>
+
+    <div class="layout-e">
+      <div class="le-search">
+        <div class="le-search-col">
+          <div>
+            <label class="input-label" for="boleto-input">Linha digitável</label>
+            <input id="boleto-input" class="input mono" type="text" style="font-size:12px"
+              placeholder="00000.00000 00000.000000 00000.000000 0 00000000000000"
+              value="34191.09008 61207.727285 41000.393105 8 93230000012345">
+            <p class="input-hint">Cole os 47 dígitos (boleto bancário) ou 48 (arrecadação). <span class="mono">47 dígitos</span></p>
+          </div>
+          <button class="btn btn-default" style="width:fit-content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9 9 9-9"/><path d="M12 16V3"/><rect width="20" height="4" x="2" y="18" rx="2"/></svg>
+            Validar boleto
+          </button>
+        </div>
+      </div>
+
+      <div id="boleto-empty" class="le-empty hidden">
+        <svg class="le-empty-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+        <p class="le-empty-title">Cole a linha digitável do boleto</p>
+        <p class="le-empty-sub">Suporta boletos bancários e de arrecadação</p>
+      </div>
+
+      <div id="boleto-result">
+        <div class="le-result-status">
+          <div>
+            <p class="rss-label">Tipo de boleto</p>
+            <p class="rss-value rss-success">Linha digitável válida</p>
+          </div>
+          <span class="badge badge-success">Boleto bancário</span>
+        </div>
+        <div class="result-sheet">
+          <div class="rs-section">
+            <div class="rs-head"><h3>Dados do Boleto</h3></div>
+            <div class="rs-row"><span class="rs-label">Banco emissor</span><span class="rs-value mono">341 — Itaú</span></div>
+            <div class="rs-row"><span class="rs-label">Moeda</span><span class="rs-value">Real (BRL)</span></div>
+            <div class="rs-row"><span class="rs-label">Valor</span><span class="rs-value mono">R$ 123,45</span></div>
+            <div class="rs-row"><span class="rs-label">Vencimento</span><span class="rs-value mono">30/06/2025</span></div>
+            <div class="rs-row"><span class="rs-label">Fator de vencimento</span><span class="rs-value mono">9323</span></div>
+          </div>
+          <div class="rs-section">
+            <div class="rs-head"><h3>Verificação de dígitos</h3></div>
+            <div class="rs-row"><span class="rs-label">Campo 1 (módulo 10)</span><span class="check-ok">OK</span></div>
+            <div class="rs-row"><span class="rs-label">Campo 2 (módulo 10)</span><span class="check-ok">OK</span></div>
+            <div class="rs-row"><span class="rs-label">Campo 3 (módulo 10)</span><span class="check-ok">OK</span></div>
+            <div class="rs-row"><span class="rs-label">DV geral (módulo 11)</span><span class="check-ok">OK</span></div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--border);">
+          <div class="rs-head"><h3>Código de barras</h3></div>
+          <div style="padding:10px 16px;">
+            <span class="mono" style="font-size:11px; color:var(--muted-fg); word-break:break-all;">34198932300000123451090061207727284100039310</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="boleto-error-result" class="hidden">
+        <div class="le-result-status">
+          <div>
+            <p class="rss-label">Tipo de boleto</p>
+            <p class="rss-value rss-error">Linha digitável inválida</p>
+          </div>
+          <span class="badge badge-destruct">Boleto bancário</span>
+        </div>
+        <div class="result-sheet">
+          <div class="rs-section">
+            <div class="rs-head"><h3>Dados do Boleto</h3></div>
+            <div class="rs-row"><span class="rs-label">Banco emissor</span><span class="rs-value mono">341 — Itaú</span></div>
+            <div class="rs-row"><span class="rs-label">Moeda</span><span class="rs-value">Real (BRL)</span></div>
+            <div class="rs-row"><span class="rs-label">Valor</span><span class="rs-value mono">R$ 123,45</span></div>
+            <div class="rs-row"><span class="rs-label">Vencimento</span><span class="rs-value mono">30/06/2025</span></div>
+          </div>
+          <div class="rs-section">
+            <div class="rs-head"><h3>Verificação de dígitos</h3></div>
+            <div class="rs-row"><span class="rs-label">Campo 1 (módulo 10)</span><span class="check-ok">OK</span></div>
+            <div class="rs-row"><span class="rs-label">Campo 2 (módulo 10)</span><span class="check-fail">INVÁLIDO</span></div>
+            <div class="rs-row"><span class="rs-label">Campo 3 (módulo 10)</span><span class="check-ok">OK</span></div>
+            <div class="rs-row"><span class="rs-label">DV geral (módulo 11)</span><span class="check-fail">INVÁLIDO</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       5. TABELA FIPE
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="tool-section" id="fipe">
+    <div class="tool-meta">
+      <span class="tool-name">Tabela FIPE</span>
+      <div class="state-pills">
+        <button class="sp" onclick="setState('fipe','empty')">Vazio</button>
+        <button class="sp" onclick="setState('fipe','loading')">Carga</button>
+        <button class="sp active" onclick="setState('fipe','result')">Resultado</button>
+        <button class="sp" onclick="setState('fipe','error')">Erro</button>
+      </div>
+    </div>
+
+    <div class="layout-e">
+      <div class="le-search">
+        <div class="fipe-selectors">
+          <div class="fipe-sel-group">
+            <label class="input-label">Tipo</label>
+            <select class="select"><option selected>Carros</option><option>Motos</option><option>Caminhões</option></select>
+          </div>
+          <div class="fipe-sel-group">
+            <label class="input-label">Marca</label>
+            <select class="select"><option value="">Selecione a marca</option><option selected>Volkswagen</option><option>Toyota</option><option>Fiat</option></select>
+          </div>
+          <div class="fipe-sel-group">
+            <label class="input-label">Modelo</label>
+            <select class="select"><option value="">Selecione o modelo</option><option selected>Gol 1.0</option><option>Polo 1.0</option><option>Golf 1.4 TSI</option></select>
+          </div>
+          <div class="fipe-sel-group" style="justify-content:flex-end">
+            <button class="btn btn-default" style="margin-top:19px">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              Consultar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="fipe-empty" class="le-empty hidden">
+        <svg class="le-empty-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h11l3 3v5a2 2 0 0 1-2 2Z"/><path d="M14 9H5"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+        <p class="le-empty-title">Selecione tipo, marca e modelo</p>
+        <p class="le-empty-sub">Preços de referência FIPE · atualização mensal</p>
+      </div>
+
+      <div id="fipe-loading" class="le-loading hidden">
+        <svg class="spinner" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+      </div>
+
+      <div id="fipe-error" class="le-error hidden">
+        <div class="le-error-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          <p>Falha ao consultar preço. Tente novamente.</p>
+        </div>
+      </div>
+
+      <div id="fipe-result">
+        <div class="fipe-table-head">
+          <span>Ano / combustível</span>
+          <span>Versão</span>
+          <span>Preço FIPE</span>
+        </div>
+        <div class="fipe-row"><span>2024 Flex</span><span>Gol 1.0 MPI Total Flex 8V 4p</span><span>R$ 58.200,00</span></div>
+        <div class="fipe-row"><span>2023 Flex</span><span>Gol 1.0 MPI Total Flex 8V 4p</span><span>R$ 52.100,00</span></div>
+        <div class="fipe-row"><span>2022 Flex</span><span>Gol 1.0 MPI Total Flex 8V 4p</span><span>R$ 46.800,00</span></div>
+        <div class="fipe-row"><span>2021 Flex</span><span>Gol 1.0 MPI Total Flex 8V 4p</span><span>R$ 41.500,00</span></div>
+        <div class="fipe-row"><span>2020 Flex</span><span>Gol 1.0 MPI Total Flex 8V 4p</span><span>R$ 36.900,00</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       6. VALIDADOR DE CARTÃO
+  ══════════════════════════════════════════════════════════════════════ -->
+  <div class="tool-section" id="cartao">
+    <div class="tool-meta">
+      <span class="tool-name">Validador de Cartão de Crédito</span>
+      <div class="state-pills">
+        <button class="sp" onclick="setState('cartao','empty')">Vazio</button>
+        <button class="sp active" onclick="setState('cartao','result')">Válido</button>
+        <button class="sp" onclick="setState('cartao','result-fail')">Inválido</button>
+      </div>
+    </div>
+
+    <div class="layout-e">
+      <div class="le-search">
+        <div class="le-search-col">
+          <div>
+            <label class="input-label">Número do cartão</label>
+            <input class="input mono" type="text" placeholder="0000 0000 0000 0000" value="4532 0153 3242 6979">
+          </div>
+          <button class="btn btn-default" style="width:fit-content">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+            Validar cartão
+          </button>
+        </div>
+      </div>
+
+      <div id="cartao-empty" class="le-empty hidden">
+        <svg class="le-empty-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+        <p class="le-empty-title">Digite um número de cartão para validar</p>
+        <p class="le-empty-sub">Usa o algoritmo de Luhn para verificação</p>
+      </div>
+
+      <div id="cartao-result">
+        <div class="result-sheet cols-1">
+          <div class="rs-section">
+            <div class="rs-head"><h3>Resultado da Validação</h3></div>
+            <div class="rs-row"><span class="rs-label">Status</span><span style="font-size:12px; font-weight:600; color:var(--success);">Cartão válido</span></div>
+            <div class="rs-row"><span class="rs-label">Bandeira</span><span class="rs-value">Visa</span></div>
+            <div class="rs-row"><span class="rs-label">Número</span><span class="rs-value mono">4532 0153 3242 6979</span></div>
+            <div class="rs-row"><span class="rs-label">Algoritmo de Luhn</span><span class="check-ok">OK</span></div>
+          </div>
+        </div>
+        <div class="le-result-actions">
+          <span style="font-size:12px; color:var(--muted-fg);">Precisa de um número para testar?</span>
+          <a href="#" class="btn btn-outline btn-sm">Gerador de Cartão</a>
+        </div>
+      </div>
+
+      <div id="cartao-result-fail" class="hidden">
+        <div class="result-sheet cols-1">
+          <div class="rs-section">
+            <div class="rs-head"><h3>Resultado da Validação</h3></div>
+            <div class="rs-row"><span class="rs-label">Status</span><span style="font-size:12px; font-weight:600; color:var(--destruct);">Cartão inválido</span></div>
+            <div class="rs-row"><span class="rs-label">Bandeira detectada</span><span class="rs-value">Visa</span></div>
+            <div class="rs-row"><span class="rs-label">Número</span><span class="rs-value mono">4532 0153 3242 0000</span></div>
+            <div class="rs-row"><span class="rs-label">Algoritmo de Luhn</span><span class="check-fail">INVÁLIDO</span></div>
+          </div>
+        </div>
+        <div class="le-result-actions">
+          <span style="font-size:12px; color:var(--muted-fg);">O número não passa na verificação do algoritmo de Luhn.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function setState(tool, state) {
+    const section = document.getElementById(tool);
+    section.querySelectorAll('[id^="' + tool + '-"]').forEach(el => el.classList.add('hidden'));
+    const target = document.getElementById(tool + '-' + state);
+    if (target) target.classList.remove('hidden');
+    section.querySelectorAll('.sp').forEach(btn => {
+      btn.classList.remove('active');
+      if ((btn.getAttribute('onclick') || '').includes("'" + state + "'")) btn.classList.add('active');
+    });
+  }
+</script>
+</body>
+</html>

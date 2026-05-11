@@ -1,0 +1,771 @@
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de adicional noturno — Ferramenta Ninja</title>
+<style>
+:root {
+  --background: oklch(0.985 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --muted: oklch(0.973 0 0);
+  --muted-foreground: oklch(0.42 0 0);
+  --border: oklch(0.916 0 0);
+  --input: oklch(0.916 0 0);
+  --ring: oklch(0.55 0.16 267);
+  --primary: oklch(0.55 0.16 267);
+  --primary-foreground: oklch(0.99 0.01 267);
+  --success: oklch(0.56 0.13 150);
+  --warning: oklch(0.53 0.12 75);
+  --warning-surface: oklch(0.976 0.016 72);
+  --warning-line: oklch(0.862 0.038 72);
+  --accent: oklch(0.96 0.01 267);
+  --accent-foreground: oklch(0.20 0.10 267);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+  --radius: 0.375rem;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+input, button, select, textarea { font-family: inherit; }
+
+/* ─── header ────────────────────────────────────── */
+.site-header {
+  position: sticky; top: 0; z-index: 30;
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklch, var(--background) 88%, transparent);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; padding: 0 24px;
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; max-width: 1280px; margin: 0 auto;
+}
+.site-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 600;
+  color: var(--foreground); text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.logo-badge {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.05em; background: var(--primary);
+  color: var(--primary-foreground); padding: 1px 5px; border-radius: 3px;
+}
+.site-nav { display: flex; align-items: center; gap: 2px; }
+.nav-link {
+  font-size: 13px; color: var(--muted-foreground);
+  text-decoration: none; padding: 6px 10px;
+  border-radius: var(--radius);
+  transition: color 0.12s, background 0.12s;
+}
+.nav-link:hover { color: var(--foreground); background: var(--muted); }
+
+/* ─── page ───────────────────────────────────────── */
+.page { max-width: 1280px; margin: 0 auto; padding: 32px 24px 64px; }
+.breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--muted-foreground); margin-bottom: 20px;
+}
+.breadcrumb a { color: var(--muted-foreground); text-decoration: none; }
+.breadcrumb a:hover { color: var(--foreground); }
+.breadcrumb-sep { color: oklch(0.75 0 0); }
+.page-header { margin-bottom: 24px; }
+.page-title {
+  font-size: 24px; font-weight: 600;
+  letter-spacing: -0.01em; text-wrap: balance;
+}
+.page-desc { margin-top: 4px; font-size: 14px; color: var(--muted-foreground); }
+.page-sep { border: none; border-top: 1px solid var(--border); margin: 0 0 24px; }
+
+/* ─── tool grid ──────────────────────────────────── */
+.tool-grid {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  align-items: stretch;
+}
+@media (max-width: 860px) {
+  .tool-grid { grid-template-columns: 1fr; }
+  .result-col { border-left: none !important; border-top: 1px solid var(--border); }
+}
+
+/* ─── form col ───────────────────────────────────── */
+.form-col {
+  background: var(--card);
+  display: flex; flex-direction: column;
+}
+.form-section {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.form-section-last {
+  border-bottom: none; flex: 1;
+}
+.section-hd {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+  margin-bottom: 12px;
+}
+.field-row { margin-bottom: 12px; }
+.field-row:last-child { margin-bottom: 0; }
+.field-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-grid-2 .field-row { margin-bottom: 0; }
+
+label.fl {
+  display: block; font-size: 12px; font-weight: 500;
+  color: var(--foreground); margin-bottom: 5px;
+}
+.hint {
+  display: block; font-size: 11px;
+  color: var(--muted-foreground); margin-top: 4px;
+  line-height: 1.4;
+}
+.input-wrap { position: relative; }
+.input-pfx {
+  position: absolute; left: 10px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--muted-foreground); pointer-events: none;
+}
+.input-sfx {
+  position: absolute; right: 10px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--muted-foreground); pointer-events: none;
+}
+.field-inp {
+  height: 36px; width: 100%; padding: 0 10px;
+  border: 1px solid var(--input); border-radius: var(--radius);
+  background: var(--card); color: var(--foreground);
+  font-size: 13px; outline: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+  appearance: none;
+}
+.field-inp.pfx { padding-left: 28px; }
+.field-inp.sfx { padding-right: 32px; }
+.field-inp[type="number"],
+.field-inp.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.field-inp::placeholder { color: var(--muted-foreground); font-family: var(--font-sans); }
+.field-inp:focus { border-color: var(--ring); box-shadow: 0 0 0 2px color-mix(in oklch, var(--ring) 25%, transparent); }
+.field-inp.sel-arrow {
+  padding-right: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  cursor: pointer;
+}
+
+/* inline derived row */
+.derived-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--muted);
+  border-radius: var(--radius);
+  margin-top: 10px;
+}
+.derived-label { font-size: 11px; color: var(--muted-foreground); }
+.derived-val {
+  font-family: var(--font-mono); font-size: 11px;
+  font-variant-numeric: tabular-nums; color: var(--foreground);
+}
+
+/* auto-fill badge */
+.auto-badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 1px 5px; border-radius: 3px;
+  background: var(--accent); color: var(--accent-foreground);
+  border: 1px solid color-mix(in oklch, var(--primary) 20%, transparent);
+  margin-left: 6px; vertical-align: middle;
+  transition: opacity 0.2s;
+}
+.auto-badge.hidden { opacity: 0; pointer-events: none; }
+
+/* form footer */
+.form-footer {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ─── buttons ────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 36px; padding: 0 16px;
+  border-radius: var(--radius);
+  font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s, transform 0.05s;
+  border: 1px solid transparent;
+  outline: none; white-space: nowrap; line-height: 1;
+}
+.btn:focus-visible { box-shadow: 0 0 0 2px color-mix(in oklch, var(--ring) 25%, transparent); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: 0.5; pointer-events: none; }
+.btn-primary { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+.btn-primary:hover { background: oklch(0.488 0.17 267); border-color: oklch(0.488 0.17 267); }
+.btn-ghost { background: transparent; color: var(--muted-foreground); }
+.btn-ghost:hover { background: color-mix(in oklch, var(--muted) 80%, transparent); color: var(--foreground); }
+.btn-outline { background: var(--card); color: var(--foreground); border-color: var(--border); }
+.btn-outline:hover { background: var(--muted); }
+.btn-sm { height: 32px; padding: 0 12px; font-size: 12px; }
+.btn-full { width: 100%; justify-content: center; }
+
+/* ─── result col ─────────────────────────────────── */
+.result-col {
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  position: sticky; top: 56px;
+  max-height: calc(100vh - 56px);
+  overflow-y: auto; scrollbar-width: thin;
+}
+.r-empty {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 280px; padding: 32px; text-align: center; gap: 8px;
+  margin: 16px;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  background: color-mix(in oklch, var(--muted) 40%, transparent);
+}
+.r-empty p { font-size: 13px; color: var(--muted-foreground); }
+
+/* result sections */
+.rs { padding: 16px; border-bottom: 1px solid var(--border); }
+.rs:last-of-type { border-bottom: none; flex: 1; }
+
+.result-hero {
+  display: flex; align-items: baseline; gap: 2px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  margin-top: 6px;
+}
+.rh-pfx { font-size: 13px; font-weight: 500; color: var(--muted-foreground); }
+.rh-int { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+.rh-dec { font-size: 16px; font-weight: 500; color: var(--muted-foreground); }
+.result-sublabel { font-size: 11px; color: var(--muted-foreground); margin-top: 4px; }
+
+.result-rows { display: flex; flex-direction: column; }
+.rr {
+  display: flex; align-items: baseline;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+.rr + .rr { border-top: 1px solid var(--border); }
+.rr-label { font-size: 12px; color: var(--muted-foreground); }
+.rr-val { font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+.chip-info {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 1px 6px; border-radius: 3px;
+  background: var(--muted); color: var(--muted-foreground);
+  border: 1px solid var(--border);
+}
+
+.result-footer {
+  padding: 12px 16px; border-top: 1px solid var(--border);
+  display: flex; gap: 8px;
+}
+.warning-banner {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 12px 16px;
+  background: var(--warning-surface);
+  border-top: 1px solid var(--warning-line);
+  font-size: 11.5px; line-height: 1.5; color: var(--muted-foreground);
+}
+.warn-icon { flex-shrink: 0; color: var(--warning); margin-top: 1px; }
+
+/* ─── segment (opt-switch) ───────────────────────── */
+.opt-switch {
+  display: flex; border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; background: var(--muted);
+}
+.opt-btn {
+  flex: 1; height: 28px; padding: 0 8px;
+  font-size: 11px; font-weight: 500;
+  border: none; background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer; transition: background 0.1s, color 0.1s;
+}
+.opt-btn.active {
+  background: var(--card); color: var(--foreground);
+  border-radius: calc(var(--radius) - 1px);
+  box-shadow: 0 0 0 1px var(--border);
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="site-logo">
+      Ferramenta Ninja <span class="logo-badge">BETA</span>
+    </a>
+    <nav class="site-nav">
+      <a href="#" class="nav-link">Ferramentas</a>
+      <a href="#" class="nav-link">Calculadoras</a>
+      <a href="#" class="nav-link">Sobre</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+
+  <nav class="breadcrumb">
+    <a href="#">Ferramentas</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="#">Calculadoras trabalhistas</a>
+    <span class="breadcrumb-sep">›</span>
+    <span>Adicional noturno</span>
+  </nav>
+
+  <header class="page-header">
+    <h1 class="page-title">Calculadora de adicional noturno</h1>
+    <p class="page-desc">Calcula o valor do adicional noturno para trabalhadores urbanos e rurais, com RSR/DSR incluso.</p>
+  </header>
+
+  <hr class="page-sep">
+
+  <div class="tool-grid">
+
+    <!-- ── form col ───────────────────────────────── -->
+    <div class="form-col">
+      <form id="calc-form" onsubmit="handleCalc(event)">
+
+        <!-- FUNCIONÁRIO -->
+        <div class="form-section">
+          <div class="section-hd">Funcionário</div>
+
+          <div class="field-row">
+            <label class="fl" for="grossSalary">Salário bruto</label>
+            <div class="input-wrap">
+              <span class="input-pfx">R$</span>
+              <input class="field-inp pfx mono" type="text" id="grossSalary"
+                     placeholder="0,00" inputmode="decimal" autocomplete="off"
+                     oninput="formatCurrency(this)">
+            </div>
+          </div>
+
+          <div class="field-grid-2">
+            <div class="field-row">
+              <label class="fl" for="contractualHours">Horas contratuais</label>
+              <div class="input-wrap">
+                <input class="field-inp sfx mono" type="number" id="contractualHours"
+                       min="1" max="744" value="220">
+                <span class="input-sfx">h</span>
+              </div>
+              <span class="hint">Padrão: 220 h/mês</span>
+            </div>
+            <div class="field-row">
+              <label class="fl" for="isRural">
+                Categoria
+              </label>
+              <select class="field-inp sel-arrow" id="isRural" onchange="handleRuralChange()">
+                <option value="no">Urbano (20%)</option>
+                <option value="yes">Rural (25%)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- JORNADA NOTURNA -->
+        <div class="form-section">
+          <div class="section-hd">Jornada noturna</div>
+
+          <div class="field-row">
+            <label class="fl" for="isNighttimeWork">Tipo de hora informada</label>
+            <div class="opt-switch" style="height:36px;">
+              <button type="button" class="opt-btn active" id="btn-diurnas"
+                      onclick="setHourType('no')" style="font-size:12px;">
+                Diurnas (converter)
+              </button>
+              <button type="button" class="opt-btn" id="btn-noturnas"
+                      onclick="setHourType('yes')" style="font-size:12px;">
+                Já noturnas
+              </button>
+            </div>
+            <span class="hint" id="hour-type-hint">Horas diurnas serão convertidas para noturnas (urbano: 52min30s = 1h noturna).</span>
+          </div>
+
+          <div class="field-grid-2">
+            <div class="field-row">
+              <label class="fl" for="workedHours">Horas trabalhadas</label>
+              <div class="input-wrap">
+                <input class="field-inp sfx mono" type="number" id="workedHours"
+                       min="0" max="744" value="0">
+                <span class="input-sfx">h</span>
+              </div>
+            </div>
+            <div class="field-row">
+              <label class="fl" for="minutes">Minutos adicionais</label>
+              <div class="input-wrap">
+                <input class="field-inp sfx mono" type="number" id="minutes"
+                       min="0" max="59" value="0">
+                <span class="input-sfx">min</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="derived-row" id="converted-row" style="display:none;">
+            <span class="derived-label">Horas noturnas equivalentes</span>
+            <span class="derived-val" id="converted-val">—</span>
+          </div>
+        </div>
+
+        <!-- PARÂMETROS -->
+        <div class="form-section form-section-last">
+          <div class="section-hd">Parâmetros do mês</div>
+
+          <div class="field-grid-2">
+            <div class="field-row">
+              <label class="fl" for="usefulDays">Dias úteis</label>
+              <input class="field-inp mono" type="number" id="usefulDays"
+                     min="1" max="31" value="22">
+            </div>
+            <div class="field-row">
+              <label class="fl" for="holidaysAndSundays">Dom. e feriados</label>
+              <input class="field-inp mono" type="number" id="holidaysAndSundays"
+                     min="0" max="31" value="4">
+              <span class="hint">Para cálculo do RSR/DSR</span>
+            </div>
+          </div>
+
+          <div class="field-row" style="margin-top:12px;">
+            <label class="fl" for="percentageAllowance">
+              Percentual do adicional
+              <span class="auto-badge" id="auto-badge">AUTO</span>
+            </label>
+            <div class="input-wrap">
+              <input class="field-inp sfx mono" type="number" id="percentageAllowance"
+                     min="0" max="100" step="0.01" value="20"
+                     oninput="handleManualPct()">
+              <span class="input-sfx">%</span>
+            </div>
+            <span class="hint">Urbano: 20% · Rural: 25% · Pode ser ajustado manualmente.</span>
+          </div>
+        </div>
+
+      </form>
+
+      <div class="form-footer">
+        <button type="button" class="btn btn-ghost btn-sm" id="reset-btn"
+                onclick="handleReset()" disabled>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          Resetar
+        </button>
+        <button type="submit" form="calc-form"
+                class="btn btn-primary btn-sm">
+          Calcular adicional noturno
+        </button>
+      </div>
+    </div>
+
+    <!-- ── result col ─────────────────────────────── -->
+    <aside class="result-col" id="result-col">
+
+      <div id="r-empty" class="r-empty">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+             stroke-linejoin="round" style="color:var(--muted-foreground)">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <p>Preencha os dados para calcular o adicional noturno</p>
+      </div>
+
+      <div id="r-content" style="display:none; flex-direction:column; flex:1;">
+
+        <!-- resultado principal -->
+        <div class="rs">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+            <div class="section-hd" style="margin-bottom:0">Resultado</div>
+            <span class="chip-info">Estimativa</span>
+          </div>
+          <div class="result-hero">
+            <span class="rh-pfx">R$</span>
+            <span class="rh-int" id="r-int">—</span>
+            <span class="rh-dec" id="r-dec">,00</span>
+          </div>
+          <div class="result-sublabel">total do adicional noturno devido</div>
+        </div>
+
+        <!-- base de cálculo -->
+        <div class="rs">
+          <div class="section-hd">Base de cálculo</div>
+          <div class="result-rows" id="r-base"></div>
+        </div>
+
+        <!-- componentes -->
+        <div class="rs">
+          <div class="section-hd">Componentes</div>
+          <div class="result-rows" id="r-components"></div>
+        </div>
+
+        <!-- detalhamento -->
+        <div class="rs" id="rs-detail" style="flex:1;">
+          <div class="section-hd">Detalhamento</div>
+          <div class="result-rows" id="r-detail"></div>
+        </div>
+
+        <div class="result-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="copyResult()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span id="copy-lbl">Copiar resumo</span>
+          </button>
+        </div>
+
+        <div class="warning-banner">
+          <svg class="warn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+            <path d="M12 9v4"/><path d="M12 17h.01"/>
+          </svg>
+          <span>Estimativa orientativa baseada na legislação vigente (2026). Consulte um contador para holerites oficiais.</span>
+        </div>
+
+      </div>
+    </aside>
+  </div>
+
+</main>
+
+<script>
+let hourType = 'no'; // 'no' = diurnas, 'yes' = noturnas
+let pctIsAuto = true;
+let lastResult = null;
+
+function formatCurrency(el) {
+  const raw = el.value.replace(/\D/g, '');
+  if (!raw) { el.value = ''; return; }
+  el.value = (parseInt(raw, 10) / 100).toLocaleString('pt-BR', {
+    minimumFractionDigits: 2, maximumFractionDigits: 2
+  });
+}
+function parseCurrency(s) {
+  return parseFloat(s.replace(/\./g, '').replace(',', '.')) || 0;
+}
+function brl(v) {
+  return v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function brlF(v) { return 'R$ ' + brl(v); }
+function hFmt(v) { return v.toFixed(2).replace('.', ',') + 'h'; }
+
+function setHourType(v) {
+  hourType = v;
+  document.getElementById('btn-diurnas').classList.toggle('active', v === 'no');
+  document.getElementById('btn-noturnas').classList.toggle('active', v === 'yes');
+  const hint = document.getElementById('hour-type-hint');
+  const isRural = document.getElementById('isRural').value === 'yes';
+  if (v === 'no') {
+    hint.textContent = isRural
+      ? 'Horas diurnas serão usadas diretamente (rural não aplica redução noturna).'
+      : 'Horas diurnas serão convertidas para noturnas (urbano: 52min30s = 1h noturna).';
+  } else {
+    hint.textContent = 'Horas já computadas em regime noturno — sem conversão.';
+  }
+  updateConverted();
+}
+
+function handleRuralChange() {
+  const isRural = document.getElementById('isRural').value === 'yes';
+  if (pctIsAuto) {
+    document.getElementById('percentageAllowance').value = isRural ? 25 : 20;
+  }
+  setHourType(hourType); // refresh hint
+  updateConverted();
+}
+
+function handleManualPct() {
+  const isRural = document.getElementById('isRural').value === 'yes';
+  const auto = isRural ? 25 : 20;
+  const current = parseFloat(document.getElementById('percentageAllowance').value);
+  pctIsAuto = current === auto;
+  document.getElementById('auto-badge').classList.toggle('hidden', !pctIsAuto);
+}
+
+function getTotalMinutes() {
+  const h = parseInt(document.getElementById('workedHours').value, 10) || 0;
+  const m = parseInt(document.getElementById('minutes').value, 10) || 0;
+  return h * 60 + m;
+}
+
+function updateConverted() {
+  const row = document.getElementById('converted-row');
+  const val = document.getElementById('converted-val');
+  if (hourType === 'no') {
+    const isRural = document.getElementById('isRural').value === 'yes';
+    const totalMin = getTotalMinutes();
+    let nightH;
+    if (isRural) {
+      nightH = totalMin / 60;
+    } else {
+      nightH = totalMin / 52.5;
+    }
+    val.textContent = hFmt(nightH);
+    row.style.display = '';
+  } else {
+    row.style.display = 'none';
+  }
+}
+
+document.getElementById('workedHours').addEventListener('input', updateConverted);
+document.getElementById('minutes').addEventListener('input', updateConverted);
+
+function calcNightAllowance() {
+  const grossSalary = parseCurrency(document.getElementById('grossSalary').value);
+  const contractualHours = parseInt(document.getElementById('contractualHours').value, 10) || 220;
+  const isRural = document.getElementById('isRural').value === 'yes';
+  const pct = parseFloat(document.getElementById('percentageAllowance').value) / 100 || 0;
+  const usefulDays = parseInt(document.getElementById('usefulDays').value, 10) || 22;
+  const holidaysAndSundays = parseInt(document.getElementById('holidaysAndSundays').value, 10) || 0;
+  const totalMin = getTotalMinutes();
+
+  const hourValue = grossSalary / contractualHours;
+
+  let nightHoursWorked;
+  if (hourType === 'yes') {
+    nightHoursWorked = totalMin / 60;
+  } else {
+    nightHoursWorked = isRural ? totalMin / 60 : totalMin / 52.5;
+  }
+
+  const allowancePerHour = hourValue * pct;
+  const hourWithAllowance = hourValue + allowancePerHour;
+  const baseAllowance = nightHoursWorked * allowancePerHour;
+  const rsrDsr = usefulDays > 0 ? (baseAllowance / usefulDays) * holidaysAndSundays : 0;
+  const totalAllowanceDue = baseAllowance + rsrDsr;
+
+  return {
+    grossSalary, contractualHours, isRural,
+    pct: pct * 100, usefulDays, holidaysAndSundays,
+    hourValue, nightHoursWorked, allowancePerHour, hourWithAllowance,
+    baseAllowance, rsrDsr, totalAllowanceDue
+  };
+}
+
+function handleCalc(e) {
+  e.preventDefault();
+  const r = calcNightAllowance();
+  lastResult = r;
+  document.getElementById('reset-btn').disabled = false;
+
+  // hero
+  const parts = brl(r.totalAllowanceDue).split(',');
+  document.getElementById('r-int').textContent = parts[0];
+  document.getElementById('r-dec').textContent = ',' + parts[1];
+
+  // base de cálculo
+  document.getElementById('r-base').innerHTML = [
+    { label: 'Salário bruto', val: brlF(r.grossSalary) },
+    { label: 'Horas contratuais', val: r.contractualHours + 'h' },
+    { label: 'Valor da hora', val: brlF(r.hourValue) },
+    { label: 'Percentual aplicado', val: r.pct.toFixed(0) + '%' },
+  ].map(row => row(row)).join('');
+
+  // componentes
+  document.getElementById('r-components').innerHTML = [
+    { label: 'Horas noturnas apuradas', val: hFmt(r.nightHoursWorked) },
+    { label: 'Adicional por hora', val: brlF(r.allowancePerHour) },
+    { label: 'Hora com adicional', val: brlF(r.hourWithAllowance) },
+  ].map(row => row(row)).join('');
+
+  // detalhamento
+  document.getElementById('r-detail').innerHTML = [
+    { label: 'Adicional base', val: brlF(r.baseAllowance) },
+    { label: 'RSR / DSR (' + r.holidaysAndSundays + ' dias)', val: brlF(r.rsrDsr) },
+    { label: 'Total devido', val: brlF(r.totalAllowanceDue), strong: true },
+  ].map(row => row(row)).join('');
+
+  document.getElementById('r-empty').style.display = 'none';
+  document.getElementById('r-content').style.display = 'flex';
+}
+
+// shared row renderer
+function row({ label, val, strong }) {
+  return `<div class="rr">
+    <span class="rr-label" ${strong ? 'style="font-weight:500;color:var(--foreground)"' : ''}>${label}</span>
+    <span class="rr-val" ${strong ? 'style="font-weight:600"' : ''}>${val}</span>
+  </div>`;
+}
+
+function handleReset() {
+  document.getElementById('grossSalary').value = '';
+  document.getElementById('contractualHours').value = '220';
+  document.getElementById('isRural').value = 'no';
+  document.getElementById('workedHours').value = '0';
+  document.getElementById('minutes').value = '0';
+  document.getElementById('usefulDays').value = '22';
+  document.getElementById('holidaysAndSundays').value = '4';
+  document.getElementById('percentageAllowance').value = '20';
+  pctIsAuto = true;
+  document.getElementById('auto-badge').classList.remove('hidden');
+  setHourType('no');
+  document.getElementById('reset-btn').disabled = true;
+  document.getElementById('r-empty').style.display = '';
+  document.getElementById('r-content').style.display = 'none';
+  lastResult = null;
+}
+
+function copyResult() {
+  if (!lastResult) return;
+  const r = lastResult;
+  const txt = [
+    'Adicional noturno — Ferramenta Ninja',
+    '─────────────────────────────',
+    'Salário bruto: ' + brlF(r.grossSalary),
+    'Horas contratuais: ' + r.contractualHours + 'h',
+    'Valor da hora: ' + brlF(r.hourValue),
+    'Horas noturnas: ' + hFmt(r.nightHoursWorked),
+    'Adicional por hora: ' + brlF(r.allowancePerHour),
+    'Adicional base: ' + brlF(r.baseAllowance),
+    'RSR/DSR: ' + brlF(r.rsrDsr),
+    '─────────────────────────────',
+    'TOTAL DEVIDO: ' + brlF(r.totalAllowanceDue),
+  ].join('\n');
+  navigator.clipboard.writeText(txt).then(() => {
+    const el = document.getElementById('copy-lbl');
+    el.textContent = 'Copiado';
+    setTimeout(() => { el.textContent = 'Copiar resumo'; }, 1500);
+  });
+}
+
+// seed with example values on load
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('grossSalary').value = '2.800,00';
+  updateConverted();
+});
+</script>
+</body>
+</html>

@@ -1,8 +1,14 @@
 "use client";
 
+import { Copy, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Separator } from "@/components/ui/separator";
-import { GooglePreviewInput } from "./google-preview-input";
+import { LayoutD } from "@/components/shared/layout-d";
+import { LimitBar } from "@/components/shared/limit-bar";
+import { StatusBar } from "@/components/shared/status-bar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { getDescriptionStatus, getTitleStatus } from "@/lib/seo/seo-preview";
 import { GooglePreviewResult } from "./google-preview-result";
 import { GooglePreviewUrl } from "./google-preview-url";
 
@@ -21,6 +27,15 @@ export function GooglePreviewTool() {
 		keyword: "",
 	});
 
+	const { title, description, url, keyword } = data;
+
+	const titleStatus = getTitleStatus(title.length);
+	const descStatus = getDescriptionStatus(description.length);
+
+	function update(partial: Partial<PreviewData>) {
+		setData((prev) => ({ ...prev, ...partial }));
+	}
+
 	function handleUrlLoad(loaded: {
 		title: string;
 		description: string;
@@ -34,24 +49,194 @@ export function GooglePreviewTool() {
 		}));
 	}
 
+	function handleClear() {
+		setData({ title: "", description: "", url: "", keyword: "" });
+	}
+
+	async function handleCopySnippet() {
+		const snippet = `${title || "Título da página"}\n${url || "seusite.com"}\n${description || "Descrição da página"}`;
+		await navigator.clipboard.writeText(snippet);
+	}
+
+	const hasContent = title || description || url;
+
 	return (
-		<div className="flex flex-col gap-6">
-			<GooglePreviewUrl onLoad={handleUrlLoad} />
-			<div className="relative flex items-center gap-3">
-				<div className="h-px flex-1 bg-border" />
-				<span className="text-xs text-muted-foreground">
-					ou insira manualmente
-				</span>
-				<div className="h-px flex-1 bg-border" />
+		<LayoutD
+			header={
+				<>
+					<div className="flex items-center gap-3">
+						<div className="text-sm font-semibold tracking-tight">
+							Prévia do Google
+						</div>
+						<span className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+							TEMPO REAL
+						</span>
+					</div>
+					<div className="flex items-center gap-1.5">
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={handleCopySnippet}
+							disabled={!title && !description && !url}
+						>
+							<Copy className="mr-1.5 h-3 w-3" />
+							Copiar
+						</Button>
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							aria-label="Limpar"
+							onClick={handleClear}
+							disabled={!hasContent}
+						>
+							<Trash2 className="h-3.5 w-3.5" />
+						</Button>
+					</div>
+				</>
+			}
+			sidebar={
+				<>
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Título
+						</h3>
+						<LimitBar
+							label="Título"
+							current={title.length}
+							min={30}
+							max={60}
+							status={titleStatus}
+						/>
+					</div>
+					<div className="p-4 space-y-3 border-t border-border">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Descrição
+						</h3>
+						<LimitBar
+							label="Descrição"
+							current={description.length}
+							min={120}
+							max={160}
+							status={descStatus}
+						/>
+					</div>
+					<div className="p-4 space-y-3 border-t border-border">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Palavra-chave
+						</h3>
+						<input
+							id="preview-keyword"
+							value={keyword}
+							onChange={(e) => update({ keyword: e.target.value })}
+							placeholder="palavra para destacar"
+							className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-xs text-foreground outline-none placeholder:text-muted-foreground/50 focus:border-foreground/30"
+						/>
+					</div>
+					<div className="p-4 space-y-2 mt-auto border-t border-border">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							Referências
+						</h3>
+						<div className="flex items-center justify-between">
+							<span className="text-xs text-muted-foreground">Título</span>
+							<span className="font-mono text-[11px] bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
+								30–60 caracteres
+							</span>
+						</div>
+						<div className="flex items-center justify-between">
+							<span className="text-xs text-muted-foreground">Descrição</span>
+							<span className="font-mono text-[11px] bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
+								120–160 caracteres
+							</span>
+						</div>
+						<div className="flex items-center justify-between">
+							<span className="text-xs text-muted-foreground">URL</span>
+							<span className="font-mono text-[11px] bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
+								limpa e descritiva
+							</span>
+						</div>
+					</div>
+				</>
+			}
+		>
+			<div className="flex flex-col">
+				<div className="p-4 border-b border-border space-y-4">
+					<GooglePreviewUrl onLoad={handleUrlLoad} />
+					<div className="relative flex items-center gap-3">
+						<div className="h-px flex-1 bg-border" />
+						<span className="text-xs text-muted-foreground">
+							ou insira manualmente
+						</span>
+						<div className="h-px flex-1 bg-border" />
+					</div>
+					<div className="space-y-3">
+						<div className="space-y-1.5">
+							<label
+								htmlFor="preview-title"
+								className="text-xs font-medium text-muted-foreground"
+							>
+								Título
+							</label>
+							<Input
+								id="preview-title"
+								placeholder="Título da página"
+								value={title}
+								onChange={(e) => update({ title: e.target.value })}
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<label
+								htmlFor="preview-description"
+								className="text-xs font-medium text-muted-foreground"
+							>
+								Meta descrição
+							</label>
+							<Textarea
+								id="preview-description"
+								placeholder="Descrição da página para os mecanismos de busca"
+								value={description}
+								onChange={(e) => update({ description: e.target.value })}
+								className="min-h-20 resize-none"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<label
+								htmlFor="preview-url"
+								className="text-xs font-medium text-muted-foreground"
+							>
+								URL
+							</label>
+							<Input
+								id="preview-url"
+								type="url"
+								placeholder="https://seusite.com/pagina"
+								value={url}
+								onChange={(e) => update({ url: e.target.value })}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="flex-1 p-4">
+					<GooglePreviewResult
+						title={title}
+						description={description}
+						url={url}
+						keyword={keyword}
+					/>
+				</div>
 			</div>
-			<GooglePreviewInput data={data} onChange={setData} />
-			<Separator />
-			<GooglePreviewResult
-				title={data.title}
-				description={data.description}
-				url={data.url}
-				keyword={data.keyword}
+
+			<StatusBar
+				items={[
+					{
+						label: "",
+						value: hasContent
+							? `Título: ${title.length} · Descrição: ${description.length}`
+							: "Aguardando",
+						mono: false,
+						variant: hasContent ? "success" : "default",
+					},
+				]}
 			/>
-		</div>
+		</LayoutD>
 	);
 }

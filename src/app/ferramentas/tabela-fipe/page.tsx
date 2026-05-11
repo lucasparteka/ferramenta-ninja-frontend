@@ -20,7 +20,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					O que é a Tabela FIPE?
 				</h2>
 				<p>
@@ -36,7 +36,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Para que serve
 				</h2>
 				<ul className="list-disc space-y-2 pl-6">
@@ -48,7 +48,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">

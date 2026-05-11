@@ -1,10 +1,13 @@
 "use client";
 
+import { Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { CopyButton } from "@/components/shared/copy-button";
-import { ResultBox } from "@/components/shared/result-box";
-import { Checkbox } from "@/components/ui/checkbox";
+import { LayoutC } from "@/components/shared/layout-c";
+import { OptionSwitch } from "@/components/shared/option-switch";
+import { PaneHeader } from "@/components/shared/pane-header";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Input } from "@/components/ui/input";
 import { numberToWords } from "@/lib/extenso/numero-extenso";
 
@@ -16,87 +19,152 @@ const EXAMPLES = [
 	{ label: "R$ 0,50", value: 0.5 },
 ];
 
-const MAX_VALUE = 999_999_999_999_999; // 999 trilhões
+const MAX_VALUE = 999_999_999_999_999;
 
 export function NumeroPorExtensoClient() {
 	const [value, setValue] = useState<number>(0);
-	const [currency, setCurrency] = useState(true);
+	const [mode, setMode] = useState<"currency" | "numeric">("currency");
 
 	const words = useMemo(
-		() => (value > 0 ? numberToWords(value, { currency }) : ""),
-		[value, currency],
+		() =>
+			value > 0 ? numberToWords(value, { currency: mode === "currency" }) : "",
+		[value, mode],
 	);
 
 	const capitalized = words
 		? words.charAt(0).toUpperCase() + words.slice(1)
 		: "";
 
+	function handleClear() {
+		setValue(0);
+	}
+
 	return (
-		<div className="space-y-6">
-			<div className="space-y-4">
-				<div className="space-y-2">
-					<label
-						htmlFor="valor-input"
-						className="block text-sm font-medium text-foreground"
-					>
-						Valor
-					</label>
-					<div className="max-w-sm">
-						<CurrencyInput
-							maxLength={25}
-							value={value}
-							onChangeValue={(_, numberValue) => {
-								const num = Number(numberValue) || 0;
-
-								if (num > MAX_VALUE) return;
-
-								setValue(num);
-							}}
-							InputElement={
-								<Input id="valor-input" type="text" placeholder="R$ 0,00" />
-							}
-						/>
+		<LayoutC
+			toolbar={
+				<div className="flex items-center gap-4">
+					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						Modo
+					</span>
+					<OptionSwitch
+						options={[
+							{ label: "Numérico", value: "numeric" },
+							{ label: "Moeda R$", value: "currency" },
+						]}
+						value={mode}
+						onChange={(v) => setMode(v as "currency" | "numeric")}
+						size="sm"
+					/>
+				</div>
+			}
+			left={
+				<>
+					<PaneHeader
+						title="Entrada"
+						actions={
+							<button
+								type="button"
+								onClick={handleClear}
+								className="rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+								aria-label="Limpar"
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</button>
+						}
+					/>
+					<div className="flex flex-1 flex-col p-3 space-y-4">
+						<div className="space-y-1.5">
+							<label
+								htmlFor="valor-input"
+								className="text-xs font-medium text-muted-foreground"
+							>
+								Valor
+							</label>
+							<CurrencyInput
+								maxLength={25}
+								value={value}
+								onChangeValue={(_, numberValue) => {
+									const num = Number(numberValue) || 0;
+									if (num > MAX_VALUE) return;
+									setValue(num);
+								}}
+								InputElement={
+									<Input
+										id="valor-input"
+										type="text"
+										placeholder={mode === "currency" ? "R$ 0,00" : "0"}
+										className="font-mono tabular-nums"
+									/>
+								}
+							/>
+						</div>
+						<div className="flex flex-wrap gap-1.5">
+							<span className="text-[11px] text-muted-foreground self-center mr-1">
+								Exemplos:
+							</span>
+							{EXAMPLES.map((ex) => (
+								<button
+									key={ex.label}
+									type="button"
+									onClick={() => setValue(ex.value)}
+									className="rounded border border-border bg-card px-2 py-0.5 text-[11px] text-foreground hover:bg-muted transition-colors"
+								>
+									{ex.label}
+								</button>
+							))}
+						</div>
 					</div>
-				</div>
-
-				<div className="flex items-center gap-2">
-					<Checkbox
-						id="include-currency"
-						checked={currency}
-						onCheckedChange={(checked) => setCurrency(checked === true)}
+				</>
+			}
+			right={
+				<>
+					<PaneHeader
+						title="Resultado"
+						actions={
+							<CopyButton
+								text={capitalized}
+								disabled={!capitalized}
+								variant="ghost"
+								size="icon-sm"
+								iconOnly
+							/>
+						}
 					/>
-					<label
-						htmlFor="include-currency"
-						className="cursor-pointer text-sm text-foreground"
-					>
-						Incluir &quot;reais&quot; e &quot;centavos&quot; (R$)
-					</label>
-				</div>
-
-				<div className="flex flex-wrap gap-2 text-sm text-muted-foreground items-center">
-					<span className="mr-1">Exemplos:</span>
-					{EXAMPLES.map((ex) => (
-						<button
-							key={ex.label}
-							type="button"
-							onClick={() => setValue(ex.value)}
-							className="rounded-full border border-border bg-background px-2 py-0.5 text-foreground hover:bg-muted"
-						>
-							{ex.label}
-						</button>
-					))}
-				</div>
-			</div>
-			{capitalized && (
-				<ResultBox value={capitalized} label="Resultado">
-					<CopyButton
-						text={capitalized}
-						label="Copiar"
-						variant="outline"
-						className="mt-4"
-					/>
-				</ResultBox>
-			)}
-		</div>
+					<div className="flex-1 min-h-[280px] bg-muted/20 p-3 cursor-default select-all">
+						{capitalized ? (
+							<p className="font-mono text-sm text-foreground leading-relaxed">
+								{capitalized}
+							</p>
+						) : (
+							<p className="text-sm text-muted-foreground">
+								Insira um valor para gerar o texto por extenso...
+							</p>
+						)}
+					</div>
+				</>
+			}
+			footer={
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: capitalized ? "Gerado" : "Aguardando",
+							mono: false,
+							variant: capitalized ? "success" : "default",
+						},
+						{
+							label: "Valor",
+							value: `R$ ${value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`,
+							mono: true,
+						},
+						{
+							label: "Chars",
+							value: `${capitalized.length} caracteres`,
+							mono: true,
+						},
+					]}
+				/>
+			}
+		/>
 	);
 }

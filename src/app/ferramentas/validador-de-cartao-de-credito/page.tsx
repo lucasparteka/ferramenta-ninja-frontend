@@ -20,7 +20,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					O que valida o número de um cartão de crédito?
 				</h2>
 				<p>
@@ -41,7 +41,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Como identificar a bandeira pelo número?
 				</h2>
 				<p>
@@ -86,7 +86,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Aviso importante
 				</h2>
 				<p className="rounded-lg border border-warning/30 bg-warning/10 p-4 text-sm text-foreground">
@@ -100,7 +100,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">
@@ -170,7 +170,6 @@ function SeoContent() {
 export default function ValidadorDeCartaoDeCreditoPage() {
 	return (
 		<PageLayout
-			compact
 			toolHref="/ferramentas/validador-de-cartao-de-credito"
 			title="Validador de Cartão de Crédito Online Grátis"
 			description="Valide números de cartão de crédito pelo algoritmo de Luhn e identifique automaticamente a bandeira. Funciona com Visa, Mastercard, American Express, Elo e Hipercard."

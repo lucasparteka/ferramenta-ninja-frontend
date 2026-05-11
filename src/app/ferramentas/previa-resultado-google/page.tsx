@@ -13,7 +13,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Como funciona a Prévia do Resultado do Google?
 				</h2>
 				<p>
@@ -51,7 +51,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					O que são título e meta descrição?
 				</h2>
 				<div className="space-y-3">
@@ -79,7 +79,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Por que o tamanho do título e da descrição importa para o SEO?
 				</h2>
 				<div className="space-y-3">
@@ -100,7 +100,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">
@@ -155,7 +155,6 @@ function SeoContent() {
 export default function PreviaResultadoGooglePage() {
 	return (
 		<PageLayout
-			compact
 			toolHref="/ferramentas/previa-resultado-google"
 			title="Prévia do Resultado do Google"
 			description="Simule como seu site aparece nos resultados de busca. Edite o título, a meta descrição e a URL e veja o snippet atualizar em tempo real."

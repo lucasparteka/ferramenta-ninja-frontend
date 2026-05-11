@@ -20,7 +20,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Como funciona a linha digitável
 				</h2>
 				<p>
@@ -39,7 +39,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					O que esta ferramenta extrai
 				</h2>
 				<ul className="list-disc space-y-2 pl-6">
@@ -57,7 +57,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">
@@ -107,7 +107,6 @@ function SeoContent() {
 export default function ValidadorBoletoPage() {
 	return (
 		<PageLayout
-			compact
 			toolHref="/ferramentas/validador-de-boleto"
 			title="Validador de Boleto"
 			description="Confira a linha digitável e extraia valor, vencimento e código de barras."

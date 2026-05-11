@@ -1,10 +1,12 @@
 "use client";
 
-import { ArrowDownUp, ArrowLeftRight } from "lucide-react";
+import { ArrowLeftRight, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { ResultBox } from "@/components/shared/result-box";
+import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutC } from "@/components/shared/layout-c";
+import { PaneHeader } from "@/components/shared/pane-header";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	convertUnit,
@@ -23,10 +25,13 @@ export function UnitConverterClient() {
 	const category = useMemo(() => getCategory(categoryId), [categoryId]);
 
 	const numeric = Number(value.replace(",", "."));
-	const result =
-		Number.isFinite(numeric) && value.trim() !== ""
-			? convertUnit(numeric, categoryId, fromId, toId)
-			: Number.NaN;
+	const valid = Number.isFinite(numeric) && value.trim() !== "";
+	const result = valid
+		? convertUnit(numeric, categoryId, fromId, toId)
+		: Number.NaN;
+
+	const fromUnit = category.units.find((u) => u.id === fromId);
+	const toUnit = category.units.find((u) => u.id === toId);
 
 	function handleCategoryChange(next: UnitCategoryId) {
 		const cat = getCategory(next);
@@ -35,129 +40,173 @@ export function UnitConverterClient() {
 		setToId(cat.units[1]?.id ?? cat.units[0].id);
 	}
 
-	function swap() {
+	function handleSwap() {
 		setFromId(toId);
 		setToId(fromId);
 	}
 
+	function handleClear() {
+		setValue("");
+	}
+
+	const resultStr = valid ? formatConverted(result) : "";
+
 	return (
-		<div className="space-y-6">
-			<div className="space-y-2 max-w-sm">
-				<label
-					htmlFor="unit-category"
-					className="block text-sm font-medium text-foreground"
-				>
-					Categoria
-				</label>
-				<NativeSelect
-					id="unit-category"
-					value={categoryId}
-					onChange={(e) =>
-						handleCategoryChange(e.target.value as UnitCategoryId)
-					}
-				>
-					{UNIT_CATEGORIES.map((c) => (
-						<option key={c.id} value={c.id}>
-							{c.label}
-						</option>
-					))}
-				</NativeSelect>
-			</div>
-
-			<div className="grid gap-4 sm:grid-cols-2">
-				<div className="space-y-2">
-					<label
-						htmlFor="unit-value"
-						className="block text-sm font-medium text-foreground"
-					>
-						Valor
-					</label>
-					<Input
-						id="unit-value"
-						type="text"
-						inputMode="decimal"
-						value={value}
-						onChange={(e) => setValue(e.target.value)}
-						placeholder="0"
-					/>
-				</div>
-				<div className="space-y-2">
-					<label
-						htmlFor="unit-from"
-						className="block text-sm font-medium text-foreground"
-					>
-						De
-					</label>
+		<LayoutC
+			toolbar={
+				<div className="flex items-center gap-4">
+					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						Categoria
+					</span>
 					<NativeSelect
-						id="unit-from"
-						value={fromId}
-						onChange={(e) => setFromId(e.target.value)}
+						id="unit-category"
+						value={categoryId}
+						onChange={(e) =>
+							handleCategoryChange(e.target.value as UnitCategoryId)
+						}
+						className="h-7 text-[11px]"
 					>
-						{category.units.map((u) => (
-							<option key={u.id} value={u.id}>
-								{u.label}
+						{UNIT_CATEGORIES.map((c) => (
+							<option key={c.id} value={c.id}>
+								{c.label}
 							</option>
 						))}
 					</NativeSelect>
 				</div>
-			</div>
-
-			<div className="flex justify-end">
-				<Button type="button" variant="outline" onClick={swap}>
-					<ArrowDownUp className="size-4" />
-					Inverter {category.label}
-				</Button>
-			</div>
-
-			<div className="grid gap-4 sm:grid-cols-2">
-				<div className="space-y-2">
-					<label
-						htmlFor="unit-result"
-						className="block text-sm font-medium text-foreground"
-					>
-						Resultado
-					</label>
-					<Input
-						id="unit-result"
-						type="text"
-						readOnly
-						value={Number.isFinite(result) ? formatConverted(result) : ""}
-						placeholder="—"
+			}
+			left={
+				<>
+					<PaneHeader
+						title="Entrada"
+						actions={
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								aria-label="Limpar"
+								onClick={handleClear}
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
+						}
 					/>
-				</div>
-				<div className="space-y-2">
-					<label
-						htmlFor="unit-to"
-						className="block text-sm font-medium text-foreground"
-					>
-						Para
-					</label>
-					<NativeSelect
-						id="unit-to"
-						value={toId}
-						onChange={(e) => setToId(e.target.value)}
-					>
-						{category.units.map((u) => (
-							<option key={u.id} value={u.id}>
-								{u.label}
-							</option>
-						))}
-					</NativeSelect>
-				</div>
-			</div>
-
-			{Number.isFinite(result) && value.trim() !== "" && (
-				<ResultBox
-					label="Conversão"
-					value={
-						<>
-							{value} {category.units.find((u) => u.id === fromId)?.label} ={" "}
-							{formatConverted(result)}{" "}
-							{category.units.find((u) => u.id === toId)?.label}
-						</>
-					}
-				></ResultBox>
-			)}
-		</div>
+					<div className="flex flex-1 flex-col p-3 space-y-4">
+						<div className="space-y-1.5">
+							<label
+								htmlFor="unit-value"
+								className="text-xs font-medium text-muted-foreground"
+							>
+								Valor
+							</label>
+							<input
+								id="unit-value"
+								type="text"
+								inputMode="decimal"
+								value={value}
+								onChange={(e) => setValue(e.target.value)}
+								placeholder="0"
+								className="w-full rounded-md border border-border bg-transparent px-3 py-1.5 font-mono text-sm tabular-nums outline-none focus:border-foreground/30"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<label
+								htmlFor="unit-from"
+								className="text-xs font-medium text-muted-foreground"
+							>
+								De
+							</label>
+							<NativeSelect
+								id="unit-from"
+								value={fromId}
+								onChange={(e) => setFromId(e.target.value)}
+								className="w-full"
+							>
+								{category.units.map((u) => (
+									<option key={u.id} value={u.id}>
+										{u.label}
+									</option>
+								))}
+							</NativeSelect>
+						</div>
+					</div>
+				</>
+			}
+			right={
+				<>
+					<PaneHeader
+						title="Resultado"
+						actions={
+							<CopyButton
+								text={resultStr}
+								disabled={!resultStr}
+								variant="ghost"
+								size="icon-sm"
+								iconOnly
+							/>
+						}
+					/>
+					<div className="flex flex-1 flex-col p-3 space-y-4">
+						<div className="flex-1 flex items-center justify-center min-h-[100px] bg-muted/20 rounded-md cursor-default select-all">
+							{resultStr ? (
+								<span className="font-mono text-lg tabular-nums text-foreground">
+									{resultStr}
+								</span>
+							) : (
+								<span className="text-sm text-muted-foreground">—</span>
+							)}
+						</div>
+						<div className="space-y-1.5">
+							<label
+								htmlFor="unit-to"
+								className="text-xs font-medium text-muted-foreground"
+							>
+								Para
+							</label>
+							<NativeSelect
+								id="unit-to"
+								value={toId}
+								onChange={(e) => setToId(e.target.value)}
+								className="w-full"
+							>
+								{category.units.map((u) => (
+									<option key={u.id} value={u.id}>
+										{u.label}
+									</option>
+								))}
+							</NativeSelect>
+						</div>
+					</div>
+				</>
+			}
+			swapButton={
+				<button
+					type="button"
+					onClick={handleSwap}
+					disabled={!value.trim()}
+					className="rounded-full border border-border bg-card p-1.5 text-muted-foreground transition-colors shadow-sm hover:text-foreground hover:bg-muted disabled:opacity-40 disabled:pointer-events-none"
+					aria-label="Inverter unidades"
+				>
+					<ArrowLeftRight className="h-3.5 w-3.5" />
+				</button>
+			}
+			footer={
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: resultStr ? "Convertido" : "Aguardando",
+							mono: false,
+							variant: resultStr ? "success" : "default",
+						},
+						{
+							label: "Fórmula",
+							value: resultStr
+								? `${value} ${fromUnit?.label ?? ""} = ${resultStr} ${toUnit?.label ?? ""}`
+								: "—",
+							mono: true,
+						},
+					]}
+				/>
+			}
+		/>
 	);
 }

@@ -1,15 +1,18 @@
 "use client";
 
+import { ArrowLeftRight, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { ResultBox } from "@/components/shared/result-box";
-import { Input } from "@/components/ui/input";
+import { LayoutC } from "@/components/shared/layout-c";
+import { PaneHeader } from "@/components/shared/pane-header";
+import { StatusBar } from "@/components/shared/status-bar";
+import { Button } from "@/components/ui/button";
 
 type TemperatureScale = "celsius" | "fahrenheit" | "kelvin";
 
 const SCALE_LABELS: Record<TemperatureScale, string> = {
-	celsius: "Celsius (°C)",
-	fahrenheit: "Fahrenheit (°F)",
-	kelvin: "Kelvin (K)",
+	celsius: "Celsius",
+	fahrenheit: "Fahrenheit",
+	kelvin: "Kelvin",
 };
 
 const SCALE_SHORT: Record<TemperatureScale, string> = {
@@ -18,40 +21,41 @@ const SCALE_SHORT: Record<TemperatureScale, string> = {
 	kelvin: "K",
 };
 
+const SCALES: TemperatureScale[] = ["celsius", "fahrenheit", "kelvin"];
+
 function convertTemperature(
 	value: number,
 	from: TemperatureScale,
 	to: TemperatureScale,
 ): number {
 	if (from === to) return value;
-
-	// Convert to Celsius first
 	let celsius = value;
-	if (from === "fahrenheit") {
-		celsius = (value - 32) * (5 / 9);
-	} else if (from === "kelvin") {
-		celsius = value - 273.15;
-	}
-
-	// Convert from Celsius to target
+	if (from === "fahrenheit") celsius = (value - 32) * (5 / 9);
+	else if (from === "kelvin") celsius = value - 273.15;
 	if (to === "celsius") return celsius;
 	if (to === "fahrenheit") return celsius * (9 / 5) + 32;
 	if (to === "kelvin") return celsius + 273.15;
-
 	return celsius;
 }
 
 function getFormula(from: TemperatureScale, to: TemperatureScale): string {
-	if (from === to) return "Valor igual na mesma escala.";
-	if (from === "celsius" && to === "fahrenheit") return "°F = (°C × 9/5) + 32";
-	if (from === "celsius" && to === "kelvin") return "K = °C + 273.15";
-	if (from === "fahrenheit" && to === "celsius") return "°C = (°F − 32) × 5/9";
-	if (from === "fahrenheit" && to === "kelvin")
-		return "K = (°F − 32) × 5/9 + 273.15";
-	if (from === "kelvin" && to === "celsius") return "°C = K − 273.15";
-	if (from === "kelvin" && to === "fahrenheit")
-		return "°F = (K − 273.15) × 9/5 + 32";
-	return "";
+	if (from === to) return "";
+	const f: Record<string, string> = {
+		"celsius→fahrenheit": "°F = (°C × 9/5) + 32",
+		"celsius→kelvin": "K = °C + 273.15",
+		"fahrenheit→celsius": "°C = (°F − 32) × 5/9",
+		"fahrenheit→kelvin": "K = (°F − 32) × 5/9 + 273.15",
+		"kelvin→celsius": "°C = K − 273.15",
+		"kelvin→fahrenheit": "°F = (K − 273.15) × 9/5 + 32",
+	};
+	return f[`${from}→${to}`] ?? "";
+}
+
+function formatNum(n: number): string {
+	return n.toLocaleString("pt-BR", {
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 4,
+	});
 }
 
 export function TemperatureConverter() {
@@ -59,154 +63,176 @@ export function TemperatureConverter() {
 	const [fromScale, setFromScale] = useState<TemperatureScale>("celsius");
 	const [toScale, setToScale] = useState<TemperatureScale>("fahrenheit");
 
-	const scales: TemperatureScale[] = ["celsius", "fahrenheit", "kelvin"];
-
 	const numeric = Number(value.replace(",", "."));
+	const valid = !Number.isNaN(numeric) && value.trim() !== "";
+
 	const result = useMemo(() => {
-		if (Number.isNaN(numeric) || value.trim() === "") return null;
+		if (!valid) return null;
 		return convertTemperature(numeric, fromScale, toScale);
-	}, [numeric, fromScale, toScale, value]);
+	}, [numeric, fromScale, toScale, valid]);
 
 	const allResults = useMemo(() => {
-		if (Number.isNaN(numeric) || value.trim() === "") return null;
-		return {
-			celsius: convertTemperature(numeric, fromScale, "celsius"),
-			fahrenheit: convertTemperature(numeric, fromScale, "fahrenheit"),
-			kelvin: convertTemperature(numeric, fromScale, "kelvin"),
-		};
-	}, [numeric, fromScale, value]);
+		if (!valid) return null;
+		return Object.fromEntries(
+			SCALES.map((s) => [s, convertTemperature(numeric, fromScale, s)]),
+		) as Record<TemperatureScale, number>;
+	}, [numeric, fromScale, valid]);
 
-	function swap() {
+	function handleSwap() {
 		setFromScale(toScale);
 		setToScale(fromScale);
 	}
 
+	function handleClear() {
+		setValue("0");
+	}
+
 	return (
-		<div className="space-y-6">
-			<div className="max-w-2xl space-y-4">
-				{/* Input scale chips */}
-				<div className="space-y-2">
-					<span className="block text-sm font-medium text-foreground">
-						Converter de
+		<LayoutC
+			toolbar={
+				<div className="flex items-center gap-4">
+					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						Escala origem
 					</span>
-					<div className="flex flex-wrap gap-2">
-						{scales.map((s) => (
+					<div className="flex gap-1">
+						{SCALES.map((s) => (
 							<button
 								key={s}
 								type="button"
 								onClick={() => setFromScale(s)}
-								className={`inline-flex items-center rounded-md border px-3 py-1.5 text-sm font-medium transition-colors ${
+								className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
 									fromScale === s
-										? "border-primary bg-primary text-primary-foreground"
-										: "border-border bg-card text-foreground hover:bg-accent"
+										? "bg-foreground/10 text-foreground font-medium"
+										: "text-muted-foreground hover:text-foreground"
 								}`}
 							>
-								{SCALE_LABELS[s]}
+								{SCALE_SHORT[s]}
 							</button>
 						))}
 					</div>
 				</div>
-
-				{/* Value input */}
-				<div className="space-y-2">
-					<label
-						htmlFor="temp-value"
-						className="block text-sm font-medium text-foreground"
-					>
-						Valor em {SCALE_SHORT[fromScale]}
-					</label>
-					<Input
-						id="temp-value"
-						type="text"
-						inputMode="decimal"
-						value={value}
-						onChange={(e) => setValue(e.target.value)}
-						placeholder={`Ex: ${fromScale === "fahrenheit" ? "32" : fromScale === "kelvin" ? "273.15" : "0"}`}
-					/>
-				</div>
-
-				{/* Output scale chips */}
-				<div className="space-y-2">
-					<div className="flex items-center justify-between">
-						<span className="block text-sm font-medium text-foreground">
-							Para
-						</span>
-						<button
-							type="button"
-							onClick={swap}
-							className="text-xs font-medium text-primary hover:underline"
-						>
-							Inverter escalas
-						</button>
-					</div>
-					<div className="flex flex-wrap gap-2">
-						{scales.map((s) => (
-							<button
-								key={s}
-								type="button"
-								onClick={() => setToScale(s)}
-								className={`inline-flex items-center rounded-md border px-3 py-1.5 text-sm font-medium transition-colors ${
-									toScale === s
-										? "border-primary bg-primary text-primary-foreground"
-										: "border-border bg-card text-foreground hover:bg-accent"
-								}`}
+			}
+			left={
+				<>
+					<PaneHeader
+						title="Entrada"
+						actions={
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								aria-label="Limpar"
+								onClick={handleClear}
 							>
-								{SCALE_LABELS[s]}
-							</button>
-						))}
-					</div>
-				</div>
-			</div>
-
-			{/* Main result */}
-			{result !== null && (
-				<div className="max-w-2xl space-y-4">
-					<ResultBox
-						label={`Resultado: ${SCALE_LABELS[toScale]}`}
-						value={
-							Number.isFinite(result)
-								? `${result.toLocaleString("pt-BR", {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 4,
-									})} ${SCALE_SHORT[toScale]}`
-								: "—"
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
 						}
-						hint={getFormula(fromScale, toScale)}
 					/>
-				</div>
-			)}
-
-			{/* All scales table */}
-			{allResults && (
-				<div className="max-w-2xl space-y-3">
-					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-						Todas as escalas
-					</p>
-					<div className="grid gap-2 sm:grid-cols-3">
-						{scales.map((s) => (
-							<div
-								key={s}
-								className={`rounded-md border px-3 py-2 text-center ${
-									s === toScale
-										? "border-primary/30 bg-primary/5"
-										: "border-border bg-card"
-								}`}
+					<div className="flex flex-1 flex-col p-3 space-y-4">
+						<div className="space-y-1.5">
+							<label
+								htmlFor="temp-value"
+								className="text-xs font-medium text-muted-foreground"
 							>
-								<p className="text-xs text-muted-foreground">
-									{SCALE_LABELS[s]}
-								</p>
-								<p className="text-lg font-semibold text-foreground">
-									{allResults[s].toLocaleString("pt-BR", {
-										minimumFractionDigits: 2,
-										maximumFractionDigits: 4,
-									})}{" "}
-									{SCALE_SHORT[s]}
-								</p>
+								Valor em {SCALE_SHORT[fromScale]}
+							</label>
+							<input
+								id="temp-value"
+								type="text"
+								inputMode="decimal"
+								value={value}
+								onChange={(e) => setValue(e.target.value)}
+								placeholder="0"
+								className="w-full rounded-md border border-border bg-transparent px-3 py-1.5 font-mono text-sm tabular-nums outline-none focus:border-foreground/30"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<span className="text-xs font-medium text-muted-foreground">
+								Converter para
+							</span>
+							<div className="flex gap-1">
+								{SCALES.map((s) => (
+									<button
+										key={s}
+										type="button"
+										onClick={() => setToScale(s)}
+										className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+											toScale === s
+												? "bg-foreground/10 text-foreground font-medium"
+												: "text-muted-foreground hover:text-foreground"
+										}`}
+									>
+										{SCALE_SHORT[s]}
+									</button>
+								))}
 							</div>
-						))}
+						</div>
 					</div>
-				</div>
-			)}
-		</div>
+				</>
+			}
+			right={
+				<>
+					<PaneHeader title="Resultado" />
+					<div className="flex-1 min-h-[280px] bg-muted/20 p-3 space-y-4">
+						{result !== null && valid ? (
+							<>
+								<p className="font-mono text-2xl tabular-nums text-foreground">
+									{Number.isFinite(result)
+										? `${formatNum(result)} ${SCALE_SHORT[toScale]}`
+										: "—"}
+								</p>
+								<p className="text-xs text-muted-foreground font-mono">
+									{getFormula(fromScale, toScale)}
+								</p>
+								<div className="space-y-2 pt-2 border-t border-border">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+										Todas as escalas
+									</p>
+									{SCALES.map((s) => (
+										<div
+											key={s}
+											className="flex items-center justify-between py-0.5"
+										>
+											<span className="text-xs text-muted-foreground">
+												{SCALE_LABELS[s]}
+											</span>
+											<span className="font-mono text-xs tabular-nums text-foreground">
+												{formatNum(allResults![s])} {SCALE_SHORT[s]}
+											</span>
+										</div>
+									))}
+								</div>
+							</>
+						) : (
+							<p className="text-sm text-muted-foreground">
+								Insira um valor para converter...
+							</p>
+						)}
+					</div>
+				</>
+			}
+			swapButton={
+				<button
+					type="button"
+					onClick={handleSwap}
+					className="rounded-full border border-border bg-card p-1.5 text-muted-foreground transition-colors shadow-sm hover:text-foreground hover:bg-muted"
+					aria-label="Inverter escalas"
+				>
+					<ArrowLeftRight className="h-3.5 w-3.5" />
+				</button>
+			}
+			footer={
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: valid && result !== null ? "Convertido" : "Aguardando",
+							mono: false,
+							variant: valid && result !== null ? "success" : "default",
+						},
+						{ label: "Escalas", value: "1 valor · 3 escalas", mono: true },
+					]}
+				/>
+			}
+		/>
 	);
 }

@@ -1,18 +1,15 @@
 "use client";
 
-import { ArrowRightLeft, Info } from "lucide-react";
+import { ArrowRightLeft, Trash2 } from "lucide-react";
 import { useCallback, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { ImageDropzone } from "@/components/shared/image-dropzone";
+import { LayoutC } from "@/components/shared/layout-c";
 import { OptionSwitch } from "@/components/shared/option-switch";
-import { ResultBox } from "@/components/shared/result-box";
+import { PaneHeader } from "@/components/shared/pane-header";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
 import {
 	fileToBase64,
 	getBase64Size,
@@ -78,9 +75,7 @@ export function ImageToBase64() {
 				height,
 			});
 		} catch {
-			setError(
-				"Erro ao carregar imagem da URL. Verifique se é uma imagem válida e acessível.",
-			);
+			setError("Erro ao carregar imagem da URL.");
 		} finally {
 			setIsLoading(false);
 		}
@@ -126,165 +121,219 @@ export function ImageToBase64() {
 	};
 
 	const displayBase64 = showPure && base64 ? getPureBase64(base64) : base64;
+	const overhead =
+		fileInfo && fileInfo.size > 0 && base64
+			? (((base64.length - fileInfo.size) / fileInfo.size) * 100).toFixed(1)
+			: null;
 
 	return (
-		<div className="space-y-6">
-			<OptionSwitch
-				options={[
-					{ label: "Upload de Imagem", value: "upload" },
-					{ label: "URL Remota", value: "url" },
-				]}
-				value={activeTab}
-				onChange={(v) => {
-					setActiveTab(v as "upload" | "url");
-					handleClear();
-				}}
-			/>
-			{activeTab === "upload" && (
-				<ImageDropzone
-					preview={preview}
-					isDragging={isDragging}
-					accept="image/png,image/jpeg,image/gif,image/svg+xml,image/webp"
-					label="Upload de Imagem"
-					hint="PNG, JPG, GIF, SVG, WebP"
-					onFile={handleFile}
-					onClear={handleClear}
-					onDragOver={onDragOver}
-					onDragLeave={onDragLeave}
-					onDrop={onDrop}
-					clearButtonClassName="mt-3 flex w-30 ml-auto"
+		<LayoutC
+			toolbar={
+				<OptionSwitch
+					options={[
+						{ label: "Upload", value: "upload" },
+						{ label: "URL Remota", value: "url" },
+					]}
+					value={activeTab}
+					onChange={(v) => {
+						setActiveTab(v as "upload" | "url");
+						handleClear();
+					}}
+					size="sm"
 				/>
-			)}
-			{activeTab === "url" && (
-				<div className="space-y-4">
-					<div className="flex gap-2">
-						<Input
-							placeholder="https://exemplo.com/imagem.png"
-							value={urlInput}
-							onChange={(e) => setUrlInput(e.target.value)}
-							onKeyDown={(e) => e.key === "Enter" && !isLoading && handleUrl()}
-						/>
-						<Button
-							onClick={handleUrl}
-							disabled={!urlInput.trim() || isLoading}
-						>
-							Carregar
-						</Button>
-					</div>
-				</div>
-			)}
-			{isLoading && (
-				<div className="py-8 text-center text-muted-foreground">
-					Processando imagem...
-				</div>
-			)}
-			{error && (
-				<div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
-					{error}
-				</div>
-			)}
-			{base64 && fileInfo && (
-				<div className="space-y-6">
-					<div className="grid gap-4 sm:grid-cols-2">
-						<div className="space-y-2">
-							<p className="text-sm font-medium text-foreground">Preview</p>
-							<div className="flex min-h-50 items-center justify-center rounded-md border bg-card p-4">
-								{/* biome-ignore lint/performance/noImgElement: data URI requires native img */}
-								<img
-									src={preview || ""}
-									alt="Preview da imagem"
-									className="max-h-75 max-w-full rounded object-contain"
+			}
+			left={
+				<>
+					<PaneHeader
+						title="Entrada"
+						actions={
+							<button
+								type="button"
+								onClick={handleClear}
+								className="rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+								aria-label="Limpar"
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</button>
+						}
+					/>
+					<div className="flex flex-1 flex-col">
+						{activeTab === "upload" ? (
+							<div className="p-3">
+								<ImageDropzone
+									preview={null}
+									isDragging={isDragging}
+									accept="image/png,image/jpeg,image/gif,image/svg+xml,image/webp"
+									label="Upload de Imagem"
+									hint="PNG, JPG, GIF, SVG, WebP"
+									onFile={handleFile}
+									onClear={handleClear}
+									onDragOver={onDragOver}
+									onDragLeave={onDragLeave}
+									onDrop={onDrop}
 								/>
 							</div>
-						</div>
-						<div className="space-y-2">
-							<p className="text-sm font-medium text-foreground">Informações</p>
-							<div className="space-y-2 rounded-md border bg-card p-4 text-sm lg:h-83.5">
-								<div className="flex justify-between">
-									<span className="text-muted-foreground">Nome:</span>
-									<span className="font-medium line-clamp-1 ml-3">
-										{fileInfo.name}
-									</span>
+						) : (
+							<div className="flex flex-1 flex-col p-3 space-y-3">
+								<div className="flex gap-2">
+									<Input
+										placeholder="https://exemplo.com/imagem.png"
+										value={urlInput}
+										onChange={(e) => setUrlInput(e.target.value)}
+										onKeyDown={(e) =>
+											e.key === "Enter" && !isLoading && handleUrl()
+										}
+										className="font-mono text-xs"
+									/>
+									<Button
+										onClick={handleUrl}
+										disabled={!urlInput.trim() || isLoading}
+										size="sm"
+									>
+										Carregar
+									</Button>
 								</div>
-								<div className="flex justify-between">
-									<span className="text-muted-foreground">Tipo:</span>
-									<span className="font-medium">{fileInfo.type}</span>
-								</div>
-								<div className="flex justify-between">
-									<span className="text-muted-foreground">Dimensões:</span>
-									<span className="font-medium">
-										{fileInfo.width} × {fileInfo.height} px
-									</span>
-								</div>
-								<div className="flex justify-between">
-									<span className="text-muted-foreground">
-										Tamanho original:
-									</span>
-									<span className="font-medium">
-										{formatBytes(fileInfo.size)}
-									</span>
-								</div>
-								<div className="flex justify-between">
-									<span className="text-muted-foreground">Tamanho Base64:</span>
-									<span className="font-medium">
-										{formatBytes(base64.length)}
-									</span>
-								</div>
-								<div className="flex justify-between">
-									<span className="flex items-center gap-1 text-muted-foreground">
-										Overhead:
-										<Popover>
-											<PopoverTrigger className="inline-flex text-muted-foreground">
-												<Info className="h-3 w-3" />
-											</PopoverTrigger>
-											<PopoverContent className="w-60 text-sm">
-												Base64 aumenta os dados em ~33%. Overhead é o acréscimo
-												percentual em relação ao tamanho original da imagem.
-											</PopoverContent>
-										</Popover>
-									</span>
-									<span className="font-medium">
-										{fileInfo.size > 0
-											? `${(
-													((base64.length - fileInfo.size) / fileInfo.size) *
-														100
-												).toFixed(1)}%`
-											: "N/A"}
-									</span>
-								</div>
+								{isLoading && (
+									<p className="text-xs text-muted-foreground">
+										Processando imagem...
+									</p>
+								)}
 							</div>
-						</div>
+						)}
+						{error && (
+							<div className="px-3 pb-3">
+								<p className="text-xs text-destructive bg-destructive/10 rounded px-2 py-1.5">
+									{error}
+								</p>
+							</div>
+						)}
 					</div>
-					<div className="space-y-2">
-						<div className="flex items-center justify-between">
-							<p className="text-sm font-medium text-foreground">
-								Resultado Base64
+				</>
+			}
+			right={
+				<>
+					<PaneHeader
+						title="Resultado"
+						actions={
+							<>
+								{base64 && (
+									<button
+										type="button"
+										onClick={() => setShowPure(!showPure)}
+										className="flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px] text-muted-foreground hover:text-foreground transition-colors"
+									>
+										<ArrowRightLeft className="h-3 w-3" />
+										{showPure ? "Data URI" : "Puro"}
+									</button>
+								)}
+								<CopyButton
+									text={displayBase64 || ""}
+									disabled={!displayBase64}
+									variant="ghost"
+									size="icon-sm"
+									iconOnly
+								/>
+							</>
+						}
+					/>
+					<div className="flex-1 min-h-[280px] bg-muted/20 p-3 space-y-3 overflow-auto">
+						{base64 && fileInfo ? (
+							<>
+								<div className="flex items-center justify-center min-h-[120px] rounded-md border border-border bg-card p-2">
+									{/* biome-ignore lint/performance/noImgElement: data URI */}
+									<img
+										src={preview || ""}
+										alt="Preview"
+										className="max-h-48 max-w-full rounded object-contain"
+									/>
+								</div>
+								<div className="space-y-1">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+										Informações
+									</p>
+									<div className="space-y-1">
+										{[
+											{ label: "Formato", value: fileInfo.type },
+											{
+												label: "Dimensões",
+												value: `${fileInfo.width} × ${fileInfo.height} px`,
+											},
+											{ label: "Original", value: formatBytes(fileInfo.size) },
+											{ label: "Base64", value: formatBytes(base64.length) },
+											...(overhead
+												? [{ label: "Overhead", value: `${overhead}%` }]
+												: []),
+										].map((item) => (
+											<div
+												key={item.label}
+												className="flex items-center justify-between py-0.5"
+											>
+												<span className="text-xs text-muted-foreground">
+													{item.label}
+												</span>
+												<span className="font-mono text-xs tabular-nums text-foreground">
+													{item.value}
+												</span>
+											</div>
+										))}
+									</div>
+								</div>
+								<div className="space-y-1">
+									<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+										Base64
+									</p>
+									<pre className="max-h-36 overflow-y-auto rounded border border-border bg-card p-2 font-mono text-[10px] text-foreground break-all select-all whitespace-pre-wrap">
+										{displayBase64}
+									</pre>
+								</div>
+							</>
+						) : isLoading ? null : (
+							<p className="text-sm text-muted-foreground">
+								{activeTab === "upload"
+									? "Arraste uma imagem ou clique para selecionar..."
+									: "Insira uma URL de imagem..."}
 							</p>
-							<Button
-								variant="ghost"
-								size="sm"
-								onClick={() => setShowPure(!showPure)}
-								className="flex items-center gap-1"
-							>
-								<ArrowRightLeft className="h-3 w-3" />
-								{showPure ? "Mostrar Data URI" : "Mostrar Base64 Puro"}
-							</Button>
-						</div>
-						<ResultBox>
-							<code className="max-h-50 block w-full overflow-y-auto break-all rounded bg-muted text-xs font-mono">
-								{displayBase64}
-							</code>
-						</ResultBox>
-						<div className="flex justify-end">
-							<CopyButton
-								text={displayBase64 || ""}
-								label="Copiar"
-								variant="outline"
-							/>
-						</div>
+						)}
 					</div>
-				</div>
-			)}
-		</div>
+				</>
+			}
+			footer={
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: base64
+								? "Convertido"
+								: isLoading
+									? "Processando..."
+									: "Aguardando",
+							mono: false,
+							variant: base64 ? "success" : isLoading ? "warning" : "default",
+						},
+						...(fileInfo
+							? [
+									{
+										label: "Original",
+										value: formatBytes(fileInfo.size),
+										mono: true,
+									},
+								]
+							: []),
+						...(base64
+							? [
+									{
+										label: "Base64",
+										value: formatBytes(base64.length),
+										mono: true,
+									},
+								]
+							: []),
+						...(overhead
+							? [{ label: "+", value: `${overhead}%`, mono: true }]
+							: []),
+					]}
+				/>
+			}
+		/>
 	);
 }

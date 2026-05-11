@@ -20,7 +20,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					O que é o PIX Copia e Cola?
 				</h2>
 				<p>
@@ -41,7 +41,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Como usar o decodificador
 				</h2>
 				<ol className="mt-4 list-decimal space-y-2 pl-6">
@@ -60,7 +60,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					O que o decodificador mostra
 				</h2>
 				<ul className="list-disc space-y-2 pl-6">
@@ -92,7 +92,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">
@@ -145,7 +145,6 @@ function SeoContent() {
 export default function DecodificadorPixPage() {
 	return (
 		<PageLayout
-			compact
 			toolHref="/ferramentas/decodificador-pix"
 			title="Decodificador PIX Copia e Cola"
 			description="Cole um código PIX e veja beneficiário, valor e chave antes de pagar. Tudo acontece no seu navegador."

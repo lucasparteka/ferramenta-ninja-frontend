@@ -20,7 +20,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					O que é o CNPJ?
 				</h2>
 				<p>
@@ -37,7 +37,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Para que serve a consulta de CNPJ
 				</h2>
 				<ul className="list-disc space-y-2 pl-6">
@@ -50,7 +50,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-xl font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">
@@ -99,7 +99,6 @@ function SeoContent() {
 export default function ConsultaCnpjPage() {
 	return (
 		<PageLayout
-			compact
 			toolHref="/ferramentas/consulta-cnpj"
 			title="Consulta de CNPJ Online"
 			description="Digite um CNPJ e obtenha os dados cadastrais oficiais da Receita Federal em segundos."

@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import type { MinifierType } from "@/lib/text/minifier";
 import { minify } from "@/lib/text/minifier";
@@ -19,11 +20,13 @@ export function CssMinifier() {
 	const [input, setInput] = useState("");
 
 	const result = useMemo(() => {
-		if (!input.trim()) return { output: "", original: 0, minified: 0, reduction: 0 };
+		if (!input.trim())
+			return { output: "", original: 0, minified: 0, reduction: 0 };
 		const output = minify(input, type);
 		const original = new Blob([input]).size;
 		const minified = new Blob([output]).size;
-		const reduction = original > 0 ? Math.round((1 - minified / original) * 100) : 0;
+		const reduction =
+			original > 0 ? Math.round((1 - minified / original) * 100) : 0;
 		return { output, original, minified, reduction };
 	}, [input, type]);
 
@@ -104,21 +107,20 @@ export function CssMinifier() {
 				</>
 			}
 			footer={
-				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-					<span className="inline-flex items-center gap-1.5">
-						<span
-							className={`h-1.5 w-1.5 rounded-full ${result.output ? "bg-green-600" : "bg-foreground/30"}`}
-						/>
-						<span className="text-[11px] text-muted-foreground">
-							{result.output ? "Minificado" : "Aguardando"}
-						</span>
-					</span>
-					{result.output && (
-						<span className="font-mono text-[11px] text-muted-foreground">
-							{result.original}B → {result.minified}B · -{result.reduction}%
-						</span>
-					)}
-				</div>
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: result.output
+								? `Minificado · -${result.reduction}%`
+								: "Aguardando",
+							mono: false,
+							variant: result.output ? "success" : "default",
+						},
+						{ label: "Original", value: `${result.original}B`, mono: true },
+						{ label: "Minificado", value: `${result.minified}B`, mono: true },
+					]}
+				/>
 			}
 		/>
 	);

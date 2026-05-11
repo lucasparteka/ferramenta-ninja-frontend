@@ -1,11 +1,13 @@
 "use client";
 
-import { Minimize2, Trash } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutC } from "@/components/shared/layout-c";
+import { OptionSwitch } from "@/components/shared/option-switch";
+import { PaneHeader } from "@/components/shared/pane-header";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 
 type Status = "idle" | "invalid" | "formatted" | "minified";
 
@@ -41,7 +43,10 @@ function highlightJSON(json: string): string {
 		.replace(/&/g, "&amp;")
 		.replace(/</g, "&lt;")
 		.replace(/>/g, "&gt;")
-		.replace(/("(?:[^"\\]|\\.)*")(\s*:)/g, (_, key, sep) => span(key, "token-key") + sep)
+		.replace(
+			/("(?:[^"\\]|\\.)*")(\s*:)/g,
+			(_, key, sep) => span(key, "token-key") + sep,
+		)
 		.replace(
 			/:\s*("(?:[^"\\]|\\.)*")/g,
 			(_: string, str: string) => `: ${span(str, "token-string")}`,
@@ -60,13 +65,14 @@ export function JsonFormatter() {
 	const [input, setInput] = useState("");
 	const [output, setOutput] = useState("");
 	const [status, setStatus] = useState<Status>("idle");
+	const [mode, setMode] = useState<"format" | "minify">("format");
 	const [indentSize, setIndentSize] = useState<2 | 4>(2);
 	const [error, setError] = useState<ErrorInfo | null>(null);
 
-	function parseAndFormat(value: string) {
+	function formatText(value: string, indent: number) {
 		try {
 			const parsed = JSON.parse(value);
-			const formatted = JSON.stringify(parsed, null, indentSize);
+			const formatted = JSON.stringify(parsed, null, indent);
 			setOutput(formatted);
 			setStatus("formatted");
 			setError(null);
@@ -87,21 +93,21 @@ export function JsonFormatter() {
 			setError(null);
 			return;
 		}
-		parseAndFormat(value);
-	}
-
-	function handleMinify() {
-		try {
-			const parsed = JSON.parse(input);
-			const minified = JSON.stringify(parsed);
-			setOutput(minified);
-			setStatus("minified");
-			setError(null);
-		} catch (e) {
-			if (e instanceof SyntaxError) {
-				setStatus("invalid");
-				setError(parseErrorPosition(e, input));
+		if (mode === "minify") {
+			try {
+				const parsed = JSON.parse(value);
+				setOutput(JSON.stringify(parsed));
+				setStatus("minified");
+				setError(null);
+			} catch (e) {
+				if (e instanceof SyntaxError) {
+					setStatus("invalid");
+					setError(parseErrorPosition(e, value));
+					setOutput("");
+				}
 			}
+		} else {
+			formatText(value, indentSize);
 		}
 	}
 
@@ -112,110 +118,198 @@ export function JsonFormatter() {
 		setError(null);
 	}
 
+	function handleModeChange(v: string) {
+		const newMode = v as "format" | "minify";
+		setMode(newMode);
+		if (!input.trim()) return;
+		if (newMode === "minify") {
+			try {
+				const parsed = JSON.parse(input);
+				setOutput(JSON.stringify(parsed));
+				setStatus("minified");
+				setError(null);
+			} catch {
+				setStatus("invalid");
+			}
+		} else {
+			formatText(input, indentSize);
+		}
+	}
+
 	function handleIndentChange(size: 2 | 4) {
 		setIndentSize(size);
+		if (!input.trim() || mode !== "format") return;
 		try {
 			const parsed = JSON.parse(input);
-			const formatted = JSON.stringify(parsed, null, size);
-			setOutput(formatted);
+			setOutput(JSON.stringify(parsed, null, size));
 			setStatus("formatted");
-			setError(null);
 		} catch {
-			// input is already known invalid — nothing to reformat
+			// input is already known invalid
 		}
 	}
 
 	const hasResult = output.length > 0;
+	const inputBytes = new TextEncoder().encode(input).length;
+	const outputBytes = new TextEncoder().encode(output).length;
 
 	return (
-		<div className="space-y-4">
-			<div>
-				<label
-					htmlFor="json-input"
-					className="mb-1 block text-sm font-medium text-foreground"
-				>
-					Cole seu JSON aqui
-				</label>
-				<Textarea
-					id="json-input"
-					value={input}
-					onChange={(e) => handleInputChange(e.target.value)}
-					placeholder='{"exemplo": "cole seu JSON aqui"}'
-					className="min-h-70 font-mono"
-					spellCheck={false}
-				/>
-			</div>
-
-			{status === "invalid" && error && (
-				<div className="rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3">
-					<p className="text-sm font-medium text-destructive">
-						Erro na linha {error.line}, coluna {error.column}
-					</p>
-					<p className="text-sm text-destructive/80">{error.message}</p>
-				</div>
-			)}
-
-			<div className="flex flex-wrap items-center gap-2">
-				<Button
-					onClick={handleMinify}
-					disabled={!input.trim()}
-					variant="secondary"
-				>
-					<Minimize2 />
-					Minificar
-				</Button>
-				<Button
-					onClick={handleClear}
-					disabled={!input.trim() && !output}
-					variant="secondary"
-				>
-					<Trash />
-					Limpar
-				</Button>
-				<div className="ml-auto flex items-center gap-2">
-					<span className="text-xs text-muted-foreground">Espaços:</span>
-					<Button
-						variant={indentSize === 2 ? "default" : "outline"}
-						size="sm"
-						onClick={() => handleIndentChange(2)}
-					>
-						2
-					</Button>
-					<Button
-						variant={indentSize === 4 ? "default" : "outline"}
-						size="sm"
-						onClick={() => handleIndentChange(4)}
-					>
-						4
-					</Button>
-				</div>
-			</div>
-
-			{hasResult && (
-				<div>
-					<div className="mb-1 flex items-center justify-between">
-						<div className="text-sm font-medium text-foreground">
-							{status === "formatted" ? "JSON formatado" : "JSON minificado"}
-						</div>
+		<LayoutC
+			toolbar={
+				<>
+					<div className="flex items-center gap-4">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Modo
+						</span>
+						<OptionSwitch
+							options={[
+								{ label: "Formatar", value: "format" },
+								{ label: "Minificar", value: "minify" },
+							]}
+							value={mode}
+							onChange={handleModeChange}
+							size="sm"
+						/>
 					</div>
-					<pre
-						className={cn(
-							"json-formatter max-h-96 overflow-auto rounded-md border border-input bg-card p-4 font-mono text-sm text-foreground",
+					{mode === "format" && (
+						<div className="flex items-center gap-2">
+							<span className="text-[11px] text-muted-foreground">
+								Espaços:
+							</span>
+							<Button
+								variant={indentSize === 2 ? "default" : "ghost"}
+								size="xs"
+								onClick={() => handleIndentChange(2)}
+								className="h-6 min-w-6 px-1.5 text-[11px]"
+							>
+								2
+							</Button>
+							<Button
+								variant={indentSize === 4 ? "default" : "ghost"}
+								size="xs"
+								onClick={() => handleIndentChange(4)}
+								className="h-6 min-w-6 px-1.5 text-[11px]"
+							>
+								4
+							</Button>
+						</div>
+					)}
+				</>
+			}
+			left={
+				<>
+					<PaneHeader
+						title="Entrada"
+						actions={
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								aria-label="Limpar"
+								onClick={handleClear}
+								disabled={!input}
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
+						}
+					/>
+					<textarea
+						value={input}
+						onChange={(e) => handleInputChange(e.target.value)}
+						placeholder='{"exemplo": "cole seu JSON aqui"}'
+						className="flex-1 min-h-[280px] resize-none bg-transparent p-3 font-mono text-sm"
+						spellCheck={false}
+					/>
+				</>
+			}
+			right={
+				<>
+					<PaneHeader
+						title={
+							<>
+								Saída{" "}
+								{hasResult && (
+									<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success">
+										Pronto
+									</span>
+								)}
+							</>
+						}
+						actions={
+							<CopyButton
+								text={output}
+								disabled={!output}
+								variant="ghost"
+								size="icon-sm"
+								iconOnly
+							/>
+						}
+					/>
+					<div className="flex-1 min-h-[280px] bg-muted/20 p-3 overflow-auto">
+						{hasResult ? (
+							<pre
+								className="font-mono text-sm whitespace-pre-wrap break-all select-all"
+								// biome-ignore lint/security/noDangerouslySetInnerHtml: syntax highlight
+								dangerouslySetInnerHTML={{
+									__html: highlightJSON(output),
+								}}
+							/>
+						) : status === "invalid" && error ? (
+							<div className="space-y-2">
+								<p className="text-sm font-medium text-destructive">
+									Erro na linha {error.line}, coluna {error.column}
+								</p>
+								<p className="text-xs text-destructive/80">{error.message}</p>
+							</div>
+						) : (
+							<p className="text-sm text-muted-foreground">
+								O JSON formatado aparecerá aqui...
+							</p>
 						)}
-						// biome-ignore lint/security/noDangerouslySetInnerHtml: ...
-						dangerouslySetInnerHTML={{
-							__html: highlightJSON(output),
-						}}
-					/>
-					<CopyButton
-						text={output}
-						label="Copiar"
-						disabled={!output}
-						variant="outline"
-						className="ml-auto flex mt-4"
-					/>
-				</div>
-			)}
-		</div>
+					</div>
+				</>
+			}
+			footer={
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value:
+								status === "invalid"
+									? "Inválido"
+									: hasResult
+										? "Válido"
+										: "Aguardando",
+							mono: false,
+							variant:
+								status === "invalid"
+									? "danger"
+									: hasResult
+										? "success"
+										: "default",
+						},
+						{
+							label: "Entrada",
+							value: `${inputBytes} bytes · ${input.split("\n").length} linhas`,
+							mono: true,
+						},
+						...(hasResult
+							? [
+									{
+										label: "Saída",
+										value: `${outputBytes} bytes`,
+										mono: true,
+									} as const,
+								]
+							: []),
+					]}
+					right={
+						status === "invalid" && error ? (
+							<span className="font-mono text-[11px] text-destructive">
+								Linha {error.line}, coluna {error.column}
+							</span>
+						) : undefined
+					}
+				/>
+			}
+		/>
 	);
 }

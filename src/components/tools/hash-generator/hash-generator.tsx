@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import { useId, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { StatusBar } from "@/components/shared/status-bar";
 import { SwitchRow } from "@/components/shared/switch-row";
 import { Button } from "@/components/ui/button";
 import {
@@ -227,7 +228,7 @@ export function HashGenerator() {
 							</div>
 							{verifyResult !== null && (
 								<p
-									className={`text-xs font-medium ${verifyResult ? "text-green-600" : "text-destructive"}`}
+									className={`text-xs font-medium ${verifyResult ? "text-success" : "text-destructive"}`}
 								>
 									{verifyResult
 										? "✓ Hash corresponde"
@@ -239,34 +240,30 @@ export function HashGenerator() {
 				</>
 			}
 			footer={
-				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-					<span className="inline-flex items-center gap-1.5">
-						<span
-							className={`h-1.5 w-1.5 rounded-full ${
-								loading
-									? "animate-pulse bg-amber-500"
-									: hashResult
-										? "bg-green-600"
-										: "bg-foreground/30"
-							}`}
-						/>
-						<span className="text-[11px] text-muted-foreground">
-							{loading
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: loading
 								? "Calculando..."
 								: hashResult
 									? `${ALGORITHM_LABELS[algo]} · ${hashResult.length} chars`
-									: "Aguardando"}
-						</span>
-					</span>
-					<Button
-						type="button"
-						size="sm"
-						onClick={compute}
-						disabled={loading || (!input && !file)}
-					>
-						{loading ? "Calculando..." : "Calcular Hash"}
-					</Button>
-				</div>
+									: "Aguardando",
+							mono: false,
+							variant: loading ? "warning" : hashResult ? "success" : "default",
+						},
+					]}
+					right={
+						<Button
+							type="button"
+							size="sm"
+							onClick={compute}
+							disabled={loading || (!input && !file)}
+						>
+							{loading ? "Calculando..." : "Calcular Hash"}
+						</Button>
+					}
+				/>
 			}
 		/>
 	);

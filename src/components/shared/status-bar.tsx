@@ -23,28 +23,31 @@ export function StatusBar({ items, right, className }: StatusBarProps) {
 			)}
 		>
 			<div className="flex items-center gap-3">
-				{items.map((item, i) => (
-					<span key={i} className="inline-flex items-center gap-1.5">
-						{i > 0 && (
-							<span className="text-[11px] text-muted-foreground">·</span>
-						)}
-						<span className="text-[11px] text-muted-foreground">
-							{item.label}
-						</span>
-						<span
-							className={cn(
-								item.mono !== false && "font-mono text-[11px] tabular-nums",
-								item.variant === "success" && "text-success",
-								item.variant === "warning" && "text-warning",
-								item.variant === "danger" && "text-destructive",
-								(!item.variant || item.variant === "default") &&
-									"text-foreground font-medium",
+				{items.map((item, i) => {
+					const key = `${item.label}-${item.value}-${i}`;
+					return (
+						<span key={key} className="inline-flex items-center gap-1.5">
+							{i > 0 && (
+								<span className="text-[11px] text-muted-foreground">·</span>
 							)}
-						>
-							{item.value}
+							<span className="text-[11px] text-muted-foreground">
+								{item.label}
+							</span>
+							<span
+								className={cn(
+									item.mono !== false && "font-mono text-[11px] tabular-nums",
+									item.variant === "success" && "text-success",
+									item.variant === "warning" && "text-warning",
+									item.variant === "danger" && "text-destructive",
+									(!item.variant || item.variant === "default") &&
+										"text-foreground font-medium",
+								)}
+							>
+								{item.value}
+							</span>
 						</span>
-					</span>
-				))}
+					);
+				})}
 			</div>
 			{right && <div className="flex items-center gap-2">{right}</div>}
 		</div>

@@ -4,6 +4,7 @@ import { ArrowLeftRight, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { decodeURL, encodeURL } from "@/lib/encoding/url";
 
@@ -19,9 +20,7 @@ export function URLEncoder() {
 		if (!input.trim()) return { output: "", error: null };
 		try {
 			const output =
-				direction === "encode"
-					? encodeURL(input, encMode)
-					: decodeURL(input);
+				direction === "encode" ? encodeURL(input, encMode) : decodeURL(input);
 			return { output, error: null };
 		} catch (e) {
 			return {
@@ -156,25 +155,26 @@ export function URLEncoder() {
 				</>
 			}
 			footer={
-				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-					<span className="inline-flex items-center gap-1.5">
-						<span
-							className={`h-1.5 w-1.5 rounded-full ${result.output ? "bg-green-600" : result.error ? "bg-destructive" : "bg-foreground/30"}`}
-						/>
-						<span className="text-[11px] text-muted-foreground">
-							{result.output
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: result.output
 								? "Convertido"
 								: result.error
 									? "Erro"
-									: "Aguardando"}
-						</span>
-					</span>
-					{(inputLen > 0 || outputLen > 0) && (
-						<span className="font-mono text-[11px] text-muted-foreground">
-							{inputLen} chars → {outputLen} chars
-						</span>
-					)}
-				</div>
+									: "Aguardando",
+							mono: false,
+							variant: result.output
+								? "success"
+								: result.error
+									? "danger"
+									: "default",
+						},
+						{ label: "Entrada", value: `${inputLen} chars`, mono: true },
+						{ label: "Saída", value: `${outputLen} chars`, mono: true },
+					]}
+				/>
 			}
 		/>
 	);

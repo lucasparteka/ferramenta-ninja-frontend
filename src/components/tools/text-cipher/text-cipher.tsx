@@ -4,6 +4,7 @@ import { ArrowLeftRight, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import type { Algorithm } from "@/lib/crypto/cipher";
 import {
@@ -139,9 +140,7 @@ export function TextCipher() {
 					</div>
 
 					<div className="flex items-center justify-between border-b border-border px-3 py-2">
-						<span className="text-[11px] text-muted-foreground">
-							Algoritmo
-						</span>
+						<span className="text-[11px] text-muted-foreground">Algoritmo</span>
 						<div className="flex items-center gap-1">
 							{(["aes-gcm", "base64", "rot13"] as const).map((alg) => (
 								<button
@@ -211,35 +210,30 @@ export function TextCipher() {
 				</>
 			}
 			footer={
-				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-					<span className="inline-flex items-center gap-1.5">
-						<span
-							className={`h-1.5 w-1.5 rounded-full ${
-								loading
-									? "animate-pulse bg-amber-500"
-									: output
-										? "bg-green-600"
-										: error
-											? "bg-destructive"
-											: "bg-foreground/30"
-							}`}
-						/>
-						<span className="text-[11px] text-muted-foreground">
-							{loading
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: loading
 								? "Processando..."
 								: output
 									? "Concluído"
 									: error
 										? "Erro"
-										: "Aguardando"}
-						</span>
-					</span>
-					{(inputLen > 0 || outputLen > 0) && !loading && (
-						<span className="font-mono text-[11px] text-muted-foreground">
-							{inputLen} chars → {outputLen} chars
-						</span>
-					)}
-				</div>
+										: "Aguardando",
+							mono: false,
+							variant: loading
+								? "warning"
+								: output
+									? "success"
+									: error
+										? "danger"
+										: "default",
+						},
+						{ label: "Entrada", value: `${inputLen} chars`, mono: true },
+						{ label: "Saída", value: `${outputLen} chars`, mono: true },
+					]}
+				/>
 			}
 		/>
 	);

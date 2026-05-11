@@ -3,12 +3,14 @@
 import { Trash2 } from "lucide-react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { CsvJsonTable } from "./csv-json-table";
 import { useCsvJson } from "./use-csv-json";
 
 export function CsvJsonConverter() {
-	const { input, output, errors, tableData, setInput, clear, mode } = useCsvJson();
+	const { input, output, errors, tableData, setInput, clear, mode } =
+		useCsvJson();
 
 	const modeLabel =
 		mode === "csv-to-json"
@@ -89,31 +91,24 @@ export function CsvJsonConverter() {
 					</>
 				}
 				footer={
-					<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-						<span className="inline-flex items-center gap-1.5">
-							<span
-								className={`h-1.5 w-1.5 rounded-full ${
+					<StatusBar
+						items={[
+							{
+								label: "",
+								value:
 									errors.length > 0
-										? "bg-destructive"
+										? "Erro"
 										: output
-											? "bg-green-600"
-											: "bg-foreground/30"
-								}`}
-							/>
-							<span className="text-[11px] text-muted-foreground">
-								{errors.length > 0
-									? "Erro"
-									: output
-										? modeLabel ?? "Convertido"
-										: "Aguardando"}
-							</span>
-						</span>
-						{(inputLen > 0 || outputLen > 0) && (
-							<span className="font-mono text-[11px] text-muted-foreground">
-								{inputLen} chars → {outputLen} chars
-							</span>
-						)}
-					</div>
+											? (modeLabel ?? "Convertido")
+											: "Aguardando",
+								mono: false,
+								variant:
+									errors.length > 0 ? "danger" : output ? "success" : "default",
+							},
+							{ label: "Entrada", value: `${inputLen} chars`, mono: true },
+							{ label: "Saída", value: `${outputLen} chars`, mono: true },
+						]}
+					/>
 				}
 			/>
 

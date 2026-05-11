@@ -1,7 +1,10 @@
 "use client";
 
+import { CreditCard, ScanLine } from "lucide-react";
 import { useState } from "react";
-import { ResultBox } from "@/components/shared/result-box";
+import { LayoutE } from "@/components/shared/layout-e";
+import { ResultSheet } from "@/components/shared/result-sheet";
+import type { Section } from "@/components/shared/result-sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -21,67 +24,98 @@ export function ValidadorBoletoClient() {
 
 	const digits = sanitizeBoleto(value);
 	const lenInfo = digits.length === 0 ? "" : `${digits.length} dígitos`;
+	const state = result ? "result" : "empty";
 
 	return (
-		<div className="space-y-6">
-			<form onSubmit={handleSubmit} className="space-y-4">
-				<div className="space-y-2">
-					<label
-						htmlFor="boleto-input"
-						className="block text-sm font-medium text-foreground"
+		<LayoutE
+			state={state}
+			searchBar={
+				<form onSubmit={handleSubmit} className="space-y-3">
+					<div className="space-y-1.5">
+						<label
+							htmlFor="boleto-input"
+							className="text-xs font-medium text-muted-foreground"
+						>
+							Linha digitável
+						</label>
+						<Input
+							id="boleto-input"
+							type="text"
+							inputMode="numeric"
+							value={value}
+							onChange={(e) => {
+								setValue(e.target.value);
+								setResult(null);
+							}}
+							placeholder="00000.00000 00000.000000 00000.000000 0 00000000000000"
+							className="font-mono"
+						/>
+						<p className="text-xs text-muted-foreground">
+							Cole os 47 dígitos (boleto bancário) ou 48 (arrecadação).{" "}
+							{lenInfo}
+						</p>
+					</div>
+					<Button
+						type="submit"
+						disabled={digits.length !== 47 && digits.length !== 48}
 					>
-						Linha digitável
-					</label>
-					<Input
-						id="boleto-input"
-						type="text"
-						inputMode="numeric"
-						value={value}
-						onChange={(e) => setValue(e.target.value)}
-						placeholder="00000.00000 00000.000000 00000.000000 0 00000000000000"
+						<ScanLine className="mr-2 h-3.5 w-3.5" />
+						Validar boleto
+					</Button>
+				</form>
+			}
+			emptyState={
+				<div className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 p-8 text-center">
+					<CreditCard
+						className="h-5 w-5 text-muted-foreground"
+						strokeWidth={1.75}
 					/>
+					<p className="text-sm text-foreground">
+						Cole a linha digitável do boleto
+					</p>
 					<p className="text-xs text-muted-foreground">
-						Cole os 47 dígitos (boleto bancário) ou 48 (arrecadação). {lenInfo}
+						Suporta boletos bancários e de arrecadação
 					</p>
 				</div>
-				<Button
-					type="submit"
-					disabled={digits.length !== 47 && digits.length !== 48}
-				>
-					Validar boleto
-				</Button>
-			</form>
-
-			{result && <ResultCard result={result} />}
-		</div>
+			}
+			result={result && <BoletoResultCard result={result} />}
+		/>
 	);
 }
 
-function ResultCard({ result }: { result: BoletoResult }) {
+function BoletoResultCard({ result }: { result: BoletoResult }) {
 	if (result.kind === "unknown") {
 		return (
-			<ResultBox tone="warning">
-				<p className="text-sm text-foreground">{result.reason}</p>
-			</ResultBox>
+			<div className="rounded-md border border-warning/30 bg-warning/5 p-4">
+				<p className="text-xs text-warning">{result.reason}</p>
+			</div>
 		);
 	}
 
-	const tone = result.valid ? "primary" : "destructive";
+	const tone = result.valid ? "success" : "destructive";
 
 	return (
 		<div className="space-y-4">
-			<ResultBox
-				tone={tone}
-				label={
-					result.kind === "banking"
-						? "Boleto bancário"
-						: "Boleto de arrecadação"
-				}
+			<div
+				className={`rounded-md border p-4 ${
+					tone === "success"
+						? "border-success/30 bg-success/10"
+						: "border-destructive/30 bg-destructive/10"
+				}`}
 			>
-				<p className="text-xl font-semibold text-foreground">
+				<p className="text-xs text-muted-foreground">
+					{result.kind === "banking"
+						? "Boleto bancário"
+						: "Boleto de arrecadação"}
+				</p>
+				<p
+					className={`mt-1 text-sm font-semibold ${
+						tone === "success" ? "text-success" : "text-destructive"
+					}`}
+				>
 					{result.valid ? "Linha digitável válida" : "Linha digitável inválida"}
 				</p>
-			</ResultBox>
+			</div>
 
 			{result.kind === "banking" && <BankingDetails result={result} />}
 			{result.kind === "collection" && <CollectionDetails result={result} />}
@@ -94,52 +128,51 @@ function BankingDetails({
 }: {
 	result: Extract<BoletoResult, { kind: "banking" }>;
 }) {
-	const rows: { label: string; value: string }[] = [
-		{ label: "Banco emissor", value: result.bankCode },
+	const sections: Section[] = [
 		{
-			label: "Moeda",
-			value: result.currencyCode === "9" ? "Real (BRL)" : result.currencyCode,
+			title: "Dados do Boleto",
+			rows: [
+				{ label: "Banco emissor", value: result.bankCode, mono: true },
+				{
+					label: "Moeda",
+					value:
+						result.currencyCode === "9" ? "Real (BRL)" : result.currencyCode,
+				},
+				{
+					label: "Valor",
+					value: result.amount.toLocaleString("pt-BR", {
+						style: "currency",
+						currency: "BRL",
+					}),
+					mono: true,
+				},
+				{
+					label: "Vencimento",
+					value: result.dueDate
+						? result.dueDate.toLocaleDateString("pt-BR", { timeZone: "UTC" })
+						: "Não informado",
+				},
+				{
+					label: "Fator de vencimento",
+					value: String(result.dueFactor),
+					mono: true,
+				},
+				{ label: "Código de barras", value: result.barcode, mono: true },
+			],
 		},
-		{
-			label: "Valor",
-			value: result.amount.toLocaleString("pt-BR", {
-				style: "currency",
-				currency: "BRL",
-			}),
-		},
-		{
-			label: "Vencimento",
-			value: result.dueDate
-				? result.dueDate.toLocaleDateString("pt-BR", { timeZone: "UTC" })
-				: "Não informado",
-		},
-		{ label: "Fator de vencimento", value: String(result.dueFactor) },
-		{ label: "Código de barras", value: result.barcode },
 	];
 
 	return (
 		<>
-			<dl className="grid gap-3 sm:grid-cols-2">
-				{rows.map((r) => (
-					<div
-						key={r.label}
-						className="rounded-md border border-border bg-card p-3"
-					>
-						<dt className="text-xs font-medium text-muted-foreground">
-							{r.label}
-						</dt>
-						<dd className="mt-1 break-all text-sm text-foreground">
-							{r.value}
-						</dd>
-					</div>
-				))}
-			</dl>
+			<ResultSheet sections={sections} />
 
-			<div>
-				<p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-					Verificação de dígitos
-				</p>
-				<ul className="space-y-1 text-sm">
+			<div className="rounded-md border border-border bg-card">
+				<div className="border-b border-border px-4 py-2">
+					<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						Verificação de dígitos
+					</h3>
+				</div>
+				<div className="divide-y divide-border">
 					<CheckRow label="Campo 1 (módulo 10)" ok={result.checks.field1} />
 					<CheckRow label="Campo 2 (módulo 10)" ok={result.checks.field2} />
 					<CheckRow label="Campo 3 (módulo 10)" ok={result.checks.field3} />
@@ -147,7 +180,7 @@ function BankingDetails({
 						label="DV geral do código de barras (módulo 11)"
 						ok={result.checks.generalDigit}
 					/>
-				</ul>
+				</div>
 			</div>
 		</>
 	);
@@ -169,48 +202,43 @@ function CollectionDetails({
 		"9": "Uso exclusivo do banco",
 	};
 
-	const rows: { label: string; value: string }[] = [
+	const sections: Section[] = [
 		{
-			label: "Segmento",
-			value: `${result.segment} — ${segmentLabels[result.segment] ?? "Desconhecido"}`,
+			title: "Dados do Boleto",
+			rows: [
+				{
+					label: "Segmento",
+					value: `${result.segment} — ${segmentLabels[result.segment] ?? "Desconhecido"}`,
+				},
+				{
+					label: "Valor",
+					value: result.amount.toLocaleString("pt-BR", {
+						style: "currency",
+						currency: "BRL",
+					}),
+					mono: true,
+				},
+				{ label: "Código de barras", value: result.barcode, mono: true },
+			],
 		},
-		{
-			label: "Valor",
-			value: result.amount.toLocaleString("pt-BR", {
-				style: "currency",
-				currency: "BRL",
-			}),
-		},
-		{ label: "Código de barras", value: result.barcode },
 	];
 
 	return (
 		<>
-			<dl className="grid gap-3 sm:grid-cols-2">
-				{rows.map((r) => (
-					<div
-						key={r.label}
-						className="rounded-md border border-border bg-card p-3"
-					>
-						<dt className="text-xs font-medium text-muted-foreground">
-							{r.label}
-						</dt>
-						<dd className="mt-1 break-all text-sm text-foreground">
-							{r.value}
-						</dd>
-					</div>
-				))}
-			</dl>
+			<ResultSheet sections={sections} />
 
-			<div>
-				<p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-					Verificação de dígitos
-				</p>
-				<ul className="space-y-1 text-sm">
-					{result.checks.fields.map((ok, i) => (
-						<CheckRow key={`field-${i + 1}`} label={`Bloco ${i + 1}`} ok={ok} />
-					))}
-				</ul>
+			<div className="rounded-md border border-border bg-card">
+				<div className="border-b border-border px-4 py-2">
+					<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						Verificação de dígitos
+					</h3>
+				</div>
+				<div className="divide-y divide-border">
+					{result.checks.fields.map((ok, i) => {
+						const label = `Bloco ${i + 1}`;
+						return <CheckRow key={label} label={label} ok={ok} />;
+					})}
+				</div>
 			</div>
 		</>
 	);
@@ -218,17 +246,15 @@ function CollectionDetails({
 
 function CheckRow({ label, ok }: { label: string; ok: boolean }) {
 	return (
-		<li className="flex items-center justify-between rounded-md border border-border bg-card px-3 py-2">
-			<span className="text-foreground">{label}</span>
+		<div className="flex items-center justify-between px-4 py-2.5">
+			<span className="text-xs text-muted-foreground">{label}</span>
 			<span
-				className={
-					ok
-						? "text-xs font-semibold text-success"
-						: "text-xs font-semibold text-destructive"
-				}
+				className={`text-xs font-semibold ${
+					ok ? "text-success" : "text-destructive"
+				}`}
 			>
 				{ok ? "OK" : "INVÁLIDO"}
 			</span>
-		</li>
+		</div>
 	);
 }

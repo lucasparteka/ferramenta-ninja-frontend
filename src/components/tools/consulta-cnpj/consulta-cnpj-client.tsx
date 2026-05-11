@@ -1,8 +1,11 @@
 "use client";
 
+import { Search, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
-import { ResultBox } from "@/components/shared/result-box";
+import { LayoutE } from "@/components/shared/layout-e";
+import { ResultSheet } from "@/components/shared/result-sheet";
+import type { Section } from "@/components/shared/result-sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -41,44 +44,74 @@ export function ConsultaCnpjClient() {
 		setValue(formatCnpjMask(raw));
 	}
 
+	function handleKeyDown(e: React.KeyboardEvent) {
+		if (e.key === "Enter") {
+			handleSubmit();
+		}
+	}
+
+	const layoutState =
+		state.kind === "idle"
+			? "empty"
+			: state.kind === "success"
+				? "result"
+				: state.kind;
+	const errorMessage = state.kind === "error" ? state.message : undefined;
+
 	return (
-		<div className="space-y-6">
-			<form onSubmit={handleSubmit} className="space-y-4">
-				<div className="space-y-2 max-w-sm">
-					<label
-						htmlFor="cnpj-input"
-						className="block text-sm font-medium text-foreground"
-					>
-						CNPJ
-					</label>
+		<LayoutE
+			state={layoutState}
+			errorState={
+				errorMessage ? (
+					<div className="rounded-md border border-destructive/30 bg-destructive/5 p-4">
+						<p className="text-xs text-destructive">{errorMessage}</p>
+					</div>
+				) : undefined
+			}
+			searchBar={
+				<form onSubmit={handleSubmit} className="flex gap-2">
 					<Input
 						id="cnpj-input"
 						type="text"
 						inputMode="numeric"
 						value={value}
 						onChange={(e) => handleChange(e.target.value)}
+						onKeyDown={handleKeyDown}
 						placeholder="00.000.000/0000-00"
 						maxLength={18}
+						className="font-mono"
 					/>
+					<Button
+						type="submit"
+						disabled={
+							state.kind === "loading" || sanitizeCnpj(value).length !== 14
+						}
+					>
+						{state.kind === "loading" ? (
+							<Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+						) : (
+							<Search className="mr-2 h-3.5 w-3.5" />
+						)}
+						{state.kind === "loading" ? "Consultando..." : "Consultar"}
+					</Button>
+				</form>
+			}
+			emptyState={
+				<div className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 p-8 text-center">
+					<Search
+						className="h-5 w-5 text-muted-foreground"
+						strokeWidth={1.75}
+					/>
+					<p className="text-sm text-foreground">
+						Digite um CNPJ para consultar
+					</p>
+					<p className="text-xs text-muted-foreground">
+						Dados fornecidos pela Receita Federal
+					</p>
 				</div>
-				<Button
-					type="submit"
-					disabled={
-						state.kind === "loading" || sanitizeCnpj(value).length !== 14
-					}
-				>
-					{state.kind === "loading" ? "Consultando..." : "Consultar CNPJ"}
-				</Button>
-			</form>
-
-			{state.kind === "error" && (
-				<ResultBox tone="warning">
-					<p className="text-sm text-foreground">{state.message}</p>
-				</ResultBox>
-			)}
-
-			{state.kind === "success" && <CnpjResult data={state.data} />}
-		</div>
+			}
+			result={state.kind === "success" && <CnpjResult data={state.data} />}
+		/>
 	);
 }
 
@@ -92,68 +125,81 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 		data.address.city && data.address.state
 			? `${data.address.city} - ${data.address.state}`
 			: data.address.city,
-		data.address.zip,
 	]
 		.filter(Boolean)
 		.join(", ");
 
-	const rows: { label: string; value?: string | number }[] = [
-		{ label: "CNPJ", value: data.cnpj },
-		{ label: "Razão Social", value: data.corporateName },
-		{ label: "Nome Fantasia", value: data.tradeName },
-		{ label: "Situação", value: data.status },
-		{ label: "Data de Abertura", value: data.openingDate },
-		{ label: "Atividade Principal", value: data.mainActivity },
-		{ label: "Natureza Jurídica", value: data.legalNature },
-		{ label: "Porte", value: data.size },
+	const sections: Section[] = [
 		{
-			label: "Capital Social",
-			value:
-				typeof data.shareCapital === "number"
-					? data.shareCapital.toLocaleString("pt-BR", {
-							style: "currency",
-							currency: "BRL",
-						})
-					: undefined,
+			title: "Identificação",
+			rows: [
+				{ label: "CNPJ", value: data.cnpj, mono: true },
+				{ label: "Razão Social", value: data.corporateName },
+				{ label: "Nome Fantasia", value: data.tradeName },
+				{ label: "Situação", value: data.status },
+				{ label: "Data de Abertura", value: data.openingDate },
+			],
 		},
-		{ label: "Telefone", value: data.phone },
-		{ label: "E-mail", value: data.email },
+		{
+			title: "Localização",
+			rows: [
+				{
+					label: "Logradouro",
+					value: `${data.address.street ?? ""}, ${data.address.number ?? ""}`,
+				},
+				{ label: "Complemento", value: data.address.complement },
+				{ label: "Bairro", value: data.address.neighborhood },
+				{
+					label: "Cidade/UF",
+					value:
+						data.address.city && data.address.state
+							? `${data.address.city} - ${data.address.state}`
+							: data.address.city,
+				},
+				{ label: "CEP", value: data.address.zip, mono: true },
+			],
+		},
+		{
+			title: "Atividade",
+			rows: [
+				{ label: "Principal", value: data.mainActivity },
+				{ label: "Natureza Jurídica", value: data.legalNature },
+				{ label: "Porte", value: data.size },
+			],
+		},
+		{
+			title: "Capital e Contato",
+			rows: [
+				{
+					label: "Capital Social",
+					value:
+						typeof data.shareCapital === "number"
+							? data.shareCapital.toLocaleString("pt-BR", {
+									style: "currency",
+									currency: "BRL",
+								})
+							: undefined,
+					mono: true,
+				},
+				{ label: "Telefone", value: data.phone, mono: true },
+				{ label: "E-mail", value: data.email },
+			],
+		},
 	];
 
 	return (
-		<ResultBox className="space-y-4">
-			<dl className="grid gap-3 sm:grid-cols-2">
-				{rows
-					.filter((r) => r.value)
-					.map((r) => (
-						<div
-							key={r.label}
-							className="rounded-md border border-border bg-card p-3"
-						>
-							<dt className="text-xs font-medium text-muted-foreground">
-								{r.label}
-							</dt>
-							<dd className="mt-1 text-sm text-foreground">{r.value}</dd>
-						</div>
-					))}
-			</dl>
-
-			{fullAddress && (
-				<div className="rounded-lg border border-border bg-card p-3">
-					<p className="text-xs font-medium text-muted-foreground">Endereço</p>
-					<p className="mt-1 text-sm text-foreground">{fullAddress}</p>
-				</div>
-			)}
+		<div className="space-y-4">
+			<ResultSheet sections={sections} />
 
 			{(data.simples?.optant || data.mei?.optant) && (
 				<div className="flex flex-wrap gap-2">
 					{data.simples?.optant && (
-						<span className="rounded-md border border-primary/30 bg-primary/10 px-2 py-1 text-xs font-medium text-foreground">
+						<span className="rounded-md border border-success/30 bg-success/10 px-2 py-1 text-xs font-medium text-success">
 							Optante Simples Nacional
 						</span>
 					)}
 					{data.mei?.optant && (
-						<span className="rounded-md border border-primary/30 bg-primary/10 px-2 py-1 text-xs font-medium text-foreground">
+						<span className="rounded-md border border-success/30 bg-success/10 px-2 py-1 text-xs font-medium text-success">
 							MEI
 						</span>
 					)}
@@ -161,32 +207,35 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 			)}
 
 			{data.partners.length > 0 && (
-				<div>
-					<p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-						Quadro de Sócios e Administradores
-					</p>
-					<ul className="space-y-2">
+				<div className="rounded-md border border-border bg-card">
+					<div className="border-b border-border px-4 py-2">
+						<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Sócios e Administradores
+						</h3>
+					</div>
+					<div className="divide-y divide-border">
 						{data.partners.map((p) => (
-							<li
+							<div
 								key={`${p.name}-${p.role ?? ""}`}
-								className="rounded-md border border-border bg-card p-3 text-sm"
+								className="flex items-center justify-between px-4 py-2.5"
 							>
-								<p className="font-medium text-foreground">{p.name}</p>
+								<span className="text-xs text-muted-foreground">{p.name}</span>
 								{p.role && (
-									<p className="text-xs text-muted-foreground">{p.role}</p>
+									<span className="text-xs text-muted-foreground">
+										{p.role}
+									</span>
 								)}
-							</li>
+							</div>
 						))}
-					</ul>
+					</div>
 				</div>
 			)}
 
-			<div className="flex flex-wrap gap-3 pt-2">
-				<CopyButton
-					text={`${data.corporateName}\n${data.cnpj}\n${fullAddress}`.trim()}
-					label="Copiar dados"
-				/>
-			</div>
-		</ResultBox>
+			<CopyButton
+				text={`${data.corporateName}\n${data.cnpj}\n${fullAddress}`.trim()}
+				label="Copiar dados"
+				variant="outline"
+			/>
+		</div>
 	);
 }

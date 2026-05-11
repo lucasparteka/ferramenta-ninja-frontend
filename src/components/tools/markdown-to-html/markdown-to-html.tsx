@@ -6,6 +6,7 @@ import { marked } from "marked";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { StatusBar } from "@/components/shared/status-bar";
 import { SwitchRow } from "@/components/shared/switch-row";
 import { Button } from "@/components/ui/button";
 
@@ -153,33 +154,35 @@ export function MarkdownToHtml() {
 					</>
 				}
 				footer={
-					<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-						<span className="inline-flex items-center gap-1.5">
-							<span
-								className={`h-1.5 w-1.5 rounded-full ${html ? "bg-green-600" : "bg-foreground/30"}`}
-							/>
-							<span className="text-[11px] text-muted-foreground">
-								{html ? "Renderizado" : "Aguardando"}
-							</span>
-						</span>
-						<div className="flex items-center gap-2">
-							<SwitchRow
-								label="CSS no download"
-								checked={includeCss}
-								onChange={(v) => setIncludeCss(v)}
-							/>
-							<Button
-								variant="ghost"
-								size="sm"
-								onClick={handleDownload}
-								disabled={!html}
-								className="h-6 gap-1 px-2 text-[11px]"
-							>
-								<Download className="h-3 w-3" />
-								Baixar HTML
-							</Button>
-						</div>
-					</div>
+					<StatusBar
+						items={[
+							{
+								label: "",
+								value: html ? "Renderizado" : "Aguardando",
+								mono: false,
+								variant: html ? "success" : "default",
+							},
+						]}
+						right={
+							<div className="flex items-center gap-2">
+								<SwitchRow
+									label="CSS no download"
+									checked={includeCss}
+									onChange={(v) => setIncludeCss(v)}
+								/>
+								<Button
+									variant="ghost"
+									size="sm"
+									onClick={handleDownload}
+									disabled={!html}
+									className="h-6 gap-1 px-2 text-[11px]"
+								>
+									<Download className="h-3 w-3" />
+									Baixar HTML
+								</Button>
+							</div>
+						}
+					/>
 				}
 			/>
 

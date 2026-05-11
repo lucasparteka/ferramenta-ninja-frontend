@@ -4,6 +4,7 @@ import { ArrowLeftRight, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import type { TimestampUnit } from "@/lib/date/timestamp";
 import {
@@ -31,9 +32,11 @@ export function TimestampConverter() {
 		if (direction === "ts-to-date") {
 			if (!timestampInput.trim()) return { output: "", error: null };
 			const num = Number(timestampInput.trim());
-			if (Number.isNaN(num)) return { output: "", error: "Timestamp deve ser um número." };
+			if (Number.isNaN(num))
+				return { output: "", error: "Timestamp deve ser um número." };
 			const formatted = formatTimestampToDate(num, unit);
-			if (!formatted) return { output: "", error: "Valor inválido para o timestamp." };
+			if (!formatted)
+				return { output: "", error: "Valor inválido para o timestamp." };
 			return { output: formatted, error: null };
 		} else {
 			if (!dateInput.trim()) return { output: "", error: null };
@@ -74,8 +77,7 @@ export function TimestampConverter() {
 		setTimeInput("");
 	}
 
-	const hasInput =
-		direction === "ts-to-date" ? !!timestampInput : !!dateInput;
+	const hasInput = direction === "ts-to-date" ? !!timestampInput : !!dateInput;
 
 	return (
 		<LayoutC
@@ -224,27 +226,32 @@ export function TimestampConverter() {
 				</>
 			}
 			footer={
-				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-					<span className="inline-flex items-center gap-1.5">
-						<span
-							className={`h-1.5 w-1.5 rounded-full ${
-								result.error
-									? "bg-destructive"
-									: result.output
-										? "bg-green-600"
-										: "bg-foreground/30"
-							}`}
-						/>
-						<span className="text-[11px] text-muted-foreground">
-							{result.error ? "Erro" : result.output ? "Convertido" : "Aguardando"}
-						</span>
-					</span>
-					{result.output && (
-						<span className="font-mono text-[11px] text-muted-foreground">
-							{direction === "ts-to-date" ? "Timestamp → Data" : "Data → Timestamp"}
-						</span>
-					)}
-				</div>
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: result.error
+								? "Erro"
+								: result.output
+									? "Convertido"
+									: "Aguardando",
+							mono: false,
+							variant: result.error
+								? "danger"
+								: result.output
+									? "success"
+									: "default",
+						},
+						{
+							label: "Tipo",
+							value:
+								direction === "ts-to-date"
+									? "Timestamp → Data"
+									: "Data → Timestamp",
+							mono: true,
+						},
+					]}
+				/>
 			}
 		/>
 	);

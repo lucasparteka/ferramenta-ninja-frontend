@@ -49,7 +49,7 @@ export function PageLayout({
 			{tool && breadcrumbs.length > 0 && <Breadcrumb items={breadcrumbs} />}
 
 			<div className="mb-6 space-y-1">
-				<h1 className="text-2xl font-bold tracking-tight text-foreground">
+				<h1 className="text-2xl font-semibold tracking-tight text-foreground">
 					{title}
 				</h1>
 				<p className="text-sm text-muted-foreground max-w-xl lg:mt-2">

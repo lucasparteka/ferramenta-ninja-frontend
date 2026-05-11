@@ -1,7 +1,6 @@
 "use client";
 
 import { type ReactNode, useState } from "react";
-import { ResultBox } from "@/components/shared/result-box";
 import { Input } from "@/components/ui/input";
 import {
 	decreaseByPercent,
@@ -11,7 +10,7 @@ import {
 	whatPercent,
 } from "@/lib/math/percentage";
 
-const INPUT_CLASS = "w-28 text-center";
+const INPUT_CLASS = "w-24 text-center font-mono";
 
 function toNum(value: string): number | null {
 	const n = Number(value);
@@ -26,21 +25,33 @@ function fmt(value: number): string {
 }
 
 type CardProps = {
-	number: number;
+	label: string;
 	sentence: ReactNode;
-	result: ReactNode;
+	result: string;
+	resultClass?: string;
 };
 
-function CalculatorCard({ number, sentence, result }: CardProps) {
+function CalculatorCard({ label, sentence, result, resultClass }: CardProps) {
 	return (
-		<div className="rounded-lg border border-border bg-card p-6">
-			<p className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-				Calculadora {number}
-			</p>
-			<div className="flex flex-wrap items-center gap-x-2 gap-y-3 text-foreground">
-				{sentence}
+		<div className="rounded-md border border-border bg-card overflow-hidden">
+			<div className="border-b border-border px-4 py-2">
+				<span className="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+					{label}
+				</span>
 			</div>
-			<div className="mt-4">{result}</div>
+			<div className="p-4">
+				<div className="flex flex-wrap items-center gap-x-2 gap-y-3 text-sm text-foreground">
+					{sentence}
+				</div>
+				<div className="mt-3 flex items-center justify-between rounded border border-border bg-muted/40 px-3 py-2">
+					<span className="text-[11px] text-muted-foreground">Resultado</span>
+					<span
+						className={`font-mono text-base font-semibold tabular-nums ${resultClass ?? "text-foreground"}`}
+					>
+						{result || "–"}
+					</span>
+				</div>
+			</div>
 		</div>
 	);
 }
@@ -63,40 +74,42 @@ export function PercentageCalculator() {
 
 	const n1p = toNum(c1p);
 	const n1v = toNum(c1v);
-	const r1 = n1p !== null && n1v !== null ? fmt(percentOf(n1p, n1v)) : "–";
+	const r1 =
+		n1p !== null && n1v !== null ? fmt(percentOf(n1p, n1v)) : "";
 
 	const n2p = toNum(c2p);
 	const n2t = toNum(c2t);
-	const r2 = n2p !== null && n2t !== null ? fmt(whatPercent(n2p, n2t)) : "–";
+	const r2 =
+		n2p !== null && n2t !== null ? `${fmt(whatPercent(n2p, n2t))}%` : "";
 
 	const n3f = toNum(c3f);
 	const n3t = toNum(c3t);
 	const change =
 		n3f !== null && n3t !== null ? percentageChange(n3f, n3t) : null;
-	const r3 = change !== null ? (change > 0 ? "+" : "") + fmt(change) : "–";
+	const r3 = change !== null ? (change > 0 ? "+" : "") + fmt(change) + "%" : "";
 	const r3Class =
 		change === null
-			? "text-foreground"
+			? undefined
 			: change > 0
 				? "text-success"
 				: change < 0
 					? "text-destructive"
-					: "text-primary";
+					: undefined;
 
 	const n4v = toNum(c4v);
 	const n4p = toNum(c4p);
 	const r4 =
-		n4v !== null && n4p !== null ? fmt(increaseByPercent(n4v, n4p)) : "–";
+		n4v !== null && n4p !== null ? fmt(increaseByPercent(n4v, n4p)) : "";
 
 	const n5v = toNum(c5v);
 	const n5p = toNum(c5p);
 	const r5 =
-		n5v !== null && n5p !== null ? fmt(decreaseByPercent(n5v, n5p)) : "–";
+		n5v !== null && n5p !== null ? fmt(decreaseByPercent(n5v, n5p)) : "";
 
 	return (
-		<div className="space-y-4">
+		<div className="space-y-3">
 			<CalculatorCard
-				number={1}
+				label="Porcentagem de um valor"
 				sentence={
 					<>
 						<span>Quanto é</span>
@@ -120,11 +133,11 @@ export function PercentageCalculator() {
 						<span>?</span>
 					</>
 				}
-				result={<ResultBox tone="primary" label="Resultado" value={r1} />}
+				result={r1}
 			/>
 
 			<CalculatorCard
-				number={2}
+				label="Qual porcentagem representa"
 				sentence={
 					<>
 						<span>O valor</span>
@@ -136,7 +149,7 @@ export function PercentageCalculator() {
 							placeholder="0"
 							aria-label="Valor parcial"
 						/>
-						<span>é qual porcentagem de</span>
+						<span>é qual % de</span>
 						<Input
 							className={INPUT_CLASS}
 							type="number"
@@ -148,14 +161,14 @@ export function PercentageCalculator() {
 						<span>?</span>
 					</>
 				}
-				result={<ResultBox tone="primary" label="Resultado" value={`${r2}%`} />}
+				result={r2}
 			/>
 
 			<CalculatorCard
-				number={3}
+				label="Variação percentual"
 				sentence={
 					<>
-						<span>Eu tenho um valor de</span>
+						<span>De</span>
 						<Input
 							className={INPUT_CLASS}
 							type="number"
@@ -164,7 +177,7 @@ export function PercentageCalculator() {
 							placeholder="0"
 							aria-label="Valor original"
 						/>
-						<span>que mudou para</span>
+						<span>para</span>
 						<Input
 							className={INPUT_CLASS}
 							type="number"
@@ -173,17 +186,18 @@ export function PercentageCalculator() {
 							placeholder="0"
 							aria-label="Novo valor"
 						/>
-						<span>. Qual foi a variação percentual?</span>
+						<span>. Qual foi a variação?</span>
 					</>
 				}
-				result={<ResultBox tone="primary" label="Resultado" value={<span className={r3Class}>{r3}%</span>} />}
+				result={r3}
+				resultClass={r3Class}
 			/>
 
 			<CalculatorCard
-				number={4}
+				label="Aumentar por porcentagem"
 				sentence={
 					<>
-						<span>Eu tenho um valor de</span>
+						<span>Valor</span>
 						<Input
 							className={INPUT_CLASS}
 							type="number"
@@ -192,8 +206,7 @@ export function PercentageCalculator() {
 							placeholder="0"
 							aria-label="Valor base"
 						/>
-						<span>e quero</span>
-						<span className="font-semibold text-success">AUMENTAR</span>
+						<span>aumentado em</span>
 						<Input
 							className={INPUT_CLASS}
 							type="number"
@@ -202,17 +215,18 @@ export function PercentageCalculator() {
 							placeholder="0"
 							aria-label="Porcentagem de aumento"
 						/>
-						<span>%. Qual é o resultado?</span>
+						<span>% =</span>
 					</>
 				}
-				result={<ResultBox tone="primary" label="Resultado" value={r4} />}
+				result={r4}
+				resultClass="text-success"
 			/>
 
 			<CalculatorCard
-				number={5}
+				label="Diminuir por porcentagem"
 				sentence={
 					<>
-						<span>Eu tenho um valor de</span>
+						<span>Valor</span>
 						<Input
 							className={INPUT_CLASS}
 							type="number"
@@ -221,8 +235,7 @@ export function PercentageCalculator() {
 							placeholder="0"
 							aria-label="Valor base"
 						/>
-						<span>e quero</span>
-						<span className="font-semibold text-destructive">DIMINUIR</span>
+						<span>diminuído em</span>
 						<Input
 							className={INPUT_CLASS}
 							type="number"
@@ -231,10 +244,11 @@ export function PercentageCalculator() {
 							placeholder="0"
 							aria-label="Porcentagem de desconto"
 						/>
-						<span>%. Qual é o resultado?</span>
+						<span>% =</span>
 					</>
 				}
-				result={<ResultBox tone="primary" label="Resultado" value={r5} />}
+				result={r5}
+				resultClass="text-destructive"
 			/>
 		</div>
 	);

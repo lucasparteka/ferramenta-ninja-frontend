@@ -1,32 +1,43 @@
 "use client";
 
-import { ArrowLeftRight, Trash2 } from "lucide-react";
+import { ArrowLeftRight, FileUp, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { OptionSwitch } from "@/components/shared/option-switch";
+import { PaneHeader } from "@/components/shared/pane-header";
+import { StatusBar, StatusDot } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { decodeBase64, encodeBase64 } from "@/lib/encoding/base64";
+import { cn } from "@/lib/utils";
 
 type Mode = "encode" | "decode";
+type Variant = "standard" | "urlsafe";
 
 export function Base64Tool() {
 	const [input, setInput] = useState("");
 	const [mode, setMode] = useState<Mode>("encode");
+	const [variant, setVariant] = useState<Variant>("standard");
 
 	const result = useMemo(() => {
-		if (!input.trim()) return { output: "", error: null };
+		if (!input.trim()) return { output: "", error: null, timeMs: 0 };
+		const start = performance.now();
 		try {
+			const fn = mode === "encode" ? encodeBase64 : decodeBase64;
+			const output = fn(input);
 			return {
-				output: mode === "encode" ? encodeBase64(input) : decodeBase64(input),
+				output,
 				error: null,
+				timeMs: performance.now() - start,
 			};
 		} catch (e) {
 			return {
 				output: "",
 				error: e instanceof Error ? e.message : "Erro desconhecido.",
+				timeMs: 0,
 			};
 		}
-	}, [input, mode]);
+	}, [input, mode, variant]);
 
 	function handleSwap() {
 		if (result.output) {
@@ -41,55 +52,91 @@ export function Base64Tool() {
 
 	const inputLen = input.length;
 	const outputLen = result.output.length;
+	const inputBytes = new TextEncoder().encode(input).length;
+	const outputBytes = result.output.length;
 	const ratio =
 		inputLen > 0 && outputLen > 0
-			? (outputLen / inputLen).toFixed(2)
+			? ((outputLen / inputLen) * 100).toFixed(0)
 			: null;
-	const ratioLabel = mode === "encode" ? "expansão" : "redução";
+
+	const checksum = useMemo(() => {
+		if (!result.output) return "";
+		let hash = 0;
+		for (let i = 0; i < result.output.length; i++) {
+			const chr = result.output.charCodeAt(i);
+			hash = (hash << 5) - hash + chr;
+			hash |= 0;
+		}
+		return Math.abs(hash).toString(16).slice(0, 4);
+	}, [result.output]);
 
 	return (
 		<LayoutC
-			left={
+			toolbar={
 				<>
-					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-							Entrada
-						</span>
-						<div className="flex items-center gap-1">
-							{(["encode", "decode"] as const).map((m) => (
-								<button
-									key={m}
-									type="button"
-									onClick={() => setMode(m)}
-									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
-										mode === m
-											? "bg-foreground/10 font-medium text-foreground"
-											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
-									}`}
-								>
-									{m === "encode" ? "Codificar" : "Decodificar"}
-								</button>
-							))}
-							<Button
-								variant="ghost"
-								size="icon-sm"
-								onClick={handleSwap}
-								disabled={!result.output}
-								aria-label="Trocar entrada e saída"
-							>
-								<ArrowLeftRight className="h-3.5 w-3.5" />
-							</Button>
-							<Button
-								variant="ghost"
-								size="icon-sm"
-								onClick={handleClear}
-								disabled={!input}
-								aria-label="Limpar"
-							>
-								<Trash2 className="h-3.5 w-3.5" />
-							</Button>
+					<div className="flex items-center gap-4">
+						<div className="flex items-center gap-2">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Direção
+							</span>
+							<OptionSwitch
+								options={[
+									{ label: "Codificar", value: "encode" },
+									{ label: "Decodificar", value: "decode" },
+								]}
+								value={mode}
+								onChange={(v) => setMode(v as Mode)}
+								size="sm"
+							/>
+						</div>
+						<div className="h-4 w-px bg-border" />
+						<div className="flex items-center gap-2">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Variante
+							</span>
+							<OptionSwitch
+								options={[
+									{ label: "Padrão", value: "standard" },
+									{ label: "URL-safe", value: "urlsafe" },
+								]}
+								value={variant}
+								onChange={(v) => setVariant(v as Variant)}
+								size="sm"
+							/>
 						</div>
 					</div>
+					<div className="flex items-center gap-2">
+						<span className="font-mono text-[11px] text-muted-foreground">
+							UTF-8
+						</span>
+					</div>
+				</>
+			}
+			left={
+				<>
+					<PaneHeader
+						title="Entrada · Texto"
+						actions={
+							<>
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									aria-label="Carregar arquivo"
+								>
+									<FileUp className="h-3.5 w-3.5" />
+								</Button>
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									onClick={handleClear}
+									disabled={!input}
+									aria-label="Limpar"
+								>
+									<Trash2 className="h-3.5 w-3.5" />
+								</Button>
+							</>
+						}
+					/>
 					<textarea
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
@@ -105,18 +152,29 @@ export function Base64Tool() {
 			}
 			right={
 				<>
-					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-							Saída
-						</span>
-						<CopyButton
-							text={result.output}
-							disabled={!result.output}
-							variant="ghost"
-							size="icon-sm"
-							iconOnly
-						/>
-					</div>
+					<PaneHeader
+						title={
+							<>
+								Saída · Base64
+								{result.output && (
+									<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success">
+										Pronto
+									</span>
+								)}
+							</>
+						}
+						actions={
+							<>
+								<CopyButton
+									text={result.output}
+									disabled={!result.output}
+									variant="ghost"
+									size="icon-sm"
+									iconOnly
+								/>
+							</>
+						}
+					/>
 					<div className="flex-1 min-h-[280px] bg-muted/20 p-3">
 						{result.error ? (
 							<p className="text-xs text-destructive">{result.error}</p>
@@ -124,26 +182,66 @@ export function Base64Tool() {
 							<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
 								{result.output}
 							</pre>
-						) : null}
+						) : (
+							<p className="text-sm text-muted-foreground">
+								{input ? "Processando..." : "Aguardando entrada"}
+							</p>
+						)}
 					</div>
 				</>
 			}
-			footer={
-				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-					<span className="inline-flex items-center gap-1.5">
-						<span
-							className={`h-1.5 w-1.5 rounded-full ${result.output ? "bg-success" : "bg-foreground/30"}`}
-						/>
-						<span className="text-[11px] text-muted-foreground">
-							{result.output ? "Convertido" : result.error ? "Erro" : "Aguardando"}
-						</span>
-					</span>
-					{ratio && (
-						<span className="font-mono text-[11px] text-muted-foreground">
-							{inputLen} chars → {outputLen} chars · {ratio}× {ratioLabel}
-						</span>
+			swapButton={
+				<button
+					type="button"
+					onClick={handleSwap}
+					disabled={!result.output}
+					className={cn(
+						"rounded-full border border-border bg-card p-1.5 text-muted-foreground transition-colors shadow-sm",
+						result.output
+							? "hover:text-foreground hover:bg-muted"
+							: "opacity-40 pointer-events-none",
 					)}
-				</div>
+					aria-label="Inverter entrada e saída"
+				>
+					<ArrowLeftRight className="h-3.5 w-3.5" />
+				</button>
+			}
+			footer={
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: input
+								? `Codificado em ${result.timeMs.toFixed(1)}ms`
+								: "Aguardando",
+							mono: true,
+						},
+						{
+							label: "Entrada",
+							value: inputLen
+								? `${inputLen} chars · ${inputBytes} bytes`
+								: "0",
+							mono: true,
+						},
+						{
+							label: "Saída",
+							value: outputLen
+								? `${outputLen} chars${ratio ? ` · +${ratio}%` : ""}`
+								: "0",
+							mono: true,
+						},
+						{
+							label: "cs",
+							value: checksum || "—",
+							mono: true,
+						},
+					]}
+					right={
+						<span className="font-mono text-[11px] text-muted-foreground">
+							RFC 4648{variant === "urlsafe" ? " · URL-safe" : ""}
+						</span>
+					}
+				/>
 			}
 		/>
 	);

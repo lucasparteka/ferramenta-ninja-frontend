@@ -1,8 +1,10 @@
 "use client";
 
+import { Info } from "lucide-react";
 import { useMemo, useState } from "react";
-import { ResultBox } from "@/components/shared/result-box";
-import { Button } from "@/components/ui/button";
+import { ResultRow } from "@/components/shared/layout-b/result-row";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { OptionSwitch } from "@/components/shared/option-switch";
 import { DateInput } from "@/components/ui/date-input";
 import { calculateAge, dateDiff } from "@/lib/date/age";
 
@@ -15,6 +17,10 @@ function parseIsoLocal(iso: string): Date | null {
 	return Number.isNaN(d.getTime()) ? null : d;
 }
 
+function pluralize(n: number, singular: string, plural: string) {
+	return `${n} ${n === 1 ? singular : plural}`;
+}
+
 export function AgeCalculatorClient() {
 	const [mode, setMode] = useState<Mode>("age");
 	const [birth, setBirth] = useState("");
@@ -22,57 +28,11 @@ export function AgeCalculatorClient() {
 	const [start, setStart] = useState("");
 	const [end, setEnd] = useState("");
 
-	return (
-		<div className="space-y-6">
-			<div className="flex flex-wrap gap-2">
-				<Button
-					type="button"
-					variant={mode === "age" ? "default" : "outline"}
-					onClick={() => setMode("age")}
-				>
-					Calcular idade
-				</Button>
-				<Button
-					type="button"
-					variant={mode === "diff" ? "default" : "outline"}
-					onClick={() => setMode("diff")}
-				>
-					Diferença entre datas
-				</Button>
-			</div>
-
-			{mode === "age" ? (
-				<AgeMode
-					birth={birth}
-					reference={reference}
-					onBirthChange={setBirth}
-					onReferenceChange={setReference}
-				/>
-			) : (
-				<DiffMode
-					start={start}
-					end={end}
-					onStartChange={setStart}
-					onEndChange={setEnd}
-				/>
-			)}
-		</div>
-	);
-}
-
-function AgeMode(props: {
-	birth: string;
-	reference: string;
-	onBirthChange: (v: string) => void;
-	onReferenceChange: (v: string) => void;
-}) {
-	const result = useMemo(() => {
-		if (!props.birth) return null;
-		const birthDate = parseIsoLocal(props.birth);
+	const ageResult = useMemo(() => {
+		if (!birth) return null;
+		const birthDate = parseIsoLocal(birth);
 		if (!birthDate) return null;
-		const refDate = props.reference
-			? parseIsoLocal(props.reference)
-			: new Date();
+		const refDate = reference ? parseIsoLocal(reference) : new Date();
 		if (!refDate) return null;
 		if (birthDate.getTime() > refDate.getTime()) return null;
 		try {
@@ -80,159 +40,192 @@ function AgeMode(props: {
 		} catch {
 			return null;
 		}
-	}, [props.birth, props.reference]);
+	}, [birth, reference]);
 
-	return (
-		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-2 max-w-2xl">
-				<div className="space-y-2">
-					<label
-						htmlFor="age-birth"
-						className="block text-sm font-medium text-foreground"
-					>
-						Data de nascimento
-					</label>
-					<DateInput
-						id="age-birth"
-						value={props.birth}
-						onChange={props.onBirthChange}
-					/>
-				</div>
-				<div className="space-y-2">
-					<label
-						htmlFor="age-ref"
-						className="block text-sm font-medium text-foreground"
-					>
-						Data de referência (opcional)
-					</label>
-					<DateInput
-						id="age-ref"
-						value={props.reference}
-						onChange={props.onReferenceChange}
-					/>
-				</div>
-			</div>
-
-			{result && (
-				<div className="space-y-4">
-					<ResultBox label="Idade">
-						<p className="text-2xl font-semibold text-foreground">
-							{result.years} {result.years === 1 ? "ano" : "anos"},{" "}
-							{result.months} {result.months === 1 ? "mês" : "meses"} e{" "}
-							{result.days} {result.days === 1 ? "dia" : "dias"}
-						</p>
-					</ResultBox>
-
-					<dl className="grid gap-3 sm:grid-cols-2">
-						<Stat
-							label="Total de dias"
-							value={result.totalDays.toLocaleString("pt-BR")}
-						/>
-						<Stat
-							label="Total de semanas"
-							value={result.totalWeeks.toLocaleString("pt-BR")}
-						/>
-						<Stat
-							label="Total de horas"
-							value={result.totalHours.toLocaleString("pt-BR")}
-						/>
-						<Stat
-							label="Total de minutos"
-							value={result.totalMinutes.toLocaleString("pt-BR")}
-						/>
-					</dl>
-
-					{result.nextBirthday && (
-						<div className="rounded-md border border-border bg-card p-3 text-sm text-foreground">
-							Próximo aniversário em{" "}
-							<strong>
-								{result.nextBirthday.daysUntil}{" "}
-								{result.nextBirthday.daysUntil === 1 ? "dia" : "dias"}
-							</strong>{" "}
-							({result.nextBirthday.date.toLocaleDateString("pt-BR")})
-						</div>
-					)}
-				</div>
-			)}
-		</div>
-	);
-}
-
-function DiffMode(props: {
-	start: string;
-	end: string;
-	onStartChange: (v: string) => void;
-	onEndChange: (v: string) => void;
-}) {
-	const result = useMemo(() => {
-		if (!props.start || !props.end) return null;
-		const a = parseIsoLocal(props.start);
-		const b = parseIsoLocal(props.end);
+	const diffResult = useMemo(() => {
+		if (!start || !end) return null;
+		const a = parseIsoLocal(start);
+		const b = parseIsoLocal(end);
 		if (!a || !b) return null;
 		return dateDiff(a, b);
-	}, [props.start, props.end]);
+	}, [start, end]);
+
+	const hasInput = mode === "age" ? !!birth : !!start && !!end;
 
 	return (
-		<div className="space-y-6">
-			<div className="grid gap-4 sm:grid-cols-2 max-w-2xl">
-				<div className="space-y-2">
-					<label
-						htmlFor="diff-start"
-						className="block text-sm font-medium text-foreground"
-					>
-						Data inicial
-					</label>
-					<DateInput
-						id="diff-start"
-						value={props.start}
-						onChange={props.onStartChange}
-					/>
+		<div className="grid grid-cols-1 items-start lg:grid-cols-[1fr_360px] border border-border rounded-md overflow-hidden">
+			{/* Coluna esquerda — formulário */}
+			<div className="bg-card flex flex-col h-full">
+				<div className="divide-y divide-border">
+					<div className="p-5">
+						<SectionLabel>Modo</SectionLabel>
+						<OptionSwitch
+							options={[
+								{ label: "Calcular idade", value: "age" },
+								{ label: "Diferença entre datas", value: "diff" },
+							]}
+							value={mode}
+							onChange={(v) => setMode(v as Mode)}
+						/>
+					</div>
+
+					<div className="p-5">
+						<SectionLabel>Datas</SectionLabel>
+						{mode === "age" ? (
+							<div className="space-y-3.5">
+								<div>
+									<label
+										htmlFor="age-birth"
+										className="mb-1.5 block text-xs font-medium text-foreground"
+									>
+										Data de nascimento
+									</label>
+									<DateInput id="age-birth" value={birth} onChange={setBirth} />
+								</div>
+								<div>
+									<label
+										htmlFor="age-ref"
+										className="mb-1.5 block text-xs font-medium text-foreground"
+									>
+										Data de referência
+									</label>
+									<DateInput
+										id="age-ref"
+										value={reference}
+										onChange={setReference}
+									/>
+									<p className="mt-1 text-[11px] text-muted-foreground">
+										Em branco usa a data de hoje
+									</p>
+								</div>
+							</div>
+						) : (
+							<div className="space-y-3.5">
+								<div>
+									<label
+										htmlFor="diff-start"
+										className="mb-1.5 block text-xs font-medium text-foreground"
+									>
+										Data inicial
+									</label>
+									<DateInput
+										id="diff-start"
+										value={start}
+										onChange={setStart}
+									/>
+								</div>
+								<div>
+									<label
+										htmlFor="diff-end"
+										className="mb-1.5 block text-xs font-medium text-foreground"
+									>
+										Data final
+									</label>
+									<DateInput id="diff-end" value={end} onChange={setEnd} />
+								</div>
+							</div>
+						)}
+					</div>
 				</div>
-				<div className="space-y-2">
-					<label
-						htmlFor="diff-end"
-						className="block text-sm font-medium text-foreground"
-					>
-						Data final
-					</label>
-					<DateInput
-						id="diff-end"
-						value={props.end}
-						onChange={props.onEndChange}
-					/>
+
+				<div className="flex items-center gap-1.5 border-t border-border bg-muted px-5 py-3 mt-auto text-[11.5px] text-muted-foreground">
+					<Info size={12} />
+					Atualizado em tempo real
 				</div>
 			</div>
 
-			{result && (
-				<div className="space-y-4">
-					<ResultBox label="Diferença">
-						<p className="text-2xl font-semibold text-foreground">
-							{result.years} {result.years === 1 ? "ano" : "anos"},{" "}
-							{result.months} {result.months === 1 ? "mês" : "meses"} e{" "}
-							{result.days} {result.days === 1 ? "dia" : "dias"}
-						</p>
-					</ResultBox>
-					<dl className="grid gap-3 sm:grid-cols-2">
-						<Stat
-							label="Total de dias"
-							value={result.totalDays.toLocaleString("pt-BR")}
-						/>
-						<Stat
-							label="Total de semanas"
-							value={Math.floor(result.totalDays / 7).toLocaleString("pt-BR")}
-						/>
-					</dl>
-				</div>
-			)}
-		</div>
-	);
-}
+			{/* Coluna direita — resultado */}
+			<aside className="flex h-full lg:border-l max-lg:border-t border-border flex-col">
+				{mode === "age" ? (
+					ageResult ? (
+						<>
+							<div className="p-4 border-b border-border">
+								<span className="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+									Idade
+								</span>
+								<p className="mt-1 font-mono text-base font-semibold leading-snug text-foreground">
+									{pluralize(ageResult.years, "ano", "anos")},{" "}
+									{pluralize(ageResult.months, "mês", "meses")} e{" "}
+									{pluralize(ageResult.days, "dia", "dias")}
+								</p>
+							</div>
 
-function Stat({ label, value }: { label: string; value: string }) {
-	return (
-		<div className="rounded-md border border-border bg-card p-3">
-			<dt className="text-xs text-muted-foreground">{label}</dt>
-			<dd className="mt-1 text-base font-semibold text-foreground">{value}</dd>
+							<div className="px-4 py-3 flex-1">
+								<SectionLabel>Detalhamento</SectionLabel>
+								<ResultRow
+									label="Total de dias"
+									value={ageResult.totalDays.toLocaleString("pt-BR")}
+								/>
+								<ResultRow
+									label="Total de semanas"
+									value={ageResult.totalWeeks.toLocaleString("pt-BR")}
+								/>
+								<ResultRow
+									label="Total de horas"
+									value={ageResult.totalHours.toLocaleString("pt-BR")}
+								/>
+								<ResultRow
+									label="Total de minutos"
+									value={ageResult.totalMinutes.toLocaleString("pt-BR")}
+								/>
+							</div>
+
+							{ageResult.nextBirthday && (
+								<div className="border-t border-border px-4 py-3 text-[11.5px] text-muted-foreground">
+									Próximo aniversário em{" "}
+									<span className="font-mono font-medium text-foreground">
+										{pluralize(ageResult.nextBirthday.daysUntil, "dia", "dias")}
+									</span>{" "}
+									(
+									{ageResult.nextBirthday.date.toLocaleDateString("pt-BR")}
+									)
+								</div>
+							)}
+						</>
+					) : (
+						<div className="flex flex-1 flex-col items-center justify-center gap-2 p-6 text-center">
+							<p className="text-sm text-muted-foreground">
+								{hasInput
+									? "Verifique as datas informadas"
+									: "Informe a data de nascimento para calcular"}
+							</p>
+						</div>
+					)
+				) : diffResult ? (
+					<>
+						<div className="p-4 border-b border-border">
+							<span className="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+								Diferença
+							</span>
+							<p className="mt-1 font-mono text-base font-semibold leading-snug text-foreground">
+								{pluralize(diffResult.years, "ano", "anos")},{" "}
+								{pluralize(diffResult.months, "mês", "meses")} e{" "}
+								{pluralize(diffResult.days, "dia", "dias")}
+							</p>
+						</div>
+
+						<div className="px-4 py-3 flex-1">
+							<SectionLabel>Detalhamento</SectionLabel>
+							<ResultRow
+								label="Total de dias"
+								value={diffResult.totalDays.toLocaleString("pt-BR")}
+							/>
+							<ResultRow
+								label="Total de semanas"
+								value={Math.floor(diffResult.totalDays / 7).toLocaleString("pt-BR")}
+							/>
+						</div>
+					</>
+				) : (
+					<div className="flex flex-1 flex-col items-center justify-center gap-2 p-6 text-center">
+						<p className="text-sm text-muted-foreground">
+							{hasInput
+								? "Verifique as datas informadas"
+								: "Informe as duas datas para calcular a diferença"}
+						</p>
+					</div>
+				)}
+			</aside>
 		</div>
 	);
 }

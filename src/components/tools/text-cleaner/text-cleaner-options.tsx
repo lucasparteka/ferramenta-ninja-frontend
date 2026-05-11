@@ -1,49 +1,49 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { SwitchRow } from "@/components/shared/switch-row";
+import type { TextCleanerOptions as TextCleanerOptionsType } from "./use-text-cleaner";
 
-type Options = {
-	removeExtraSpaces: boolean;
-	removeLineBreaks: boolean;
-	removeInvisible: boolean;
-	trimLines: boolean;
+type OptionDef = {
+	key: keyof TextCleanerOptionsType;
+	label: string;
+	hint: string;
 };
 
 type Props = {
-	options: Options;
-	onChange: (options: Options) => void;
+	options: TextCleanerOptionsType;
+	onChange: (options: TextCleanerOptionsType) => void;
+	counts?: Partial<Record<keyof TextCleanerOptionsType, number>>;
 };
 
-const items = [
-	{ key: "removeExtraSpaces", label: "Remover espaços extras" },
-	{ key: "removeLineBreaks", label: "Remover quebras de linha" },
-	{ key: "removeInvisible", label: "Remover caracteres invisíveis" },
-	{ key: "trimLines", label: "Remover espaços no início/fim das linhas" },
-] as const;
+const items: OptionDef[] = [
+	{ key: "removeExtraSpaces", label: "Espaços extras", hint: "Reduz múltiplos espaços para um" },
+	{ key: "removeLineBreaks", label: "Quebras de linha duplicadas", hint: "Reduz múltiplas quebras para uma" },
+	{ key: "removeInvisible", label: "Caracteres invisíveis", hint: "Remove zero-width, BOM, etc." },
+	{ key: "trimLines", label: "Trim por linha", hint: "Espaços no início/fim de cada linha" },
+];
 
-export function TextCleanerOptions({ options, onChange }: Props) {
-	function handleChange(key: keyof Options, value: boolean) {
+export function TextCleanerOptions({ options, onChange, counts }: Props) {
+	function handleChange(key: keyof TextCleanerOptionsType, value: boolean) {
 		onChange({ ...options, [key]: value });
 	}
 
 	return (
-		<div className="space-y-3">
-			{items.map(({ key, label }) => (
-				<div key={key} className="flex items-center justify-between">
-					<Label
-						htmlFor={key}
-						className="cursor-pointer text-xs text-muted-foreground"
-					>
-						{label}
-					</Label>
-					<Checkbox
-						id={key}
+		<div className="space-y-2">
+			{items.map(({ key, label, hint }) => {
+				const count = counts?.[key];
+				const feedback = count !== undefined && count > 0 ? `−${count} ocorrências` : undefined;
+				return (
+					<SwitchRow
+						key={key}
+						label={label}
+						hint={hint}
 						checked={options[key]}
-						onCheckedChange={(v) => handleChange(key, v === true)}
+						onChange={(v) => handleChange(key, v)}
+						feedback={feedback}
+						muted={!options[key]}
 					/>
-				</div>
-			))}
+				);
+			})}
 		</div>
 	);
 }

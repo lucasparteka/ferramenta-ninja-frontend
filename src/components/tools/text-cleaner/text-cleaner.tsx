@@ -1,15 +1,16 @@
 "use client";
 
 import DiffMatchPatch from "diff-match-patch";
-import { Trash2 } from "lucide-react";
-import { useMemo } from "react";
+import { ChevronDown, Trash2 } from "lucide-react";
+import { useMemo, useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
+import { StatusBar } from "@/components/shared/status-bar";
+import { SwitchRow } from "@/components/shared/switch-row";
 import { DiffResult } from "@/components/tools/text-diff/diff-result";
 import { Button } from "@/components/ui/button";
 import { TextCleanerHighlight } from "./text-cleaner-highlight";
 import { TextCleanerInput } from "./text-cleaner-input";
-import { TextCleanerOptions } from "./text-cleaner-options";
-import { TextCleanerResult } from "./text-cleaner-result";
 import {
 	type TextCleanerOptions as TextCleanerOptionsType,
 	useTextCleaner,
@@ -30,6 +31,8 @@ export function TextCleaner({ defaultOptions }: Props) {
 	const { input, output, options, setInput, setOptions, issues, clearAll } =
 		useTextCleaner(defaultOptions);
 
+	const [showDiff, setShowDiff] = useState(false);
+
 	const diff = useMemo(() => {
 		if (!input || !output) return [];
 		return computeDiff(input, output);
@@ -42,7 +45,6 @@ export function TextCleaner({ defaultOptions }: Props) {
 		return {
 			characters: output.length,
 			words: output.trim() ? output.trim().split(/\s+/).length : 0,
-			lines: output.split("\n").length,
 		};
 	}, [output]);
 
@@ -51,7 +53,21 @@ export function TextCleaner({ defaultOptions }: Props) {
 		return {
 			characters: input.length,
 			words: input.trim() ? input.trim().split(/\s+/).length : 0,
-			lines: input.split("\n").length,
+		};
+	}, [input]);
+
+	const removedCount = useMemo(() => {
+		if (!inputStats || !outputStats) return 0;
+		return inputStats.characters - outputStats.characters;
+	}, [inputStats, outputStats]);
+
+	const counts = useMemo(() => {
+		if (!input) return {};
+		return {
+			removeExtraSpaces: (input.match(/  +/g) || []).length,
+			removeLineBreaks: (input.match(/\n{2,}/g) || []).length,
+			removeInvisible: (input.match(/[​-‍﻿]/g) || []).length,
+			trimLines: (input.match(/^ +| +$/gm) || []).length,
 		};
 	}, [input]);
 
@@ -61,18 +77,32 @@ export function TextCleaner({ defaultOptions }: Props) {
 			header={
 				<>
 					<div className="flex items-center gap-3">
-						<h1 className="text-sm font-semibold tracking-tight">Limpar texto</h1>
+						<h1 className="text-sm font-semibold tracking-tight">
+							Limpar texto
+						</h1>
 						<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
 							LIMPEZA
 						</span>
+						{hasChanges && (
+							<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success tabular-nums">
+								−{removedCount} chars
+							</span>
+						)}
 					</div>
 					<div className="flex items-center gap-1.5">
+						<CopyButton
+							text={output}
+							label="Copiar"
+							variant="outline"
+							size="sm"
+							disabled={!output}
+						/>
 						<Button
 							variant="ghost"
 							size="icon-sm"
 							onClick={clearAll}
-							aria-label="Limpar"
 							disabled={!input}
+							aria-label="Limpar"
 						>
 							<Trash2 className="h-3.5 w-3.5" />
 						</Button>
@@ -81,63 +111,72 @@ export function TextCleaner({ defaultOptions }: Props) {
 			}
 			sidebar={
 				<>
-					{outputStats && (
-						<div className="p-4 space-y-2">
-							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-								Resultado
-							</h3>
-							<div className="flex items-center justify-between py-0.5">
-								<span className="text-xs text-muted-foreground">Caracteres</span>
-								<span className="font-mono text-xs font-medium tabular-nums">
-									{outputStats.characters}
-								</span>
-							</div>
-							<div className="flex items-center justify-between py-0.5">
-								<span className="text-xs text-muted-foreground">Palavras</span>
-								<span className="font-mono text-xs font-medium tabular-nums">
-									{outputStats.words}
-								</span>
-							</div>
-							<div className="flex items-center justify-between py-0.5">
-								<span className="text-xs text-muted-foreground">Linhas</span>
-								<span className="font-mono text-xs font-medium tabular-nums">
-									{outputStats.lines}
-								</span>
-							</div>
-						</div>
-					)}
-
-					{input &&
-						(issues.fromWord ||
-							issues.hasInvisible ||
-							issues.hasManyLineBreaks) && (
-							<div className="p-4 space-y-2">
-								<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-									Problemas detectados
-								</h3>
-								{issues.fromWord && (
-									<div className="flex items-center gap-2 text-xs text-amber-600">
-										<span>Texto parece vindo do Word</span>
-									</div>
-								)}
-								{issues.hasInvisible && (
-									<div className="flex items-center gap-2 text-xs text-amber-600">
-										<span>Contém caracteres invisíveis</span>
-									</div>
-								)}
-								{issues.hasManyLineBreaks && (
-									<div className="flex items-center gap-2 text-xs text-amber-600">
-										<span>Muitas quebras de linha</span>
-									</div>
-								)}
-							</div>
-						)}
-
-					<div className="p-4 space-y-3">
+					<div className="p-4 space-y-2">
 						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Opções
+							Operações
+							<span className="ml-2 normal-case tracking-normal font-normal text-muted-foreground/60">
+								aplicadas em ordem
+							</span>
 						</h3>
-						<TextCleanerOptions options={options} onChange={setOptions} />
+						<SwitchRow
+							label="Espaços extras"
+							hint="Reduz múltiplos espaços para um"
+							checked={options.removeExtraSpaces}
+							onChange={(v) => setOptions({ ...options, removeExtraSpaces: v })}
+							feedback={
+								options.removeExtraSpaces && counts.removeExtraSpaces && counts.removeExtraSpaces > 0
+									? `−${counts.removeExtraSpaces} ocorrências`
+									: undefined
+							}
+						/>
+						<SwitchRow
+							label="Quebras de linha duplicadas"
+							hint="Reduz múltiplas quebras para uma"
+							checked={options.removeLineBreaks}
+							onChange={(v) => setOptions({ ...options, removeLineBreaks: v })}
+							feedback={
+								options.removeLineBreaks && counts.removeLineBreaks && counts.removeLineBreaks > 0
+									? `−${counts.removeLineBreaks} ocorrências`
+									: undefined
+							}
+						/>
+						<SwitchRow
+							label="Caracteres invisíveis"
+							hint="Remove zero-width, BOM, etc."
+							checked={options.removeInvisible}
+							onChange={(v) => setOptions({ ...options, removeInvisible: v })}
+							feedback={
+								options.removeInvisible && counts.removeInvisible && counts.removeInvisible > 0
+									? `−${counts.removeInvisible}`
+									: undefined
+							}
+						/>
+						<SwitchRow
+							label="Trim por linha"
+							hint="Espaços no início/fim"
+							checked={options.trimLines}
+							onChange={(v) => setOptions({ ...options, trimLines: v })}
+						/>
+					</div>
+
+					<div className="p-4 space-y-2">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							Normalização
+						</h3>
+						<SwitchRow
+							label="Aspas curvas → retas"
+							hint={`“‘ → "'`}
+							checked={options.convertQuotes}
+							onChange={(v) => setOptions({ ...options, convertQuotes: v })}
+							muted
+						/>
+						<SwitchRow
+							label="Travessões → hífens"
+							hint="— – → -"
+							checked={options.convertDashes}
+							onChange={(v) => setOptions({ ...options, convertDashes: v })}
+							muted
+						/>
 					</div>
 				</>
 			}
@@ -147,46 +186,100 @@ export function TextCleaner({ defaultOptions }: Props) {
 			</div>
 
 			{output && (
-				<>
-					<div className="border-t border-border p-4">
-						<TextCleanerResult output={output} />
-					</div>
-					{hasChanges && (
-						<div className="border-t border-border p-4">
-							<DiffResult diffResult={diff} showOnlyDifferences={false} />
-						</div>
-					)}
-				</>
+				<div className="border-t border-border p-4">
+					<TextCleanerResult
+						output={output}
+						difference={removedCount}
+						totalInput={inputStats?.characters ?? 0}
+					/>
+				</div>
 			)}
 
 			{input && (
 				<div className="border-t border-border p-4">
 					<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-						Visualização de caracteres invisíveis
+						Caracteres invisíveis
 					</h3>
 					<TextCleanerHighlight text={input} />
 				</div>
 			)}
 
-			<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2 mt-auto">
-				<div className="flex items-center gap-2">
-					<span className="inline-flex items-center gap-1.5">
-						<span className="h-1.5 w-1.5 rounded-full bg-green-600" />
-						<span className="text-[11px] text-muted-foreground">
-							{output ? "Processado" : "Pronto"}
-						</span>
+			{showDiff && hasChanges && (
+				<div className="border-t border-border p-4">
+					<DiffResult diffResult={diff} showOnlyDifferences={false} />
+				</div>
+			)}
+
+			<StatusBar
+				items={[
+					{
+						label: "",
+						value: output ? "Limpo" : "Pronto",
+						mono: true,
+					},
+					{
+						label: "Total removido",
+						value: removedCount > 0 ? `−${removedCount} chars` : "0",
+						mono: true,
+						variant: removedCount > 0 ? "success" : "default",
+					},
+					{
+						label: "",
+						value:
+							inputStats && removedCount > 0
+								? `${((removedCount / inputStats.characters) * 100).toFixed(1)}%`
+								: "",
+						mono: true,
+					},
+				]}
+				right={
+					hasChanges ? (
+						<Button
+							variant="ghost"
+							size="sm"
+							className="h-6 px-2 text-[11px]"
+							onClick={() => setShowDiff(!showDiff)}
+						>
+							<ChevronDown
+								className={`mr-1 h-3 w-3 transition-transform ${
+									showDiff ? "rotate-180" : ""
+								}`}
+							/>
+							{showDiff ? "Ocultar diff" : "Mostrar diff"}
+						</Button>
+					) : undefined
+				}
+			/>
+		</LayoutD>
+	);
+}
+
+type TextCleanerResultProps = {
+	output: string;
+	difference?: number;
+	totalInput?: number;
+};
+
+function TextCleanerResult({
+	output,
+	difference,
+	totalInput,
+}: TextCleanerResultProps) {
+	return (
+		<div className="space-y-2">
+			{difference !== undefined && difference > 0 && totalInput && (
+				<div className="flex items-center justify-between">
+					<span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+						Resultado
+					</span>
+					<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success tabular-nums">
+						−{difference} chars
 					</span>
 				</div>
-				{inputStats && (
-					<div className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground">
-						<span>{inputStats.characters} caracteres</span>
-						<span>·</span>
-						<span>{inputStats.words} palavras</span>
-						<span>·</span>
-						<span>{inputStats.lines} linhas</span>
-					</div>
-				)}
-			</div>
-		</LayoutD>
+			)}
+			<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
+				{output}
+			</pre>
+		</div>
 	);
 }

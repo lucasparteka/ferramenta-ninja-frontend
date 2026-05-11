@@ -7,6 +7,8 @@ export type TextCleanerOptions = {
 	removeLineBreaks: boolean;
 	removeInvisible: boolean;
 	trimLines: boolean;
+	convertQuotes: boolean;
+	convertDashes: boolean;
 };
 
 const defaultOptions: TextCleanerOptions = {
@@ -14,6 +16,8 @@ const defaultOptions: TextCleanerOptions = {
 	removeLineBreaks: false,
 	removeInvisible: true,
 	trimLines: true,
+	convertQuotes: false,
+	convertDashes: false,
 };
 
 function cleanText(text: string, options: TextCleanerOptions) {
@@ -36,6 +40,14 @@ function cleanText(text: string, options: TextCleanerOptions) {
 
 	if (options.removeLineBreaks) {
 		result = result.replace(/\n/g, " ");
+	}
+
+	if (options.convertQuotes) {
+		result = result.replace(/[""]/g, '"').replace(/['']/g, "'");
+	}
+
+	if (options.convertDashes) {
+		result = result.replace(/[—–]/g, "-");
 	}
 
 	return result;

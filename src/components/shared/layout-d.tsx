@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils";
+import type { ReactNode } from "react";
 
 type LayoutDProps = {
-	header: React.ReactNode;
-	sidebar: React.ReactNode;
-	children: React.ReactNode;
+	header: ReactNode;
+	sidebar: ReactNode;
+	children: ReactNode;
 	sidebarWidth?: number;
 	mainAreaClassName?: string;
 };
@@ -20,7 +21,7 @@ export function LayoutD({
 			className="rounded-sm border border-border overflow-hidden flex flex-col md:grid"
 			style={{ gridTemplateColumns: `1fr ${sidebarWidth}px` }}
 		>
-			<div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between border-b border-border px-4 py-2.5 col-span-full">
+			<div className="flex items-center justify-between border-b border-border px-4 py-2.5 col-span-full">
 				{header}
 			</div>
 			<div className={cn("flex flex-col border-r border-border", mainAreaClassName)}>

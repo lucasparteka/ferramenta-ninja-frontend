@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { CharacterCounterStats } from "./character-counter-stats";
@@ -14,6 +15,7 @@ type CounterResult = {
 	words: number;
 	lines: number;
 	paragraphs: number;
+	readingTime: string;
 };
 
 function calculateStats(text: string): CounterResult {
@@ -24,6 +26,7 @@ function calculateStats(text: string): CounterResult {
 			words: 0,
 			lines: 0,
 			paragraphs: 0,
+			readingTime: "0s",
 		};
 	}
 
@@ -31,18 +34,27 @@ function calculateStats(text: string): CounterResult {
 	const charactersNoSpaces = text.replace(/\s/g, "").length;
 	const words = text.trim().split(/\s+/).filter(Boolean).length;
 	const lines = text.split("\n").length;
-	const paragraphs = text
-		.trim()
-		.split(/\n\s*\n/)
-		.filter(Boolean).length;
+	const paragraphs = text.trim().split(/\n\s*\n/).filter(Boolean).length;
+	const readingTime = Math.max(1, Math.ceil(words / 200));
 
-	return { characters, charactersNoSpaces, words, lines, paragraphs };
+	return {
+		characters,
+		charactersNoSpaces,
+		words,
+		lines,
+		paragraphs,
+		readingTime: `${readingTime}min`,
+	};
 }
 
 export function CharacterCounter() {
 	const [text, setText] = useState("");
 
 	const stats = calculateStats(text);
+
+	function handleCopy() {
+		if (text) navigator.clipboard.writeText(text);
+	}
 
 	return (
 		<LayoutD
@@ -88,21 +100,31 @@ export function CharacterCounter() {
 				placeholder="Digite ou cole seu texto aqui"
 				className="flex-1 min-h-70 resize-none bg-transparent border-0 rounded-none p-4 text-sm text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
 			/>
-			<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-				<div className="flex items-center gap-2">
-					<span className="inline-flex items-center gap-1.5">
-						<span className="h-1.5 w-1.5 rounded-full bg-success" />
-						<span className="text-[11px] text-muted-foreground">
-							Em tempo real
-						</span>
-					</span>
-				</div>
-				<div className="flex items-center gap-2">
-					<span className="font-mono text-[11px] text-muted-foreground">
-						{stats.characters} caracteres
-					</span>
-				</div>
-			</div>
+
+			<StatusBar
+				items={[
+					{
+						label: "",
+						value: "Em tempo real",
+						mono: false,
+					},
+					{
+						label: "",
+						value: `${stats.words} palavras`,
+						mono: true,
+					},
+					{
+						label: "",
+						value: `${stats.characters} caracteres`,
+						mono: true,
+					},
+					{
+						label: "",
+						value: `~${stats.readingTime} leitura`,
+						mono: false,
+					},
+				]}
+			/>
 		</LayoutD>
 	);
 }

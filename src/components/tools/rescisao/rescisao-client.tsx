@@ -18,7 +18,7 @@ import type { TerminationType } from "@/lib/payroll";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
-import { Segmented } from "./_parts/segmented";
+import { OptionSwitch } from "@/components/shared/option-switch";
 
 type TerminationTypeOption = TerminationType | "indirect-resignation";
 
@@ -251,10 +251,11 @@ export function RescisaoClient() {
 								<p className="mb-1.5 text-xs font-medium text-foreground">
 									Aviso prévio
 								</p>
-								<Segmented
+								<OptionSwitch
 									value={state.noticeType}
 									onChange={(v) => set("noticeType")(v as NoticePolicy)}
 									options={NOTICE_POLICY_OPTIONS}
+									fullWidth
 								/>
 							</div>
 						</div>

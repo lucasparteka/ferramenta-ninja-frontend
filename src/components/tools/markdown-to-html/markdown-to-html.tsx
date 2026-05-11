@@ -6,6 +6,7 @@ import { marked } from "marked";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { SwitchRow } from "@/components/shared/switch-row";
 import { Button } from "@/components/ui/button";
 
 const SAMPLE_MARKDOWN = `# Título Principal
@@ -51,7 +52,13 @@ const BASIC_CSS = `<style>
   a { color: #7c3aed; }
 </style>`;
 
-function SanitizedHtml({ html, className }: { html: string; className?: string }) {
+function SanitizedHtml({
+	html,
+	className,
+}: {
+	html: string;
+	className?: string;
+}) {
 	const ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		if (ref.current) ref.current.innerHTML = html;
@@ -65,7 +72,11 @@ export function MarkdownToHtml() {
 
 	const html = useMemo(() => {
 		if (!markdown.trim()) return "";
-		const raw = marked.parse(markdown, { async: false, gfm: true, breaks: true });
+		const raw = marked.parse(markdown, {
+			async: false,
+			gfm: true,
+			breaks: true,
+		});
 		return DOMPurify.sanitize(raw as string);
 	}, [markdown]);
 
@@ -152,15 +163,11 @@ export function MarkdownToHtml() {
 							</span>
 						</span>
 						<div className="flex items-center gap-2">
-							<label className="flex items-center gap-1.5 cursor-pointer">
-								<input
-									type="checkbox"
-									checked={includeCss}
-									onChange={(e) => setIncludeCss(e.target.checked)}
-									className="h-3 w-3"
-								/>
-								<span className="text-[11px] text-muted-foreground">CSS no download</span>
-							</label>
+							<SwitchRow
+								label="CSS no download"
+								checked={includeCss}
+								onChange={(v) => setIncludeCss(v)}
+							/>
 							<Button
 								variant="ghost"
 								size="sm"

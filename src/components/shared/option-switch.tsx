@@ -2,16 +2,17 @@
 
 import { cn } from "@/lib/utils";
 
-type Option = {
+export type OptionSwitchOption = {
 	label: string;
 	value: string;
 };
 
 type OptionSwitchProps = {
-	options: Option[];
+	options: OptionSwitchOption[];
 	value: string;
 	onChange: (value: string) => void;
 	size?: "default" | "sm";
+	fullWidth?: boolean;
 };
 
 export function OptionSwitch({
@@ -19,12 +20,14 @@ export function OptionSwitch({
 	value,
 	onChange,
 	size = "default",
+	fullWidth = false,
 }: OptionSwitchProps) {
 	return (
 		<div
+			role="radiogroup"
 			className={cn(
-				"inline-flex items-center border border-border rounded-md p-0.5",
-				size === "sm" && "rounded",
+				"inline-flex items-center bg-muted border border-border rounded-md p-0.5 gap-0.5",
+				fullWidth && "flex w-full",
 			)}
 		>
 			{options.map((option) => {
@@ -35,12 +38,13 @@ export function OptionSwitch({
 						type="button"
 						onClick={() => onChange(option.value)}
 						className={cn(
-							"rounded transition-colors font-medium",
+							"rounded transition-all font-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30",
 							size === "default"
-								? "px-3 py-1 text-sm"
+								? "px-3 text-[13px] h-7.5"
 								: "px-2 py-0.5 text-[11px]",
+							fullWidth && "flex-1 flex items-center justify-center",
 							active
-								? "bg-muted text-foreground shadow-[inset_0_0_0_1px_var(--border)]"
+								? "bg-card text-foreground shadow-[0_1px_3px_oklch(0_0_0/0.12),0_0_0_0.5px_oklch(0_0_0/0.08)] font-medium"
 								: "text-muted-foreground hover:text-foreground",
 						)}
 					>

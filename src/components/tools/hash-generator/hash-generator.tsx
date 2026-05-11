@@ -4,6 +4,7 @@ import { Trash2 } from "lucide-react";
 import { useId, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
+import { SwitchRow } from "@/components/shared/switch-row";
 import { Button } from "@/components/ui/button";
 import {
 	ALGORITHM_LABELS,
@@ -87,9 +88,7 @@ export function HashGenerator() {
 					</div>
 
 					<div className="flex items-center justify-between border-b border-border px-3 py-2">
-						<span className="text-[11px] text-muted-foreground">
-							Algoritmo
-						</span>
+						<span className="text-[11px] text-muted-foreground">Algoritmo</span>
 						<select
 							value={algo}
 							onChange={(e) => {
@@ -107,23 +106,15 @@ export function HashGenerator() {
 						</select>
 					</div>
 
-					<div className="flex items-center justify-between border-b border-border px-3 py-2">
-						<label
-							htmlFor={`${uid}-hmac`}
-							className="text-[11px] text-muted-foreground"
-						>
-							HMAC com chave secreta
-						</label>
-						<input
-							id={`${uid}-hmac`}
-							type="checkbox"
+					<div className="border-b border-border px-3 py-2">
+						<SwitchRow
+							label="HMAC com chave secreta"
 							checked={useHmac}
-							onChange={(e) => {
-								setUseHmac(e.target.checked);
+							onChange={(v) => {
+								setUseHmac(v);
 								setHashResult("");
 								setVerifyResult(null);
 							}}
-							className="h-3.5 w-3.5"
 						/>
 					</div>
 

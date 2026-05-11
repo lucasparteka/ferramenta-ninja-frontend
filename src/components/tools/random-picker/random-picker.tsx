@@ -3,6 +3,7 @@
 import { Shuffle, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { LayoutD } from "@/components/shared/layout-d";
+import { SwitchRow } from "@/components/shared/switch-row";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { drawRandomItems } from "@/lib/random/draw";
@@ -148,47 +149,17 @@ export function RandomPicker() {
 							/>
 						</div>
 
-						<div className="flex items-center justify-between">
-							<span className="text-xs text-muted-foreground">
-								Permitir repetição
-							</span>
-							<button
-								type="button"
-								role="switch"
-								aria-checked={options.allowRepeat}
-								onClick={() => set("allowRepeat", !options.allowRepeat)}
-								className={`relative h-4 w-7 rounded-full transition-colors ${
-									options.allowRepeat ? "bg-foreground/80" : "bg-border"
-								}`}
-							>
-								<span
-									className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${
-										options.allowRepeat ? "left-[14px]" : "left-0.5"
-									}`}
-								/>
-							</button>
-						</div>
+						<SwitchRow
+							label="Permitir repetição"
+							checked={options.allowRepeat}
+							onChange={(v) => set("allowRepeat", v)}
+						/>
 
-						<div className="flex items-center justify-between">
-							<span className="text-xs text-muted-foreground">
-								Ignorar linhas vazias
-							</span>
-							<button
-								type="button"
-								role="switch"
-								aria-checked={options.removeEmpty}
-								onClick={() => set("removeEmpty", !options.removeEmpty)}
-								className={`relative h-4 w-7 rounded-full transition-colors ${
-									options.removeEmpty ? "bg-foreground/80" : "bg-border"
-								}`}
-							>
-								<span
-									className={`absolute top-0.5 h-3 w-3 rounded-full bg-white transition-all ${
-										options.removeEmpty ? "left-[14px]" : "left-0.5"
-									}`}
-								/>
-							</button>
-						</div>
+						<SwitchRow
+							label="Ignorar linhas vazias"
+							checked={options.removeEmpty}
+							onChange={(v) => set("removeEmpty", v)}
+						/>
 					</div>
 				</>
 			}

@@ -182,10 +182,11 @@ export function convertUnit(
 
 export function formatConverted(value: number): string {
 	if (!Number.isFinite(value)) return "—";
+	if (value === 0) return "0";
 	const abs = Math.abs(value);
-	if (abs !== 0 && (abs < 0.0001 || abs >= 1e15)) {
-		return value.toExponential(6);
+	if (abs < 0.0001 || abs >= 1e15) {
+		return value.toExponential(4).replace(".", ",").replace("e+", "e");
 	}
-	const formatted = value.toFixed(6);
-	return formatted.replace(/\.?0+$/, "");
+	const str = String(parseFloat(value.toPrecision(6)));
+	return str.replace(".", ",");
 }

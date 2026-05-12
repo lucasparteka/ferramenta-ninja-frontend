@@ -18,11 +18,11 @@ export function StatusBar({ items, right, className }: StatusBarProps) {
 	return (
 		<div
 			className={cn(
-				"flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2 text-caption mt-auto",
+				"flex items-center flex-wrap justify-between border-t border-border bg-muted/40 px-4 py-2 text-caption mt-auto",
 				className,
 			)}
 		>
-			<div className="flex items-center gap-3">
+			<div className="flex items-center gap-3 flex-wrap">
 				{items.map((item, i) => {
 					const key = `${item.label}-${item.value}-${i}`;
 					return (

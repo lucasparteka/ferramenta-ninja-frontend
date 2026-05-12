@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeftRight, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
@@ -14,66 +14,50 @@ import {
 	getCategory,
 	UNIT_CATEGORIES,
 	type UnitCategoryId,
+	type UnitDef,
 } from "@/lib/units/convert";
+import { cn } from "@/lib/utils";
 
 export function UnitConverterClient() {
 	const [categoryId, setCategoryId] = useState<UnitCategoryId>("length");
 	const [fromId, setFromId] = useState("m");
-	const [toId, setToId] = useState("cm");
 	const [value, setValue] = useState("1");
 
 	const category = useMemo(() => getCategory(categoryId), [categoryId]);
 
 	const numeric = Number(value.replace(",", "."));
 	const valid = Number.isFinite(numeric) && value.trim() !== "";
-	const result = valid
-		? convertUnit(numeric, categoryId, fromId, toId)
-		: Number.NaN;
 
 	const fromUnit = category.units.find((u) => u.id === fromId);
-	const toUnit = category.units.find((u) => u.id === toId);
 
 	function handleCategoryChange(next: UnitCategoryId) {
 		const cat = getCategory(next);
 		setCategoryId(next);
 		setFromId(cat.units[0].id);
-		setToId(cat.units[1]?.id ?? cat.units[0].id);
-	}
-
-	function handleSwap() {
-		setFromId(toId);
-		setToId(fromId);
 	}
 
 	function handleClear() {
 		setValue("");
 	}
 
-	const resultStr = valid ? formatConverted(result) : "";
+	function handleRowClick(unit: UnitDef) {
+		const converted = convertUnit(numeric, categoryId, fromId, unit.id);
+		if (valid && Number.isFinite(converted)) {
+			setValue(formatConverted(converted));
+		}
+		setFromId(unit.id);
+	}
+
+	const formulaUnit = category.units.find((u) => u.id !== fromId);
+	const formulaStr =
+		valid && fromUnit && formulaUnit
+			? `${value} ${fromUnit.label} = ${formatConverted(convertUnit(numeric, categoryId, fromId, formulaUnit.id))} ${formulaUnit.label}`
+			: "—";
+
+	const copyStr = valid && fromUnit ? `${value} ${fromUnit.label}` : "";
 
 	return (
 		<LayoutC
-			toolbar={
-				<div className="flex items-center gap-4">
-					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-						Categoria
-					</span>
-					<NativeSelect
-						id="unit-category"
-						value={categoryId}
-						onChange={(e) =>
-							handleCategoryChange(e.target.value as UnitCategoryId)
-						}
-						className="h-7 text-[11px]"
-					>
-						{UNIT_CATEGORIES.map((c) => (
-							<option key={c.id} value={c.id}>
-								{c.label}
-							</option>
-						))}
-					</NativeSelect>
-				</div>
-			}
 			left={
 				<>
 					<PaneHeader
@@ -89,7 +73,29 @@ export function UnitConverterClient() {
 							</Button>
 						}
 					/>
-					<div className="flex flex-1 flex-col p-3 space-y-4">
+					<div className="flex flex-1 flex-col p-3 space-y-3">
+						<div className="space-y-1.5">
+							<label
+								htmlFor="unit-category"
+								className="text-xs font-medium text-muted-foreground"
+							>
+								Categoria
+							</label>
+							<NativeSelect
+								id="unit-category"
+								value={categoryId}
+								onChange={(e) =>
+									handleCategoryChange(e.target.value as UnitCategoryId)
+								}
+								className="w-full"
+							>
+								{UNIT_CATEGORIES.map((c) => (
+									<option key={c.id} value={c.id}>
+										{c.label}
+									</option>
+								))}
+							</NativeSelect>
+						</div>
 						<div className="space-y-1.5">
 							<label
 								htmlFor="unit-value"
@@ -112,7 +118,7 @@ export function UnitConverterClient() {
 								htmlFor="unit-from"
 								className="text-xs font-medium text-muted-foreground"
 							>
-								De
+								Unidade
 							</label>
 							<NativeSelect
 								id="unit-from"
@@ -127,82 +133,127 @@ export function UnitConverterClient() {
 								))}
 							</NativeSelect>
 						</div>
+						<div className="rounded-md border border-border bg-muted/40 px-3 py-2 font-mono text-[11px] text-muted-foreground tabular-nums leading-relaxed break-all">
+							{formulaStr}
+						</div>
 					</div>
 				</>
 			}
 			right={
 				<>
 					<PaneHeader
-						title="Resultado"
+						title="Resultados"
 						actions={
 							<CopyButton
-								text={resultStr}
-								disabled={!resultStr}
+								text={copyStr}
+								disabled={!copyStr}
 								variant="ghost"
 								size="icon-sm"
 								iconOnly
 							/>
 						}
 					/>
-					<div className="flex flex-1 flex-col p-3 space-y-4">
-						<div className="flex-1 flex items-center justify-center min-h-[100px] bg-muted/20 rounded-md cursor-default select-all">
-							{resultStr ? (
-								<span className="font-mono text-lg tabular-nums text-foreground">
-									{resultStr}
-								</span>
-							) : (
-								<span className="text-sm text-muted-foreground">—</span>
-							)}
-						</div>
-						<div className="space-y-1.5">
-							<label
-								htmlFor="unit-to"
-								className="text-xs font-medium text-muted-foreground"
-							>
-								Para
-							</label>
-							<NativeSelect
-								id="unit-to"
-								value={toId}
-								onChange={(e) => setToId(e.target.value)}
-								className="w-full"
-							>
-								{category.units.map((u) => (
-									<option key={u.id} value={u.id}>
-										{u.label}
-									</option>
-								))}
-							</NativeSelect>
-						</div>
-					</div>
+					<ul
+						className="flex-1 overflow-y-auto"
+						aria-label="Resultados da conversão"
+					>
+						{category.units.map((unit) => {
+							const isActive = unit.id === fromId;
+							const converted = valid
+								? convertUnit(numeric, categoryId, fromId, unit.id)
+								: Number.NaN;
+							const convertedStr =
+								valid && Number.isFinite(converted)
+									? formatConverted(converted)
+									: "—";
+							const labelMatch = unit.label.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
+							const unitName = labelMatch ? labelMatch[1] : unit.label;
+							const unitSym = labelMatch ? labelMatch[2] : undefined;
+							return (
+								<li
+									key={unit.id}
+									tabIndex={isActive ? -1 : 0}
+									onClick={() => !isActive && handleRowClick(unit)}
+									onKeyDown={(e) => {
+										if (!isActive && (e.key === "Enter" || e.key === " ")) {
+											e.preventDefault();
+											handleRowClick(unit);
+										}
+									}}
+									aria-label={`${unit.label}: ${convertedStr}${isActive ? " (base atual)" : ""}`}
+									className={cn(
+										"group flex items-center justify-between px-3 py-2.5 border-b border-border last:border-b-0 gap-3",
+										isActive
+											? "bg-accent/60 cursor-default"
+											: "cursor-pointer hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-ring/30",
+									)}
+								>
+									<div className="flex flex-col gap-0.5 min-w-0">
+										<span
+											className={cn(
+												"text-xs truncate",
+												isActive
+													? "text-accent-foreground font-medium"
+													: "text-foreground",
+											)}
+										>
+											{unitName}
+										</span>
+										{unitSym && (
+											<span
+												className={cn(
+													"font-mono text-[10px]",
+													isActive
+														? "text-accent-foreground/60"
+														: "text-muted-foreground",
+												)}
+											>
+												{unitSym}
+											</span>
+										)}
+									</div>
+									<div className="flex items-center gap-2 shrink-0">
+										{!isActive && (
+											<span className="text-[10px] text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-150 whitespace-nowrap">
+												← usar como base
+											</span>
+										)}
+										<span
+											className={cn(
+												"font-mono text-sm tabular-nums",
+												isActive
+													? "text-accent-foreground font-medium"
+													: "text-foreground",
+											)}
+										>
+											{convertedStr}
+										</span>
+									</div>
+								</li>
+							);
+						})}
+					</ul>
 				</>
-			}
-			swapButton={
-				<button
-					type="button"
-					onClick={handleSwap}
-					disabled={!value.trim()}
-					className="rounded-full border border-border bg-card p-1.5 text-muted-foreground transition-colors shadow-sm hover:text-foreground hover:bg-muted disabled:opacity-40 disabled:pointer-events-none"
-					aria-label="Inverter unidades"
-				>
-					<ArrowLeftRight className="h-3.5 w-3.5" />
-				</button>
 			}
 			footer={
 				<StatusBar
 					items={[
 						{
 							label: "",
-							value: resultStr ? "Convertido" : "Aguardando",
-							mono: false,
-							variant: resultStr ? "success" : "default",
+							value:
+								valid && fromUnit ? `${value} ${fromUnit.label}` : "Aguardando",
+							mono: valid,
+							variant: valid ? "success" : "default",
 						},
 						{
-							label: "Fórmula",
-							value: resultStr
-								? `${value} ${fromUnit?.label ?? ""} = ${resultStr} ${toUnit?.label ?? ""}`
-								: "—",
+							label: "",
+							value: `${category.units.length} unidades`,
 							mono: true,
+						},
+						{
+							label: "",
+							value: category.label,
+							mono: false,
 						},
 					]}
 				/>

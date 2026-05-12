@@ -18,7 +18,7 @@ export function StatusBar({ items, right, className }: StatusBarProps) {
 	return (
 		<div
 			className={cn(
-				"flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2",
+				"flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2 text-caption mt-auto",
 				className,
 			)}
 		>
@@ -27,15 +27,11 @@ export function StatusBar({ items, right, className }: StatusBarProps) {
 					const key = `${item.label}-${item.value}-${i}`;
 					return (
 						<span key={key} className="inline-flex items-center gap-1.5">
-							{i > 0 && (
-								<span className="text-[11px] text-muted-foreground">·</span>
-							)}
-							<span className="text-[11px] text-muted-foreground">
-								{item.label}
-							</span>
+							{i > 0 && <span className="text-muted-foreground">·</span>}
+							<span className="text-muted-foreground">{item.label}</span>
 							<span
 								className={cn(
-									item.mono !== false && "font-mono text-[11px] tabular-nums",
+									item.mono !== false && "font-mono  tabular-nums",
 									item.variant === "success" && "text-success",
 									item.variant === "warning" && "text-warning",
 									item.variant === "danger" && "text-destructive",

@@ -53,29 +53,54 @@ export function WhatsAppFormatter() {
 		setWhatsAppText("");
 	}
 
+	function handleClearStyle() {
+		editor
+			?.chain()
+			.focus()
+			.extendMarkRange("bold")
+			.extendMarkRange("italic")
+			.extendMarkRange("strike")
+			.extendMarkRange("code")
+			.unsetAllMarks()
+			.run();
+	}
+
 	const isEmpty = editor?.isEmpty ?? true;
 	const canUndo = editor?.can().undo() ?? false;
+	const hasActiveStyle = !!(
+		editor?.isActive("bold") ||
+		editor?.isActive("italic") ||
+		editor?.isActive("strike") ||
+		editor?.isActive("code")
+	);
 
 	return (
 		<LayoutD
 			sidebarWidth={380}
 			header={
-				<>
-					<div className="flex items-center gap-3">
-						<h1 className="text-sm font-semibold tracking-tight">
-							Formatador WhatsApp
-						</h1>
-						<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
-							FORMATAÇÃO
-						</span>
-					</div>
-					<div className="flex items-center gap-1.5">
+				<div className="flex items-center gap-3">
+					<h1 className="text-sm font-semibold tracking-tight">
+						Formatador WhatsApp
+					</h1>
+					<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
+						FORMATAÇÃO
+					</span>
+				</div>
+			}
+			sidebar={
+				<div className="p-4 space-y-3">
+					<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+						Pré-visualização
+					</h3>
+					<WhatsAppPreview text={whatsAppText} />
+					<div className="flex items-center gap-1.5 pt-1">
 						<CopyButton
 							text={whatsAppText}
 							label="Copiar"
 							variant="outline"
 							size="sm"
 							disabled={isEmpty}
+							className="flex-1"
 						/>
 						<Button
 							variant="ghost"
@@ -91,19 +116,11 @@ export function WhatsAppFormatter() {
 							size="icon-sm"
 							onClick={handleClear}
 							disabled={isEmpty}
-							aria-label="Limpar"
+							aria-label="Limpar tudo"
 						>
 							<Trash2 className="h-3.5 w-3.5" />
 						</Button>
 					</div>
-				</>
-			}
-			sidebar={
-				<div className="p-4 space-y-3">
-					<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-						Pré-visualização
-					</h3>
-					<WhatsAppPreview text={whatsAppText} />
 				</div>
 			}
 		>
@@ -153,12 +170,12 @@ export function WhatsAppFormatter() {
 					variant="ghost"
 					size="sm"
 					className="ml-auto"
-					onClick={() => editor?.chain().focus().unsetAllMarks().run()}
-					disabled={isEmpty}
-					aria-label="Limpar estilos"
+					onClick={handleClearStyle}
+					disabled={!hasActiveStyle}
+					aria-label="Remover estilo"
 				>
 					<Eraser className="h-3.5 w-3.5" />
-					Limpar estilos
+					Remover estilo
 				</Button>
 			</div>
 

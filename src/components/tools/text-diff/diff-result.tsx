@@ -37,15 +37,15 @@ export function DiffResult({
 				</span>
 				<div className="overflow-x-auto rounded-md border bg-background p-4">
 					<pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-foreground">
-						{leftItems.map(([type, text]) => {
+						{leftItems.map(([type, text], i) => {
 							if (type === -1) {
 								return (
-									<span key={text + "-removed-original"} style={removedStyle}>
+									<span key={i} style={removedStyle}>
 										{text}
 									</span>
 								);
 							}
-							return <span key={text + "-original"}>{text}</span>;
+							return <span key={i}>{text}</span>;
 						})}
 					</pre>
 				</div>
@@ -57,15 +57,15 @@ export function DiffResult({
 				</span>
 				<div className="overflow-x-auto rounded-md border bg-background p-4">
 					<pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-foreground">
-						{rightItems.map(([type, text]) => {
+						{rightItems.map(([type, text], i) => {
 							if (type === 1) {
 								return (
-									<span key={text + "-added-modified"} style={addedStyle}>
+									<span key={i} style={addedStyle}>
 										{text}
 									</span>
 								);
 							}
-							return <span key={text + "-removed-modified"}>{text}</span>;
+							return <span key={i}>{text}</span>;
 						})}
 					</pre>
 				</div>

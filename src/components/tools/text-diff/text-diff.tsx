@@ -1,7 +1,6 @@
 "use client";
 
 import { GitCompare, Trash2 } from "lucide-react";
-import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
 import { Button } from "@/components/ui/button";
 import { DiffInputs } from "./diff-inputs";
@@ -24,7 +23,6 @@ export function TextDiff() {
 		swapTexts,
 	} = useDiff();
 
-	const resultText = diffResult.map(([, text]) => text).join("");
 	const additions = diffResult.filter(([type]) => type === 1).length;
 	const removals = diffResult.filter(([type]) => type === -1).length;
 
@@ -45,14 +43,6 @@ export function TextDiff() {
 							<GitCompare className="mr-1.5 h-3 w-3" />
 							Comparar
 						</Button>
-						{hasCompared && (
-							<CopyButton
-								text={resultText}
-								label="Copiar"
-								variant="outline"
-								size="sm"
-							/>
-						)}
 						<Button
 							variant="ghost"
 							size="icon-sm"
@@ -110,7 +100,7 @@ export function TextDiff() {
 			/>
 
 			{hasCompared && (
-				<div className="border-t border-border">
+				<div className="border-t border-border p-4">
 					<DiffResult
 						diffResult={diffResult}
 						showOnlyDifferences={options.showOnlyDifferences}

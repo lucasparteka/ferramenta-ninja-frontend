@@ -8,6 +8,7 @@ import { LayoutC } from "@/components/shared/layout-c";
 import { OptionSwitch } from "@/components/shared/option-switch";
 import { PaneHeader } from "@/components/shared/pane-header";
 import { StatusBar } from "@/components/shared/status-bar";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { numberToWords } from "@/lib/extenso/numero-extenso";
 
@@ -62,14 +63,15 @@ export function NumeroPorExtensoClient() {
 					<PaneHeader
 						title="Entrada"
 						actions={
-							<button
+							<Button
+								variant="ghost"
+								size="icon-xs"
 								type="button"
 								onClick={handleClear}
-								className="rounded-md p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
 								aria-label="Limpar"
 							>
-								<Trash2 className="h-3.5 w-3.5" />
-							</button>
+								<Trash2 />
+							</Button>
 						}
 					/>
 					<div className="flex flex-1 flex-col p-3 space-y-4">
@@ -125,7 +127,7 @@ export function NumeroPorExtensoClient() {
 								text={capitalized}
 								disabled={!capitalized}
 								variant="ghost"
-								size="icon-sm"
+								size="icon-xs"
 								iconOnly
 							/>
 						}

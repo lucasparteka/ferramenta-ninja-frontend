@@ -1,8 +1,8 @@
 "use client";
 
 import DiffMatchPatch from "diff-match-patch";
-import { ChevronDown, Trash2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { ChevronDown, Loader2, Trash2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
 import { StatusBar } from "@/components/shared/status-bar";
@@ -28,10 +28,13 @@ function computeDiff(left: string, right: string) {
 }
 
 export function TextCleaner({ defaultOptions }: Props) {
-	const { input, output, options, setInput, setOptions, issues, clearAll } =
+	const { input, output, options, setInput, setOptions, clearAll } =
 		useTextCleaner(defaultOptions);
 
 	const [showDiff, setShowDiff] = useState(false);
+	const [isTyping, setIsTyping] = useState(false);
+	const [displayedRemovedCount, setDisplayedRemovedCount] = useState(0);
+	const [displayedHasChanges, setDisplayedHasChanges] = useState(false);
 
 	const diff = useMemo(() => {
 		if (!input || !output) return [];
@@ -61,10 +64,20 @@ export function TextCleaner({ defaultOptions }: Props) {
 		return inputStats.characters - outputStats.characters;
 	}, [inputStats, outputStats]);
 
+	useEffect(() => {
+		setIsTyping(true);
+		const timer = setTimeout(() => {
+			setIsTyping(false);
+			setDisplayedRemovedCount(removedCount);
+			setDisplayedHasChanges(hasChanges);
+		}, 500);
+		return () => clearTimeout(timer);
+	}, [input]);
+
 	const counts = useMemo(() => {
 		if (!input) return {};
 		return {
-			removeExtraSpaces: (input.match(/  +/g) || []).length,
+			removeExtraSpaces: (input.match(/ {2,}/g) || []).length,
 			removeLineBreaks: (input.match(/\n{2,}/g) || []).length,
 			removeInvisible: (input.match(/[​-‍﻿]/g) || []).length,
 			trimLines: (input.match(/^ +| +$/gm) || []).length,
@@ -83,29 +96,13 @@ export function TextCleaner({ defaultOptions }: Props) {
 						<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
 							LIMPEZA
 						</span>
-						{hasChanges && (
+						{isTyping && input ? (
+							<Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+						) : displayedHasChanges ? (
 							<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success tabular-nums">
-								−{removedCount} chars
+								−{displayedRemovedCount} chars
 							</span>
-						)}
-					</div>
-					<div className="flex items-center gap-1.5">
-						<CopyButton
-							text={output}
-							label="Copiar"
-							variant="outline"
-							size="sm"
-							disabled={!output}
-						/>
-						<Button
-							variant="ghost"
-							size="icon-sm"
-							onClick={clearAll}
-							disabled={!input}
-							aria-label="Limpar"
-						>
-							<Trash2 className="h-3.5 w-3.5" />
-						</Button>
+						) : null}
 					</div>
 				</>
 			}
@@ -124,7 +121,9 @@ export function TextCleaner({ defaultOptions }: Props) {
 							checked={options.removeExtraSpaces}
 							onChange={(v) => setOptions({ ...options, removeExtraSpaces: v })}
 							feedback={
-								options.removeExtraSpaces && counts.removeExtraSpaces && counts.removeExtraSpaces > 0
+								options.removeExtraSpaces &&
+								counts.removeExtraSpaces &&
+								counts.removeExtraSpaces > 0
 									? `−${counts.removeExtraSpaces} ocorrências`
 									: undefined
 							}
@@ -135,7 +134,9 @@ export function TextCleaner({ defaultOptions }: Props) {
 							checked={options.removeLineBreaks}
 							onChange={(v) => setOptions({ ...options, removeLineBreaks: v })}
 							feedback={
-								options.removeLineBreaks && counts.removeLineBreaks && counts.removeLineBreaks > 0
+								options.removeLineBreaks &&
+								counts.removeLineBreaks &&
+								counts.removeLineBreaks > 0
 									? `−${counts.removeLineBreaks} ocorrências`
 									: undefined
 							}
@@ -146,7 +147,9 @@ export function TextCleaner({ defaultOptions }: Props) {
 							checked={options.removeInvisible}
 							onChange={(v) => setOptions({ ...options, removeInvisible: v })}
 							feedback={
-								options.removeInvisible && counts.removeInvisible && counts.removeInvisible > 0
+								options.removeInvisible &&
+								counts.removeInvisible &&
+								counts.removeInvisible > 0
 									? `−${counts.removeInvisible}`
 									: undefined
 							}
@@ -181,16 +184,29 @@ export function TextCleaner({ defaultOptions }: Props) {
 				</>
 			}
 		>
-			<div className="p-4">
+			<div className="p-4 space-y-2">
 				<TextCleanerInput value={input} onChange={setInput} />
+				<div className="flex justify-end">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={clearAll}
+						disabled={!input}
+						className="h-7 px-2 text-xs text-muted-foreground gap-1.5"
+					>
+						<Trash2 className="h-3.5 w-3.5" />
+						Limpar
+					</Button>
+				</div>
 			</div>
 
 			{output && (
 				<div className="border-t border-border p-4">
 					<TextCleanerResult
 						output={output}
-						difference={removedCount}
+						difference={displayedRemovedCount}
 						totalInput={inputStats?.characters ?? 0}
+						isTyping={isTyping}
 					/>
 				</div>
 			)}
@@ -258,28 +274,43 @@ type TextCleanerResultProps = {
 	output: string;
 	difference?: number;
 	totalInput?: number;
+	isTyping?: boolean;
 };
 
 function TextCleanerResult({
 	output,
 	difference,
 	totalInput,
+	isTyping,
 }: TextCleanerResultProps) {
 	return (
 		<div className="space-y-2">
-			{difference !== undefined && difference > 0 && totalInput && (
-				<div className="flex items-center justify-between">
-					<span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-						Resultado
-					</span>
+			<div className="flex items-center justify-between">
+				<span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+					Resultado
+				</span>
+				{isTyping ? (
+					<Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+				) : difference !== undefined && difference > 0 && totalInput ? (
 					<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success tabular-nums">
 						−{difference} chars
 					</span>
-				</div>
-			)}
-			<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
-				{output}
-			</pre>
+				) : null}
+			</div>
+			<div className="rounded-md border border-border bg-muted/20 p-3">
+				<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
+					{output}
+				</pre>
+			</div>
+			<div className="flex justify-end">
+				<CopyButton
+					text={output}
+					label="Copiar resultado"
+					variant="outline"
+					size="sm"
+					disabled={!output}
+				/>
+			</div>
 		</div>
 	);
 }

@@ -34,7 +34,10 @@ function calculateStats(text: string): CounterResult {
 	const charactersNoSpaces = text.replace(/\s/g, "").length;
 	const words = text.trim().split(/\s+/).filter(Boolean).length;
 	const lines = text.split("\n").length;
-	const paragraphs = text.trim().split(/\n\s*\n/).filter(Boolean).length;
+	const paragraphs = text
+		.trim()
+		.split(/\n\s*\n/)
+		.filter(Boolean).length;
 	const readingTime = Math.max(1, Math.ceil(words / 200));
 
 	return {
@@ -52,10 +55,6 @@ export function CharacterCounter() {
 
 	const stats = calculateStats(text);
 
-	function handleCopy() {
-		if (text) navigator.clipboard.writeText(text);
-	}
-
 	return (
 		<LayoutD
 			header={
@@ -71,7 +70,6 @@ export function CharacterCounter() {
 					<div className="flex items-center gap-1.5">
 						<CopyButton
 							text={text}
-							label="Copiar"
 							variant="outline"
 							size="sm"
 							disabled={text === ""}

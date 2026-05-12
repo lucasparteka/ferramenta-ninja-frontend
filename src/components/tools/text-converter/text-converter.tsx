@@ -97,7 +97,7 @@ export function TextConverter() {
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						placeholder="Cole ou digite o texto que deseja converter..."
-						className="flex-1 min-h-[280px] resize-none bg-transparent p-3 font-mono text-sm"
+						className="flex-1 min-h-70 resize-none bg-transparent p-3 font-mono text-sm"
 						spellCheck={false}
 					/>
 				</>
@@ -116,7 +116,7 @@ export function TextConverter() {
 							/>
 						}
 					/>
-					<div className="flex-1 min-h-[280px] bg-muted/20 p-3 cursor-default select-all">
+					<div className="flex-1 min-h-70 bg-muted/20 p-3 cursor-default select-all">
 						{output ? (
 							<pre className="font-mono text-sm whitespace-pre-wrap break-all">
 								{output}

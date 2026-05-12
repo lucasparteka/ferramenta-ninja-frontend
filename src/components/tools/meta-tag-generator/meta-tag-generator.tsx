@@ -4,6 +4,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -32,17 +33,13 @@ export function MetaTagGenerator() {
 		keywords,
 	});
 
-
 	return (
 		<div className="space-y-6">
 			<div className="max-w-2xl space-y-4">
 				<div className="space-y-2">
-					<label
-						htmlFor="meta-title"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="meta-title" className="block">
 						Título da página
-					</label>
+					</Label>
 					<Input
 						id="meta-title"
 						value={title}
@@ -56,12 +53,9 @@ export function MetaTagGenerator() {
 				</div>
 
 				<div className="space-y-2">
-					<label
-						htmlFor="meta-desc"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="meta-desc" className="block">
 						Meta descrição
-					</label>
+					</Label>
 					<Textarea
 						id="meta-desc"
 						value={description}
@@ -76,12 +70,9 @@ export function MetaTagGenerator() {
 				</div>
 
 				<div className="space-y-2">
-					<label
-						htmlFor="meta-url"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="meta-url" className="block">
 						URL da página
-					</label>
+					</Label>
 					<Input
 						id="meta-url"
 						type="url"
@@ -92,12 +83,9 @@ export function MetaTagGenerator() {
 				</div>
 
 				<div className="space-y-2">
-					<label
-						htmlFor="meta-image"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="meta-image" className="block">
 						Imagem OG (URL)
-					</label>
+					</Label>
 					<Input
 						id="meta-image"
 						type="url"
@@ -108,12 +96,9 @@ export function MetaTagGenerator() {
 				</div>
 
 				<div className="space-y-2">
-					<label
-						htmlFor="meta-type"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="meta-type" className="block">
 						Tipo de conteúdo
-					</label>
+					</Label>
 					<NativeSelect
 						id="meta-type"
 						value={type}
@@ -128,12 +113,9 @@ export function MetaTagGenerator() {
 				</div>
 
 				<div className="space-y-2">
-					<label
-						htmlFor="meta-author"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="meta-author" className="block">
 						Autor
-					</label>
+					</Label>
 					<Input
 						id="meta-author"
 						value={author}
@@ -143,12 +125,9 @@ export function MetaTagGenerator() {
 				</div>
 
 				<div className="space-y-2">
-					<label
-						htmlFor="meta-keywords"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="meta-keywords" className="block">
 						Palavras-chave
-					</label>
+					</Label>
 					<Input
 						id="meta-keywords"
 						value={keywords}
@@ -160,7 +139,9 @@ export function MetaTagGenerator() {
 
 			{(title || description) && (
 				<div className="max-w-2xl space-y-4">
-					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Previews</p>
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						Previews
+					</p>
 
 					<div className="space-y-2">
 						<p className="text-xs text-muted-foreground">Google</p>
@@ -214,12 +195,9 @@ export function MetaTagGenerator() {
 			)}
 
 			<div className="max-w-2xl space-y-2">
-				<label
-					htmlFor="meta-html"
-					className="block text-sm font-medium text-foreground"
-				>
+				<Label htmlFor="meta-html" className="block">
 					Código HTML gerado
-				</label>
+				</Label>
 				<Textarea
 					id="meta-html"
 					value={html || "Preencha os campos acima para gerar o código."}
@@ -227,7 +205,12 @@ export function MetaTagGenerator() {
 					className="min-h-[280px] font-mono text-sm text-foreground"
 					spellCheck={false}
 				/>
-				<CopyButton text={html} label="Copiar código" disabled={!html} variant="outline" />
+				<CopyButton
+					text={html}
+					label="Copiar código"
+					disabled={!html}
+					variant="outline"
+				/>
 			</div>
 		</div>
 	);

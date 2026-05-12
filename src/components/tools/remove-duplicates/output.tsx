@@ -1,3 +1,4 @@
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 type RemoveDuplicatesOutputProps = {
@@ -7,12 +8,7 @@ type RemoveDuplicatesOutputProps = {
 export function RemoveDuplicatesOutput({ value }: RemoveDuplicatesOutputProps) {
 	return (
 		<div className="space-y-2">
-			<label
-				htmlFor="duplicates-output"
-				className="text-sm font-medium text-foreground"
-			>
-				Lista Desduplicada
-			</label>
+			<Label htmlFor="duplicates-output">Lista Desduplicada</Label>
 			<Textarea
 				id="duplicates-output"
 				readOnly

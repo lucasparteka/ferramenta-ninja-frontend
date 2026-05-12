@@ -1,4 +1,5 @@
 import { CopyButton } from "@/components/shared/copy-button";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 type TextOutputProps = {
@@ -6,20 +7,17 @@ type TextOutputProps = {
 	onChange: (value: string) => void;
 };
 
-export function TextOutput({
-	value,
-	onChange,
-}: TextOutputProps) {
+export function TextOutput({ value, onChange }: TextOutputProps) {
 	return (
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
-				<label
-					htmlFor="text-output"
-					className="text-sm font-medium text-foreground"
-				>
-					Resultado
-				</label>
-				<CopyButton text={value} label="Copiar" disabled={!value} variant="outline" />
+				<Label htmlFor="text-output">Resultado</Label>
+				<CopyButton
+					text={value}
+					label="Copiar"
+					disabled={!value}
+					variant="outline"
+				/>
 			</div>
 			<Textarea
 				id="text-output"

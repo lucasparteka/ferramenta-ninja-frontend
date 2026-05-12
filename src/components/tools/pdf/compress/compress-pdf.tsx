@@ -3,6 +3,7 @@
 import { Trash } from "lucide-react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	type CompressionLevel,
@@ -110,9 +111,7 @@ export function CompressPDF() {
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="space-y-1">
-				<label className="block text-sm font-medium text-foreground">
-					Selecione um PDF
-				</label>
+				<Label>Selecione um PDF</Label>
 				<div
 					role="button"
 					tabIndex={0}
@@ -175,12 +174,7 @@ export function CompressPDF() {
 			</div>
 
 			<div className="space-y-1">
-				<label
-					htmlFor="compression-level"
-					className="block text-sm font-medium text-foreground"
-				>
-					Nível de compressão
-				</label>
+				<Label htmlFor="compression-level">Nível de compressão</Label>
 				<NativeSelect
 					id="compression-level"
 					value={level}

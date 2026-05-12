@@ -1,5 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type PasswordConfig = {
 	length: number;
@@ -40,12 +41,7 @@ export function PasswordOptions({ config, onChange }: PasswordOptionsProps) {
 		<div className="space-y-6">
 			<div className="space-y-3">
 				<div className="flex items-center justify-between">
-					<label
-						htmlFor="password-length"
-						className="text-sm font-medium text-foreground"
-					>
-						Tamanho da senha
-					</label>
+					<Label htmlFor="password-length">Tamanho da senha</Label>
 					<Input
 						type="number"
 						value={config.length}
@@ -68,24 +64,24 @@ export function PasswordOptions({ config, onChange }: PasswordOptionsProps) {
 			</div>
 
 			<div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-			{checkboxOptions.map((option) => (
-				<div
-					key={option.key}
-					className="flex items-center gap-2 rounded-md border border-border bg-secondary p-3 transition-colors hover:border-primary"
-				>
-					<Checkbox
-						id={`password-opt-${option.key}`}
-						checked={config[option.key]}
-						onCheckedChange={() => handleToggle(option.key)}
-					/>
-					<label
-						htmlFor={`password-opt-${option.key}`}
-						className="cursor-pointer text-sm text-foreground"
+				{checkboxOptions.map((option) => (
+					<div
+						key={option.key}
+						className="flex items-center gap-2 rounded-md border border-border bg-secondary p-3 transition-colors hover:border-primary"
 					>
-						{option.label}
-					</label>
-				</div>
-			))}
+						<Checkbox
+							id={`password-opt-${option.key}`}
+							checked={config[option.key]}
+							onCheckedChange={() => handleToggle(option.key)}
+						/>
+						<Label
+							htmlFor={`password-opt-${option.key}`}
+							className="cursor-pointer"
+						>
+							{option.label}
+						</Label>
+					</div>
+				))}
 			</div>
 		</div>
 	);

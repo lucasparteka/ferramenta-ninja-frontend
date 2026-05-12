@@ -5,6 +5,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { generateNumbers } from "@/lib/random/numbers";
 
@@ -61,7 +62,6 @@ export function NumberGenerator() {
 		setNumbers(generateNumbers(options));
 	}
 
-
 	const rangeSize = Math.abs(options.max - options.min) + 1;
 	const uniqueWarning = options.unique && options.count > rangeSize;
 
@@ -70,12 +70,7 @@ export function NumberGenerator() {
 			<div className="space-y-6 sm:w-[30%] sm:shrink-0">
 				<div className="grid grid-cols-1 gap-4">
 					<div className="space-y-1">
-						<label
-							htmlFor="num-count"
-							className="flex w-full text-sm font-medium text-foreground"
-						>
-							Números
-						</label>
+						<Label htmlFor="num-count">Números</Label>
 						<Input
 							id="num-count"
 							type="number"
@@ -87,9 +82,7 @@ export function NumberGenerator() {
 					</div>
 
 					<div className="space-y-1">
-						<label className="flex w-full text-sm font-medium text-foreground">
-							Entre
-						</label>
+						<Label>Entre</Label>
 						<div className="flex items-center gap-2">
 							<Input
 								type="number"
@@ -108,12 +101,7 @@ export function NumberGenerator() {
 					</div>
 
 					<div className="space-y-1">
-						<label
-							htmlFor="num-columns"
-							className="flex w-full text-sm font-medium text-foreground"
-						>
-							Colunas
-						</label>
+						<Label htmlFor="num-columns">Colunas</Label>
 						<NativeSelect
 							id="num-columns"
 							value={options.columns}
@@ -128,12 +116,7 @@ export function NumberGenerator() {
 					</div>
 
 					<div className="space-y-1">
-						<label
-							htmlFor="num-order"
-							className="flex w-full text-sm font-medium text-foreground"
-						>
-							Ordem
-						</label>
+						<Label htmlFor="num-order">Ordem</Label>
 						<NativeSelect
 							id="num-order"
 							value={options.order}
@@ -150,16 +133,16 @@ export function NumberGenerator() {
 							Números únicos
 						</span>
 						<div className="flex h-10 items-center">
-						<div className="flex items-center gap-2">
-							<Checkbox
-								id="unique"
-								checked={options.unique}
-								onCheckedChange={(checked) => set("unique", checked === true)}
-							/>
-							<label htmlFor="unique" className="text-sm text-foreground cursor-pointer">
-								Ativar
-							</label>
-						</div>
+							<div className="flex items-center gap-2">
+								<Checkbox
+									id="unique"
+									checked={options.unique}
+									onCheckedChange={(checked) => set("unique", checked === true)}
+								/>
+								<Label htmlFor="unique" className="cursor-pointer">
+									Ativar
+								</Label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -189,7 +172,11 @@ export function NumberGenerator() {
 								{numbers.length}{" "}
 								{numbers.length === 1 ? "número gerado" : "números gerados"}
 							</p>
-						<CopyButton text={numbers.join("\n")} label="Copiar" variant="outline" />
+							<CopyButton
+								text={numbers.join("\n")}
+								label="Copiar"
+								variant="outline"
+							/>
 						</div>
 						<div
 							className={`grid gap-2 rounded-md border border-border bg-secondary p-4 ${COLS_CLASS[options.columns] ?? "grid-cols-1"}`}

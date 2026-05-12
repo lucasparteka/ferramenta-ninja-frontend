@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 
 type OcrLanguage = "por" | "eng" | "spa";
@@ -27,12 +28,9 @@ export function OcrControls({
 	return (
 		<div className="space-y-4">
 			<div className="space-y-1">
-				<label
-					htmlFor="ocr-language"
-					className="block text-sm font-medium text-foreground"
-				>
+				<Label htmlFor="ocr-language" className="block">
 					Idioma do texto
-				</label>
+				</Label>
 				<NativeSelect
 					id="ocr-language"
 					value={language}

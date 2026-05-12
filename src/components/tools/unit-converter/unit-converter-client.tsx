@@ -7,6 +7,7 @@ import { LayoutC } from "@/components/shared/layout-c";
 import { PaneHeader } from "@/components/shared/pane-header";
 import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	convertUnit,
@@ -75,12 +76,12 @@ export function UnitConverterClient() {
 					/>
 					<div className="flex flex-1 flex-col p-3 space-y-3">
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="unit-category"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Categoria
-							</label>
+							</Label>
 							<NativeSelect
 								id="unit-category"
 								value={categoryId}
@@ -97,12 +98,12 @@ export function UnitConverterClient() {
 							</NativeSelect>
 						</div>
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="unit-value"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Valor
-							</label>
+							</Label>
 							<input
 								id="unit-value"
 								type="text"
@@ -114,12 +115,12 @@ export function UnitConverterClient() {
 							/>
 						</div>
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="unit-from"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Unidade
-							</label>
+							</Label>
 							<NativeSelect
 								id="unit-from"
 								value={fromId}

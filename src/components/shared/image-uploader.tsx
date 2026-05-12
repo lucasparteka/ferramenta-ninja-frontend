@@ -13,6 +13,7 @@ import {
 	DialogOverlay,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { getCroppedImg } from "@/utils/image";
 
 type Props = {
@@ -199,9 +200,7 @@ export default function ImageUploader({
 						)}
 					</div>
 					<div className="mt-4">
-						<label htmlFor="zoom-slider" className="block text-sm mb-2">
-							Zoom
-						</label>
+						<Label htmlFor="zoom-slider">Zoom</Label>
 						<Slider
 							id="zoom-slider"
 							value={[zoom]}

@@ -7,6 +7,7 @@ import { Chip } from "@/components/shared/layout-b/chip";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { PaneHeader } from "@/components/shared/pane-header";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	convertToCSV,
@@ -210,12 +211,12 @@ export function MockDataGenerator() {
 						<SectionLabel>Configuração</SectionLabel>
 						<div className="space-y-3">
 							<div>
-								<label
+								<Label
 									htmlFor="data-type"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Tipo de dado
-								</label>
+								</Label>
 								<NativeSelect
 									id="data-type"
 									value={dataType}
@@ -233,12 +234,12 @@ export function MockDataGenerator() {
 							</div>
 
 							<div>
-								<label
+								<Label
 									htmlFor="quantity"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Quantidade
-								</label>
+								</Label>
 								<NativeSelect
 									id="quantity"
 									value={quantity}
@@ -256,12 +257,12 @@ export function MockDataGenerator() {
 							</div>
 
 							<div>
-								<label
+								<Label
 									htmlFor="output-format"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Formato de saída
-								</label>
+								</Label>
 								<NativeSelect
 									id="output-format"
 									value={format}

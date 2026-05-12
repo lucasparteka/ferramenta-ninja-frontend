@@ -14,6 +14,7 @@
 import { FileCode, Image as ImageIcon, Smile, Type } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { OptionSwitch } from "@/components/shared/option-switch";
+import { Label } from "@/components/ui/label";
 import type { FaviconMode } from "@/lib/image/favicon";
 import { cn } from "@/lib/utils";
 
@@ -364,9 +365,7 @@ export function ColorField({
 
 	return (
 		<div className="space-y-2">
-			<label htmlFor={id} className="text-sm font-medium text-foreground">
-				{label}
-			</label>
+			<Label htmlFor={id}>{label}</Label>
 			<div className="flex items-center gap-2">
 				<input
 					type="color"
@@ -472,9 +471,7 @@ export function SizeSlider({
 	return (
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
-				<label htmlFor={id} className="text-sm font-medium text-foreground">
-					{label}
-				</label>
+				<Label htmlFor={id}>{label}</Label>
 				<span className="font-mono text-xs text-muted-foreground">
 					{value}%
 				</span>

@@ -6,6 +6,7 @@ import { LayoutD } from "@/components/shared/layout-d";
 import { SwitchRow } from "@/components/shared/switch-row";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { drawRandomItems } from "@/lib/random/draw";
 
 type PickerOptions = {
@@ -164,9 +165,9 @@ export function RandomPicker() {
 				</>
 			}
 		>
-			<label htmlFor="picker-input" className="sr-only">
+			<Label htmlFor="picker-input" className="sr-only">
 				Digite os itens (um por linha)
-			</label>
+			</Label>
 			<textarea
 				id="picker-input"
 				value={input}

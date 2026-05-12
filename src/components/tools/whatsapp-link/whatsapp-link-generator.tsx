@@ -2,6 +2,7 @@
 
 import { useId, useState, useEffect, useCallback } from "react";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ResultBox } from "@/components/shared/result-box";
@@ -17,10 +18,15 @@ function formatPhoneBR(raw: string): string {
 	return `(${ddd}) ${rest.slice(0, 5)}-${rest.slice(5, 9)}`;
 }
 
-function validatePhone(raw: string): { valid: boolean; digits: string; error?: string } {
+function validatePhone(raw: string): {
+	valid: boolean;
+	digits: string;
+	error?: string;
+} {
 	const digits = raw.replace(/\D/g, "");
 	if (digits.length === 0) return { valid: false, digits: "" };
-	if (digits.length < 10) return { valid: false, digits, error: "Número incompleto" };
+	if (digits.length < 10)
+		return { valid: false, digits, error: "Número incompleto" };
 	return { valid: true, digits };
 }
 
@@ -52,7 +58,11 @@ export function WhatsAppLinkGenerator() {
 	async function handleGenerateQr() {
 		if (!link) return;
 		try {
-			const dataUrl = await generateQRCode({ text: link, size: 280, errorCorrectionLevel: "M" });
+			const dataUrl = await generateQRCode({
+				text: link,
+				size: 280,
+				errorCorrectionLevel: "M",
+			});
 			setQrDataUrl(dataUrl);
 			setShowQr(true);
 		} catch {
@@ -76,9 +86,12 @@ export function WhatsAppLinkGenerator() {
 	return (
 		<div className="space-y-6">
 			<div className="space-y-1">
-				<label htmlFor={`${uid}-phone`} className="block text-[10px] uppercase tracking-wider text-muted-foreground">
+				<Label
+					htmlFor={`${uid}-phone`}
+					className="text-[10px] uppercase tracking-wider text-muted-foreground"
+				>
 					Número de telefone
-				</label>
+				</Label>
 				<Input
 					id={`${uid}-phone`}
 					type="tel"
@@ -88,7 +101,9 @@ export function WhatsAppLinkGenerator() {
 						setQrDataUrl("");
 					}}
 					placeholder="(11) 91234-5678"
-					className={rawPhone && !phoneValidation.valid ? "border-destructive" : ""}
+					className={
+						rawPhone && !phoneValidation.valid ? "border-destructive" : ""
+					}
 				/>
 				{phoneValidation.error && (
 					<p className="text-xs text-destructive">{phoneValidation.error}</p>
@@ -96,13 +111,19 @@ export function WhatsAppLinkGenerator() {
 			</div>
 
 			<div className="space-y-1">
-				<label htmlFor={`${uid}-message`} className="block text-[10px] uppercase tracking-wider text-muted-foreground">
+				<Label
+					htmlFor={`${uid}-message`}
+					className="text-[10px] uppercase tracking-wider text-muted-foreground"
+				>
 					Mensagem <span className="text-muted-foreground/60">(opcional)</span>
-				</label>
+				</Label>
 				<Textarea
 					id={`${uid}-message`}
 					value={message}
-					onChange={(e) => { setMessage(e.target.value); setQrDataUrl(""); }}
+					onChange={(e) => {
+						setMessage(e.target.value);
+						setQrDataUrl("");
+					}}
 					placeholder="Digite a mensagem pré-preenchida..."
 					rows={3}
 				/>
@@ -145,7 +166,13 @@ export function WhatsAppLinkGenerator() {
 			</ResultBox>
 
 			<div className="space-y-3">
-				<Button type="button" variant="outline" size="sm" onClick={handleGenerateQr} disabled={!link}>
+				<Button
+					type="button"
+					variant="outline"
+					size="sm"
+					onClick={handleGenerateQr}
+					disabled={!link}
+				>
 					{showQr ? "Atualizar" : "Gerar"} QR Code
 				</Button>
 
@@ -158,7 +185,12 @@ export function WhatsAppLinkGenerator() {
 							height={280}
 							className="rounded-md border border-border bg-card"
 						/>
-						<Button type="button" variant="outline" size="sm" onClick={handleDownloadQr}>
+						<Button
+							type="button"
+							variant="outline"
+							size="sm"
+							onClick={handleDownloadQr}
+						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="14"

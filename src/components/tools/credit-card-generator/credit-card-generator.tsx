@@ -11,6 +11,7 @@ import {
 	type GeneratedCard,
 	generateCreditCard,
 } from "@/lib/credit-card/generate";
+import { Label } from "@/components/ui/label";
 import { CardPreview } from "./card-preview";
 
 const BRAND_KEYS = Object.keys(CARD_BRANDS) as Array<keyof typeof CARD_BRANDS>;
@@ -27,12 +28,7 @@ export function CreditCardGenerator() {
 	return (
 		<div className="space-y-6">
 			<div className="space-y-2">
-				<label
-					htmlFor="card-brand"
-					className="text-sm font-medium text-foreground"
-				>
-					Bandeira
-				</label>
+				<Label htmlFor="card-brand">Bandeira</Label>
 				<div className="flex flex-wrap gap-2">
 					{BRAND_KEYS.map((key) => (
 						<button

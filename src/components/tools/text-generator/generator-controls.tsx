@@ -1,5 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 
 type GeneratorType = "lorem" | "random";
@@ -38,12 +39,7 @@ export function GeneratorControls({
 	return (
 		<div className="grid gap-4 sm:grid-cols-3">
 			<div className="space-y-2">
-				<label
-					htmlFor="generator-type"
-					className="text-sm font-medium text-foreground"
-				>
-					Tipo de texto
-				</label>
+				<Label htmlFor="generator-type">Tipo de texto</Label>
 				<NativeSelect
 					id="generator-type"
 					value={options.type}
@@ -55,12 +51,7 @@ export function GeneratorControls({
 			</div>
 
 			<div className="space-y-2">
-				<label
-					htmlFor="generator-quantity"
-					className="text-sm font-medium text-foreground"
-				>
-					Quantidade
-				</label>
+				<Label htmlFor="generator-quantity">Quantidade</Label>
 				<Input
 					id="generator-quantity"
 					type="number"
@@ -72,12 +63,7 @@ export function GeneratorControls({
 			</div>
 
 			<div className="space-y-2">
-				<label
-					htmlFor="generator-unit"
-					className="text-sm font-medium text-foreground"
-				>
-					Formato
-				</label>
+				<Label htmlFor="generator-unit">Formato</Label>
 				<NativeSelect
 					id="generator-unit"
 					value={options.unit}
@@ -91,18 +77,18 @@ export function GeneratorControls({
 
 			{options.type === "lorem" && (
 				<div className="sm:col-span-3">
-				<div className="flex items-center gap-2">
-					<Checkbox
-						id="start-with-lorem"
-						checked={options.startWithLorem}
-						onCheckedChange={(checked) =>
-							set("startWithLorem", checked === true)
-						}
-					/>
-					<label htmlFor="start-with-lorem" className="cursor-pointer text-sm text-foreground">
-						Começar com "Lorem ipsum dolor sit amet..."
-					</label>
-				</div>
+					<div className="flex items-center gap-2">
+						<Checkbox
+							id="start-with-lorem"
+							checked={options.startWithLorem}
+							onCheckedChange={(checked) =>
+								set("startWithLorem", checked === true)
+							}
+						/>
+						<Label htmlFor="start-with-lorem" className="cursor-pointer">
+							Começar com "Lorem ipsum dolor sit amet..."
+						</Label>
+					</div>
 				</div>
 			)}
 		</div>

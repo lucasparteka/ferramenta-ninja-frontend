@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import {
 	downloadPDF,
 	extractPagesByIndex,
@@ -147,9 +148,7 @@ export function SplitPDF() {
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="space-y-1">
-				<label className="block text-sm font-medium text-foreground">
-					Selecione um PDF
-				</label>
+				<Label>Selecione um PDF</Label>
 				<div
 					role="button"
 					tabIndex={0}
@@ -210,7 +209,7 @@ export function SplitPDF() {
 			<div className="space-y-3">
 				<p className="text-sm font-medium text-foreground">Modo de divisão</p>
 				<div className="space-y-2">
-					<label className="flex cursor-pointer items-center gap-3">
+					<Label className="cursor-pointer gap-3">
 						<input
 							type="radio"
 							name="split-mode"
@@ -227,8 +226,8 @@ export function SplitPDF() {
 						<span className="text-sm text-foreground">
 							Extrair páginas específicas
 						</span>
-					</label>
-					<label className="flex cursor-pointer items-center gap-3">
+					</Label>
+					<Label className="cursor-pointer gap-3">
 						<input
 							type="radio"
 							name="split-mode"
@@ -246,7 +245,7 @@ export function SplitPDF() {
 						<span className="text-sm text-foreground">
 							Dividir todas as páginas
 						</span>
-					</label>
+					</Label>
 				</div>
 			</div>
 

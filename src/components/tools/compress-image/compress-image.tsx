@@ -7,6 +7,7 @@ import { ResultBox, ResultRow } from "@/components/shared/result-box";
 import { Slider } from "@/components/shared/slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { ImageInfo } from "@/lib/image";
 import { compressImage, formatBytes, getImageInfo } from "@/lib/image";
@@ -143,12 +144,7 @@ export function CompressImage() {
 					<div className="w-full space-y-5 sm:w-72 sm:shrink-0">
 						<div className="space-y-2">
 							<div className="flex items-center justify-between">
-								<label
-									htmlFor="compress-quality"
-									className="text-sm font-medium text-foreground"
-								>
-									Qualidade
-								</label>
+								<Label htmlFor="compress-quality">Qualidade</Label>
 								<span className="text-sm text-muted-foreground">
 									{quality}%
 								</span>
@@ -164,12 +160,9 @@ export function CompressImage() {
 						</div>
 
 						<div className="space-y-2">
-							<label
-								htmlFor="compress-width"
-								className="block text-sm font-medium text-foreground"
-							>
+							<Label htmlFor="compress-width" className="block">
 								Largura máxima (px)
-							</label>
+							</Label>
 							<Input
 								id="compress-width"
 								type="number"
@@ -180,12 +173,9 @@ export function CompressImage() {
 						</div>
 
 						<div className="space-y-2">
-							<label
-								htmlFor="compress-height"
-								className="block text-sm font-medium text-foreground"
-							>
+							<Label htmlFor="compress-height" className="block">
 								Altura máxima (px)
-							</label>
+							</Label>
 							<Input
 								id="compress-height"
 								type="number"
@@ -196,12 +186,9 @@ export function CompressImage() {
 						</div>
 
 						<div className="space-y-2">
-							<label
-								htmlFor="compress-format"
-								className="block text-sm font-medium text-foreground"
-							>
+							<Label htmlFor="compress-format" className="block">
 								Formato de saída
-							</label>
+							</Label>
 							<NativeSelect
 								id="compress-format"
 								value={outputFormat}

@@ -432,9 +432,9 @@ export function MenuEditor() {
 									updateStyle({ showPrices: checked === true })
 								}
 							/>
-							<label htmlFor="show-prices" className="cursor-pointer text-sm">
+							<Label htmlFor="show-prices" className="cursor-pointer">
 								Exibir preços
-							</label>
+							</Label>
 						</div>
 					</div>
 				)}
@@ -456,12 +456,12 @@ export function MenuEditor() {
 									<AlertDialog>
 										<AlertDialogTrigger
 											render={
-											<Button
-												type="button"
-												variant="ghost"
-												disabled={data.sections.length <= 1}
-												className="shrink-0 text-muted-foreground hover:text-destructive"
-											/>
+												<Button
+													type="button"
+													variant="ghost"
+													disabled={data.sections.length <= 1}
+													className="shrink-0 text-muted-foreground hover:text-destructive"
+												/>
 											}
 										>
 											Remover

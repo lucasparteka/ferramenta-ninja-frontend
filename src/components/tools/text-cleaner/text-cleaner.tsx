@@ -64,6 +64,7 @@ export function TextCleaner({ defaultOptions }: Props) {
 		return inputStats.characters - outputStats.characters;
 	}, [inputStats, outputStats]);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: .
 	useEffect(() => {
 		setIsTyping(true);
 		const timer = setTimeout(() => {
@@ -88,23 +89,19 @@ export function TextCleaner({ defaultOptions }: Props) {
 		<LayoutD
 			sidebarWidth={280}
 			header={
-				<>
-					<div className="flex items-center gap-3">
-						<h1 className="text-sm font-semibold tracking-tight">
-							Limpar texto
-						</h1>
-						<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
-							LIMPEZA
+				<div className="flex items-center gap-3">
+					<h1 className="text-sm font-semibold tracking-tight">Limpar texto</h1>
+					<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
+						LIMPEZA
+					</span>
+					{isTyping && input ? (
+						<Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+					) : displayedHasChanges ? (
+						<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success tabular-nums">
+							−{displayedRemovedCount} chars
 						</span>
-						{isTyping && input ? (
-							<Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
-						) : displayedHasChanges ? (
-							<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success tabular-nums">
-								−{displayedRemovedCount} chars
-							</span>
-						) : null}
-					</div>
-				</>
+					) : null}
+				</div>
 			}
 			sidebar={
 				<>

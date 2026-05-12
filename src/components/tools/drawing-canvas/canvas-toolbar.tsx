@@ -11,6 +11,7 @@ import {
 	Trash,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 type Tool = "pencil" | "eraser" | "rectangle" | "circle";
 
@@ -78,12 +79,9 @@ export function CanvasToolbar({
 			</div>
 
 			<div className="flex flex-col gap-1 max-md:min-w-full">
-				<label
-					htmlFor="color-picker"
-					className="text-xs font-medium text-muted-foreground"
-				>
+				<Label htmlFor="color-picker" className="text-xs text-muted-foreground">
 					Cor
-				</label>
+				</Label>
 				<input
 					id="color-picker"
 					type="color"
@@ -95,12 +93,9 @@ export function CanvasToolbar({
 			</div>
 
 			<div className="flex flex-col gap-1 max-md:min-w-full">
-				<label
-					htmlFor="brush-size"
-					className="text-xs font-medium text-muted-foreground"
-				>
+				<Label htmlFor="brush-size" className="text-xs text-muted-foreground">
 					Tamanho: {brushSize}px
-				</label>
+				</Label>
 				<input
 					id="brush-size"
 					type="range"

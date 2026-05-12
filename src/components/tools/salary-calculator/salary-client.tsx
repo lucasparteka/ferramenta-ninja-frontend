@@ -9,6 +9,7 @@ import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { calculateSalary } from "./utils";
 
 interface SalaryFormState {
@@ -85,12 +86,12 @@ export function SalaryClient() {
 						<SectionLabel>Remuneração</SectionLabel>
 						<div className="space-y-3.5">
 							<div>
-								<label
+								<Label
 									htmlFor="salary"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Salário bruto mensal
-								</label>
+								</Label>
 								<CurrencyInput
 									value={state.salary > 0 ? state.salary : undefined}
 									onChangeValue={(_, num) =>
@@ -108,12 +109,12 @@ export function SalaryClient() {
 								/>
 							</div>
 							<div>
-								<label
+								<Label
 									htmlFor="benefits"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Benefícios
-								</label>
+								</Label>
 								<CurrencyInput
 									value={state.benefits > 0 ? state.benefits : undefined}
 									onChangeValue={(_, num) =>
@@ -141,30 +142,28 @@ export function SalaryClient() {
 						<div className="space-y-3.5">
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
+									<Label
 										htmlFor="dependents"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Dependentes para IRRF
-									</label>
+									</Label>
 									<Input
 										id="dependents"
 										type="number"
 										min={0}
 										max={10}
 										value={state.dependents}
-										onChange={(e) =>
-											set("dependents")(Number(e.target.value))
-										}
+										onChange={(e) => set("dependents")(Number(e.target.value))}
 									/>
 								</div>
 								<div>
-									<label
+									<Label
 										htmlFor="otherDiscounts"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Outros descontos
-									</label>
+									</Label>
 									<CurrencyInput
 										value={
 											state.otherDiscounts > 0

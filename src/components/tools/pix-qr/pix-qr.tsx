@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { PixKeyType } from "@/lib/pix/generate";
 import { generatePixPayload } from "@/lib/pix/generate";
@@ -86,12 +87,9 @@ export function PixQR() {
 		<div className="flex flex-col gap-6 sm:flex-row">
 			<div className="space-y-4 sm:w-[30%] sm:shrink-0">
 				<div className="space-y-1">
-					<label
-						htmlFor="pix-key-type"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="pix-key-type" className="flex w-full">
 						Tipo de chave
-					</label>
+					</Label>
 					<NativeSelect
 						id="pix-key-type"
 						value={keyType}
@@ -111,12 +109,9 @@ export function PixQR() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="pix-key"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="pix-key" className="flex w-full">
 						Chave Pix
-					</label>
+					</Label>
 					<Input
 						id="pix-key"
 						type="text"
@@ -130,12 +125,9 @@ export function PixQR() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="pix-name"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="pix-name" className="flex w-full">
 						Nome do beneficiário
-					</label>
+					</Label>
 					<Input
 						id="pix-name"
 						type="text"
@@ -150,12 +142,9 @@ export function PixQR() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="pix-city"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="pix-city" className="flex w-full">
 						Cidade
-					</label>
+					</Label>
 					<Input
 						id="pix-city"
 						type="text"
@@ -170,12 +159,9 @@ export function PixQR() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="pix-amount"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="pix-amount" className="flex w-full">
 						Valor (opcional)
-					</label>
+					</Label>
 					<Input
 						id="pix-amount"
 						type="text"
@@ -189,12 +175,9 @@ export function PixQR() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="pix-desc"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="pix-desc" className="flex w-full">
 						Descrição (opcional)
-					</label>
+					</Label>
 					<Input
 						id="pix-desc"
 						type="text"

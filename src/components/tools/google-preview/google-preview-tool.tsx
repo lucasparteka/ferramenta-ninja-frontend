@@ -7,6 +7,7 @@ import { LimitBar } from "@/components/shared/limit-bar";
 import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { getDescriptionStatus, getTitleStatus } from "@/lib/seo/seo-preview";
 import { GooglePreviewResult } from "./google-preview-result";
@@ -170,12 +171,12 @@ export function GooglePreviewTool() {
 					</div>
 					<div className="space-y-3">
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="preview-title"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Título
-							</label>
+							</Label>
 							<Input
 								id="preview-title"
 								placeholder="Título da página"
@@ -184,12 +185,12 @@ export function GooglePreviewTool() {
 							/>
 						</div>
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="preview-description"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Meta descrição
-							</label>
+							</Label>
 							<Textarea
 								id="preview-description"
 								placeholder="Descrição da página para os mecanismos de busca"
@@ -199,12 +200,12 @@ export function GooglePreviewTool() {
 							/>
 						</div>
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="preview-url"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								URL
-							</label>
+							</Label>
 							<Input
 								id="preview-url"
 								type="url"

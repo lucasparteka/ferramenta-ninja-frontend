@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DateInput } from "@/components/ui/date-input";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
 	addBusinessDays,
 	calculateBusinessDays,
@@ -159,12 +160,9 @@ export function BusinessDaysCalculator() {
 						<SectionLabel>Datas</SectionLabel>
 						<div className="space-y-3.5">
 							<div>
-								<label
-									htmlFor="bd-start"
-									className="mb-1.5 block text-xs font-medium text-foreground"
-								>
+								<Label htmlFor="bd-start" className="mb-1.5 block text-xs">
 									Data inicial
-								</label>
+								</Label>
 								<DateInput
 									id="bd-start"
 									value={startDate}
@@ -173,12 +171,9 @@ export function BusinessDaysCalculator() {
 							</div>
 							{mode === "range" ? (
 								<div>
-									<label
-										htmlFor="bd-end"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="bd-end" className="mb-1.5 block text-xs">
 										Data final
-									</label>
+									</Label>
 									<DateInput
 										id="bd-end"
 										value={endDate}
@@ -187,12 +182,9 @@ export function BusinessDaysCalculator() {
 								</div>
 							) : (
 								<div>
-									<label
-										htmlFor="bd-days"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="bd-days" className="mb-1.5 block text-xs">
 										Dias úteis a adicionar
-									</label>
+									</Label>
 									<Input
 										id="bd-days"
 										type="text"
@@ -215,13 +207,13 @@ export function BusinessDaysCalculator() {
 									setIncludeOptional(checked === true)
 								}
 							/>
-							<label
+							<Label
 								htmlFor="bd-optional"
-								className="cursor-pointer text-xs text-foreground leading-relaxed"
+								className="cursor-pointer text-xs leading-relaxed"
 							>
 								Incluir feriados facultativos (Dia do Servidor, Véspera de
 								Natal, Véspera de Ano-Novo)
-							</label>
+							</Label>
 						</div>
 					</div>
 				</div>
@@ -238,9 +230,7 @@ export function BusinessDaysCalculator() {
 					</Button>
 					<Button
 						onClick={mode === "range" ? handleCalculateRange : handleAddDays}
-						disabled={
-							!startDate || (mode === "range" ? !endDate : !daysToAdd)
-						}
+						disabled={!startDate || (mode === "range" ? !endDate : !daysToAdd)}
 					>
 						Calcular
 					</Button>
@@ -274,9 +264,18 @@ export function BusinessDaysCalculator() {
 								Detalhamento
 							</p>
 							<div className="divide-y divide-border">
-								<Row label="Total de dias" value={rangeResult.totalDays.toLocaleString("pt-BR")} />
-								<Row label="Fins de semana" value={rangeResult.weekendDays.toLocaleString("pt-BR")} />
-								<Row label="Feriados" value={rangeResult.holidayDays.toLocaleString("pt-BR")} />
+								<Row
+									label="Total de dias"
+									value={rangeResult.totalDays.toLocaleString("pt-BR")}
+								/>
+								<Row
+									label="Fins de semana"
+									value={rangeResult.weekendDays.toLocaleString("pt-BR")}
+								/>
+								<Row
+									label="Feriados"
+									value={rangeResult.holidayDays.toLocaleString("pt-BR")}
+								/>
 							</div>
 						</div>
 
@@ -343,7 +342,9 @@ function Row({ label, value }: { label: string; value: string }) {
 	return (
 		<div className="flex items-center justify-between py-1.5">
 			<span className="text-[12.5px] text-muted-foreground">{label}</span>
-			<span className="font-mono text-[12.5px] tabular-nums text-foreground">{value}</span>
+			<span className="font-mono text-[12.5px] tabular-nums text-foreground">
+				{value}
+			</span>
 		</div>
 	);
 }

@@ -6,6 +6,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
 import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CharacterCounterStats } from "./character-counter-stats";
 
@@ -88,9 +89,9 @@ export function CharacterCounter() {
 			}
 			sidebar={<CharacterCounterStats stats={stats} />}
 		>
-			<label htmlFor="text-input" className="sr-only">
+			<Label htmlFor="text-input" className="sr-only">
 				Texto para análise
-			</label>
+			</Label>
 			<Textarea
 				id="text-input"
 				value={text}

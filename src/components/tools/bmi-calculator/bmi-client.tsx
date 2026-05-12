@@ -7,6 +7,7 @@ import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { type BmiClassification, calculateBmi } from "@/lib/health/bmi";
 
 interface BmiFormState {
@@ -16,10 +17,7 @@ interface BmiFormState {
 
 const DEFAULTS: BmiFormState = { weight: 0, height: 0 };
 
-const CHIP_TONE: Record<
-	BmiClassification,
-	"warn" | "success" | "danger"
-> = {
+const CHIP_TONE: Record<BmiClassification, "warn" | "success" | "danger"> = {
 	underweight: "warn",
 	normal: "success",
 	overweight: "warn",
@@ -55,12 +53,9 @@ export function BmiClient() {
 						<div className="space-y-3.5">
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
-										htmlFor="weight"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="weight" className="mb-1.5 block text-xs">
 										Peso (kg)
-									</label>
+									</Label>
 									<Input
 										id="weight"
 										type="number"
@@ -72,12 +67,9 @@ export function BmiClient() {
 									/>
 								</div>
 								<div>
-									<label
-										htmlFor="height"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="height" className="mb-1.5 block text-xs">
 										Altura (cm)
-									</label>
+									</Label>
 									<Input
 										id="height"
 										type="number"

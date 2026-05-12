@@ -6,6 +6,7 @@ import { useState } from "react";
 import { LayoutE } from "@/components/shared/layout-e";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
 	type ValidationResult,
 	validateCreditCard,
@@ -40,12 +41,12 @@ export function CreditCardValidator() {
 			searchBar={
 				<div className="space-y-3">
 					<div className="space-y-1.5">
-						<label
+						<Label
 							htmlFor="card-number-input"
-							className="text-xs font-medium text-muted-foreground"
+							className="text-xs text-muted-foreground"
 						>
 							Número do cartão
-						</label>
+						</Label>
 						<Input
 							id="card-number-input"
 							type="text"

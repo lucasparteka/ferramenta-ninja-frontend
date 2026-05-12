@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CopyButton } from "@/components/shared/copy-button";
 
@@ -24,12 +25,9 @@ export function OcrOutput({
 	return (
 		<div className="flex h-full flex-col space-y-1">
 			<div className="flex items-center justify-between">
-				<label
-					htmlFor="ocr-result"
-					className="block text-sm font-medium text-foreground"
-				>
+				<Label htmlFor="ocr-result" className="block">
 					Texto extraído
-				</label>
+				</Label>
 				{result && (
 					<CopyButton text={result} label="Copiar texto" variant="outline" />
 				)}

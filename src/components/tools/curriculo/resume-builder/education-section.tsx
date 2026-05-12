@@ -26,6 +26,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -124,9 +125,7 @@ const EducationCardForm = memo(function EducationCardForm({
 	return (
 		<div className="border-t md:px-4 px-2 pb-4 pt-4 space-y-4">
 			<div className="space-y-2">
-				<label htmlFor="institution-input" className="text-sm font-medium">
-					Instituição *
-				</label>
+				<Label htmlFor="institution-input">Instituição *</Label>
 				<Input
 					id="institution-input"
 					placeholder="Ex: Universidade Federal de Santa Catarina"
@@ -163,9 +162,7 @@ const EducationCardForm = memo(function EducationCardForm({
 					)}
 				/>
 				<div className="space-y-2">
-					<label htmlFor="course-area-input" className="text-sm font-medium">
-						Curso / Área
-					</label>
+					<Label htmlFor="course-area-input">Curso / Área</Label>
 					<Input
 						id="course-area-input"
 						placeholder="Ex: Ciência da Computação"
@@ -231,9 +228,9 @@ const EducationCardForm = memo(function EducationCardForm({
 				name={`education.${index}.isCurrent`}
 				render={({ field }) => (
 					<FormItem>
-						<label
+						<Label
 							htmlFor={`education-${index}-isCurrent`}
-							className="flex items-center gap-2 cursor-pointer w-fit"
+							className="cursor-pointer w-fit"
 						>
 							<FormControl>
 								<Checkbox
@@ -243,15 +240,13 @@ const EducationCardForm = memo(function EducationCardForm({
 								/>
 							</FormControl>
 							<span className="text-sm">Cursando atualmente</span>
-						</label>
+						</Label>
 					</FormItem>
 				)}
 			/>
 
 			<div className="space-y-2">
-				<label htmlFor="education-description" className="text-sm font-medium">
-					Descrição
-				</label>
+				<Label htmlFor="education-description">Descrição</Label>
 				<Textarea
 					id="education-description"
 					placeholder="Atividades relevantes, TCC, projetos de destaque..."

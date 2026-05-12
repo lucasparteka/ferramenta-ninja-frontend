@@ -23,6 +23,7 @@ import {
 } from "@/components/tools/curriculo/resume-templates/scaled-resume";
 import type { ResumeTemplateData } from "@/components/tools/curriculo/resume-templates/types";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	Sheet,
@@ -202,12 +203,12 @@ export function ResumePreviewModal({
 						</div>
 						<div className="flex gap-3">
 							<div className="flex flex-col gap-1 flex-1">
-								<label
+								<Label
 									htmlFor="font-name"
-									className="text-xs font-medium text-muted-foreground"
+									className="text-xs text-muted-foreground"
 								>
 									Fonte
-								</label>
+								</Label>
 								<NativeSelect
 									id="font-name"
 									value={fontVar}
@@ -225,12 +226,12 @@ export function ResumePreviewModal({
 								</NativeSelect>
 							</div>
 							<div className="flex flex-col gap-1 flex-1">
-								<label
+								<Label
 									htmlFor="font-size"
-									className="text-xs font-medium text-muted-foreground"
+									className="text-xs text-muted-foreground"
 								>
 									Tamanho da fonte
-								</label>
+								</Label>
 								<NativeSelect
 									id="font-size"
 									value={fontSize}

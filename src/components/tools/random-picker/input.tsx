@@ -1,3 +1,4 @@
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 type RandomPickerInputProps = {
@@ -14,12 +15,7 @@ export function RandomPickerInput({
 	return (
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
-				<label
-					htmlFor="picker-input"
-					className="text-sm font-medium text-foreground"
-				>
-					Digite os itens (um por linha)
-				</label>
+				<Label htmlFor="picker-input">Digite os itens (um por linha)</Label>
 				{itemCount > 0 && (
 					<span className="text-xs text-muted-foreground">
 						{itemCount} itens

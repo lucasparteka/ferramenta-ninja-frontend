@@ -6,6 +6,7 @@ import { Slider } from "@/components/shared/slider";
 import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { ColorStop, GradientType } from "@/lib/color/gradient";
 import {
@@ -57,17 +58,11 @@ export function GradientGenerator() {
 		]);
 	}
 
-
 	return (
 		<div className="space-y-6">
 			<div className="max-w-2xl space-y-4">
 				<div className="space-y-2">
-					<label
-						htmlFor="gradient-type"
-						className="block text-sm font-medium text-foreground"
-					>
-						Tipo
-					</label>
+					<Label htmlFor="gradient-type">Tipo</Label>
 					<NativeSelect
 						id="gradient-type"
 						value={type}
@@ -81,12 +76,7 @@ export function GradientGenerator() {
 				{type === "linear" && (
 					<div className="space-y-2">
 						<div className="flex items-center justify-between">
-							<label
-								htmlFor="gradient-angle"
-								className="text-sm font-medium text-foreground"
-							>
-								Ângulo
-							</label>
+							<Label htmlFor="gradient-angle">Ângulo</Label>
 							<div className="flex items-center gap-2">
 								<Input
 									id="gradient-angle-input"
@@ -116,7 +106,9 @@ export function GradientGenerator() {
 				)}
 
 				<div className="space-y-3">
-					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Cores</p>
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						Cores
+					</p>
 					{stops.map((stop, i) => (
 						<div key={stop.id} className="flex items-center gap-3">
 							<Input
@@ -182,9 +174,7 @@ export function GradientGenerator() {
 				/>
 
 				<div className="space-y-2">
-					<label className="block text-sm font-medium text-foreground">
-						Código CSS
-					</label>
+					<Label>Código CSS</Label>
 					<pre
 						id="gradient-css"
 						className="overflow-x-auto rounded-lg p-4 font-mono text-sm"
@@ -193,7 +183,11 @@ export function GradientGenerator() {
 						<code>background: {gradientCSS};</code>
 					</pre>
 					<div className="flex justify-end">
-						<CopyButton text={`background: ${gradientCSS};`} label="Copiar" variant="outline" />
+						<CopyButton
+							text={`background: ${gradientCSS};`}
+							label="Copiar"
+							variant="outline"
+						/>
 					</div>
 				</div>
 			</div>

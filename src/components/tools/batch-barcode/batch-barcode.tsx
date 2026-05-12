@@ -4,6 +4,7 @@ import JsBarcode from "jsbarcode";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -109,12 +110,7 @@ export function BatchBarcode() {
 		<div className="flex flex-col gap-6 sm:flex-row">
 			<div className="space-y-4 sm:w-[30%] sm:shrink-0">
 				<div className="space-y-1">
-					<label
-						htmlFor="batch-format"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
-						Formato
-					</label>
+					<Label htmlFor="batch-format">Formato</Label>
 					<NativeSelect
 						id="batch-format"
 						value={format}
@@ -138,19 +134,14 @@ export function BatchBarcode() {
 							checked={displayValue}
 							onCheckedChange={(checked) => setDisplayValue(checked === true)}
 						/>
-						<label htmlFor="display-value" className="cursor-pointer text-sm text-foreground">
+						<Label htmlFor="display-value" className="cursor-pointer">
 							Ativar
-						</label>
+						</Label>
 					</div>
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="batch-values"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
-						Valores (um por linha)
-					</label>
+					<Label htmlFor="batch-values">Valores (um por linha)</Label>
 					<Textarea
 						id="batch-values"
 						rows={12}

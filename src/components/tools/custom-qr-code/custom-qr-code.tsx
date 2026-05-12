@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 import type { PixKeyType } from "@/lib/pix/generate";
@@ -330,12 +331,9 @@ export function CustomQrCode() {
 					<div className="space-y-4">
 						{tab === "url" && (
 							<div className="space-y-2">
-								<label
-									htmlFor="qr-url"
-									className="block text-sm font-medium text-foreground"
-								>
+								<Label htmlFor="qr-url" className="block">
 									Texto ou URL
-								</label>
+								</Label>
 								<Input
 									id="qr-url"
 									value={urlText}
@@ -348,12 +346,9 @@ export function CustomQrCode() {
 						{tab === "wifi" && (
 							<div className="space-y-3">
 								<div className="space-y-2">
-									<label
-										htmlFor="qr-wifi-ssid"
-										className="block text-sm font-medium text-foreground"
-									>
+									<Label htmlFor="qr-wifi-ssid" className="block">
 										Nome da rede (SSID)
-									</label>
+									</Label>
 									<Input
 										id="qr-wifi-ssid"
 										value={wifiSsid}
@@ -362,12 +357,9 @@ export function CustomQrCode() {
 									/>
 								</div>
 								<div className="space-y-2">
-									<label
-										htmlFor="qr-wifi-pass"
-										className="block text-sm font-medium text-foreground"
-									>
+									<Label htmlFor="qr-wifi-pass" className="block">
 										Senha
-									</label>
+									</Label>
 									<Input
 										id="qr-wifi-pass"
 										type="password"
@@ -378,12 +370,9 @@ export function CustomQrCode() {
 								</div>
 								<div className="grid gap-4 sm:grid-cols-2">
 									<div className="space-y-2">
-										<label
-											htmlFor="qr-wifi-sec"
-											className="block text-sm font-medium text-foreground"
-										>
+										<Label htmlFor="qr-wifi-sec" className="block">
 											Segurança
-										</label>
+										</Label>
 										<NativeSelect
 											id="qr-wifi-sec"
 											value={wifiSecurity}
@@ -400,14 +389,13 @@ export function CustomQrCode() {
 										<Checkbox
 											id="qr-wifi-hidden"
 											checked={wifiHidden}
-											onCheckedChange={(checked) => setWifiHidden(checked === true)}
+											onCheckedChange={(checked) =>
+												setWifiHidden(checked === true)
+											}
 										/>
-										<label
-											htmlFor="qr-wifi-hidden"
-											className="text-sm text-foreground cursor-pointer"
-										>
+										<Label htmlFor="qr-wifi-hidden" className="cursor-pointer">
 											Rede oculta
-										</label>
+										</Label>
 									</div>
 								</div>
 							</div>
@@ -416,12 +404,9 @@ export function CustomQrCode() {
 						{tab === "email" && (
 							<div className="space-y-3">
 								<div className="space-y-2">
-									<label
-										htmlFor="qr-email-to"
-										className="block text-sm font-medium text-foreground"
-									>
+									<Label htmlFor="qr-email-to" className="block">
 										Para
-									</label>
+									</Label>
 									<Input
 										id="qr-email-to"
 										type="email"
@@ -431,12 +416,9 @@ export function CustomQrCode() {
 									/>
 								</div>
 								<div className="space-y-2">
-									<label
-										htmlFor="qr-email-subject"
-										className="block text-sm font-medium text-foreground"
-									>
+									<Label htmlFor="qr-email-subject" className="block">
 										Assunto
-									</label>
+									</Label>
 									<Input
 										id="qr-email-subject"
 										value={emailSubject}
@@ -445,12 +427,9 @@ export function CustomQrCode() {
 									/>
 								</div>
 								<div className="space-y-2">
-									<label
-										htmlFor="qr-email-body"
-										className="block text-sm font-medium text-foreground"
-									>
+									<Label htmlFor="qr-email-body" className="block">
 										Corpo
-									</label>
+									</Label>
 									<Textarea
 										id="qr-email-body"
 										value={emailBody}
@@ -464,12 +443,9 @@ export function CustomQrCode() {
 
 						{tab === "phone" && (
 							<div className="space-y-2">
-								<label
-									htmlFor="qr-phone"
-									className="block text-sm font-medium text-foreground"
-								>
+								<Label htmlFor="qr-phone" className="block">
 									Número de telefone
-								</label>
+								</Label>
 								<Input
 									id="qr-phone"
 									type="tel"
@@ -486,12 +462,9 @@ export function CustomQrCode() {
 							<div className="space-y-3">
 								<div className="grid gap-4 sm:grid-cols-2">
 									<div className="space-y-2">
-										<label
-											htmlFor="qr-pix-type"
-											className="block text-sm font-medium text-foreground"
-										>
+										<Label htmlFor="qr-pix-type" className="block">
 											Tipo de chave
-										</label>
+										</Label>
 										<NativeSelect
 											id="qr-pix-type"
 											value={pixKeyType}
@@ -507,12 +480,9 @@ export function CustomQrCode() {
 										</NativeSelect>
 									</div>
 									<div className="space-y-2">
-										<label
-											htmlFor="qr-pix-key"
-											className="block text-sm font-medium text-foreground"
-										>
+										<Label htmlFor="qr-pix-key" className="block">
 											Chave Pix
-										</label>
+										</Label>
 										<Input
 											id="qr-pix-key"
 											value={pixKey}
@@ -523,12 +493,9 @@ export function CustomQrCode() {
 								</div>
 								<div className="grid gap-4 sm:grid-cols-2">
 									<div className="space-y-2">
-										<label
-											htmlFor="qr-pix-name"
-											className="block text-sm font-medium text-foreground"
-										>
+										<Label htmlFor="qr-pix-name" className="block">
 											Nome do beneficiário
-										</label>
+										</Label>
 										<Input
 											id="qr-pix-name"
 											value={pixName}
@@ -537,12 +504,9 @@ export function CustomQrCode() {
 										/>
 									</div>
 									<div className="space-y-2">
-										<label
-											htmlFor="qr-pix-city"
-											className="block text-sm font-medium text-foreground"
-										>
+										<Label htmlFor="qr-pix-city" className="block">
 											Cidade
-										</label>
+										</Label>
 										<Input
 											id="qr-pix-city"
 											value={pixCity}
@@ -553,12 +517,9 @@ export function CustomQrCode() {
 								</div>
 								<div className="grid gap-4 sm:grid-cols-2">
 									<div className="space-y-2">
-										<label
-											htmlFor="qr-pix-amount"
-											className="block text-sm font-medium text-foreground"
-										>
+										<Label htmlFor="qr-pix-amount" className="block">
 											Valor (opcional)
-										</label>
+										</Label>
 										<Input
 											id="qr-pix-amount"
 											value={pixAmount}
@@ -567,12 +528,9 @@ export function CustomQrCode() {
 										/>
 									</div>
 									<div className="space-y-2">
-										<label
-											htmlFor="qr-pix-desc"
-											className="block text-sm font-medium text-foreground"
-										>
+										<Label htmlFor="qr-pix-desc" className="block">
 											Descrição (opcional)
-										</label>
+										</Label>
 										<Input
 											id="qr-pix-desc"
 											value={pixDescription}
@@ -600,7 +558,7 @@ export function CustomQrCode() {
 						<div className="grid gap-4 sm:grid-cols-2">
 							{/* Dot color */}
 							<div className="space-y-2">
-								<span className="block text-xs font-medium text-muted-foreground">
+								<span className="block text-xs text-muted-foreground">
 									Cor dos pontos
 								</span>
 								<div className="flex flex-wrap gap-2">
@@ -629,7 +587,7 @@ export function CustomQrCode() {
 
 							{/* Background color */}
 							<div className="space-y-2">
-								<span className="block text-xs font-medium text-muted-foreground">
+								<span className="block text-xs text-muted-foreground">
 									Cor do fundo
 								</span>
 								<div className="flex flex-wrap gap-2">
@@ -662,12 +620,12 @@ export function CustomQrCode() {
 						<div className="grid gap-4 sm:grid-cols-3">
 							{/* Dot type */}
 							<div className="space-y-2">
-								<label
+								<Label
 									htmlFor="qr-dot-type"
-									className="block text-xs font-medium text-muted-foreground"
+									className="block text-xs text-muted-foreground"
 								>
 									Estilo dos pontos
-								</label>
+								</Label>
 								<NativeSelect
 									id="qr-dot-type"
 									value={dotType}
@@ -683,12 +641,12 @@ export function CustomQrCode() {
 
 							{/* Corner type */}
 							<div className="space-y-2">
-								<label
+								<Label
 									htmlFor="qr-corner-type"
-									className="block text-xs font-medium text-muted-foreground"
+									className="block text-xs text-muted-foreground"
 								>
 									Estilo dos cantos
-								</label>
+								</Label>
 								<NativeSelect
 									id="qr-corner-type"
 									value={cornerType}
@@ -704,12 +662,12 @@ export function CustomQrCode() {
 
 							{/* Error correction */}
 							<div className="space-y-2">
-								<label
+								<Label
 									htmlFor="qr-error"
-									className="block text-xs font-medium text-muted-foreground"
+									className="block text-xs text-muted-foreground"
 								>
 									Correção de erro
-								</label>
+								</Label>
 								<NativeSelect
 									id="qr-error"
 									value={errorLevel}
@@ -728,12 +686,12 @@ export function CustomQrCode() {
 
 						{/* Logo upload */}
 						<div className="space-y-2">
-							<label
+							<Label
 								htmlFor="qr-logo"
-								className="block text-xs font-medium text-muted-foreground"
+								className="block text-xs text-muted-foreground"
 							>
 								Logo central (opcional)
-							</label>
+							</Label>
 							<input
 								id="qr-logo"
 								type="file"
@@ -785,24 +743,15 @@ export function CustomQrCode() {
 							className="flex h-[300px] w-[300px] items-center justify-center rounded-lg border border-border bg-card"
 						/>
 						<div className="flex flex-wrap justify-center gap-2">
-							<Button
-								variant="outline"
-								onClick={() => handleDownload("png")}
-							>
+							<Button variant="outline" onClick={() => handleDownload("png")}>
 								<Download className="mr-1.5 h-4 w-4" />
 								Baixar em PNG
 							</Button>
-							<Button
-								variant="outline"
-								onClick={() => handleDownload("jpeg")}
-							>
+							<Button variant="outline" onClick={() => handleDownload("jpeg")}>
 								<Download className="mr-1.5 h-4 w-4" />
 								Baixar em JPG
 							</Button>
-							<Button
-								variant="outline"
-								onClick={() => handleDownload("svg")}
-							>
+							<Button variant="outline" onClick={() => handleDownload("svg")}>
 								<Download className="mr-1.5 h-4 w-4" />
 								Baixar em SVG
 							</Button>

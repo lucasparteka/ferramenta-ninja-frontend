@@ -6,6 +6,7 @@ import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { OptionSwitch } from "@/components/shared/option-switch";
 import { DateInput } from "@/components/ui/date-input";
+import { Label } from "@/components/ui/label";
 import { calculateAge, dateDiff } from "@/lib/date/age";
 
 type Mode = "age" | "diff";
@@ -74,21 +75,15 @@ export function AgeCalculatorClient() {
 						{mode === "age" ? (
 							<div className="space-y-3.5">
 								<div>
-									<label
-										htmlFor="age-birth"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="age-birth" className="mb-1.5 block text-xs">
 										Data de nascimento
-									</label>
+									</Label>
 									<DateInput id="age-birth" value={birth} onChange={setBirth} />
 								</div>
 								<div>
-									<label
-										htmlFor="age-ref"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="age-ref" className="mb-1.5 block text-xs">
 										Data de referência
-									</label>
+									</Label>
 									<DateInput
 										id="age-ref"
 										value={reference}
@@ -102,12 +97,9 @@ export function AgeCalculatorClient() {
 						) : (
 							<div className="space-y-3.5">
 								<div>
-									<label
-										htmlFor="diff-start"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="diff-start" className="mb-1.5 block text-xs">
 										Data inicial
-									</label>
+									</Label>
 									<DateInput
 										id="diff-start"
 										value={start}
@@ -115,12 +107,9 @@ export function AgeCalculatorClient() {
 									/>
 								</div>
 								<div>
-									<label
-										htmlFor="diff-end"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="diff-end" className="mb-1.5 block text-xs">
 										Data final
-									</label>
+									</Label>
 									<DateInput id="diff-end" value={end} onChange={setEnd} />
 								</div>
 							</div>
@@ -176,9 +165,7 @@ export function AgeCalculatorClient() {
 									<span className="font-mono font-medium text-foreground">
 										{pluralize(ageResult.nextBirthday.daysUntil, "dia", "dias")}
 									</span>{" "}
-									(
-									{ageResult.nextBirthday.date.toLocaleDateString("pt-BR")}
-									)
+									({ageResult.nextBirthday.date.toLocaleDateString("pt-BR")})
 								</div>
 							)}
 						</>
@@ -212,7 +199,9 @@ export function AgeCalculatorClient() {
 							/>
 							<ResultRow
 								label="Total de semanas"
-								value={Math.floor(diffResult.totalDays / 7).toLocaleString("pt-BR")}
+								value={Math.floor(diffResult.totalDays / 7).toLocaleString(
+									"pt-BR",
+								)}
 							/>
 						</div>
 					</>

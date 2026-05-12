@@ -11,6 +11,7 @@ import {
 	TEMPLATE_LABELS,
 	type TemplateId,
 } from "@/components/tools/curriculo/resume-templates/config";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { cn } from "@/lib/utils";
 
@@ -73,12 +74,12 @@ export function TemplateSelector({
 			</div>
 			<div className="flex gap-3">
 				<div className="flex flex-col gap-1 w-full flex-1">
-					<label
+					<Label
 						htmlFor="font-select"
-						className="text-xs font-medium text-muted-foreground"
+						className="text-xs text-muted-foreground"
 					>
 						Fonte
-					</label>
+					</Label>
 					<NativeSelect
 						id="font-select"
 						value={fontVar}
@@ -94,12 +95,12 @@ export function TemplateSelector({
 					</NativeSelect>
 				</div>
 				<div className="flex flex-col gap-1 w-full flex-1">
-					<label
+					<Label
 						htmlFor="font-size-select"
-						className="text-xs font-medium text-muted-foreground"
+						className="text-xs text-muted-foreground"
 					>
 						Tamanho da fonte
-					</label>
+					</Label>
 					<NativeSelect
 						id="font-size-select"
 						value={fontSize}

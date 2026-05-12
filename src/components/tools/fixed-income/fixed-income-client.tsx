@@ -9,6 +9,7 @@ import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	type IndexType,
@@ -95,12 +96,12 @@ export function FixedIncomeClient() {
 						<SectionLabel>Aplicação</SectionLabel>
 						<div className="space-y-3.5">
 							<div>
-								<label
+								<Label
 									htmlFor="principal"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Valor aplicado
-								</label>
+								</Label>
 								<CurrencyInput
 									value={state.principal > 0 ? state.principal : undefined}
 									onChangeValue={(_, num) =>
@@ -119,12 +120,12 @@ export function FixedIncomeClient() {
 							</div>
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
+									<Label
 										htmlFor="days"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Prazo
-									</label>
+									</Label>
 									<Input
 										id="days"
 										type="number"
@@ -138,21 +139,18 @@ export function FixedIncomeClient() {
 									</p>
 								</div>
 								<div>
-									<label
+									<Label
 										htmlFor="kind"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Tipo de aplicação
-									</label>
+									</Label>
 									<NativeSelect
 										id="kind"
 										value={state.kind}
 										onChange={(e) =>
 											set("kind")(
-												e.target.value as
-													| "cdb"
-													| "lci-lca"
-													| "tesouro-selic",
+												e.target.value as "cdb" | "lci-lca" | "tesouro-selic",
 											)
 										}
 									>
@@ -169,12 +167,12 @@ export function FixedIncomeClient() {
 						<SectionLabel>Indexador</SectionLabel>
 						<div className="space-y-3.5">
 							<div>
-								<label
+								<Label
 									htmlFor="indexType"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Indexador
-								</label>
+								</Label>
 								<NativeSelect
 									id="indexType"
 									value={state.indexType}
@@ -192,13 +190,13 @@ export function FixedIncomeClient() {
 							{state.indexType !== "prefixed" ? (
 								<div className="grid grid-cols-2 gap-3.5">
 									<div>
-										<label
+										<Label
 											htmlFor="annualIndexRate"
-											className="mb-1.5 block text-xs font-medium text-foreground"
+											className="mb-1.5 block text-xs text-foreground"
 										>
 											Taxa anual do{" "}
 											{state.indexType === "cdi" ? "CDI" : "Selic"} (%)
-										</label>
+										</Label>
 										<Input
 											id="annualIndexRate"
 											type="number"
@@ -211,12 +209,12 @@ export function FixedIncomeClient() {
 										/>
 									</div>
 									<div>
-										<label
+										<Label
 											htmlFor="indexPercentage"
-											className="mb-1.5 block text-xs font-medium text-foreground"
+											className="mb-1.5 block text-xs text-foreground"
 										>
 											% do indexador
-										</label>
+										</Label>
 										<Input
 											id="indexPercentage"
 											type="number"
@@ -232,12 +230,12 @@ export function FixedIncomeClient() {
 								</div>
 							) : (
 								<div>
-									<label
+									<Label
 										htmlFor="prefixedAnnualRate"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Taxa prefixada anual (%)
-									</label>
+									</Label>
 									<Input
 										id="prefixedAnnualRate"
 										type="number"
@@ -310,10 +308,7 @@ export function FixedIncomeClient() {
 								<p className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
 									Detalhamento
 								</p>
-								<ResultRow
-									label="Rendimento bruto"
-									value={result.grossYield}
-								/>
+								<ResultRow label="Rendimento bruto" value={result.grossYield} />
 								<ResultRow
 									label="Valor bruto final"
 									value={result.grossFinal}
@@ -332,10 +327,7 @@ export function FixedIncomeClient() {
 									subdued={result.ir === 0}
 								/>
 								<div className="my-2 h-px bg-border" />
-								<ResultRow
-									label="Rendimento líquido"
-									value={result.netYield}
-								/>
+								<ResultRow label="Rendimento líquido" value={result.netYield} />
 								<ResultRow
 									label="Valor líquido final"
 									value={result.netFinal}
@@ -357,8 +349,8 @@ export function FixedIncomeClient() {
 					<AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0 text-warning" />
 					<span>
 						Simulação orientativa com IR regressivo (Lei 11.033/2004) e IOF
-						(Decreto 6.306/2007). LCI e LCA são isentos de IR e IOF para
-						pessoa física.
+						(Decreto 6.306/2007). LCI e LCA são isentos de IR e IOF para pessoa
+						física.
 					</span>
 				</div>
 			</aside>

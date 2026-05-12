@@ -17,6 +17,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { parseCurrencyToNumber } from "@/utils/number";
 import type { CalculateNightAllowanceResult } from "./types";
@@ -144,12 +145,12 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								name="grossSalary"
 								render={({ field }) => (
 									<FormItem>
-										<label
+										<Label
 											htmlFor="na-salary"
-											className="block text-xs font-medium text-foreground"
+											className="block text-xs text-foreground"
 										>
 											Salário bruto
-										</label>
+										</Label>
 										<FormControl>
 											<div className="relative">
 												<span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground">
@@ -182,12 +183,12 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 									name="contractualHours"
 									render={({ field }) => (
 										<FormItem>
-											<label
+											<Label
 												htmlFor="na-hours"
-												className="block text-xs font-medium text-foreground"
+												className="block text-xs text-foreground"
 											>
 												Horas contratuais
-											</label>
+											</Label>
 											<FormControl>
 												<div className="relative">
 													<Input
@@ -214,12 +215,12 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 									name="isRural"
 									render={({ field }) => (
 										<FormItem>
-											<label
+											<Label
 												htmlFor="na-rural"
-												className="block text-xs font-medium text-foreground"
+												className="block text-xs text-foreground"
 											>
 												Categoria
-											</label>
+											</Label>
 											<FormControl>
 												<NativeSelect
 													id="na-rural"
@@ -280,12 +281,12 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 									name="workedHours"
 									render={({ field }) => (
 										<FormItem>
-											<label
+											<Label
 												htmlFor="na-worked"
-												className="block text-xs font-medium text-foreground"
+												className="block text-xs text-foreground"
 											>
 												Horas trabalhadas
-											</label>
+											</Label>
 											<FormControl>
 												<div className="relative">
 													<Input
@@ -309,12 +310,12 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 									name="minutes"
 									render={({ field }) => (
 										<FormItem>
-											<label
+											<Label
 												htmlFor="na-minutes"
-												className="block text-xs font-medium text-foreground"
+												className="block text-xs text-foreground"
 											>
 												Minutos adicionais
-											</label>
+											</Label>
 											<FormControl>
 												<div className="relative">
 													<Input
@@ -359,12 +360,12 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 									name="usefulDays"
 									render={({ field }) => (
 										<FormItem>
-											<label
+											<Label
 												htmlFor="na-useful"
-												className="block text-xs font-medium text-foreground"
+												className="block text-xs text-foreground"
 											>
 												Dias úteis
-											</label>
+											</Label>
 											<FormControl>
 												<Input
 													id="na-useful"
@@ -384,12 +385,12 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 									name="holidaysAndSundays"
 									render={({ field }) => (
 										<FormItem>
-											<label
+											<Label
 												htmlFor="na-rest"
-												className="block text-xs font-medium text-foreground"
+												className="block text-xs text-foreground"
 											>
 												Dom. e feriados
-											</label>
+											</Label>
 											<FormControl>
 												<Input
 													id="na-rest"
@@ -414,12 +415,12 @@ export function NightAllowanceCalculatorForm(props: NightAllowanceFormProps) {
 								name="percentageAllowance"
 								render={({ field }) => (
 									<FormItem>
-										<label
+										<Label
 											htmlFor="na-pct"
-											className="block text-xs font-medium text-foreground"
+											className="block text-xs text-foreground"
 										>
 											Percentual do adicional
-										</label>
+										</Label>
 										<FormControl>
 											<div className="relative">
 												<Input

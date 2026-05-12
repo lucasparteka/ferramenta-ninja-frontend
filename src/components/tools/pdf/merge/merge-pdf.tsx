@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { downloadPDF, mergePDFs } from "@/lib/pdf/merge";
 import { renderPageThumbnail } from "@/lib/pdf/thumbnail";
 
@@ -140,9 +141,7 @@ export function MergePDF() {
 	return (
 		<div className="flex flex-col gap-6">
 			<div className="space-y-1">
-				<label className="block text-sm font-medium text-foreground">
-					Adicionar PDFs
-				</label>
+				<Label>Adicionar PDFs</Label>
 				<div
 					role="button"
 					tabIndex={0}

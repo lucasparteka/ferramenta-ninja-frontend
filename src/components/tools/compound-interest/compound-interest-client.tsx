@@ -9,6 +9,7 @@ import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { calculateCompoundInterest } from "@/lib/finance/compound-interest";
 
@@ -83,12 +84,9 @@ export function CompoundInterestClient() {
 						<SectionLabel>Investimento</SectionLabel>
 						<div className="space-y-3.5">
 							<div>
-								<label
-									htmlFor="principal"
-									className="mb-1.5 block text-xs font-medium text-foreground"
-								>
+								<Label htmlFor="principal" className="mb-1.5 block text-xs">
 									Aporte inicial
-								</label>
+								</Label>
 								<CurrencyInput
 									value={state.principal > 0 ? state.principal : undefined}
 									onChangeValue={(_, num) =>
@@ -106,12 +104,12 @@ export function CompoundInterestClient() {
 								/>
 							</div>
 							<div>
-								<label
+								<Label
 									htmlFor="monthlyContribution"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs"
 								>
 									Aporte mensal
-								</label>
+								</Label>
 								<CurrencyInput
 									value={
 										state.monthlyContribution > 0
@@ -140,30 +138,22 @@ export function CompoundInterestClient() {
 						<div className="space-y-3.5">
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
-										htmlFor="annualRate"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="annualRate" className="mb-1.5 block text-xs">
 										Taxa de juros anual (%)
-									</label>
+									</Label>
 									<Input
 										id="annualRate"
 										type="number"
 										step={0.01}
 										min={0}
 										value={state.annualRate}
-										onChange={(e) =>
-											set("annualRate")(Number(e.target.value))
-										}
+										onChange={(e) => set("annualRate")(Number(e.target.value))}
 									/>
 								</div>
 								<div>
-									<label
-										htmlFor="months"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="months" className="mb-1.5 block text-xs">
 										Período
-									</label>
+									</Label>
 									<Input
 										id="months"
 										type="number"
@@ -178,19 +168,17 @@ export function CompoundInterestClient() {
 								</div>
 							</div>
 							<div>
-								<label
+								<Label
 									htmlFor="contributionTiming"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs"
 								>
 									Quando o aporte é feito
-								</label>
+								</Label>
 								<NativeSelect
 									id="contributionTiming"
 									value={state.contributionTiming}
 									onChange={(e) =>
-										set("contributionTiming")(
-											e.target.value as "begin" | "end",
-										)
+										set("contributionTiming")(e.target.value as "begin" | "end")
 									}
 								>
 									<option value="end">Fim do mês (padrão)</option>

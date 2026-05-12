@@ -20,6 +20,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { calculateOvertime, type OvertimeResult } from "@/lib/labor/overtime";
 import type { WeeklyHours } from "@/lib/payroll/working-hours";
@@ -109,12 +110,12 @@ export function OvertimeCalculatorClient() {
 										name="salary"
 										render={({ field }) => (
 											<FormItem>
-												<label
+												<Label
 													htmlFor="ot-salary"
-													className="mb-1.5 block text-xs font-medium text-foreground"
+													className="mb-1.5 block text-xs text-foreground"
 												>
 													Salário bruto mensal
-												</label>
+												</Label>
 												<FormControl>
 													<CurrencyInput
 														value={field.value}
@@ -140,17 +141,19 @@ export function OvertimeCalculatorClient() {
 										name="weeklyHours"
 										render={({ field }) => (
 											<FormItem>
-												<label
+												<Label
 													htmlFor="ot-weekly"
-													className="mb-1.5 block text-xs font-medium text-foreground"
+													className="mb-1.5 block text-xs text-foreground"
 												>
 													Carga horária semanal
-												</label>
+												</Label>
 												<FormControl>
 													<NativeSelect
 														id="ot-weekly"
 														value={field.value}
-														onChange={(e) => field.onChange(Number(e.target.value))}
+														onChange={(e) =>
+															field.onChange(Number(e.target.value))
+														}
 													>
 														<option value={44}>44h (220h mensais)</option>
 														<option value={40}>40h (200h mensais)</option>
@@ -173,12 +176,12 @@ export function OvertimeCalculatorClient() {
 										name="hours50"
 										render={({ field }) => (
 											<FormItem>
-												<label
+												<Label
 													htmlFor="ot-h50"
-													className="mb-1.5 block text-xs font-medium text-foreground"
+													className="mb-1.5 block text-xs text-foreground"
 												>
 													50% (dias úteis)
-												</label>
+												</Label>
 												<FormControl>
 													<Input
 														id="ot-h50"
@@ -197,12 +200,12 @@ export function OvertimeCalculatorClient() {
 										name="hours100"
 										render={({ field }) => (
 											<FormItem>
-												<label
+												<Label
 													htmlFor="ot-h100"
-													className="mb-1.5 block text-xs font-medium text-foreground"
+													className="mb-1.5 block text-xs text-foreground"
 												>
 													100% (dom./feriado)
-												</label>
+												</Label>
 												<FormControl>
 													<Input
 														id="ot-h100"
@@ -233,12 +236,12 @@ export function OvertimeCalculatorClient() {
 														checked={field.value}
 														onCheckedChange={field.onChange}
 													/>
-													<label
+													<Label
 														htmlFor="ot-dsr"
-														className="cursor-pointer text-xs text-foreground"
+														className="cursor-pointer text-xs"
 													>
 														Incluir DSR — Descanso semanal remunerado
-													</label>
+													</Label>
 												</div>
 											</FormItem>
 										)}
@@ -250,12 +253,12 @@ export function OvertimeCalculatorClient() {
 												name="usefulDays"
 												render={({ field }) => (
 													<FormItem>
-														<label
+														<Label
 															htmlFor="ot-useful"
-															className="mb-1.5 block text-xs font-medium text-foreground"
+															className="mb-1.5 block text-xs text-foreground"
 														>
 															Dias úteis no mês
-														</label>
+														</Label>
 														<FormControl>
 															<Input
 																id="ot-useful"
@@ -273,12 +276,12 @@ export function OvertimeCalculatorClient() {
 												name="restDays"
 												render={({ field }) => (
 													<FormItem>
-														<label
+														<Label
 															htmlFor="ot-rest"
-															className="mb-1.5 block text-xs font-medium text-foreground"
+															className="mb-1.5 block text-xs text-foreground"
 														>
 															Domingos e feriados
-														</label>
+														</Label>
 														<FormControl>
 															<Input
 																id="ot-rest"
@@ -326,7 +329,9 @@ export function OvertimeCalculatorClient() {
 								<Chip tone="success">Estimativa</Chip>
 							</div>
 							<div className="flex items-baseline gap-1 font-mono">
-								<span className="text-sm font-medium text-muted-foreground">R$</span>
+								<span className="text-sm font-medium text-muted-foreground">
+									R$
+								</span>
 								<span className="text-[28px] font-semibold leading-none tracking-tight text-foreground">
 									{intPart}
 								</span>
@@ -340,9 +345,18 @@ export function OvertimeCalculatorClient() {
 							<p className="mb-1 text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
 								Detalhamento
 							</p>
-							<ResultRow label="Valor da hora normal" value={result.hourlyRate} />
-							<ResultRow label="Horas extras 50%" value={result.overtime50Total} />
-							<ResultRow label="Horas extras 100%" value={result.overtime100Total} />
+							<ResultRow
+								label="Valor da hora normal"
+								value={result.hourlyRate}
+							/>
+							<ResultRow
+								label="Horas extras 50%"
+								value={result.overtime50Total}
+							/>
+							<ResultRow
+								label="Horas extras 100%"
+								value={result.overtime100Total}
+							/>
 							<ResultRow label="DSR" value={result.dsr} />
 						</div>
 

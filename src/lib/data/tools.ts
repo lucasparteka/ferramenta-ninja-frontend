@@ -370,10 +370,18 @@ export const categories: ToolCategory[] = [
 			{
 				name: "Gerador de CPF",
 				href: "/ferramentas/gerador-de-cpf",
-				description: "Gere e valide CPFs",
+				description: "Gere CPFs válidos para testes",
 				icon: Hash,
 				tags: ["cpf", "documento"],
 				intent: "generate",
+			},
+			{
+				name: "Validador de CPF",
+				href: "/ferramentas/validador-de-cpf",
+				description: "Valide qualquer CPF instantaneamente",
+				icon: Hash,
+				tags: ["cpf", "documento", "validacao"],
+				intent: "validate",
 			},
 			{
 				name: "Gerador de CNPJ",

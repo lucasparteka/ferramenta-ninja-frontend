@@ -1,3 +1,4 @@
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 type RemoveDuplicatesInputProps = {
@@ -11,12 +12,7 @@ export function RemoveDuplicatesInput({
 }: RemoveDuplicatesInputProps) {
 	return (
 		<div className="space-y-2">
-			<label
-				htmlFor="duplicates-input"
-				className="text-sm font-medium text-foreground"
-			>
-				Lista Original
-			</label>
+			<Label htmlFor="duplicates-input">Lista Original</Label>
 			<Textarea
 				id="duplicates-input"
 				value={value}

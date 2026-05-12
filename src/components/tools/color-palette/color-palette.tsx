@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { RGB } from "@/lib/color/palette";
 import { generatePalette, hexToHsl, hexToRgb } from "@/lib/color/palette";
@@ -37,12 +38,9 @@ export function ColorPalette() {
 		<div className="space-y-6">
 			<div className="max-w-2xl space-y-4">
 				<div className="space-y-2">
-					<label
-						htmlFor="palette-base"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="palette-base" className="block">
 						Cor base
-					</label>
+					</Label>
 					<div className="flex gap-3">
 						<Input
 							id="palette-base"
@@ -62,12 +60,9 @@ export function ColorPalette() {
 				</div>
 
 				<div className="space-y-2">
-					<label
-						htmlFor="palette-type"
-						className="block text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="palette-type" className="block">
 						Tipo de paleta
-					</label>
+					</Label>
 					<NativeSelect
 						id="palette-type"
 						value={type}

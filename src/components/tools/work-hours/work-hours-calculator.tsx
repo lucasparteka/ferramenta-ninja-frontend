@@ -4,6 +4,7 @@ import { useId, useMemo, useState } from "react";
 import { ResultBox } from "@/components/shared/result-box";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	calculateDay,
@@ -64,7 +65,7 @@ export function WorkHoursCalculator() {
 	return (
 		<div className="space-y-6">
 			<div className="flex flex-wrap items-center justify-between gap-2">
-				<label className="flex items-center gap-2 text-sm">
+				<Label>
 					<input
 						type="checkbox"
 						checked={showWeekend}
@@ -72,7 +73,7 @@ export function WorkHoursCalculator() {
 						className="h-4 w-4 rounded border-border accent-primary"
 					/>
 					Incluir sábado e domingo
-				</label>
+				</Label>
 				<Button type="button" variant="outline" size="sm" onClick={reset}>
 					Limpar tudo
 				</Button>
@@ -170,12 +171,12 @@ function DayRow({
 				/>
 
 				<div className="space-y-1">
-					<label
+					<Label
 						htmlFor={`${uid}-break`}
-						className="block text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"
+						className="block text-[11px] uppercase tracking-wider text-muted-foreground"
 					>
 						Intervalo
-					</label>
+					</Label>
 					<NativeSelect
 						id={`${uid}-break`}
 						value={entry.breakMinutes}
@@ -225,12 +226,12 @@ function TimeInput({
 }) {
 	return (
 		<div className="space-y-1">
-			<label
+			<Label
 				htmlFor={id}
-				className="block text-[11px] font-semibold uppercase tracking-wider text-muted-foreground"
+				className="block text-[11px] uppercase tracking-wider text-muted-foreground"
 			>
 				{label}
-			</label>
+			</Label>
 			<Input
 				id={id}
 				type="time"

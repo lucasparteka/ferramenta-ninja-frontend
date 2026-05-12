@@ -10,6 +10,7 @@ import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { calculateVacation } from "@/lib/labor/vacation";
 
 interface VacationFormState {
@@ -107,12 +108,12 @@ export function VacationClient() {
 						<div className="space-y-3.5">
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
+									<Label
 										htmlFor="salary"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Salário bruto mensal
-									</label>
+									</Label>
 									<CurrencyInput
 										value={state.salary > 0 ? state.salary : undefined}
 										onChangeValue={(_, num) =>
@@ -130,12 +131,12 @@ export function VacationClient() {
 									/>
 								</div>
 								<div>
-									<label
+									<Label
 										htmlFor="daysToTake"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Dias de férias
-									</label>
+									</Label>
 									<Input
 										id="daysToTake"
 										type="number"
@@ -157,12 +158,12 @@ export function VacationClient() {
 						<div className="space-y-3.5">
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
+									<Label
 										htmlFor="monthsAtCompany"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Meses trabalhados
-									</label>
+									</Label>
 									<Input
 										id="monthsAtCompany"
 										type="number"
@@ -175,12 +176,12 @@ export function VacationClient() {
 									/>
 								</div>
 								<div>
-									<label
+									<Label
 										htmlFor="absences"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Faltas injustificadas
-									</label>
+									</Label>
 									<Input
 										id="absences"
 										type="number"
@@ -191,12 +192,12 @@ export function VacationClient() {
 								</div>
 							</div>
 							<div>
-								<label
+								<Label
 									htmlFor="dependents"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Dependentes para IRRF
-								</label>
+								</Label>
 								<Input
 									id="dependents"
 									type="number"
@@ -210,7 +211,7 @@ export function VacationClient() {
 
 					<div className="p-5">
 						<SectionLabel>Opções</SectionLabel>
-						<label
+						<Label
 							htmlFor="sellAbono"
 							className={`flex cursor-pointer items-start gap-2.5 rounded-md border p-2.5 transition-colors ${
 								state.sellAbono
@@ -232,7 +233,7 @@ export function VacationClient() {
 									Converte 1/3 dos dias em dinheiro (isento de tributos)
 								</p>
 							</div>
-						</label>
+						</Label>
 					</div>
 				</div>
 

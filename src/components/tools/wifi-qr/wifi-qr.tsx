@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { generateQRCode } from "@/lib/qrcode/generate";
 import type { WifiSecurity } from "@/lib/wifi/generate";
@@ -60,12 +61,9 @@ export function WifiQR() {
 		<div className="flex flex-col gap-6 sm:flex-row">
 			<div className="space-y-4 sm:w-[30%] sm:shrink-0">
 				<div className="space-y-1">
-					<label
-						htmlFor="wifi-ssid"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="wifi-ssid" className="flex w-full">
 						Nome da rede (SSID)
-					</label>
+					</Label>
 					<Input
 						id="wifi-ssid"
 						type="text"
@@ -79,12 +77,9 @@ export function WifiQR() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="wifi-security"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="wifi-security" className="flex w-full">
 						Segurança
-					</label>
+					</Label>
 					<NativeSelect
 						id="wifi-security"
 						value={security}
@@ -102,12 +97,9 @@ export function WifiQR() {
 
 				{security !== "nopass" && (
 					<div className="space-y-1">
-						<label
-							htmlFor="wifi-password"
-							className="flex w-full text-sm font-medium text-foreground"
-						>
+						<Label htmlFor="wifi-password" className="flex w-full">
 							Senha
-						</label>
+						</Label>
 						<div className="flex gap-2">
 							<Input
 								id="wifi-password"
@@ -143,9 +135,9 @@ export function WifiQR() {
 								setDataUrl("");
 							}}
 						/>
-						<label htmlFor="wifi-hidden" className="text-sm text-foreground cursor-pointer">
+						<Label htmlFor="wifi-hidden" className="cursor-pointer">
 							Ativar
-						</label>
+						</Label>
 					</div>
 				</div>
 

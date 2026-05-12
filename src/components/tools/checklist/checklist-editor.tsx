@@ -367,12 +367,9 @@ export function ChecklistEditor() {
 										updateHeader({ enabled: checked === true })
 									}
 								/>
-								<label
-									htmlFor="header-enabled"
-									className="cursor-pointer text-sm font-medium"
-								>
+								<Label htmlFor="header-enabled" className="cursor-pointer">
 									Cabeçalho personalizado
-								</label>
+								</Label>
 							</div>
 							{state.header.enabled && (
 								<div className="space-y-3 rounded-md border border-border p-3">
@@ -551,12 +548,9 @@ export function ChecklistEditor() {
 										updateLayout({ showCheckbox: checked === true })
 									}
 								/>
-								<label
-									htmlFor="show-checkbox"
-									className="cursor-pointer text-sm"
-								>
+								<Label htmlFor="show-checkbox" className="cursor-pointer">
 									Mostrar caixas de seleção
-								</label>
+								</Label>
 							</div>
 							<div className="flex items-center gap-2">
 								<Checkbox
@@ -566,12 +560,9 @@ export function ChecklistEditor() {
 										updateLayout({ showDividers: checked === true })
 									}
 								/>
-								<label
-									htmlFor="show-dividers"
-									className="cursor-pointer text-sm"
-								>
+								<Label htmlFor="show-dividers" className="cursor-pointer">
 									Mostrar divisores
-								</label>
+								</Label>
 							</div>
 						</div>
 						<div className="space-y-2">

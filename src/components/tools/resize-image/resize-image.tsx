@@ -5,6 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { ImageDropzone } from "@/components/shared/image-dropzone";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { ImageInfo, ResizeMode } from "@/lib/image";
 import { calculateAspectRatio, getImageInfo, resizeImage } from "@/lib/image";
@@ -255,12 +256,9 @@ export function ResizeImage() {
 						</div>
 
 						<div className="space-y-2">
-							<label
-								htmlFor="resize-mode"
-								className="block text-sm font-medium text-foreground"
-							>
+							<Label htmlFor="resize-mode" className="block">
 								Modo de redimensionamento
-							</label>
+							</Label>
 							<NativeSelect
 								id="resize-mode"
 								value={resizeMode}
@@ -276,12 +274,9 @@ export function ResizeImage() {
 
 						{resizeMode === "fit" && (
 							<div className="space-y-2">
-								<label
-									htmlFor="resize-bg"
-									className="block text-sm font-medium text-foreground"
-								>
+								<Label htmlFor="resize-bg" className="block">
 									Cor de fundo
-								</label>
+								</Label>
 								<NativeSelect
 									id="resize-bg"
 									value={backgroundColor}
@@ -298,12 +293,7 @@ export function ResizeImage() {
 
 						<div className="space-y-2">
 							<div className="flex items-center justify-between">
-								<label
-									htmlFor="resize-width"
-									className="text-sm font-medium text-foreground"
-								>
-									Largura (px)
-								</label>
+								<Label htmlFor="resize-width">Largura (px)</Label>
 								<button
 									type="button"
 									onClick={() => setLockAspectRatio(!lockAspectRatio)}
@@ -330,12 +320,9 @@ export function ResizeImage() {
 						</div>
 
 						<div className="space-y-2">
-							<label
-								htmlFor="resize-height"
-								className="block text-sm font-medium text-foreground"
-							>
+							<Label htmlFor="resize-height" className="block">
 								Altura (px)
-							</label>
+							</Label>
 							<Input
 								id="resize-height"
 								type="number"
@@ -347,12 +334,9 @@ export function ResizeImage() {
 						</div>
 
 						<div className="space-y-2">
-							<label
-								htmlFor="resize-format"
-								className="block text-sm font-medium text-foreground"
-							>
+							<Label htmlFor="resize-format" className="block">
 								Formato de saída
-							</label>
+							</Label>
 							<NativeSelect
 								id="resize-format"
 								value={outputFormat}

@@ -8,17 +8,19 @@ import {
 	ChevronRight,
 	Copy,
 	Download,
+	Loader2,
 	Trash2,
 	Upload,
 	X,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LayoutD } from "@/components/shared/layout-d";
 import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 const ROWS_PER_PAGE = 50;
@@ -193,6 +195,7 @@ export function CsvViewer() {
 	const [delimiterOverride, setDelimiterOverride] =
 		useState<DelimiterOption>("auto");
 	const [hasHeader, setHasHeader] = useState(true);
+	const [isTyping, setIsTyping] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	function runParse(text: string) {
@@ -262,17 +265,14 @@ export function CsvViewer() {
 		reader.readAsText(selected, "UTF-8");
 	}
 
-	function handlePaste(e: React.ClipboardEvent<HTMLTextAreaElement>) {
-		const pasted = e.clipboardData.getData("text");
-		if (
-			pasted
-				.trim()
-				.split("\n")
-				.filter((l) => l.trim()).length >= 2
-		) {
-			setTimeout(() => tryParse(rawText + pasted), 0);
-		}
-	}
+	useEffect(() => {
+		if (!rawText.trim()) return;
+		const timer = setTimeout(() => {
+			setIsTyping(false);
+			tryParse(rawText);
+		}, 500);
+		return () => clearTimeout(timer);
+	}, [rawText]);
 
 	function handleDrop(e: React.DragEvent<HTMLDivElement>) {
 		e.preventDefault();
@@ -285,9 +285,14 @@ export function CsvViewer() {
 		setRawText(value);
 		setFile(null);
 		if (inputRef.current) inputRef.current.value = "";
-		setState("idle");
 		setErrorMsg("");
-		setParsed(null);
+		if (!value.trim()) {
+			setState("idle");
+			setParsed(null);
+			setIsTyping(false);
+		} else {
+			setIsTyping(true);
+		}
 	}
 
 	function handleSort(columnIndex: number) {
@@ -312,6 +317,7 @@ export function CsvViewer() {
 		setParsed(null);
 		setSortConfig(null);
 		setCurrentPage(1);
+		setIsTyping(false);
 		if (inputRef.current) inputRef.current.value = "";
 	}
 
@@ -420,12 +426,12 @@ export function CsvViewer() {
 					Opções
 				</h3>
 				<div className="flex flex-col gap-2">
-					<label
+					<Label
 						htmlFor="delimiter-select"
 						className="text-xs text-muted-foreground"
 					>
 						Delimitador
-					</label>
+					</Label>
 					<NativeSelect
 						id="delimiter-select"
 						value={delimiterOverride}
@@ -445,12 +451,12 @@ export function CsvViewer() {
 						checked={hasHeader}
 						onCheckedChange={(checked) => setHasHeader(checked === true)}
 					/>
-					<label
+					<Label
 						htmlFor="has-header"
 						className="text-xs text-muted-foreground cursor-pointer"
 					>
 						Primeira linha como header
-					</label>
+					</Label>
 				</div>
 			</div>
 
@@ -500,20 +506,15 @@ export function CsvViewer() {
 						<h1 className="text-sm font-semibold tracking-tight">
 							Visualizador de CSV
 						</h1>
-						<span className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-							{state === "done" ? "PRONTO" : "EM TEMPO REAL"}
-						</span>
+						{isTyping && rawText ? (
+							<Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+						) : (
+							<span className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+								{state === "done" ? "PRONTO" : "EM TEMPO REAL"}
+							</span>
+						)}
 					</div>
 					<div className="flex items-center gap-1.5">
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={handleCopyTable}
-							disabled={!parsed}
-						>
-							<Copy className="mr-1.5 h-3 w-3" />
-							Copiar
-						</Button>
 						<Button
 							variant="ghost"
 							size="icon-sm"
@@ -534,7 +535,7 @@ export function CsvViewer() {
 			)}
 
 			{(state === "idle" || state === "error") && (
-				<div className="space-y-3 p-4">
+				<div className="space-y-3 p-4 pb-0">
 					{/** biome-ignore lint/a11y/useSemanticElements: dnd */}
 					<div
 						role="button"
@@ -605,16 +606,6 @@ export function CsvViewer() {
 						className="hidden"
 					/>
 
-					<Textarea
-						value={rawText}
-						onChange={(e) => handleTextChange(e.target.value)}
-						onPaste={handlePaste}
-						placeholder="Cole o CSV aqui... (detecção automática)"
-						rows={5}
-						aria-label="Cole o conteúdo CSV aqui"
-						className="resize-y bg-card font-mono text-foreground"
-					/>
-
 					{fileIsLarge && (
 						<Button
 							onClick={() => file && processFile(file)}
@@ -632,8 +623,18 @@ export function CsvViewer() {
 				</div>
 			)}
 
+			<div className="p-4">
+				<Textarea
+					value={rawText}
+					onChange={(e) => handleTextChange(e.target.value)}
+					placeholder="Cole o CSV aqui... (detecção automática)"
+					aria-label="Cole o conteúdo CSV aqui"
+					className="resize-y bg-card font-mono text-foreground min-h-[300px]"
+				/>
+			</div>
+
 			{state === "done" && parsed && (
-				<div className="flex flex-col">
+				<div className="flex flex-col border-t border-border">
 					<div className="overflow-x-auto border-b border-border">
 						<table className="min-w-full divide-y divide-border text-sm">
 							<thead>

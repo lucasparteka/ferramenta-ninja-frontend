@@ -10,6 +10,7 @@ import { PaneHeader } from "@/components/shared/pane-header";
 import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { numberToWords } from "@/lib/extenso/numero-extenso";
 
 const EXAMPLES = [
@@ -76,12 +77,12 @@ export function NumeroPorExtensoClient() {
 					/>
 					<div className="flex flex-1 flex-col p-3 space-y-4">
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="valor-input"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Valor
-							</label>
+							</Label>
 							<CurrencyInput
 								maxLength={25}
 								value={value}

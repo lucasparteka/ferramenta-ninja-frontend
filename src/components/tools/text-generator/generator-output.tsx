@@ -1,4 +1,5 @@
 import { CopyButton } from "@/components/shared/copy-button";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 type GeneratorOutputProps = {
@@ -8,12 +9,7 @@ type GeneratorOutputProps = {
 export function GeneratorOutput({ value }: GeneratorOutputProps) {
 	return (
 		<div className="space-y-2">
-			<label
-				htmlFor="generator-output"
-				className="text-sm font-medium text-foreground"
-			>
-				Texto gerado
-			</label>
+			<Label htmlFor="generator-output">Texto gerado</Label>
 			<Textarea
 				id="generator-output"
 				readOnly

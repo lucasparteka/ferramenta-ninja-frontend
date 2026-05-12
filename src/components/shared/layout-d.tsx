@@ -26,7 +26,7 @@ export function LayoutD({
 			</div>
 			<div
 				className={cn(
-					"flex flex-col border-r border-border",
+					"flex flex-col border-r border-border min-w-0",
 					mainAreaClassName,
 				)}
 			>

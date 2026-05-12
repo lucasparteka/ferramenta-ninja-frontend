@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
 import { CpfGenerator } from "@/components/tools/cpf-generator/cpf-generator";
-import { CpfValidator } from "@/components/tools/cpf-generator/cpf-validator";
 
 export const metadata: Metadata = {
 	title: "Gerador de CPF Válido Online Grátis | Ferramenta Ninja",
 	description:
-		"Gere CPFs válidos para testes e valide CPFs existentes. Os CPFs gerados não pertencem a pessoas reais. Ferramenta gratuita, sem cadastro.",
+		"Gere CPFs válidos para testes e desenvolvimento. Os CPFs gerados são matematicamente corretos mas não pertencem a pessoas reais. Gratuito, sem cadastro.",
 };
 
 function SeoContent() {
@@ -32,34 +31,6 @@ function SeoContent() {
 					matemático específico. Isso permite que qualquer sistema verifique se
 					um CPF é matematicamente válido sem precisar consultar a Receita
 					Federal.
-				</p>
-			</section>
-
-			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Como funciona a validação do CPF?
-				</h2>
-				<p>
-					A validação do CPF segue dois passos baseados em multiplicação e
-					módulo:
-				</p>
-				<ol className="mt-4 list-decimal space-y-2 pl-6">
-					<li>
-						Os 9 primeiros dígitos são multiplicados pelos pesos de 10 a 2. A
-						soma é calculada e o resultado de <code>(soma × 10) % 11</code>{" "}
-						determina o primeiro dígito verificador. Se o resultado for 10 ou
-						mais, o dígito é 0.
-					</li>
-					<li>
-						Os 10 dígitos (incluindo o primeiro verificador) são multiplicados
-						pelos pesos de 11 a 2. A mesma fórmula determina o segundo dígito
-						verificador.
-					</li>
-				</ol>
-				<p className="mt-3">
-					Além dos dígitos verificadores, sequências como 000.000.000-00 ou
-					111.111.111-11 são consideradas inválidas mesmo que os cálculos
-					resultem nos dígitos corretos.
 				</p>
 			</section>
 
@@ -151,9 +122,15 @@ function SeoContent() {
 							Como validar um CPF?
 						</h3>
 						<p>
-							Use o validador acima: cole o CPF no campo e clique em{" "}
-							<strong>Validar CPF</strong>. A ferramenta aceita o CPF com ou sem
-							formatação (pontos e traço) e verifica tanto o formato quanto os
+							Use nosso{" "}
+							<a
+								href="/ferramentas/validador-de-cpf"
+								className="text-primary underline-offset-4 hover:underline"
+							>
+								Validador de CPF
+							</a>
+							: cole o CPF no campo e clique em Validar. A ferramenta aceita o
+							CPF com ou sem formatação e verifica tanto o formato quanto os
 							dígitos verificadores.
 						</p>
 					</div>
@@ -162,9 +139,8 @@ function SeoContent() {
 							Os dados são enviados para algum servidor?
 						</h3>
 						<p>
-							Não. Toda a geração e validação ocorre diretamente no seu
-							navegador. Nenhum CPF digitado ou gerado é transmitido ou
-							armazenado em qualquer servidor.
+							Não. Toda a geração ocorre diretamente no seu navegador. Nenhum
+							CPF gerado é transmitido ou armazenado em qualquer servidor.
 						</p>
 					</div>
 				</div>
@@ -179,24 +155,11 @@ export default function GeradorDeCpfPage() {
 			compact
 			toolHref="/ferramentas/gerador-de-cpf"
 			title="Gerador de CPF Válido Online Grátis"
-			description="Gere CPFs válidos para testes ou valide CPFs existentes. Os números gerados são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
+			description="Gere CPFs válidos para testes e desenvolvimento. Os números gerados são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
 			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-cpf" />}
 			extraContent={<SeoContent />}
 		>
-			<div className="space-y-8">
-				<div>
-					<h2 className="mb-5 text-lg font-semibold text-foreground">
-						Gerar CPF
-					</h2>
-					<CpfGenerator />
-				</div>
-				<div className="border-t border-border pt-8">
-					<h2 className="mb-5 text-lg font-semibold text-foreground">
-						Validar CPF
-					</h2>
-					<CpfValidator />
-				</div>
-			</div>
+			<CpfGenerator />
 		</PageLayout>
 	);
 }

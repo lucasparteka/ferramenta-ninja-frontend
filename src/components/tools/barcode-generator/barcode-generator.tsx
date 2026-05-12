@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 
 type BarcodeFormat = "EAN13" | "UPC" | "EAN8" | "CODE128" | "CODE39" | "ITF14";
@@ -95,12 +96,7 @@ export function BarcodeGenerator() {
 		<div className="flex flex-col gap-6 sm:flex-row">
 			<div className="space-y-4 sm:w-[30%] sm:shrink-0">
 				<div className="space-y-1">
-					<label
-						htmlFor="bc-format"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
-						Formato
-					</label>
+					<Label htmlFor="bc-format">Formato</Label>
 					<NativeSelect
 						id="bc-format"
 						value={format}
@@ -123,12 +119,7 @@ export function BarcodeGenerator() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="bc-value"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
-						Valor
-					</label>
+					<Label htmlFor="bc-value">Valor</Label>
 					<Input
 						id="bc-value"
 						type="text"
@@ -155,9 +146,9 @@ export function BarcodeGenerator() {
 								setGenerated(false);
 							}}
 						/>
-						<label htmlFor="display-value" className="cursor-pointer text-sm text-foreground">
+						<Label htmlFor="display-value" className="cursor-pointer">
 							Ativar
-						</label>
+						</Label>
 					</div>
 				</div>
 

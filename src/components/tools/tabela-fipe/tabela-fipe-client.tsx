@@ -4,6 +4,7 @@ import { Car, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { LayoutE } from "@/components/shared/layout-e";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	type FipeBrand,
@@ -105,12 +106,12 @@ export function TabelaFipeClient() {
 				<div className="space-y-4">
 					<div className="grid gap-4 sm:grid-cols-3">
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="fipe-type"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Tipo de veículo
-							</label>
+							</Label>
 							<NativeSelect
 								id="fipe-type"
 								value={type}
@@ -124,12 +125,12 @@ export function TabelaFipeClient() {
 							</NativeSelect>
 						</div>
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="fipe-brand"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Marca
-							</label>
+							</Label>
 							<NativeSelect
 								id="fipe-brand"
 								value={brandCode}
@@ -147,12 +148,12 @@ export function TabelaFipeClient() {
 							</NativeSelect>
 						</div>
 						<div className="space-y-1.5">
-							<label
+							<Label
 								htmlFor="fipe-model"
-								className="text-xs font-medium text-muted-foreground"
+								className="text-xs text-muted-foreground"
 							>
 								Modelo
-							</label>
+							</Label>
 							<NativeSelect
 								id="fipe-model"
 								value={modelCode}

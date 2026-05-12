@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 import type { ErrorCorrectionLevel } from "@/lib/qrcode/generate";
@@ -55,12 +56,9 @@ export function QRGenerator() {
 		<div className="flex flex-col gap-6 sm:flex-row">
 			<div className="space-y-4 sm:w-[30%] sm:shrink-0">
 				<div className="space-y-1">
-					<label
-						htmlFor="qr-text"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="qr-text" className="flex w-full">
 						Texto ou URL
-					</label>
+					</Label>
 					<Textarea
 						id="qr-text"
 						rows={4}
@@ -72,12 +70,9 @@ export function QRGenerator() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="qr-size"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="qr-size" className="flex w-full">
 						Tamanho
-					</label>
+					</Label>
 					<NativeSelect
 						id="qr-size"
 						value={state.size}
@@ -91,12 +86,9 @@ export function QRGenerator() {
 				</div>
 
 				<div className="space-y-1">
-					<label
-						htmlFor="qr-ecl"
-						className="flex w-full text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="qr-ecl" className="flex w-full">
 						Correção de erro
-					</label>
+					</Label>
 					<NativeSelect
 						id="qr-ecl"
 						value={state.errorCorrectionLevel}

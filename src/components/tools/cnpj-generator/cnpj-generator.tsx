@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { generateMultipleCNPJ } from "@/lib/cnpj/generate";
 import { CnpjList } from "./cnpj-list";
 
@@ -28,12 +29,9 @@ export function CnpjGenerator() {
 		<div className="space-y-6">
 			<div className="space-y-4">
 				<div className="space-y-2">
-					<label
-						htmlFor="cnpj-quantity"
-						className="mr-3 text-sm font-medium text-foreground"
-					>
+					<Label htmlFor="cnpj-quantity" className="mr-3">
 						Quantidade de CNPJs
-					</label>
+					</Label>
 					<Input
 						id="cnpj-quantity"
 						type="number"
@@ -51,12 +49,9 @@ export function CnpjGenerator() {
 						checked={formatted}
 						onCheckedChange={(checked) => setFormatted(checked === true)}
 					/>
-					<label
-						htmlFor="format-cnpj"
-						className="cursor-pointer text-sm text-foreground"
-					>
+					<Label htmlFor="format-cnpj" className="cursor-pointer">
 						Formatar CNPJ (##.###.###/####-##)
-					</label>
+					</Label>
 				</div>
 			</div>
 

@@ -7,6 +7,7 @@ import { ResultSheet } from "@/components/shared/result-sheet";
 import type { Section } from "@/components/shared/result-sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
 	type BoletoResult,
 	parseBoleto,
@@ -32,12 +33,12 @@ export function ValidadorBoletoClient() {
 			searchBar={
 				<form onSubmit={handleSubmit} className="space-y-3">
 					<div className="space-y-1.5">
-						<label
+						<Label
 							htmlFor="boleto-input"
-							className="text-xs font-medium text-muted-foreground"
+							className="text-xs text-muted-foreground"
 						>
 							Linha digitável
-						</label>
+						</Label>
 						<Input
 							id="boleto-input"
 							type="text"

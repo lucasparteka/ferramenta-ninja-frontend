@@ -6,6 +6,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 type Dialect = "mysql" | "postgresql" | "sqlite" | "oracle" | "sqlserver";
@@ -187,12 +188,9 @@ function OptionCheckbox({
 				checked={checked}
 				onCheckedChange={(v) => onChange(v === true)}
 			/>
-			<label
-				htmlFor={id}
-				className="cursor-pointer select-none text-sm text-foreground"
-			>
+			<Label htmlFor={id} className="cursor-pointer">
 				{label}
-			</label>
+			</Label>
 		</div>
 	);
 }
@@ -340,12 +338,7 @@ export function CsvToSql() {
 		<div className="space-y-4">
 			<div className="grid gap-4 sm:grid-cols-2">
 				<div className="space-y-1.5">
-					<label
-						htmlFor="table-name"
-						className="text-sm font-medium text-foreground"
-					>
-						Nome da tabela
-					</label>
+					<Label htmlFor="table-name">Nome da tabela</Label>
 					<Input
 						id="table-name"
 						type="text"

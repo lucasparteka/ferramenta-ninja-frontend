@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DateInput } from "@/components/ui/date-input";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	calculateTermination,
@@ -168,12 +169,12 @@ export function RescisaoClient() {
 						</SectionLabel>
 						<div className="space-y-3.5">
 							<div>
-								<label
+								<Label
 									htmlFor="salary"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Salário bruto mensal
-								</label>
+								</Label>
 								<CurrencyInput
 									value={state.salary > 0 ? state.salary : undefined}
 									onChangeValue={(_, num) =>
@@ -192,12 +193,12 @@ export function RescisaoClient() {
 							</div>
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
+									<Label
 										htmlFor="admissionDate"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Data de admissão
-									</label>
+									</Label>
 									<DateInput
 										id="admissionDate"
 										value={state.admissionDate}
@@ -205,12 +206,12 @@ export function RescisaoClient() {
 									/>
 								</div>
 								<div>
-									<label
+									<Label
 										htmlFor="terminationDate"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Data de rescisão
-									</label>
+									</Label>
 									<DateInput
 										id="terminationDate"
 										value={state.terminationDate}
@@ -225,12 +226,12 @@ export function RescisaoClient() {
 						<SectionLabel>Tipo de rescisão</SectionLabel>
 						<div className="space-y-3.5">
 							<div>
-								<label
+								<Label
 									htmlFor="terminationReason"
-									className="mb-1.5 block text-xs font-medium text-foreground"
+									className="mb-1.5 block text-xs text-foreground"
 								>
 									Motivo da rescisão
-								</label>
+								</Label>
 								<NativeSelect
 									id="terminationReason"
 									value={state.terminationReason}
@@ -265,12 +266,12 @@ export function RescisaoClient() {
 						<div className="space-y-3.5">
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
+									<Label
 										htmlFor="fgts"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Saldo do FGTS atual
-									</label>
+									</Label>
 									<CurrencyInput
 										value={
 											state.fgtsBalance > 0 ? state.fgtsBalance : undefined
@@ -292,12 +293,12 @@ export function RescisaoClient() {
 									</p>
 								</div>
 								<div>
-									<label
+									<Label
 										htmlFor="deps"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs text-foreground"
 									>
 										Dependentes para IRRF
-									</label>
+									</Label>
 									<Input
 										id="deps"
 										type="number"
@@ -310,7 +311,7 @@ export function RescisaoClient() {
 								</div>
 							</div>
 							<div className="grid grid-cols-2 gap-2.5">
-								<label
+								<Label
 									htmlFor="expired-vacation"
 									className={`flex cursor-pointer items-start gap-2.5 rounded-md border p-2.5 transition-colors ${
 										state.hasExpiredVacation
@@ -329,8 +330,8 @@ export function RescisaoClient() {
 									<span className="text-[12.5px] leading-snug text-foreground">
 										Possui férias vencidas
 									</span>
-								</label>
-								<label
+								</Label>
+								<Label
 									htmlFor="thirteenth-paid"
 									className={`flex cursor-pointer items-start gap-2.5 rounded-md border p-2.5 transition-colors ${
 										state.thirteenthAlreadyPaid
@@ -349,7 +350,7 @@ export function RescisaoClient() {
 									<span className="text-[12.5px] leading-snug text-foreground">
 										13º deste ano já recebido
 									</span>
-								</label>
+								</Label>
 							</div>
 						</div>
 					</div>

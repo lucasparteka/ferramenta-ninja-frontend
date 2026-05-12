@@ -6,6 +6,7 @@ import { ImageDropzone } from "@/components/shared/image-dropzone";
 import { ResultBox, ResultRow } from "@/components/shared/result-box";
 import { Slider } from "@/components/shared/slider";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { ImageInfo } from "@/lib/image";
 import {
@@ -142,12 +143,9 @@ export function ConvertImage() {
 						<ResultRow label="Tamanho" value={formatBytes(file?.size ?? 0)} />
 
 						<div className="space-y-2">
-							<label
-								htmlFor="convert-format"
-								className="block text-sm font-medium text-foreground"
-							>
+							<Label htmlFor="convert-format" className="block">
 								Converter para
-							</label>
+							</Label>
 							<NativeSelect
 								id="convert-format"
 								value={targetFormat}
@@ -165,12 +163,7 @@ export function ConvertImage() {
 							targetFormat === "image/webp") && (
 							<div className="space-y-2">
 								<div className="flex items-center justify-between">
-									<label
-										htmlFor="convert-quality"
-										className="text-sm font-medium text-foreground"
-									>
-										Qualidade
-									</label>
+									<Label htmlFor="convert-quality">Qualidade</Label>
 									<span className="text-sm text-muted-foreground">
 										{quality}%
 									</span>
@@ -210,11 +203,7 @@ export function ConvertImage() {
 							<>
 								<ResultRow
 									label="Formato convertido"
-									value={
-										<span className="text-success">
-											{targetLabel}
-										</span>
-									}
+									value={<span className="text-success">{targetLabel}</span>}
 								/>
 
 								<ResultRow

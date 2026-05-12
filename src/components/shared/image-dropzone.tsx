@@ -3,6 +3,7 @@
 import { Trash } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
 type ImageDropzoneProps = {
@@ -44,12 +45,7 @@ export function ImageDropzone({
 
 	return (
 		<div className={cn("space-y-1", className)}>
-			<label
-				htmlFor={inputId}
-				className="block text-sm font-medium text-foreground"
-			>
-				{label}
-			</label>
+			<Label htmlFor={inputId}>{label}</Label>
 			<button
 				type="button"
 				aria-label="Área de upload de imagem. Clique ou arraste uma imagem."

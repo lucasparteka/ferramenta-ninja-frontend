@@ -25,6 +25,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -200,9 +201,7 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 		<div className="border-t md:px-4 px-2 pb-4 pt-4 space-y-4">
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<div className="space-y-2">
-					<label htmlFor="experience-role" className="text-sm font-medium">
-						Cargo *
-					</label>
+					<Label htmlFor="experience-role">Cargo *</Label>
 					<Input
 						placeholder="Ex: Desenvolvedor Frontend"
 						id="experience-role"
@@ -215,9 +214,7 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 					)}
 				</div>
 				<div className="space-y-2">
-					<label htmlFor="experience-company" className="text-sm font-medium">
-						Empresa *
-					</label>
+					<Label htmlFor="experience-company">Empresa *</Label>
 					<Input
 						placeholder="Ex: Empresa XPTO"
 						id="experience-company"
@@ -232,9 +229,7 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 			</div>
 
 			<div className="space-y-2">
-				<label htmlFor="experience-location" className="text-sm font-medium">
-					Localização
-				</label>
+				<Label htmlFor="experience-location">Localização</Label>
 				<Input
 					placeholder="Ex: Florianópolis, SC · Remoto"
 					id="experience-location"
@@ -281,9 +276,9 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 				name={`experiences.${index}.isCurrent`}
 				render={({ field }) => (
 					<FormItem>
-						<label
+						<Label
 							htmlFor="experiences-current-work"
-							className="flex items-center gap-2 cursor-pointer w-fit"
+							className="cursor-pointer w-fit"
 						>
 							<FormControl>
 								<Checkbox
@@ -293,15 +288,13 @@ const ExperienceCardForm = memo(function ExperienceCardForm({
 								/>
 							</FormControl>
 							<span className="text-sm">Trabalho aqui atualmente</span>
-						</label>
+						</Label>
 					</FormItem>
 				)}
 			/>
 
 			<div className="space-y-2">
-				<label htmlFor="experience-description" className="text-sm font-medium">
-					Descrição
-				</label>
+				<Label htmlFor="experience-description">Descrição</Label>
 				<Textarea
 					id="experience-description"
 					placeholder="Descreva suas responsabilidades, projetos e conquistas..."

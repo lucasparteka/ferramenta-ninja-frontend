@@ -1,3 +1,4 @@
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 type TextInputProps = {
@@ -8,12 +9,7 @@ type TextInputProps = {
 export function TextInput({ value, onChange }: TextInputProps) {
 	return (
 		<div className="space-y-2">
-			<label
-				htmlFor="text-input"
-				className="text-sm font-medium text-foreground"
-			>
-				Digite ou cole seu texto
-			</label>
+			<Label htmlFor="text-input">Digite ou cole seu texto</Label>
 			<Textarea
 				id="text-input"
 				value={value}

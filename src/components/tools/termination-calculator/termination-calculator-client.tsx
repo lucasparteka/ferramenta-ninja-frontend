@@ -19,6 +19,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	calculateTermination,
@@ -115,7 +116,10 @@ export function TerminationCalculatorClient() {
 		const admission = new Date(`${data.admissionDate}T00:00:00Z`);
 		const termination = new Date(`${data.terminationDate}T00:00:00Z`);
 
-		if (Number.isNaN(admission.getTime()) || Number.isNaN(termination.getTime())) {
+		if (
+			Number.isNaN(admission.getTime()) ||
+			Number.isNaN(termination.getTime())
+		) {
 			setError("Datas inválidas.");
 			setResult(null);
 			return;
@@ -150,9 +154,7 @@ export function TerminationCalculatorClient() {
 				</div>
 			)}
 
-			{error && (
-				<p className="text-sm text-destructive">{error}</p>
-			)}
+			{error && <p className="text-sm text-destructive">{error}</p>}
 
 			{result && (
 				<>
@@ -175,7 +177,9 @@ export function TerminationCalculatorClient() {
 									key={line.label}
 									className="flex items-center justify-between py-2"
 								>
-									<span className="text-xs text-muted-foreground">{line.label}</span>
+									<span className="text-xs text-muted-foreground">
+										{line.label}
+									</span>
 									<span className="font-mono text-xs tabular-nums text-foreground">
 										{brl(line.amount)}
 									</span>
@@ -186,7 +190,9 @@ export function TerminationCalculatorClient() {
 
 					{result.fgtsWithdrawable > 0 && (
 						<div className="flex items-center justify-between border-t border-border pt-3">
-							<span className="text-xs text-muted-foreground">FGTS sacável</span>
+							<span className="text-xs text-muted-foreground">
+								FGTS sacável
+							</span>
 							<span className="font-mono text-xs font-semibold tabular-nums text-foreground">
 								{brl(result.fgtsWithdrawable)}
 							</span>
@@ -204,7 +210,11 @@ export function TerminationCalculatorClient() {
 								{result.noticeDays} dias
 							</span>
 						</p>
-						<p className={result.unemploymentInsuranceEligible ? "text-green-600" : ""}>
+						<p
+							className={
+								result.unemploymentInsuranceEligible ? "text-green-600" : ""
+							}
+						>
 							{result.unemploymentInsuranceEligible
 								? "✓ Possível direito ao seguro-desemprego"
 								: "Sem direito a seguro-desemprego"}
@@ -264,7 +274,10 @@ export function TerminationCalculatorClient() {
 										<FormItem>
 											<FormLabel>Data de admissão</FormLabel>
 											<FormControl>
-												<DateInput value={field.value} onChange={field.onChange} />
+												<DateInput
+													value={field.value}
+													onChange={field.onChange}
+												/>
 											</FormControl>
 											<FormMessage />
 										</FormItem>
@@ -277,7 +290,10 @@ export function TerminationCalculatorClient() {
 										<FormItem>
 											<FormLabel>Data de rescisão</FormLabel>
 											<FormControl>
-												<DateInput value={field.value} onChange={field.onChange} />
+												<DateInput
+													value={field.value}
+													onChange={field.onChange}
+												/>
 											</FormControl>
 											<FormMessage />
 										</FormItem>
@@ -347,7 +363,11 @@ export function TerminationCalculatorClient() {
 														field.onChange(masked as string)
 													}
 													InputElement={
-														<Input type="text" placeholder="R$ 0,00" {...field} />
+														<Input
+															type="text"
+															placeholder="R$ 0,00"
+															{...field}
+														/>
 													}
 												/>
 											</FormControl>
@@ -381,13 +401,13 @@ export function TerminationCalculatorClient() {
 												checked={field.value}
 												onCheckedChange={field.onChange}
 											/>
-											<label
+											<Label
 												htmlFor="has-expired-vacation"
-												className="cursor-pointer text-sm text-foreground"
+												className="cursor-pointer text-sm"
 											>
 												Possui férias vencidas (período aquisitivo completo não
 												usufruído)
-											</label>
+											</Label>
 										</div>
 									</FormItem>
 								)}

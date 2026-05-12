@@ -9,6 +9,7 @@ import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { calculateChristmasBonus } from "@/lib/labor/christmas-bonus";
 
@@ -87,12 +88,9 @@ export function ChristmasBonusClient() {
 						<div className="space-y-3.5">
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
-										htmlFor="salary"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="salary" className="mb-1.5 block text-xs">
 										Salário bruto mensal
-									</label>
+									</Label>
 									<CurrencyInput
 										value={state.salary > 0 ? state.salary : undefined}
 										onChangeValue={(_, num) =>
@@ -110,16 +108,11 @@ export function ChristmasBonusClient() {
 									/>
 								</div>
 								<div>
-									<label
-										htmlFor="additional"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
+									<Label htmlFor="additional" className="mb-1.5 block text-xs">
 										Adicionais habituais
-									</label>
+									</Label>
 									<CurrencyInput
-										value={
-											state.additional > 0 ? state.additional : undefined
-										}
+										value={state.additional > 0 ? state.additional : undefined}
 										onChangeValue={(_, num) =>
 											set("additional")((num as number) ?? 0)
 										}
@@ -146,12 +139,12 @@ export function ChristmasBonusClient() {
 						<div className="space-y-3.5">
 							<div className="grid grid-cols-2 gap-3.5">
 								<div>
-									<label
+									<Label
 										htmlFor="monthsWorked"
-										className="mb-1.5 block text-xs font-medium text-foreground"
+										className="mb-1.5 block text-xs"
 									>
 										Meses trabalhados
-									</label>
+									</Label>
 									<Input
 										id="monthsWorked"
 										type="number"
@@ -164,20 +157,15 @@ export function ChristmasBonusClient() {
 									/>
 								</div>
 								<div>
-									<label
-										htmlFor="dependents"
-										className="mb-1.5 block text-xs font-medium text-foreground"
-									>
-										Dependentes para IRRF
-									</label>
+									<Label htmlFor="dependents" className="mb-1.5 block text-xs">
+										Dependentes
+									</Label>
 									<Input
 										id="dependents"
 										type="number"
 										min={0}
 										value={state.dependents}
-										onChange={(e) =>
-											set("dependents")(Number(e.target.value))
-										}
+										onChange={(e) => set("dependents")(Number(e.target.value))}
 									/>
 								</div>
 							</div>
@@ -187,12 +175,12 @@ export function ChristmasBonusClient() {
 					<div className="p-5">
 						<SectionLabel>Opções</SectionLabel>
 						<div>
-							<label
+							<Label
 								htmlFor="firstInstallmentTiming"
-								className="mb-1.5 block text-xs font-medium text-foreground"
+								className="mb-1.5 block text-xs"
 							>
 								Pagamento da 1ª parcela
-							</label>
+							</Label>
 							<NativeSelect
 								id="firstInstallmentTiming"
 								value={state.firstInstallmentTiming}
@@ -202,9 +190,7 @@ export function ChristmasBonusClient() {
 									)
 								}
 							>
-								<option value="november">
-									Até 30 de novembro (padrão)
-								</option>
+								<option value="november">Até 30 de novembro (padrão)</option>
 								<option value="vacation">
 									Adiantar junto às férias (Lei 4.749/65 art. 2º §2º)
 								</option>
@@ -290,11 +276,7 @@ export function ChristmasBonusClient() {
 								<ResultRow label="(−) INSS" value={result.inss} dim />
 								<ResultRow label="(−) IRRF" value={result.irrf} dim />
 								<div className="my-2 h-px bg-border" />
-								<ResultRow
-									label="13º líquido"
-									value={result.netTotal}
-									strong
-								/>
+								<ResultRow label="13º líquido" value={result.netTotal} strong />
 								<p className="mt-2 text-[11px] text-muted-foreground">
 									{result.firstInstallmentDueLabel}
 								</p>
@@ -313,9 +295,9 @@ export function ChristmasBonusClient() {
 				<div className="flex items-start gap-2 border-t border-warning-line bg-warning-surface px-4.5 py-3 text-[11.5px] leading-relaxed text-muted-foreground">
 					<AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0 text-warning" />
 					<span>
-						Estimativa baseada nas tabelas INSS e IRRF 2026. IRRF calculado
-						sem o redutor da reforma 2025 (vale apenas para salário mensal).
-						FGTS (8%) é depositado pelo empregador, sem desconto no holerite.
+						Estimativa baseada nas tabelas INSS e IRRF 2026. IRRF calculado sem
+						o redutor da reforma 2025 (vale apenas para salário mensal). FGTS
+						(8%) é depositado pelo empregador, sem desconto no holerite.
 					</span>
 				</div>
 			</aside>

@@ -4,6 +4,7 @@ import { CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { formatCnpjMask } from "@/lib/cnpj/lookup";
 import { validateCNPJ } from "@/lib/cnpj/validate";
 
@@ -24,12 +25,9 @@ export function CnpjValidator() {
 	return (
 		<div className="space-y-4">
 			<div className="space-y-2">
-				<label
-					htmlFor="cnpj-validate-input"
-					className="mr-3 text-sm font-medium text-foreground"
-				>
+				<Label htmlFor="cnpj-validate-input" className="mr-3">
 					Digite um CNPJ para validar
-				</label>
+				</Label>
 				<Input
 					id="cnpj-validate-input"
 					type="text"

@@ -4,7 +4,9 @@ import { Copy, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { LayoutD } from "@/components/shared/layout-d";
 import { LimitBar } from "@/components/shared/limit-bar";
+import { SidebarSection } from "@/components/shared/sidebar-section";
 import { StatusBar } from "@/components/shared/status-bar";
+import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -64,43 +66,36 @@ export function GooglePreviewTool() {
 	return (
 		<LayoutD
 			header={
-				<>
-					<div className="flex items-center gap-3">
-						<div className="text-sm font-semibold tracking-tight">
-							Prévia do Google
-						</div>
-						<span className="rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-							TEMPO REAL
-						</span>
-					</div>
-					<div className="flex items-center gap-1.5">
-						<Button
-							variant="outline"
-							size="sm"
-							onClick={handleCopySnippet}
-							disabled={!title && !description && !url}
-						>
-							<Copy className="mr-1.5 h-3 w-3" />
-							Copiar
-						</Button>
-						<Button
-							variant="ghost"
-							size="icon-sm"
-							aria-label="Limpar"
-							onClick={handleClear}
-							disabled={!hasContent}
-						>
-							<Trash2 className="h-3.5 w-3.5" />
-						</Button>
-					</div>
-				</>
+				<ToolHeader
+					title="Prévia do Google"
+					badge="TEMPO REAL"
+					actions={
+						<>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={handleCopySnippet}
+								disabled={!title && !description && !url}
+							>
+								<Copy className="mr-1.5 h-3 w-3" />
+								Copiar
+							</Button>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								aria-label="Limpar"
+								onClick={handleClear}
+								disabled={!hasContent}
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
+						</>
+					}
+				/>
 			}
 			sidebar={
 				<>
-					<div className="p-4 space-y-3">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-							Título
-						</h3>
+					<SidebarSection title="Título">
 						<LimitBar
 							label="Título"
 							current={title.length}
@@ -108,11 +103,8 @@ export function GooglePreviewTool() {
 							max={60}
 							status={titleStatus}
 						/>
-					</div>
-					<div className="p-4 space-y-3 border-t border-border">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-							Descrição
-						</h3>
+					</SidebarSection>
+					<SidebarSection title="Descrição">
 						<LimitBar
 							label="Descrição"
 							current={description.length}
@@ -120,11 +112,8 @@ export function GooglePreviewTool() {
 							max={160}
 							status={descStatus}
 						/>
-					</div>
-					<div className="p-4 space-y-3 border-t border-border">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-							Palavra-chave
-						</h3>
+					</SidebarSection>
+					<SidebarSection title="Palavra-chave">
 						<input
 							id="preview-keyword"
 							value={keyword}
@@ -132,11 +121,8 @@ export function GooglePreviewTool() {
 							placeholder="palavra para destacar"
 							className="w-full rounded-md border border-border bg-transparent px-2.5 py-1.5 text-xs text-foreground outline-none placeholder:text-muted-foreground/50 focus:border-foreground/30"
 						/>
-					</div>
-					<div className="p-4 space-y-2 mt-auto border-t border-border">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Referências
-						</h3>
+					</SidebarSection>
+					<SidebarSection title="Referências">
 						<div className="flex items-center justify-between">
 							<span className="text-xs text-muted-foreground">Título</span>
 							<span className="font-mono text-[11px] bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
@@ -155,7 +141,7 @@ export function GooglePreviewTool() {
 								limpa e descritiva
 							</span>
 						</div>
-					</div>
+					</SidebarSection>
 				</>
 			}
 		>

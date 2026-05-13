@@ -3,7 +3,10 @@
 import { Shuffle, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { LayoutD } from "@/components/shared/layout-d";
+import { SidebarSection } from "@/components/shared/sidebar-section";
+import { StatusBar } from "@/components/shared/status-bar";
 import { SwitchRow } from "@/components/shared/switch-row";
+import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -82,39 +85,32 @@ export function RandomPicker() {
 	return (
 		<LayoutD
 			header={
-				<>
-					<div className="flex items-center gap-3">
-						<h1 className="text-sm font-semibold tracking-tight">
-							Sorteio Aleatório
-						</h1>
-						<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
-							SORTEIO
-						</span>
-					</div>
-					<div className="flex items-center gap-1.5">
-						<Button size="sm" onClick={handleDraw} disabled={drawing}>
-							<Shuffle className="mr-1.5 h-3 w-3" />
-							{drawing ? "Sorteando..." : "Sortear"}
-						</Button>
-						<Button
-							variant="ghost"
-							size="icon-sm"
-							onClick={handleClear}
-							disabled={!input}
-							aria-label="Limpar"
-						>
-							<Trash2 className="h-3.5 w-3.5" />
-						</Button>
-					</div>
-				</>
+				<ToolHeader
+					title="Sorteio Aleatório"
+					badge="SORTEIO"
+					actions={
+						<>
+							<Button size="sm" onClick={handleDraw} disabled={drawing}>
+								<Shuffle className="mr-1.5 h-3 w-3" />
+								{drawing ? "Sorteando..." : "Sortear"}
+							</Button>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={handleClear}
+								disabled={!input}
+								aria-label="Limpar"
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
+						</>
+					}
+				/>
 			}
 			sidebar={
 				<>
 					{winners && (
-						<div className="p-4 space-y-2">
-							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-								Resultado
-							</h3>
+						<SidebarSection title="Resultado">
 							<ol className="space-y-1.5">
 								{winners.map((winner, index) => (
 									<li
@@ -130,14 +126,10 @@ export function RandomPicker() {
 									</li>
 								))}
 							</ol>
-						</div>
+						</SidebarSection>
 					)}
 
-					<div className="p-4 space-y-3">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Opções
-						</h3>
-
+					<SidebarSection title="Opções">
 						<div className="flex items-center justify-between">
 							<span className="text-xs text-muted-foreground">Vencedores</span>
 							<Input
@@ -161,7 +153,7 @@ export function RandomPicker() {
 							checked={options.removeEmpty}
 							onChange={(v) => set("removeEmpty", v)}
 						/>
-					</div>
+					</SidebarSection>
 				</>
 			}
 		>
@@ -176,22 +168,21 @@ export function RandomPicker() {
 				className="flex-1 min-h-[280px] resize-none bg-transparent p-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
 			/>
 
-			<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-				<span className="inline-flex items-center gap-1.5">
-					<span
-						className={`h-1.5 w-1.5 rounded-full ${error ? "bg-destructive" : items.length > 0 ? "bg-green-600" : "bg-foreground/30"}`}
-					/>
-					<span
-						className={`text-[11px] ${error ? "text-destructive" : "text-muted-foreground"}`}
-					>
-						{error ||
-							(items.length > 0 ? "Pronto para sortear" : "Aguardando itens")}
-					</span>
-				</span>
-				<span className="font-mono text-[11px] text-muted-foreground">
-					{items.length} {items.length === 1 ? "item" : "itens"}
-				</span>
-			</div>
+			<StatusBar
+				items={[
+					{
+						label: "",
+						value: error || (items.length > 0 ? "Pronto para sortear" : "Aguardando itens"),
+						mono: false,
+						variant: error ? "danger" : items.length > 0 ? "success" : "default",
+					},
+					{
+						label: "",
+						value: `${items.length} ${items.length === 1 ? "item" : "itens"}`,
+						mono: true,
+					},
+				]}
+			/>
 		</LayoutD>
 	);
 }

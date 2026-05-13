@@ -5,8 +5,10 @@ import { ChevronDown, Loader2, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
+import { SidebarSection } from "@/components/shared/sidebar-section";
 import { StatusBar } from "@/components/shared/status-bar";
 import { SwitchRow } from "@/components/shared/switch-row";
+import { ToolHeader } from "@/components/shared/tool-header";
 import { DiffResult } from "@/components/tools/text-diff/diff-result";
 import { Button } from "@/components/ui/button";
 import { TextCleanerHighlight } from "./text-cleaner-highlight";
@@ -89,29 +91,23 @@ export function TextCleaner({ defaultOptions }: Props) {
 		<LayoutD
 			sidebarWidth={280}
 			header={
-				<div className="flex items-center gap-3">
-					<h1 className="text-sm font-semibold tracking-tight">Limpar texto</h1>
-					<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
-						LIMPEZA
-					</span>
-					{isTyping && input ? (
-						<Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
-					) : displayedHasChanges ? (
-						<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success tabular-nums">
-							−{displayedRemovedCount} chars
-						</span>
-					) : null}
-				</div>
+				<ToolHeader
+					title="Limpar texto"
+					badge="LIMPEZA"
+					actions={
+						isTyping && input ? (
+							<Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+						) : displayedHasChanges ? (
+							<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success tabular-nums">
+								−{displayedRemovedCount} chars
+							</span>
+						) : undefined
+					}
+				/>
 			}
 			sidebar={
 				<>
-					<div className="p-4 space-y-2">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Operações
-							<span className="ml-2 normal-case tracking-normal font-normal text-muted-foreground/60">
-								aplicadas em ordem
-							</span>
-						</h3>
+					<SidebarSection title="Operações" hint="aplicadas em ordem">
 						<SwitchRow
 							label="Espaços extras"
 							hint="Reduz múltiplos espaços para um"
@@ -157,15 +153,12 @@ export function TextCleaner({ defaultOptions }: Props) {
 							checked={options.trimLines}
 							onChange={(v) => setOptions({ ...options, trimLines: v })}
 						/>
-					</div>
+					</SidebarSection>
 
-					<div className="p-4 space-y-2">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Normalização
-						</h3>
+					<SidebarSection title="Normalização">
 						<SwitchRow
 							label="Aspas curvas → retas"
-							hint={`“‘ → "'`}
+							hint={`"’ → "’`}
 							checked={options.convertQuotes}
 							onChange={(v) => setOptions({ ...options, convertQuotes: v })}
 							muted
@@ -177,7 +170,7 @@ export function TextCleaner({ defaultOptions }: Props) {
 							onChange={(v) => setOptions({ ...options, convertDashes: v })}
 							muted
 						/>
-					</div>
+					</SidebarSection>
 				</>
 			}
 		>

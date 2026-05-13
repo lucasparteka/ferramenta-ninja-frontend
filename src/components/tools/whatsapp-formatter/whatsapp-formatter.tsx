@@ -14,6 +14,9 @@ import {
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
+import { SidebarSection } from "@/components/shared/sidebar-section";
+import { StatusBar } from "@/components/shared/status-bar";
+import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { serializeToWhatsApp } from "@/lib/text/whatsapp-serializer";
 import { WhatsAppPreview } from "./whatsapp-preview";
@@ -77,21 +80,9 @@ export function WhatsAppFormatter() {
 	return (
 		<LayoutD
 			sidebarWidth={380}
-			header={
-				<div className="flex items-center gap-3">
-					<h1 className="text-sm font-semibold tracking-tight">
-						Formatador WhatsApp
-					</h1>
-					<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
-						FORMATAÇÃO
-					</span>
-				</div>
-			}
+			header={<ToolHeader title="Formatador WhatsApp" badge="FORMATAÇÃO" />}
 			sidebar={
-				<div className="p-4 space-y-3">
-					<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-						Pré-visualização
-					</h3>
+				<SidebarSection title="Pré-visualização">
 					<WhatsAppPreview text={whatsAppText} />
 					<div className="flex items-center gap-1.5 pt-1">
 						<CopyButton
@@ -121,7 +112,7 @@ export function WhatsAppFormatter() {
 							<Trash2 className="h-3.5 w-3.5" />
 						</Button>
 					</div>
-				</div>
+				</SidebarSection>
 			}
 		>
 			{/* Toolbar de formatação */}
@@ -184,17 +175,12 @@ export function WhatsAppFormatter() {
 				className="flex-1 cursor-text [&_.ProseMirror]:min-h-[280px] [&_.ProseMirror]:p-4 [&_.ProseMirror]:text-sm [&_.ProseMirror]:text-foreground [&_.ProseMirror]:outline-none [&_.ProseMirror_p.is-editor-empty:first-child]:before:pointer-events-none [&_.ProseMirror_p.is-editor-empty:first-child]:before:float-left [&_.ProseMirror_p.is-editor-empty:first-child]:before:h-0 [&_.ProseMirror_p.is-editor-empty:first-child]:before:text-muted-foreground [&_.ProseMirror_p.is-editor-empty:first-child]:before:content-[attr(data-placeholder)]"
 			/>
 
-			<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-				<span className="inline-flex items-center gap-1.5">
-					<span className="h-1.5 w-1.5 rounded-full bg-green-600" />
-					<span className="text-[11px] text-muted-foreground">
-						Em tempo real
-					</span>
-				</span>
-				<span className="font-mono text-[11px] text-muted-foreground">
-					{whatsAppText.length} caracteres
-				</span>
-			</div>
+			<StatusBar
+				items={[
+					{ label: "", value: "Em tempo real", mono: false, variant: "success" },
+					{ label: "", value: `${whatsAppText.length} caracteres`, mono: true },
+				]}
+			/>
 		</LayoutD>
 	);
 }

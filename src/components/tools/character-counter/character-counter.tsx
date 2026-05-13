@@ -5,6 +5,7 @@ import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
 import { StatusBar } from "@/components/shared/status-bar";
+import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -59,33 +60,29 @@ export function CharacterCounter() {
 	return (
 		<LayoutD
 			header={
-				<>
-					<div className="flex items-center gap-3">
-						<h1 className="text-sm font-semibold tracking-tight">
-							Contador de caracteres
-						</h1>
-						<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
-							TEMPO REAL
-						</span>
-					</div>
-					<div className="flex items-center gap-1.5">
-						<CopyButton
-							text={text}
-							variant="outline"
-							size="sm"
-							disabled={text === ""}
-						/>
-						<Button
-							variant="ghost"
-							size="icon-sm"
-							aria-label="Limpar"
-							onClick={() => setText("")}
-							disabled={text === ""}
-						>
-							<Trash2 className="h-3.5 w-3.5" />
-						</Button>
-					</div>
-				</>
+				<ToolHeader
+					title="Contador de caracteres"
+					badge="TEMPO REAL"
+					actions={
+						<>
+							<CopyButton
+								text={text}
+								variant="outline"
+								size="sm"
+								disabled={text === ""}
+							/>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								aria-label="Limpar"
+								onClick={() => setText("")}
+								disabled={text === ""}
+							>
+								<Trash2 className="h-3.5 w-3.5" />
+							</Button>
+						</>
+					}
+				/>
 			}
 			sidebar={<CharacterCounterStats stats={stats} />}
 		>

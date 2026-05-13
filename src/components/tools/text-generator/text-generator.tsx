@@ -4,7 +4,10 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
+import { SidebarSection } from "@/components/shared/sidebar-section";
+import { StatusBar } from "@/components/shared/status-bar";
 import { SwitchRow } from "@/components/shared/switch-row";
+import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -92,46 +95,39 @@ export function TextGenerator() {
 	return (
 		<LayoutD
 			header={
-				<>
-					<div className="flex items-center gap-3">
-						<h1 className="text-sm font-semibold tracking-tight">
-							Gerador de Texto
-						</h1>
-						<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
-							{options.type === "lorem" ? "MODELO" : "ALEATÓRIO"}
-						</span>
-					</div>
-					<div className="flex items-center gap-1.5">
-						<Button size="sm" onClick={handleGenerate}>
-							Gerar texto
-						</Button>
-						{output && (
-							<CopyButton
-								text={output}
-								label="Copiar"
-								variant="outline"
-								size="sm"
-							/>
-						)}
-						{output && (
-							<Button
-								variant="ghost"
-								size="icon-sm"
-								onClick={handleClear}
-								aria-label="Limpar"
-							>
-								<Trash2 className="h-3.5 w-3.5" />
+				<ToolHeader
+					title="Gerador de Texto"
+					badge={options.type === "lorem" ? "MODELO" : "ALEATÓRIO"}
+					actions={
+						<>
+							<Button size="sm" onClick={handleGenerate}>
+								Gerar texto
 							</Button>
-						)}
-					</div>
-				</>
+							{output && (
+								<CopyButton
+									text={output}
+									label="Copiar"
+									variant="outline"
+									size="sm"
+								/>
+							)}
+							{output && (
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									onClick={handleClear}
+									aria-label="Limpar"
+								>
+									<Trash2 className="h-3.5 w-3.5" />
+								</Button>
+							)}
+						</>
+					}
+				/>
 			}
 			sidebar={
 				<>
-					<div className="p-4 space-y-2">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Tipo
-						</h3>
+					<SidebarSection title="Tipo">
 						<div className="flex flex-col gap-1">
 							{TYPE_OPTIONS.map((opt) => (
 								<button
@@ -148,12 +144,9 @@ export function TextGenerator() {
 								</button>
 							))}
 						</div>
-					</div>
+					</SidebarSection>
 
-					<div className="p-4 space-y-2">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Formato
-						</h3>
+					<SidebarSection title="Formato">
 						<div className="flex flex-col gap-1">
 							{UNIT_OPTIONS.map((opt) => (
 								<button
@@ -170,12 +163,9 @@ export function TextGenerator() {
 								</button>
 							))}
 						</div>
-					</div>
+					</SidebarSection>
 
-					<div className="p-4 space-y-3">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Quantidade
-						</h3>
+					<SidebarSection title="Quantidade">
 						<div className="flex items-center justify-between">
 							<span className="text-xs text-muted-foreground">{unitLabel}</span>
 							<Input
@@ -192,19 +182,16 @@ export function TextGenerator() {
 								className="h-7 w-16 text-right font-mono text-xs"
 							/>
 						</div>
-					</div>
+					</SidebarSection>
 
 					{options.type === "lorem" && (
-						<div className="p-4 space-y-3">
-							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-								Opções
-							</h3>
+						<SidebarSection title="Opções">
 							<SwitchRow
 								label="Começar com Lorem"
 								checked={options.startWithLorem}
 								onChange={(v) => set("startWithLorem", v)}
 							/>
-						</div>
+						</SidebarSection>
 					)}
 				</>
 			}
@@ -216,25 +203,22 @@ export function TextGenerator() {
 				className="flex-1 min-h-[280px] resize-none bg-transparent p-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
 			/>
 
-			<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
-				<span className="inline-flex items-center gap-1.5">
-					<span
-						className={`h-1.5 w-1.5 rounded-full ${output ? "bg-green-600" : "bg-foreground/30"}`}
-					/>
-					<span className="text-[11px] text-muted-foreground">
-						{output ? "Gerado" : "Aguardando"}
-					</span>
-				</span>
-				<div className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground">
-					{output && (
-						<>
-							<span>{wordCount} palavras</span>
-							<span>·</span>
-							<span>{output.length} chars</span>
-						</>
-					)}
-				</div>
-			</div>
+			<StatusBar
+				items={[
+					{
+						label: "",
+						value: output ? "Gerado" : "Aguardando",
+						mono: false,
+						variant: output ? "success" : "default",
+					},
+					...(output
+						? ([
+								{ label: "", value: `${wordCount} palavras`, mono: true },
+								{ label: "", value: `${output.length} chars`, mono: true },
+							] as const)
+						: []),
+				]}
+			/>
 		</LayoutD>
 	);
 }

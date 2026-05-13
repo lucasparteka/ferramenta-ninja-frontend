@@ -4,8 +4,8 @@ import { Loader2, MapPin, Search } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutE } from "@/components/shared/layout-e";
-import { ResultSheet } from "@/components/shared/result-sheet";
 import type { Section } from "@/components/shared/result-sheet";
+import { ResultSheet } from "@/components/shared/result-sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -20,6 +20,20 @@ type State =
 	| { kind: "loading" }
 	| { kind: "success"; data: CepAddress }
 	| { kind: "error"; message: string };
+
+function buildFullAddress(data: CepAddress) {
+	return [
+		data.street,
+		data.neighborhood,
+		data.city && data.state ? `${data.city} - ${data.state}` : data.city,
+	]
+		.filter(Boolean)
+		.join(", ");
+}
+
+function buildMapsUrl(data: CepAddress, fullAddress: string) {
+	return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${fullAddress} ${data.cep}`.trim())}`;
+}
 
 export function ConsultaCepClient() {
 	const [value, setValue] = useState("");
@@ -57,6 +71,10 @@ export function ConsultaCepClient() {
 				? "result"
 				: state.kind;
 	const errorMessage = state.kind === "error" ? state.message : undefined;
+	const fullAddress =
+		state.kind === "success" ? buildFullAddress(state.data) : "";
+	const mapsUrl =
+		state.kind === "success" ? buildMapsUrl(state.data, fullAddress) : "";
 
 	return (
 		<LayoutE
@@ -79,7 +97,7 @@ export function ConsultaCepClient() {
 						onKeyDown={handleKeyDown}
 						placeholder="00000-000"
 						maxLength={9}
-						className="font-mono max-w-[200px]"
+						className="font-mono max-w-50"
 					/>
 					<Button
 						type="submit"
@@ -97,7 +115,7 @@ export function ConsultaCepClient() {
 				</form>
 			}
 			emptyState={
-				<div className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 p-8 text-center">
+				<div className="flex min-h-50 flex-col items-center justify-center gap-2 bg-card p-8 text-center">
 					<MapPin
 						className="h-5 w-5 text-muted-foreground"
 						strokeWidth={1.75}
@@ -111,23 +129,33 @@ export function ConsultaCepClient() {
 				</div>
 			}
 			result={state.kind === "success" && <CepResult data={state.data} />}
+			footerActions={
+				state.kind === "success" ? (
+					<>
+						<CopyButton
+							text={fullAddress}
+							label="Copiar endereço"
+							variant="outline"
+							size="sm"
+							className="ml-auto"
+						/>
+						<a
+							href={mapsUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="max-md:ml-auto flex gap-1.5 h-8 items-center rounded-md border border-border bg-background px-3 text-xs font-medium text-foreground hover:bg-muted"
+						>
+							<MapPin size={15} />
+							Ver no Google Maps
+						</a>
+					</>
+				) : undefined
+			}
 		/>
 	);
 }
 
 function CepResult({ data }: { data: CepAddress }) {
-	const fullAddress = [
-		data.street,
-		data.neighborhood,
-		data.city && data.state ? `${data.city} - ${data.state}` : data.city,
-	]
-		.filter(Boolean)
-		.join(", ");
-
-	const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-		`${fullAddress} ${data.cep}`.trim(),
-	)}`;
-
 	const sections: Section[] = [
 		{
 			title: "Endereço",
@@ -154,23 +182,7 @@ function CepResult({ data }: { data: CepAddress }) {
 
 	return (
 		<div className="space-y-4">
-			<ResultSheet sections={sections} />
-
-			<div className="flex flex-wrap gap-3">
-				<CopyButton
-					text={fullAddress}
-					label="Copiar endereço"
-					variant="outline"
-				/>
-				<a
-					href={mapsUrl}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="inline-flex h-9 items-center rounded-md border border-border bg-background px-4 text-sm font-medium text-foreground hover:bg-muted"
-				>
-					Ver no Google Maps
-				</a>
-			</div>
+			<ResultSheet variant="grid" sections={sections} />
 		</div>
 	);
 }

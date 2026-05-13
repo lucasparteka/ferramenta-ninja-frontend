@@ -35,7 +35,7 @@ function parseTlv(input: string): Record<string, string> {
 		const id = input.substring(i, i + 2);
 		const len = Number.parseInt(input.substring(i + 2, i + 4), 10);
 		if (Number.isNaN(len)) {
-			throw new Error(`Tamanho inválido no campo ${id}`);
+			throw new Error(`Tamanho inválido`);
 		}
 		const value = input.substring(i + 4, i + 4 + len);
 		if (value.length !== len) {

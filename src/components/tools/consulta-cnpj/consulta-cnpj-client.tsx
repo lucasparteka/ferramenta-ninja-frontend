@@ -1,11 +1,11 @@
 "use client";
 
-import { Search, Loader2 } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutE } from "@/components/shared/layout-e";
-import { ResultSheet } from "@/components/shared/result-sheet";
 import type { Section } from "@/components/shared/result-sheet";
+import { ResultSheet } from "@/components/shared/result-sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -20,6 +20,22 @@ type State =
 	| { kind: "loading" }
 	| { kind: "success"; data: CnpjCompany }
 	| { kind: "error"; message: string };
+
+function buildCopyText(d: CnpjCompany) {
+	const addr = [
+		d.address.street && d.address.number
+			? `${d.address.street}, ${d.address.number}`
+			: d.address.street,
+		d.address.complement,
+		d.address.neighborhood,
+		d.address.city && d.address.state
+			? `${d.address.city} - ${d.address.state}`
+			: d.address.city,
+	]
+		.filter(Boolean)
+		.join(", ");
+	return `${d.corporateName}\n${d.cnpj}\n${addr}`.trim();
+}
 
 export function ConsultaCnpjClient() {
 	const [value, setValue] = useState("");
@@ -57,6 +73,7 @@ export function ConsultaCnpjClient() {
 				? "result"
 				: state.kind;
 	const errorMessage = state.kind === "error" ? state.message : undefined;
+	const copyText = state.kind === "success" ? buildCopyText(state.data) : null;
 
 	return (
 		<LayoutE
@@ -79,7 +96,7 @@ export function ConsultaCnpjClient() {
 						onKeyDown={handleKeyDown}
 						placeholder="00.000.000/0000-00"
 						maxLength={18}
-						className="font-mono"
+						className="font-mono max-w-50"
 					/>
 					<Button
 						type="submit"
@@ -97,7 +114,7 @@ export function ConsultaCnpjClient() {
 				</form>
 			}
 			emptyState={
-				<div className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 p-8 text-center">
+				<div className="flex min-h-50 flex-col items-center justify-center gap-2 bg-card p-8 text-center">
 					<Search
 						className="h-5 w-5 text-muted-foreground"
 						strokeWidth={1.75}
@@ -111,24 +128,22 @@ export function ConsultaCnpjClient() {
 				</div>
 			}
 			result={state.kind === "success" && <CnpjResult data={state.data} />}
+			footerActions={
+				copyText ? (
+					<CopyButton
+						text={copyText}
+						label="Copiar dados"
+						variant="outline"
+						size="sm"
+						className="ml-auto"
+					/>
+				) : undefined
+			}
 		/>
 	);
 }
 
 function CnpjResult({ data }: { data: CnpjCompany }) {
-	const fullAddress = [
-		data.address.street && data.address.number
-			? `${data.address.street}, ${data.address.number}`
-			: data.address.street,
-		data.address.complement,
-		data.address.neighborhood,
-		data.address.city && data.address.state
-			? `${data.address.city} - ${data.address.state}`
-			: data.address.city,
-	]
-		.filter(Boolean)
-		.join(", ");
-
 	const sections: Section[] = [
 		{
 			title: "Identificação",
@@ -188,18 +203,17 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 	];
 
 	return (
-		<div className="space-y-4">
-			<ResultSheet sections={sections} />
-
+		<div>
+			<ResultSheet variant="grid" sections={sections} />
 			{(data.simples?.optant || data.mei?.optant) && (
-				<div className="flex flex-wrap gap-2">
+				<div className="flex flex-wrap gap-2 px-4">
 					{data.simples?.optant && (
-						<span className="rounded-md border border-success/30 bg-success/10 px-2 py-1 text-xs font-medium text-success">
+						<span className="rounded-md border border-success-bd bg-success/10 px-2 py-1 text-xs font-semibold text-success">
 							Optante Simples Nacional
 						</span>
 					)}
 					{data.mei?.optant && (
-						<span className="rounded-md border border-success/30 bg-success/10 px-2 py-1 text-xs font-medium text-success">
+						<span className="rounded-md border border-success-bd bg-success/10 px-2 py-1 text-xs font-semibold text-success">
 							MEI
 						</span>
 					)}
@@ -207,9 +221,9 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 			)}
 
 			{data.partners.length > 0 && (
-				<div className="rounded-md border border-border bg-card">
-					<div className="border-b border-border px-4 py-2">
-						<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+				<div className="border-border border-t bg-card">
+					<div className="border-b border-border px-4 py-2 bg-muted/55">
+						<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Sócios e Administradores
 						</h3>
 					</div>
@@ -230,12 +244,6 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 					</div>
 				</div>
 			)}
-
-			<CopyButton
-				text={`${data.corporateName}\n${data.cnpj}\n${fullAddress}`.trim()}
-				label="Copiar dados"
-				variant="outline"
-			/>
 		</div>
 	);
 }

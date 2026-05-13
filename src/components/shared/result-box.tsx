@@ -1,3 +1,7 @@
+/**
+ * @deprecated Use ResultSheet (Layout A/C/E) ou badges inline (Layout E).
+ * Mantido apenas para compatibilidade com ferramentas legadas.
+ */
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 

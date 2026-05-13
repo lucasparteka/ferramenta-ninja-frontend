@@ -9,7 +9,8 @@ type LayoutEProps = {
 	emptyState?: React.ReactNode;
 	loadingState?: React.ReactNode;
 	errorState?: React.ReactNode;
-	result: React.ReactNode;
+	result?: React.ReactNode;
+	footerActions?: React.ReactNode;
 };
 
 export function LayoutE({
@@ -20,16 +21,26 @@ export function LayoutE({
 	loadingState,
 	errorState,
 	result,
+	footerActions,
 }: LayoutEProps) {
 	return (
 		<div className="space-y-6">
 			{header}
-			<div className="space-y-6">
-				{searchBar}
-				{state === "empty" && (emptyState ?? <EmptyState />)}
-				{state === "loading" && (loadingState ?? <LoadingState />)}
-				{state === "error" && (errorState ?? <ErrorState />)}
-				{state === "result" && result}
+			<div className="rounded-lg border border-border overflow-hidden bg-card">
+				<div className="border-b border-border bg-muted/55 px-4 py-3">
+					{searchBar}
+				</div>
+				<div>
+					{state === "empty" && (emptyState ?? <EmptyState />)}
+					{state === "loading" && (loadingState ?? <LoadingState />)}
+					{state === "error" && (errorState ?? <ErrorState />)}
+					{state === "result" && result}
+				</div>
+				{footerActions && (
+					<div className="flex flex-wrap items-center gap-2 border-t border-border bg-muted/40 px-4 py-2.5">
+						{footerActions}
+					</div>
+				)}
 			</div>
 		</div>
 	);

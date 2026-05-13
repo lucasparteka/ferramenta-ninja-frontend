@@ -1,11 +1,11 @@
 "use client";
 
-import { QrCode, Trash } from "lucide-react";
+import { QrCode, Search, Trash } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutE } from "@/components/shared/layout-e";
-import { ResultSheet } from "@/components/shared/result-sheet";
 import type { Section } from "@/components/shared/result-sheet";
+import { ResultSheet } from "@/components/shared/result-sheet";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -51,6 +51,7 @@ export function DecodificadorPixClient() {
 					/>
 					<div className="flex gap-2">
 						<Button onClick={handleDecode} disabled={!input.trim()}>
+							<Search className="mr-2 h-3.5 w-3.5" />
 							Decodificar
 						</Button>
 						<Button
@@ -65,7 +66,7 @@ export function DecodificadorPixClient() {
 				</div>
 			}
 			emptyState={
-				<div className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 p-8 text-center">
+				<div className="flex min-h-50 flex-col items-center justify-center gap-2 bg-card p-8 text-center">
 					<QrCode
 						className="h-5 w-5 text-muted-foreground"
 						strokeWidth={1.75}
@@ -79,16 +80,22 @@ export function DecodificadorPixClient() {
 				</div>
 			}
 			result={result && <PixResult result={result} />}
+			footerActions={
+				result?.key ? (
+					<CopyButton
+						text={result.key}
+						label="Copiar chave PIX"
+						variant="outline"
+					/>
+				) : undefined
+			}
 		/>
 	);
 }
 
 function PixResult({ result }: { result: PixDecoded }) {
-	const rows: { label: string; value?: string }[] = [
-		{
-			label: "Beneficiário",
-			value: result.beneficiary,
-		},
+	const transferRows: { label: string; value?: string }[] = [
+		{ label: "Beneficiário", value: result.beneficiary },
 		{
 			label: result.keyType
 				? `Chave PIX (${keyTypeLabel(result.keyType)})`
@@ -101,10 +108,7 @@ function PixResult({ result }: { result: PixDecoded }) {
 		},
 		{ label: "Cidade", value: result.city },
 		{ label: "PSP / Instituição", value: result.psp },
-		{
-			label: "Info adicional",
-			value: result.additionalInfo,
-		},
+		{ label: "Info adicional", value: result.additionalInfo },
 	];
 
 	const techRows: { label: string; value?: string }[] = [
@@ -115,15 +119,12 @@ function PixResult({ result }: { result: PixDecoded }) {
 	const sections: Section[] = [
 		{
 			title: "Dados da Transferência",
-			rows: rows
+			rows: transferRows
 				.filter((r) => r.value)
 				.map((r) => ({
 					label: r.label,
 					value: r.value,
-					mono:
-						r.label === "TxID" ||
-						r.label === "CRC" ||
-						r.label.startsWith("Chave"),
+					mono: r.label.startsWith("Chave"),
 				})),
 		},
 		{
@@ -138,15 +139,15 @@ function PixResult({ result }: { result: PixDecoded }) {
 		},
 	];
 
+	const badgeClass = result.valid
+		? "border-success-bd bg-success/10 text-success"
+		: "border-warning-bd bg-warning/10 text-warning";
+
 	return (
-		<div className="space-y-4">
-			<div className="flex flex-wrap items-center gap-3">
+		<div>
+			<div className="flex flex-wrap items-center gap-3 border-b border-border bg-muted/30 px-4 py-2.5">
 				<span
-					className={`inline-flex items-center rounded-md px-3 py-1 text-xs font-semibold ${
-						result.valid
-							? "bg-success/10 text-success"
-							: "bg-warning/10 text-warning"
-					}`}
+					className={`inline-flex items-center rounded-md border px-3 py-1 text-xs font-semibold ${badgeClass}`}
 				>
 					{result.valid ? "Código válido" : "Atenção"}
 				</span>
@@ -158,23 +159,19 @@ function PixResult({ result }: { result: PixDecoded }) {
 			</div>
 
 			{result.errors.length > 0 && (
-				<div className="rounded-md border border-warning/30 bg-warning/5 p-3">
-					<ul className="list-disc space-y-1 pl-5 text-xs text-warning">
-						{result.errors.map((err) => (
-							<li key={err}>{err}</li>
-						))}
-					</ul>
+				<div className="px-4 py-3">
+					<div className="rounded-md border border-warning-bd bg-warning/5 p-3">
+						<ul className="list-disc space-y-1 pl-5 text-xs text-warning">
+							{result.errors.map((err) => (
+								<li key={err}>{err}</li>
+							))}
+						</ul>
+					</div>
 				</div>
 			)}
 
-			<ResultSheet sections={sections} />
-
-			{result.key && (
-				<CopyButton
-					text={result.key}
-					label="Copiar chave PIX"
-					variant="outline"
-				/>
+			{result.errors.length === 0 && (
+				<ResultSheet variant="grid" sections={sections} />
 			)}
 		</div>
 	);

@@ -81,7 +81,7 @@ export function MetaTagGenerator() {
 										value={description}
 										onChange={(e) => setDescription(e.target.value)}
 										placeholder="Descrição breve do conteúdo da página..."
-										className="min-h-[80px]"
+										className="min-h-20"
 										maxLength={160}
 									/>
 								</div>

@@ -11,7 +11,14 @@
 /*  - <Section>: bloco de propriedades com header uppercase            */
 /* ------------------------------------------------------------------ */
 
-import { FileCode, Image as ImageIcon, Smile, Type } from "lucide-react";
+import {
+	FileCode,
+	Image as ImageIcon,
+	Lock,
+	Smile,
+	Star,
+	Type,
+} from "lucide-react";
 import { useEffect, useRef } from "react";
 import { OptionSwitch } from "@/components/shared/option-switch";
 import { Slider } from "@/components/shared/slider";
@@ -172,6 +179,83 @@ export function ModeTabs({
 	);
 }
 
+/* ---------- BrowserTabPreview -------------------------------------- */
+
+function BrowserTabPreview({
+	tabRef,
+	tabLabel = "exemplo.com.br",
+	className,
+}: {
+	tabRef: React.RefObject<HTMLCanvasElement | null>;
+	tabLabel?: string;
+	className?: string;
+}) {
+	const url = `https://${tabLabel}`;
+	return (
+		<div
+			className={cn(
+				"rounded-lg border border-border bg-card overflow-hidden",
+				className,
+			)}
+		>
+			<div className="flex items-center justify-between px-3 h-7 bg-muted/40">
+				<div className="flex items-center gap-1" aria-hidden>
+					<span className="h-2.5 w-2.5 rounded-full bg-red-500/60" />
+					<span className="h-2.5 w-2.5 rounded-full bg-amber-500/60" />
+					<span className="h-2.5 w-2.5 rounded-full bg-green-500/60" />
+				</div>
+				<div
+					className="flex items-center gap-1.5 text-muted-foreground/35 text-xs select-none"
+					aria-hidden
+				>
+					<span>—</span>
+					<span>□</span>
+					<span>✕</span>
+				</div>
+			</div>
+
+			<div className="flex items-end bg-muted/30 px-3 h-8">
+				<div className="flex items-center gap-2 rounded-t-md border border-border border-b-0 bg-card px-2 h-7 -mb-px min-w-0">
+					<canvas
+						ref={tabRef}
+						width={32}
+						height={32}
+						style={{ width: 17, height: 17 }}
+						className="shrink-0"
+					/>
+					<span className="text-body-sm truncate max-w-28">{tabLabel}</span>
+					<button
+						type="button"
+						tabIndex={-1}
+						aria-hidden
+						className="text-muted-foreground/40 hover:text-muted-foreground text-sm leading-none shrink-0 cursor-default ml-4"
+					>
+						×
+					</button>
+				</div>
+			</div>
+
+			<div className="flex items-center gap-2 px-3 h-8 bg-card">
+				<div className="flex items-center gap-1.5 flex-1 rounded-full bg-muted/60 px-2.5 h-6 min-w-0">
+					<Lock
+						className="size-3 shrink-0 text-muted-foreground"
+						strokeWidth={1.75}
+					/>
+					<span className="text-[11px] text-muted-foreground truncate">
+						{url}
+					</span>
+				</div>
+				<Star
+					className="size-3 shrink-0 text-muted-foreground/30"
+					strokeWidth={1.75}
+				/>
+			</div>
+
+			<div className="h-16 bg-background" />
+		</div>
+	);
+}
+
 /* ---------- LivePreview ------------------------------------------- */
 
 type RenderFn = (
@@ -318,21 +402,11 @@ export function LivePreview({
 			</div>
 
 			{/* contextual preview: browser tab */}
-			<div className="rounded-md border bg-card p-4">
-				<p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+			<div className="space-y-3">
+				<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					No navegador
-				</p>
-				<div className="flex items-center gap-2 rounded-t-md border border-b-0 bg-muted/40 px-3 py-2">
-					<canvas
-						ref={tabRef}
-						width={32}
-						height={32}
-						style={{ width: 16, height: 16 }}
-					/>
-					<span className="truncate text-xs text-foreground">{tabLabel}</span>
-					<span className="ml-auto text-muted-foreground/60">×</span>
-				</div>
-				<div className="h-12 rounded-b-md border bg-background" />
+				</h3>
+				<BrowserTabPreview tabRef={tabRef} tabLabel={tabLabel} />
 			</div>
 		</div>
 	);

@@ -29,6 +29,7 @@ import {
 	Hash,
 	Image,
 	Keyboard,
+	Layout,
 	LayoutList,
 	LineDotRightHorizontal,
 	Link,
@@ -951,6 +952,15 @@ export const categories: ToolCategory[] = [
 					"Crie sombras CSS personalizadas com preview em tempo real",
 				icon: Box,
 				tags: ["design", "css", "box-shadow", "sombra", "frontend"],
+				intent: "generate",
+			},
+			{
+				name: "Gerador de Flexbox CSS",
+				href: "/ferramentas/gerador-de-flexbox-css",
+				description:
+					"Experimente propriedades do Flexbox com preview em tempo real e código pronto",
+				icon: Layout,
+				tags: ["design", "css", "flexbox", "frontend", "layout"],
 				intent: "generate",
 			},
 			{

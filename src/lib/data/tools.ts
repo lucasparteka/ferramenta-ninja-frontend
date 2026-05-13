@@ -386,10 +386,18 @@ export const categories: ToolCategory[] = [
 			{
 				name: "Gerador de CNPJ",
 				href: "/ferramentas/gerador-de-cnpj",
-				description: "Gere e valide CNPJs",
+				description: "Gere CNPJs válidos para testes",
 				icon: Hash,
 				tags: ["cnpj", "documento"],
 				intent: "generate",
+			},
+			{
+				name: "Validador de CNPJ",
+				href: "/ferramentas/validador-de-cnpj",
+				description: "Valide qualquer CNPJ instantaneamente",
+				icon: Hash,
+				tags: ["cnpj", "documento", "validacao"],
+				intent: "validate",
 			},
 			{
 				name: "Gerador de Cartão de Crédito",

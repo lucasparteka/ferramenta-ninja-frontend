@@ -21,7 +21,7 @@ export function LayoutD({
 			className="rounded-sm border border-border overflow-hidden flex flex-col md:grid bg-card"
 			style={{ gridTemplateColumns: `1fr ${sidebarWidth}px` }}
 		>
-			<div className="flex items-center justify-between border-b border-border px-4 py-2.5 col-span-full">
+			<div className="flex items-center justify-between gap-y-4 flex-wrap border-b border-border px-4 py-2.5 col-span-full">
 				{header}
 			</div>
 			<div

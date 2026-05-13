@@ -21,8 +21,8 @@ import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { NativeSelect } from "@/components/ui/select-native";
 import { Label } from "@/components/ui/label";
+import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 
 const ROWS_PER_PAGE = 50;
@@ -267,6 +267,7 @@ export function CsvViewer() {
 		reader.readAsText(selected, "UTF-8");
 	}
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: .
 	useEffect(() => {
 		if (!rawText.trim()) return;
 		const timer = setTimeout(() => {

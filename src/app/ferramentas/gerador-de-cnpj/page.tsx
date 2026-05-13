@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
 import { CnpjGenerator } from "@/components/tools/cnpj-generator/cnpj-generator";
-import { CnpjValidator } from "@/components/tools/cnpj-generator/cnpj-validator";
 
 export const metadata: Metadata = {
 	title: "Gerador de CNPJ Válido Online Grátis | Ferramenta Ninja",
 	description:
-		"Gere CNPJs válidos para testes e valide CNPJs existentes. Os números gerados não pertencem a empresas reais. Ferramenta gratuita, sem cadastro.",
+		"Gere CNPJs válidos para testes e desenvolvimento. Os números gerados não pertencem a empresas reais. Ferramenta gratuita, sem cadastro.",
 };
 
 function SeoContent() {
@@ -155,10 +154,16 @@ function SeoContent() {
 							Como validar um CNPJ?
 						</h3>
 						<p>
-							Use o validador acima: cole o CNPJ no campo e clique em{" "}
-							<strong>Validar CNPJ</strong>. A ferramenta aceita o CNPJ com ou
-							sem formatação (pontos, barra e traço) e verifica tanto o formato
-							quanto os dígitos verificadores.
+							Use nosso{" "}
+							<a
+								href="/ferramentas/validador-de-cnpj"
+								className="text-primary underline-offset-4 hover:underline"
+							>
+								Validador de CNPJ
+							</a>
+							: cole o CNPJ no campo e clique em Validar. A ferramenta aceita o
+							CNPJ com ou sem formatação e verifica tanto o formato quanto os
+							dígitos verificadores.
 						</p>
 					</div>
 					<div>
@@ -177,9 +182,9 @@ function SeoContent() {
 							Os dados são enviados para algum servidor?
 						</h3>
 						<p>
-							Não. Toda a geração e validação ocorre diretamente no seu
-							navegador. Nenhum CNPJ digitado ou gerado é transmitido ou
-							armazenado em qualquer servidor.
+							Não. Toda a geração ocorre diretamente no seu navegador. Nenhum
+							CNPJ digitado ou gerado é transmitido ou armazenado em qualquer
+							servidor.
 						</p>
 					</div>
 				</div>
@@ -194,24 +199,11 @@ export default function GeradorDeCnpjPage() {
 			compact
 			toolHref="/ferramentas/gerador-de-cnpj"
 			title="Gerador de CNPJ Válido Online Grátis"
-			description="Gere CNPJs válidos para testes ou valide CNPJs existentes. Os números gerados são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
+			description="Gere CNPJs válidos para testes e desenvolvimento. Os números gerados são matematicamente corretos e destinados exclusivamente a fins de desenvolvimento."
 			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-cnpj" />}
 			extraContent={<SeoContent />}
 		>
-			<div className="space-y-8">
-				<div>
-					<h2 className="mb-5 text-lg font-semibold text-foreground">
-						Gerar CNPJ
-					</h2>
-					<CnpjGenerator />
-				</div>
-				<div className="border-t border-border pt-8">
-					<h2 className="mb-5 text-lg font-semibold text-foreground">
-						Validar CNPJ
-					</h2>
-					<CnpjValidator />
-				</div>
-			</div>
+			<CnpjGenerator />
 		</PageLayout>
 	);
 }

@@ -115,7 +115,11 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 						6 PNGs + favicon.ico + site.webmanifest
 					</p>
 				</div>
-				<Button onClick={handleDownloadZip} disabled={zipLoading}>
+				<Button
+					onClick={handleDownloadZip}
+					disabled={zipLoading}
+					variant="outline"
+				>
 					{zipLoading ? (
 						<Loader2 className="mr-2 h-4 w-4 animate-spin" />
 					) : (
@@ -168,7 +172,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 									aria-label={`Baixar ${file.name}`}
 								>
 									{isDownloaded ? (
-										<Check className="h-3.5 w-3.5 text-green-500" />
+										<Check className="h-3.5 w-3.5 text-success" />
 									) : (
 										<Download className="h-3.5 w-3.5" />
 									)}
@@ -181,7 +185,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 
 			{/* HTML + manifest */}
 			<div className="grid gap-4 lg:grid-cols-2">
-				<div className="rounded-lg border bg-background p-4">
+				<div className="rounded-lg border bg-background p-4 overflow-x-auto">
 					<div className="mb-2 flex items-center gap-2">
 						<Code className="h-4 w-4 text-muted-foreground" />
 						<h3 className="text-sm font-semibold text-foreground">Tags HTML</h3>
@@ -192,22 +196,22 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 							&lt;head&gt;
 						</code>
 					</p>
-					<div className="relative min-w-0">
+					<div className="my-2 flex justify-end w-full">
+						<CopyButton
+							text={htmlTags}
+							label="Copiar"
+							variant="secondary"
+							size="xs"
+						/>
+					</div>
+					<div className="min-w-0">
 						<pre className="overflow-x-auto rounded-lg bg-muted p-3 text-[11px] text-muted-foreground">
 							<code>{htmlTags}</code>
 						</pre>
-						<div className="absolute right-2 top-2">
-							<CopyButton
-								text={htmlTags}
-								label="Copiar"
-								variant="secondary"
-								size="xs"
-							/>
-						</div>
 					</div>
 				</div>
 
-				<div className="rounded-lg border bg-background p-4">
+				<div className="rounded-lg border bg-background p-4 overflow-x-auto">
 					<button
 						type="button"
 						onClick={() => setManifestOpen((o) => !o)}
@@ -229,6 +233,14 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 					<p className="mt-1 text-left text-xs text-muted-foreground">
 						JSON para PWA
 					</p>
+					<div className="w-full flex justify-end">
+						<CopyButton
+							text={manifestJson}
+							label="Copiar"
+							variant="secondary"
+							size="xs"
+						/>
+					</div>
 					{manifestOpen && (
 						<motion.div
 							initial={{ opacity: 0, height: 0 }}
@@ -236,18 +248,10 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 							transition={{ duration: 0.2 }}
 							className="mt-3 overflow-hidden"
 						>
-							<div className="relative min-w-0">
+							<div className="min-w-0">
 								<pre className="overflow-x-auto rounded-lg bg-muted p-3 text-[11px] text-muted-foreground">
 									<code>{manifestJson}</code>
 								</pre>
-								<div className="absolute right-2 top-2">
-									<CopyButton
-										text={manifestJson}
-										label="Copiar"
-										variant="secondary"
-										size="xs"
-									/>
-								</div>
 							</div>
 						</motion.div>
 					)}

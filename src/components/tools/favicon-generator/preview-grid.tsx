@@ -1,10 +1,5 @@
 "use client";
 
-/* ------------------------------------------------------------------ */
-/*  PreviewGrid — agora renderiza inline dentro do ResultPanel.        */
-/*  Sem nav (sem botões "voltar/reset" — o shell ficou persistente).   */
-/* ------------------------------------------------------------------ */
-
 import { motion } from "framer-motion";
 import { AlertTriangle, Loader2, RotateCcw } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -120,8 +115,8 @@ export function PreviewGrid({
 
 	if (status === "error" && error) {
 		return (
-			<div className="rounded-lg border border-destructive/20 bg-destructive/5 p-6 text-center">
-				<AlertTriangle className="mx-auto h-8 w-8 text-destructive" />
+			<div className="rounded-md border border-destructive/30 bg-destructive/5 p-6 text-center">
+				<AlertTriangle className="mx-auto h-3.5 w-3.5 text-destructive" />
 				<p className="mt-2 text-sm font-medium text-foreground">
 					Erro na geração
 				</p>

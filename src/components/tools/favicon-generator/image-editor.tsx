@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, RefreshCw, Upload } from "lucide-react";
+import { RefreshCw, Upload } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { FaviconMode } from "@/lib/image/favicon";
@@ -135,7 +135,9 @@ export function ImageEditor({
 
 	const left = (
 		<>
-			<ModeTabs value={mode} onChange={onChangeMode} />
+			<div className="p-4 border-b border-border">
+				<ModeTabs value={mode} onChange={onChangeMode} />
+			</div>
 
 			<Section title="Origem">
 				{sourceImage ? (
@@ -181,7 +183,7 @@ export function ImageEditor({
 					// biome-ignore lint/a11y/useSemanticElements: .
 					<div
 						className={cn(
-							"relative cursor-pointer rounded-lg border-2 border-dashed p-5 text-center transition-colors",
+							"relative cursor-pointer rounded-lg border border-dashed p-5 text-center transition-colors",
 							isDragging
 								? "border-primary bg-primary/5"
 								: "border-border hover:border-primary/50 hover:bg-muted/40",
@@ -263,23 +265,13 @@ export function ImageEditor({
 	const right = (
 		<>
 			<Section title="Cor de fundo">
-				<ColorField
-					id="image-bg-color"
-					label=""
-					value={bgColor}
-					onChange={setBgColor}
-				/>
+				<ColorField value={bgColor} onChange={setBgColor} />
 			</Section>
 			<Section title="Forma">
 				<FormatField value={format} onChange={setFormat} />
 			</Section>
 			<Section title="Escala">
-				<SizeSlider
-					id="image-media-size"
-					label="Tamanho da imagem"
-					value={mediaSize}
-					onChange={setMediaSize}
-				/>
+				<SizeSlider value={mediaSize} onChange={setMediaSize} />
 			</Section>
 		</>
 	);

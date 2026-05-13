@@ -1,10 +1,10 @@
 "use client";
 
-import { CopyButton } from "@/components/shared/copy-button";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutB } from "@/components/shared/layout-b";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -33,187 +33,251 @@ export function MetaTagGenerator() {
 		keywords,
 	});
 
+	const hasContent = !!(title || description);
+
 	return (
-		<div className="space-y-6">
-			<div className="max-w-2xl space-y-4">
-				<div className="space-y-2">
-					<Label htmlFor="meta-title" className="block">
-						Título da página
-					</Label>
-					<Input
-						id="meta-title"
-						value={title}
-						onChange={(e) => setTitle(e.target.value)}
-						placeholder="Meu Site Incrível"
-						maxLength={60}
-					/>
-					<p className="text-xs text-muted-foreground">
-						{title.length}/60 caracteres
-					</p>
-				</div>
-
-				<div className="space-y-2">
-					<Label htmlFor="meta-desc" className="block">
-						Meta descrição
-					</Label>
-					<Textarea
-						id="meta-desc"
-						value={description}
-						onChange={(e) => setDescription(e.target.value)}
-						placeholder="Descrição breve do conteúdo da página..."
-						className="min-h-[80px]"
-						maxLength={160}
-					/>
-					<p className="text-xs text-muted-foreground">
-						{description.length}/160 caracteres
-					</p>
-				</div>
-
-				<div className="space-y-2">
-					<Label htmlFor="meta-url" className="block">
-						URL da página
-					</Label>
-					<Input
-						id="meta-url"
-						type="url"
-						value={url}
-						onChange={(e) => setUrl(e.target.value)}
-						placeholder="https://www.exemplo.com.br/pagina"
-					/>
-				</div>
-
-				<div className="space-y-2">
-					<Label htmlFor="meta-image" className="block">
-						Imagem OG (URL)
-					</Label>
-					<Input
-						id="meta-image"
-						type="url"
-						value={image}
-						onChange={(e) => setImage(e.target.value)}
-						placeholder="https://www.exemplo.com.br/imagem.jpg"
-					/>
-				</div>
-
-				<div className="space-y-2">
-					<Label htmlFor="meta-type" className="block">
-						Tipo de conteúdo
-					</Label>
-					<NativeSelect
-						id="meta-type"
-						value={type}
-						onChange={(e) => setType(e.target.value)}
-					>
-						{OG_TYPES.map((t) => (
-							<option key={t.value} value={t.value}>
-								{t.label}
-							</option>
-						))}
-					</NativeSelect>
-				</div>
-
-				<div className="space-y-2">
-					<Label htmlFor="meta-author" className="block">
-						Autor
-					</Label>
-					<Input
-						id="meta-author"
-						value={author}
-						onChange={(e) => setAuthor(e.target.value)}
-						placeholder="Nome do autor"
-					/>
-				</div>
-
-				<div className="space-y-2">
-					<Label htmlFor="meta-keywords" className="block">
-						Palavras-chave
-					</Label>
-					<Input
-						id="meta-keywords"
-						value={keywords}
-						onChange={(e) => setKeywords(e.target.value)}
-						placeholder="palavra1, palavra2, palavra3"
-					/>
-				</div>
-			</div>
-
-			{(title || description) && (
-				<div className="max-w-2xl space-y-4">
-					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-						Previews
-					</p>
-
-					<div className="space-y-2">
-						<p className="text-xs text-muted-foreground">Google</p>
-						<div className="rounded-md border border-border bg-card p-4">
-							<p className="truncate text-lg text-[#1a0dab] dark:text-[#8ab4f8]">
-								{title || "Título da página"}
-							</p>
-							<p className="truncate text-sm text-[#006621] dark:text-[#34a853]">
-								{url || "www.exemplo.com.br › pagina"}
-							</p>
-							<p className="mt-0.5 text-sm leading-snug text-[#4d5156] dark:text-[#bdc1c6]">
-								{description || "Descrição do conteúdo da página..."}
-							</p>
-						</div>
-					</div>
-
-					<div className="space-y-2">
-						<p className="text-xs text-muted-foreground">
-							Facebook / Open Graph
-						</p>
-						<div className="max-w-sm overflow-hidden rounded-md border border-border">
-							{image ? (
-								// biome-ignore lint/performance/noImgElement: preview
-								<img
-									src={image}
-									alt="OG preview"
-									className="h-40 w-full object-cover"
-									onError={(e) => {
-										(e.target as HTMLImageElement).style.display = "none";
-									}}
-								/>
-							) : (
-								<div className="flex h-40 w-full items-center justify-center bg-muted text-sm text-muted-foreground">
-									Sem imagem
+		<LayoutB
+			form={
+				<div className="rounded-md border border-border bg-card overflow-hidden">
+					<div className="divide-y divide-border">
+						<div className="p-4">
+							<SectionLabel>Informações básicas</SectionLabel>
+							<div className="space-y-3">
+								<div className="space-y-1.5">
+									<div className="flex items-center justify-between">
+										<label
+											htmlFor="meta-title"
+											className="text-xs font-medium text-foreground"
+										>
+											Título da página
+										</label>
+										<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+											{title.length}/60
+										</span>
+									</div>
+									<Input
+										id="meta-title"
+										value={title}
+										onChange={(e) => setTitle(e.target.value)}
+										placeholder="Meu Site"
+										maxLength={60}
+									/>
 								</div>
-							)}
-							<div className="bg-[#f0f2f5] p-3 dark:bg-[#3a3b3c]">
-								<p className="truncate text-xs uppercase tracking-wide text-muted-foreground">
-									{url ? new URL(url).hostname : "exemplo.com.br"}
-								</p>
-								<p className="mt-0.5 truncate text-sm font-semibold text-foreground">
-									{title || "Título"}
-								</p>
-								<p className="truncate text-xs text-muted-foreground">
-									{description || "Descrição"}
-								</p>
+
+								<div className="space-y-1.5">
+									<div className="flex items-center justify-between">
+										<label
+											htmlFor="meta-desc"
+											className="text-xs font-medium text-foreground"
+										>
+											Meta descrição
+										</label>
+										<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+											{description.length}/160
+										</span>
+									</div>
+									<Textarea
+										id="meta-desc"
+										value={description}
+										onChange={(e) => setDescription(e.target.value)}
+										placeholder="Descrição breve do conteúdo da página..."
+										className="min-h-[80px]"
+										maxLength={160}
+									/>
+								</div>
+
+								<div className="space-y-1.5">
+									<label
+										htmlFor="meta-url"
+										className="text-xs font-medium text-foreground"
+									>
+										URL da página
+									</label>
+									<Input
+										id="meta-url"
+										type="url"
+										value={url}
+										onChange={(e) => setUrl(e.target.value)}
+										placeholder="https://www.exemplo.com.br/pagina"
+									/>
+								</div>
+
+								<div className="space-y-1.5">
+									<label
+										htmlFor="meta-image"
+										className="text-xs font-medium text-foreground"
+									>
+										Imagem OG (URL)
+									</label>
+									<Input
+										id="meta-image"
+										type="url"
+										value={image}
+										onChange={(e) => setImage(e.target.value)}
+										placeholder="https://www.exemplo.com.br/imagem.jpg"
+									/>
+								</div>
+							</div>
+						</div>
+
+						<div className="p-4">
+							<SectionLabel>Configuração</SectionLabel>
+							<div className="space-y-3">
+								<div className="space-y-1.5">
+									<label
+										htmlFor="meta-type"
+										className="text-xs font-medium text-foreground"
+									>
+										Tipo de conteúdo
+									</label>
+									<NativeSelect
+										id="meta-type"
+										value={type}
+										onChange={(e) => setType(e.target.value)}
+									>
+										{OG_TYPES.map((t) => (
+											<option key={t.value} value={t.value}>
+												{t.label}
+											</option>
+										))}
+									</NativeSelect>
+								</div>
+
+								<div className="space-y-1.5">
+									<label
+										htmlFor="meta-author"
+										className="text-xs font-medium text-foreground"
+									>
+										Autor
+									</label>
+									<Input
+										id="meta-author"
+										value={author}
+										onChange={(e) => setAuthor(e.target.value)}
+										placeholder="Nome do autor"
+									/>
+								</div>
+
+								<div className="space-y-1.5">
+									<label
+										htmlFor="meta-keywords"
+										className="text-xs font-medium text-foreground"
+									>
+										Palavras-chave
+									</label>
+									<Input
+										id="meta-keywords"
+										value={keywords}
+										onChange={(e) => setKeywords(e.target.value)}
+										placeholder="palavra1, palavra2, palavra3"
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			)}
 
-			<div className="max-w-2xl space-y-2">
-				<Label htmlFor="meta-html" className="block">
-					Código HTML gerado
-				</Label>
-				<Textarea
-					id="meta-html"
-					value={html || "Preencha os campos acima para gerar o código."}
-					readOnly
-					className="min-h-[280px] font-mono text-sm text-foreground"
-					spellCheck={false}
-				/>
-				<CopyButton
-					text={html}
-					label="Copiar código"
-					disabled={!html}
-					variant="outline"
-				/>
-			</div>
-		</div>
+					<div className="flex items-center justify-end border-t border-border bg-muted/40 px-4 py-3">
+						<CopyButton
+							text={html}
+							label="Copiar código"
+							variant="outline"
+							size="sm"
+							disabled={!html}
+						/>
+					</div>
+				</div>
+			}
+			result={
+				!hasContent ? (
+					<div className="flex flex-col items-center justify-center gap-2 py-8 text-center">
+						<p className="text-sm text-muted-foreground">
+							Preencha os campos para gerar as meta tags
+						</p>
+					</div>
+				) : (
+					<>
+						<div className="space-y-2">
+							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Google
+							</h3>
+							{/* Cores hardcoded são intencionais — simulam a UI real do Google */}
+							<div className="rounded-md border border-border bg-card p-3 space-y-0.5">
+								<p className="truncate text-sm text-[#1a0dab] dark:text-[#8ab4f8]">
+									{title || "Título da página"}
+								</p>
+								<p className="truncate text-xs text-[#006621] dark:text-[#34a853]">
+									{url || "www.exemplo.com.br › pagina"}
+								</p>
+								<p className="text-xs leading-snug text-[#4d5156] dark:text-[#bdc1c6] line-clamp-2">
+									{description || "Descrição do conteúdo da página..."}
+								</p>
+							</div>
+						</div>
+
+						<div className="space-y-2 border-t border-border pt-4">
+							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Open Graph
+							</h3>
+							{/* Cores hardcoded são intencionais — simulam a UI do Facebook/LinkedIn */}
+							<div className="overflow-hidden rounded-md border border-border">
+								{image ? (
+									// biome-ignore lint/performance/noImgElement: preview
+									<img
+										src={image}
+										alt="OG preview"
+										className="h-36 w-full object-cover"
+										onError={(e) => {
+											(e.target as HTMLImageElement).style.display = "none";
+										}}
+									/>
+								) : (
+									<div className="flex h-36 w-full items-center justify-center bg-muted text-xs text-muted-foreground">
+										Sem imagem
+									</div>
+								)}
+								<div className="bg-[#f0f2f5] p-3 dark:bg-[#3a3b3c]">
+									<p className="truncate text-[10px] uppercase tracking-wide text-muted-foreground">
+										{url ? safeHostname(url) : "exemplo.com.br"}
+									</p>
+									<p className="mt-0.5 truncate text-xs font-semibold text-foreground">
+										{title || "Título"}
+									</p>
+									<p className="truncate text-xs text-muted-foreground">
+										{description || "Descrição"}
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div className="space-y-2 border-t border-border pt-4">
+							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Código HTML
+							</h3>
+							<pre className="overflow-auto max-h-48 rounded-md border border-border bg-muted/20 p-3 font-mono text-[11px] leading-relaxed text-foreground select-all whitespace-pre-wrap break-all">
+								{html}
+							</pre>
+							<CopyButton
+								text={html}
+								label="Copiar código"
+								variant="outline"
+								size="sm"
+								disabled={!html}
+								className="w-full"
+							/>
+						</div>
+					</>
+				)
+			}
+		/>
 	);
+}
+
+function safeHostname(url: string): string {
+	try {
+		return new URL(url).hostname;
+	} catch {
+		return url;
+	}
 }
 
 function generateMetaHTML({

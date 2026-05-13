@@ -14,7 +14,8 @@
 import { FileCode, Image as ImageIcon, Smile, Type } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { OptionSwitch } from "@/components/shared/option-switch";
-import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/shared/slider";
+import { Input } from "@/components/ui/input";
 import type { FaviconMode } from "@/lib/image/favicon";
 import { cn } from "@/lib/utils";
 
@@ -134,28 +135,28 @@ export function ModeTabs({
 						type="button"
 						onClick={() => onChange(m)}
 						className={cn(
-							"group flex items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors",
+							"group flex w-full items-center gap-2 rounded-md border px-2.5 py-2 text-left text-xs font-medium transition-colors",
 							active
-								? "border-primary/40 bg-primary/5"
+								? "bg-accent text-accent-foreground border-border"
 								: "border-transparent hover:border-border hover:bg-muted/50",
 						)}
 						aria-pressed={active}
 					>
 						<span
 							className={cn(
-								"flex h-9 w-9 shrink-0 items-center justify-center rounded-md border transition-colors",
+								"flex h-8 w-8 shrink-0 items-center justify-center rounded-md border transition-colors",
 								active
-									? "border-primary/40 bg-primary/10 text-primary"
+									? "bg-card text-accent-foreground border-border"
 									: "border-border bg-card text-muted-foreground",
 							)}
 						>
-							<Icon className="h-4 w-4" />
+							<Icon className="h-3.5 w-3.5" />
 						</span>
 						<span className="min-w-0 flex-1">
 							<span
 								className={cn(
-									"block text-sm font-medium",
-									active ? "text-foreground" : "text-foreground/80",
+									"block leading-tight",
+									active ? "text-accent-foreground" : "text-muted-foreground",
 								)}
 							>
 								{meta.label}
@@ -247,12 +248,12 @@ export function LivePreview({
 		return () => {
 			cancelled = true;
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// biome-ignore lint/correctness/useExhaustiveDependencies: .
 	}, deps);
 
 	if (!render) {
 		return (
-			<div className="flex h-full min-h-[420px] flex-col items-center justify-center rounded-xl border border-dashed bg-muted/30 p-8 text-center">
+			<div className="flex h-full min-h-105 flex-col items-center justify-center rounded-md border border-dashed border-border bg-muted/30 p-8 text-center">
 				{empty ?? (
 					<p className="text-sm text-muted-foreground">
 						Adicione conteúdo no painel à esquerda para ver o preview.
@@ -268,9 +269,9 @@ export function LivePreview({
 			<div className="flex justify-center">
 				<div
 					className={cn(
-						"relative rounded-2xl border p-3 shadow-sm",
+						"relative rounded-md border p-3",
 						bgTransparent
-							? "bg-[conic-gradient(from_45deg,_#e5e7eb_25%,_transparent_0_50%,_#e5e7eb_0_75%,_transparent_0)] [background-size:16px_16px]"
+							? "bg-[conic-gradient(from_90deg,#e5e7eb_25%,transparent_0_50%,#e5e7eb_0_75%,transparent_0)] bg-size-[16px_16px]"
 							: "bg-card",
 					)}
 				>
@@ -278,7 +279,7 @@ export function LivePreview({
 						ref={mainRef}
 						width={PREVIEW_SIZE}
 						height={PREVIEW_SIZE}
-						className="block aspect-square w-[280px] sm:w-[320px]"
+						className="block aspect-square w-70 sm:w-[320px]"
 					/>
 				</div>
 			</div>
@@ -293,7 +294,7 @@ export function LivePreview({
 								className={cn(
 									"flex items-center justify-center rounded-md border p-1.5",
 									bgTransparent
-										? "bg-[conic-gradient(from_45deg,_#e5e7eb_25%,_transparent_0_50%,_#e5e7eb_0_75%,_transparent_0)] [background-size:8px_8px]"
+										? "bg-[conic-gradient(from_90deg,#e5e7eb_25%,transparent_0_50%,#e5e7eb_0_75%,transparent_0)] bg-size-[8px_8px]"
 										: "bg-card",
 								)}
 							>
@@ -317,11 +318,11 @@ export function LivePreview({
 			</div>
 
 			{/* contextual preview: browser tab */}
-			<div className="rounded-xl border bg-card p-4">
-				<p className="mb-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+			<div className="rounded-md border bg-card p-4">
+				<p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					No navegador
 				</p>
-				<div className="flex items-center gap-2 rounded-t-lg border border-b-0 bg-muted/40 px-3 py-2">
+				<div className="flex items-center gap-2 rounded-t-md border border-b-0 bg-muted/40 px-3 py-2">
 					<canvas
 						ref={tabRef}
 						width={32}
@@ -331,7 +332,7 @@ export function LivePreview({
 					<span className="truncate text-xs text-foreground">{tabLabel}</span>
 					<span className="ml-auto text-muted-foreground/60">×</span>
 				</div>
-				<div className="h-12 rounded-b-lg border bg-background" />
+				<div className="h-12 rounded-b-md border bg-background" />
 			</div>
 		</div>
 	);
@@ -340,15 +341,11 @@ export function LivePreview({
 /* ---------- ColorField -------------------------------------------- */
 
 export function ColorField({
-	id,
-	label,
 	value,
 	onChange,
 	allowTransparent = true,
 	presets = COLOR_PRESETS,
 }: {
-	id: string;
-	label: string;
 	value: string;
 	onChange: (v: string) => void;
 	allowTransparent?: boolean;
@@ -365,21 +362,19 @@ export function ColorField({
 
 	return (
 		<div className="space-y-2">
-			<Label htmlFor={id}>{label}</Label>
 			<div className="flex items-center gap-2">
-				<input
+				<Input
 					type="color"
 					value={value === "transparent" ? "#3B82F6" : value}
 					onChange={(e) => onChange(e.target.value)}
-					className="h-9 w-9 shrink-0 cursor-pointer rounded-lg border bg-transparent p-0.5"
-					aria-label={`${label} — seletor`}
+					className="h-8 w-8 shrink-0 cursor-pointer rounded-md border border-border bg-transparent p-0.5"
+					aria-label="Seletor de cor"
 				/>
-				<input
-					id={id}
+				<Input
 					type="text"
 					value={value}
 					onChange={(e) => handleHex(e.target.value)}
-					className="flex-1 rounded-lg border bg-background px-3 py-1.5 font-mono text-sm"
+					className="font-mono text-xs h-8"
 					placeholder="#FFFFFF"
 				/>
 				{allowTransparent && (
@@ -387,9 +382,9 @@ export function ColorField({
 						type="button"
 						onClick={() => onChange("transparent")}
 						className={cn(
-							"flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors",
+							"flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-border transition-colors",
 							value === "transparent"
-								? "border-primary bg-primary/10 text-primary"
+								? "bg-accent text-accent-foreground border-border"
 								: "border-border text-muted-foreground hover:border-foreground/40",
 						)}
 						aria-label="Fundo transparente"
@@ -416,9 +411,9 @@ export function ColorField({
 						onClick={() => onChange(c)}
 						title={c}
 						className={cn(
-							"h-6 w-6 rounded-full border-2 transition-transform hover:scale-110",
+							"h-6 w-6 rounded-md border transition-all hover:ring-2 hover:ring-ring/50",
 							value.toLowerCase() === c.toLowerCase()
-								? "scale-110 border-primary ring-2 ring-primary/30"
+								? "ring-2 ring-ring/50"
 								: "border-border",
 						)}
 						style={{ backgroundColor: c }}
@@ -441,11 +436,11 @@ export function FormatField({
 }) {
 	return (
 		<div className="space-y-2">
-			<div className="text-sm font-medium text-foreground">Formato</div>
 			<OptionSwitch
 				options={FORMATS}
 				value={value}
 				onChange={(v) => onChange(v as Format)}
+				size="sm"
 			/>
 		</div>
 	);
@@ -454,15 +449,11 @@ export function FormatField({
 /* ---------- SizeSlider -------------------------------------------- */
 
 export function SizeSlider({
-	id,
-	label,
 	value,
 	onChange,
 	min = 40,
 	max = 100,
 }: {
-	id: string;
-	label: string;
 	value: number;
 	onChange: (v: number) => void;
 	min?: number;
@@ -471,24 +462,18 @@ export function SizeSlider({
 	return (
 		<div className="space-y-2">
 			<div className="flex items-center justify-between">
-				<Label htmlFor={id}>{label}</Label>
+				<span className="text-xs font-medium text-foreground">Tamanho</span>
 				<span className="font-mono text-xs text-muted-foreground">
 					{value}%
 				</span>
 			</div>
-			<input
-				id={id}
-				type="range"
+			<Slider
+				value={[value]}
+				onValueChange={([v]) => onChange(v)}
 				min={min}
 				max={max}
-				value={value}
-				onChange={(e) => onChange(Number(e.target.value))}
-				className="w-full accent-primary"
+				step={1}
 			/>
-			<div className="flex justify-between text-[10px] text-muted-foreground">
-				<span>{min}%</span>
-				<span>{max}%</span>
-			</div>
 		</div>
 	);
 }
@@ -503,7 +488,7 @@ export function Section({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className="space-y-3">
+		<div className="p-4 space-y-3">
 			<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 				{title}
 			</h3>

@@ -1,18 +1,11 @@
 "use client";
 
-/* ------------------------------------------------------------------ */
-/*  FaviconGenerator — orquestrador.                                   */
-/*  Mantém o estado de modo + canvas gerado e mostra o ResultPanel     */
-/*  (preview-grid + export-panel) inline abaixo do shell, em vez de    */
-/*  trocar de "step". O usuário pode ajustar e re-gerar à vontade.     */
-/* ------------------------------------------------------------------ */
-
 import { useCallback, useState } from "react";
 import type { FaviconMode, GeneratedFaviconFile } from "@/lib/image/favicon";
 import { EmojiEditor } from "./emoji-editor";
+import { ExportPanel } from "./export-panel";
 import { ImageEditor } from "./image-editor";
 import { PreviewGrid } from "./preview-grid";
-import { ExportPanel } from "./export-panel";
 import { SvgEditor } from "./svg-editor";
 import { TextEditor } from "./text-editor";
 
@@ -55,12 +48,11 @@ export function FaviconGenerator() {
 		[],
 	);
 
-	/* O resultado aparece como footer compartilhado para todos os editores */
 	const resultFooter =
 		sourceCanvas != null ? (
 			<section
 				id="favicon-result"
-				className="space-y-6 rounded-xl border-2 border-primary/20 bg-card p-6"
+				className="space-y-6 rounded-md border border-primary/20 bg-card p-6"
 			>
 				<header className="flex items-center justify-between">
 					<div>

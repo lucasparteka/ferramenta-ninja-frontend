@@ -146,3 +146,41 @@ export function generatePalette(
 	}
 	return hsls.map(hslToHex);
 }
+
+export type OKLCH = { l: number; c: number; h: number };
+
+function linearize(v: number): number {
+	return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+}
+
+export function rgbToOklch({ r, g, b }: RGB): OKLCH {
+	const lr = linearize(r / 255);
+	const lg = linearize(g / 255);
+	const lb = linearize(b / 255);
+
+	const x = 0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb;
+	const y = 0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb;
+	const z = 0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb;
+
+	const l_ = Math.cbrt(0.8189330101 * x + 0.3618667424 * y - 0.1288597137 * z);
+	const m_ = Math.cbrt(0.0329845436 * x + 0.9293118715 * y + 0.0361456387 * z);
+	const s_ = Math.cbrt(0.0482003018 * x + 0.2643662691 * y + 0.6300380129 * z);
+
+	const L = 0.2104542553 * l_ + 0.793617785 * m_ - 0.0040720468 * s_;
+	const a = 1.9779984951 * l_ - 2.428592205 * m_ + 0.4505937099 * s_;
+	const bk = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.808675766 * s_;
+
+	const C = Math.sqrt(a * a + bk * bk);
+	const H = (Math.atan2(bk, a) * 180) / Math.PI;
+
+	return {
+		l: Math.round(L * 1000) / 1000,
+		c: Math.round(C * 1000) / 1000,
+		h: Math.round(((H % 360) + 360) % 360),
+	};
+}
+
+export function hexToOklch(hex: string): OKLCH | null {
+	const rgb = hexToRgb(hex);
+	return rgb ? rgbToOklch(rgb) : null;
+}

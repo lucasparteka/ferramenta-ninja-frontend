@@ -108,7 +108,9 @@ export function EmojiEditor({
 
 	const left = (
 		<>
-			<ModeTabs value={mode} onChange={onChangeMode} />
+			<div className="p-4 border-b border-border">
+				<ModeTabs value={mode} onChange={onChangeMode} />
+			</div>
 
 			<Section title="Emoji personalizado">
 				<Input
@@ -123,7 +125,7 @@ export function EmojiEditor({
 						}
 					}}
 					placeholder="Cole ou digite"
-					className="text-center text-xl"
+					className="text-center text-xl placeholder:text-sm"
 				/>
 			</Section>
 
@@ -133,9 +135,9 @@ export function EmojiEditor({
 						type="button"
 						onClick={() => setActiveCategory(-1)}
 						className={cn(
-							"inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors",
+							"inline-flex shrink-0 items-center gap-1 rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors",
 							activeCategory === -1
-								? "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300"
+								? "bg-accent text-accent-foreground"
 								: "bg-muted text-muted-foreground hover:bg-muted/80",
 						)}
 					>
@@ -148,9 +150,9 @@ export function EmojiEditor({
 							type="button"
 							onClick={() => setActiveCategory(idx)}
 							className={cn(
-								"inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors",
+								"inline-flex shrink-0 items-center rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors",
 								activeCategory === idx
-									? "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300"
+									? "bg-accent text-accent-foreground"
 									: "bg-muted text-muted-foreground hover:bg-muted/80",
 							)}
 						>
@@ -159,7 +161,7 @@ export function EmojiEditor({
 					))}
 				</div>
 
-				<div className="mt-3 grid max-h-[280px] grid-cols-6 gap-0.5 overflow-y-auto rounded-lg border bg-background p-2">
+				<div className="mt-3 grid max-h-70 grid-cols-6 gap-0.5 overflow-y-auto rounded-lg border bg-background p-2">
 					{emojis.map((emoji) => (
 						<button
 							key={emoji}
@@ -172,7 +174,7 @@ export function EmojiEditor({
 							className={cn(
 								"flex h-9 w-9 items-center justify-center rounded-md text-lg transition-all",
 								selectedEmoji === emoji
-									? "bg-amber-100 ring-1 ring-amber-400 dark:bg-amber-950"
+									? "bg-accent ring-1 ring-ring/50"
 									: "hover:bg-muted",
 							)}
 							title={emoji}
@@ -196,20 +198,13 @@ export function EmojiEditor({
 	const right = (
 		<>
 			<Section title="Cor de fundo">
-				<ColorField
-					id="emoji-bg"
-					label=""
-					value={bgColor}
-					onChange={setBgColor}
-				/>
+				<ColorField value={bgColor} onChange={setBgColor} />
 			</Section>
 			<Section title="Forma">
 				<FormatField value={format} onChange={setFormat} />
 			</Section>
 			<Section title="Escala">
 				<SizeSlider
-					id="emoji-size"
-					label="Tamanho do emoji"
 					value={emojiSize}
 					onChange={setEmojiSize}
 					min={40}

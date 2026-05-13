@@ -2,19 +2,19 @@
 
 import { RefreshCw } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
-import type { FaviconMode } from "@/lib/image/favicon";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/select-native";
+import type { FaviconMode } from "@/lib/image/favicon";
 import { FaviconShell } from "./favicon-shell";
 import {
 	ColorField,
+	drawBackground,
 	type Format,
 	FormatField,
 	LivePreview,
 	ModeTabs,
 	Section,
 	SizeSlider,
-	drawBackground,
 } from "./shared-controls";
 
 interface TextEditorProps {
@@ -191,7 +191,9 @@ export function TextEditor({
 
 	const left = (
 		<>
-			<ModeTabs value={mode} onChange={onChangeMode} />
+			<div className="p-4 border-b border-border">
+				<ModeTabs value={mode} onChange={onChangeMode} />
+			</div>
 
 			<Section title="Texto">
 				<Input
@@ -268,28 +270,19 @@ export function TextEditor({
 		<>
 			<Section title="Cor do texto">
 				<ColorField
-					id="text-fg"
-					label=""
 					value={textColor}
 					onChange={setTextColor}
 					allowTransparent={false}
 				/>
 			</Section>
 			<Section title="Cor de fundo">
-				<ColorField
-					id="text-bg"
-					label=""
-					value={bgColor}
-					onChange={setBgColor}
-				/>
+				<ColorField value={bgColor} onChange={setBgColor} />
 			</Section>
 			<Section title="Forma">
 				<FormatField value={format} onChange={setFormat} />
 			</Section>
 			<Section title="Escala">
 				<SizeSlider
-					id="text-size"
-					label="Tamanho do texto"
 					value={fontSizePercent}
 					onChange={setFontSizePercent}
 					min={20}

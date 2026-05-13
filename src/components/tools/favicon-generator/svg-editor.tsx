@@ -8,14 +8,14 @@ import { cn } from "@/lib/utils";
 import { FaviconShell } from "./favicon-shell";
 import {
 	ColorField,
+	clipFormat,
+	drawBackground,
 	type Format,
 	FormatField,
 	LivePreview,
 	ModeTabs,
 	Section,
 	SizeSlider,
-	clipFormat,
-	drawBackground,
 } from "./shared-controls";
 
 interface SvgEditorProps {
@@ -200,7 +200,9 @@ export function SvgEditor({
 
 	const left = (
 		<>
-			<ModeTabs value={mode} onChange={onChangeMode} />
+			<div className="p-4 border-b border-border">
+				<ModeTabs value={mode} onChange={onChangeMode} />
+			</div>
 
 			<Section title="Origem do SVG">
 				<OptionSwitch
@@ -213,9 +215,10 @@ export function SvgEditor({
 				/>
 
 				{tab === "file" && (
+					// biome-ignore lint/a11y/useSemanticElements: .
 					<div
 						className={cn(
-							"mt-3 cursor-pointer rounded-lg border-2 border-dashed p-5 text-center transition-colors",
+							"mt-3 cursor-pointer rounded-lg border border-dashed p-5 text-center transition-colors",
 							isDragging
 								? "border-primary bg-primary/5"
 								: "border-border hover:border-primary/50 hover:bg-muted/40",
@@ -310,23 +313,13 @@ export function SvgEditor({
 	const right = (
 		<>
 			<Section title="Cor de fundo">
-				<ColorField
-					id="svg-bg"
-					label=""
-					value={bgColor}
-					onChange={setBgColor}
-				/>
+				<ColorField value={bgColor} onChange={setBgColor} />
 			</Section>
 			<Section title="Forma">
 				<FormatField value={format} onChange={setFormat} />
 			</Section>
 			<Section title="Escala">
-				<SizeSlider
-					id="svg-media-size"
-					label="Tamanho do SVG"
-					value={mediaSize}
-					onChange={setMediaSize}
-				/>
+				<SizeSlider value={mediaSize} onChange={setMediaSize} />
 			</Section>
 		</>
 	);

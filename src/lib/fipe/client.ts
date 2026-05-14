@@ -2,11 +2,16 @@ export type VehicleType = "carros" | "motos" | "caminhoes";
 
 export type FipeBrand = {
 	nome: string;
-	valor: string;
+	codigo: string;
 };
 
 export type FipeModel = {
-	modelo: string;
+	nome: string;
+	codigo: number;
+};
+
+export type FipeYear = {
+	nome: string;
 	codigo: string;
 };
 
@@ -22,25 +27,40 @@ export type FipePrice = {
 	siglaCombustivel: string;
 };
 
-const BASE = "https://brasilapi.com.br/api/fipe";
-
 export async function fetchBrands(type: VehicleType): Promise<FipeBrand[]> {
-	const response = await fetch(`${BASE}/marcas/v1/${type}`);
-	if (!response.ok) throw new Error("Falha ao buscar marcas");
-	return (await response.json()) as FipeBrand[];
+	const res = await fetch(`/api/fipe/marcas/${type}`);
+	if (!res.ok) throw new Error("Falha ao buscar marcas");
+	return res.json() as Promise<FipeBrand[]>;
 }
 
 export async function fetchModels(
 	type: VehicleType,
 	brandCode: string,
 ): Promise<FipeModel[]> {
-	const response = await fetch(`${BASE}/veiculos/v1/${type}/${brandCode}`);
-	if (!response.ok) throw new Error("Falha ao buscar modelos");
-	return (await response.json()) as FipeModel[];
+	const res = await fetch(`/api/fipe/modelos/${type}/${brandCode}`);
+	if (!res.ok) throw new Error("Falha ao buscar modelos");
+	return res.json() as Promise<FipeModel[]>;
 }
 
-export async function fetchPrice(fipeCode: string): Promise<FipePrice[]> {
-	const response = await fetch(`${BASE}/preco/v1/${fipeCode}`);
-	if (!response.ok) throw new Error("Falha ao consultar preço");
-	return (await response.json()) as FipePrice[];
+export async function fetchYears(
+	type: VehicleType,
+	brandCode: string,
+	modelCode: string,
+): Promise<FipeYear[]> {
+	const res = await fetch(`/api/fipe/anos/${type}/${brandCode}/${modelCode}`);
+	if (!res.ok) throw new Error("Falha ao buscar anos");
+	return res.json() as Promise<FipeYear[]>;
+}
+
+export async function fetchPrice(
+	type: VehicleType,
+	brandCode: string,
+	modelCode: string,
+	year: string,
+): Promise<FipePrice> {
+	const res = await fetch(
+		`/api/fipe/preco/${type}/${brandCode}/${modelCode}/${year}`,
+	);
+	if (!res.ok) throw new Error("Falha ao consultar preço");
+	return res.json() as Promise<FipePrice>;
 }

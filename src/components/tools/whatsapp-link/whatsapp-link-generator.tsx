@@ -1,12 +1,15 @@
 "use client";
 
-import { useId, useState, useEffect, useCallback } from "react";
+import { Download, ExternalLink, QrCode } from "lucide-react";
+import { useCallback, useEffect, useId, useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutD } from "@/components/shared/layout-d";
+import { ResultBox } from "@/components/shared/result-box";
+import { ToolHeader } from "@/components/shared/tool-header";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { ResultBox } from "@/components/shared/result-box";
-import { CopyButton } from "@/components/shared/copy-button";
 import { generateQRCode } from "@/lib/qrcode/generate";
 
 function formatPhoneBR(raw: string): string {
@@ -84,58 +87,123 @@ export function WhatsAppLinkGenerator() {
 	}
 
 	return (
-		<div className="space-y-6">
-			<div className="space-y-1">
-				<Label
-					htmlFor={`${uid}-phone`}
-					className="text-[10px] uppercase tracking-wider text-muted-foreground"
-				>
-					Número de telefone
-				</Label>
-				<Input
-					id={`${uid}-phone`}
-					type="tel"
-					value={formatPhoneBR(rawPhone)}
-					onChange={(e) => {
-						setRawPhone(e.target.value);
-						setQrDataUrl("");
-					}}
-					placeholder="(11) 91234-5678"
-					className={
-						rawPhone && !phoneValidation.valid ? "border-destructive" : ""
+		<LayoutD
+			header={
+				<ToolHeader
+					title="Gerador de Link do WhatsApp"
+					badge="WHATSAPP"
+					actions={
+						<>
+							<CopyButton text={link} disabled={!link} size="sm" />
+							<Button
+								type="button"
+								size="sm"
+								variant="outline"
+								onClick={handleOpen}
+								disabled={!link}
+							>
+								<ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+								Abrir
+							</Button>
+						</>
 					}
 				/>
-				{phoneValidation.error && (
-					<p className="text-xs text-destructive">{phoneValidation.error}</p>
-				)}
-			</div>
+			}
+			sidebar={
+				<div className="flex flex-col gap-3 p-4">
+					<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						QR Code
+					</h3>
+					<Button
+						type="button"
+						variant="outline"
+						size="sm"
+						onClick={handleGenerateQr}
+						disabled={!link}
+					>
+						<QrCode className="mr-1.5 h-3.5 w-3.5" />
+						{showQr ? "Atualizar" : "Gerar"} QR Code
+					</Button>
+					{qrDataUrl && (
+						<div className="flex flex-col items-center gap-3">
+							{/** biome-ignore lint/performance/noImgElement: . */}
+							<img
+								src={qrDataUrl}
+								alt="QR Code do link WhatsApp"
+								width={280}
+								height={280}
+								className="w-full max-w-70 rounded-md border border-border bg-card"
+							/>
+							<Button
+								type="button"
+								variant="outline"
+								size="sm"
+								onClick={handleDownloadQr}
+							>
+								<Download className="mr-1.5 h-3.5 w-3.5" />
+								Baixar QR Code
+							</Button>
+						</div>
+					)}
+				</div>
+			}
+			sidebarWidth={320}
+		>
+			<div className="space-y-6 p-4">
+				<div className="space-y-1">
+					<Label
+						htmlFor={`${uid}-phone`}
+						className="text-[10px] uppercase tracking-wider text-muted-foreground"
+					>
+						Número de telefone
+					</Label>
+					<Input
+						id={`${uid}-phone`}
+						type="tel"
+						value={formatPhoneBR(rawPhone)}
+						onChange={(e) => {
+							setRawPhone(e.target.value);
+							setQrDataUrl("");
+						}}
+						placeholder="(11) 91234-5678"
+						className={
+							rawPhone && !phoneValidation.valid ? "border-destructive" : ""
+						}
+					/>
+					{phoneValidation.error && (
+						<p className="text-xs text-destructive">{phoneValidation.error}</p>
+					)}
+				</div>
 
-			<div className="space-y-1">
-				<Label
-					htmlFor={`${uid}-message`}
-					className="text-[10px] uppercase tracking-wider text-muted-foreground"
+				<div className="space-y-1">
+					<Label
+						htmlFor={`${uid}-message`}
+						className="text-[10px] uppercase tracking-wider text-muted-foreground"
+					>
+						Mensagem{" "}
+						<span className="text-muted-foreground/60">(opcional)</span>
+					</Label>
+					<Textarea
+						id={`${uid}-message`}
+						value={message}
+						onChange={(e) => {
+							setMessage(e.target.value);
+							setQrDataUrl("");
+						}}
+						placeholder="Digite a mensagem pré-preenchida..."
+						rows={3}
+					/>
+				</div>
+
+				<ResultBox
+					label="Link gerado"
+					className="max-md:p-0 max-md:bg-transparent max-md:border-0"
 				>
-					Mensagem <span className="text-muted-foreground/60">(opcional)</span>
-				</Label>
-				<Textarea
-					id={`${uid}-message`}
-					value={message}
-					onChange={(e) => {
-						setMessage(e.target.value);
-						setQrDataUrl("");
-					}}
-					placeholder="Digite a mensagem pré-preenchida..."
-					rows={3}
-				/>
-			</div>
-
-			<ResultBox label="Link gerado">
-				<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-					<code className="min-h-[2.5rem] flex-1 break-all rounded bg-background px-3 py-2 text-sm font-mono text-foreground">
+					<code className="block mt-1 min-h-10 break-all rounded bg-background px-3 py-2 text-sm font-mono border border-border whitespace-nowrap line-clamp-1 text-ellipsis">
 						{link || "https://wa.me/5511999999999"}
 					</code>
-					<div className="flex shrink-0 gap-1">
-						<CopyButton text={link} disabled={!link} />
+					<div className="flex gap-3 mt-3 justify-end">
+						<CopyButton text={link} disabled={!link} size="sm" />
 						<Button
 							type="button"
 							size="sm"
@@ -143,75 +211,12 @@ export function WhatsAppLinkGenerator() {
 							onClick={handleOpen}
 							disabled={!link}
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="14"
-								height="14"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								className="mr-1.5"
-							>
-								<path d="M15 3h6v6" />
-								<path d="M10 14 21 3" />
-								<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-							</svg>
+							<ExternalLink className="mr-1.5 h-3.5 w-3.5" />
 							Abrir
 						</Button>
 					</div>
-				</div>
-			</ResultBox>
-
-			<div className="space-y-3">
-				<Button
-					type="button"
-					variant="outline"
-					size="sm"
-					onClick={handleGenerateQr}
-					disabled={!link}
-				>
-					{showQr ? "Atualizar" : "Gerar"} QR Code
-				</Button>
-
-				{qrDataUrl && (
-					<div className="flex flex-col items-center gap-3">
-						<img
-							src={qrDataUrl}
-							alt="QR Code do link WhatsApp"
-							width={280}
-							height={280}
-							className="rounded-md border border-border bg-card"
-						/>
-						<Button
-							type="button"
-							variant="outline"
-							size="sm"
-							onClick={handleDownloadQr}
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="14"
-								height="14"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								className="mr-1.5"
-							>
-								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-								<polyline points="7 10 12 15 17 10" />
-								<line x1="12" x2="12" y1="15" y2="3" />
-							</svg>
-							Baixar QR Code
-						</Button>
-					</div>
-				)}
+				</ResultBox>
 			</div>
-		</div>
+		</LayoutD>
 	);
 }

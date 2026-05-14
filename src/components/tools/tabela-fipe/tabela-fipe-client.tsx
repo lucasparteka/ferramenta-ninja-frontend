@@ -3,6 +3,7 @@
 import { Car, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { LayoutE } from "@/components/shared/layout-e";
+import { ResultSheet } from "@/components/shared/result-sheet";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
@@ -10,9 +11,11 @@ import {
 	type FipeBrand,
 	type FipeModel,
 	type FipePrice,
+	type FipeYear,
 	fetchBrands,
 	fetchModels,
 	fetchPrice,
+	fetchYears,
 	type VehicleType,
 } from "@/lib/fipe/client";
 
@@ -25,7 +28,7 @@ const TYPES: { value: VehicleType; label: string }[] = [
 type QueryState =
 	| { kind: "idle" }
 	| { kind: "loading" }
-	| { kind: "result"; data: FipePrice[] }
+	| { kind: "result"; data: FipePrice }
 	| { kind: "error"; message: string };
 
 export function TabelaFipeClient() {
@@ -34,10 +37,12 @@ export function TabelaFipeClient() {
 	const [brandCode, setBrandCode] = useState("");
 	const [models, setModels] = useState<FipeModel[]>([]);
 	const [modelCode, setModelCode] = useState("");
-	const [prices, setPrices] = useState<FipePrice[] | null>(null);
-	const [loading, setLoading] = useState<"brands" | "models" | "price" | null>(
-		null,
-	);
+	const [years, setYears] = useState<FipeYear[]>([]);
+	const [yearCode, setYearCode] = useState("");
+	const [price, setPrice] = useState<FipePrice | null>(null);
+	const [loading, setLoading] = useState<
+		"brands" | "models" | "years" | "price" | null
+	>(null);
 	const [error, setError] = useState<string | null>(null);
 	const [state, setState] = useState<QueryState>({ kind: "idle" });
 
@@ -46,7 +51,10 @@ export function TabelaFipeClient() {
 		setBrandCode("");
 		setModels([]);
 		setModelCode("");
-		setPrices(null);
+		setYears([]);
+		setYearCode("");
+		setPrice(null);
+		setState({ kind: "idle" });
 		setLoading("brands");
 		fetchBrands(type)
 			.then((data) => setBrands(data))
@@ -58,12 +66,18 @@ export function TabelaFipeClient() {
 		if (!brandCode) {
 			setModels([]);
 			setModelCode("");
-			setPrices(null);
+			setYears([]);
+			setYearCode("");
+			setPrice(null);
+			setState({ kind: "idle" });
 			return;
 		}
 		setError(null);
 		setModelCode("");
-		setPrices(null);
+		setYears([]);
+		setYearCode("");
+		setPrice(null);
+		setState({ kind: "idle" });
 		setLoading("models");
 		fetchModels(type, brandCode)
 			.then((data) => setModels(data))
@@ -71,15 +85,34 @@ export function TabelaFipeClient() {
 			.finally(() => setLoading(null));
 	}, [type, brandCode]);
 
-	async function handleSearch() {
-		if (!modelCode) return;
+	useEffect(() => {
+		if (!modelCode) {
+			setYears([]);
+			setYearCode("");
+			setPrice(null);
+			setState({ kind: "idle" });
+			return;
+		}
 		setError(null);
-		setPrices(null);
+		setYearCode("");
+		setPrice(null);
+		setState({ kind: "idle" });
+		setLoading("years");
+		fetchYears(type, brandCode, modelCode)
+			.then((data) => setYears(data))
+			.catch(() => setError("Falha ao buscar anos. Tente novamente."))
+			.finally(() => setLoading(null));
+	}, [type, brandCode, modelCode]);
+
+	async function handleSearch() {
+		if (!yearCode) return;
+		setError(null);
+		setPrice(null);
 		setLoading("price");
 		setState({ kind: "loading" });
 		try {
-			const data = await fetchPrice(modelCode);
-			setPrices(data);
+			const data = await fetchPrice(type, brandCode, modelCode, yearCode);
+			setPrice(data);
 			setState({ kind: "result", data });
 		} catch {
 			setError("Falha ao consultar preço. Tente novamente.");
@@ -103,7 +136,7 @@ export function TabelaFipeClient() {
 				) : undefined
 			}
 			searchBar={
-				<div className="grid grid-cols-2 gap-2 sm:grid-cols-[1fr_1fr_1fr_auto] items-end">
+				<div className="grid grid-cols-2 gap-2 sm:grid-cols-[1fr_1fr_1fr_1fr_auto] items-end">
 					<div className="space-y-1.5">
 						<Label
 							htmlFor="fipe-type"
@@ -140,7 +173,7 @@ export function TabelaFipeClient() {
 								{loading === "brands" ? "Carregando..." : "Selecione"}
 							</option>
 							{brands.map((b) => (
-								<option key={b.valor} value={b.valor}>
+								<option key={b.codigo} value={b.codigo}>
 									{b.nome}
 								</option>
 							))}
@@ -167,16 +200,44 @@ export function TabelaFipeClient() {
 										: "Escolha a marca primeiro"}
 							</option>
 							{models.map((m) => (
-								<option key={m.codigo} value={m.codigo}>
-									{m.modelo}
+								<option key={m.codigo} value={String(m.codigo)}>
+									{m.nome}
+								</option>
+							))}
+						</NativeSelect>
+					</div>
+					<div className="space-y-1.5">
+						<Label
+							htmlFor="fipe-year"
+							className="text-xs text-muted-foreground"
+						>
+							Ano
+						</Label>
+						<NativeSelect
+							id="fipe-year"
+							value={yearCode}
+							onChange={(e) => setYearCode(e.target.value)}
+							disabled={loading === "years" || years.length === 0}
+						>
+							<option value="">
+								{loading === "years"
+									? "Carregando..."
+									: modelCode
+										? "Selecione"
+										: "Escolha o modelo primeiro"}
+							</option>
+							{years.map((y) => (
+								<option key={y.codigo} value={y.codigo}>
+									{y.nome}
 								</option>
 							))}
 						</NativeSelect>
 					</div>
 					<Button
+						className="max-md:mt-3 max-md:col-span-2"
 						type="button"
 						onClick={handleSearch}
-						disabled={!modelCode || loading === "price"}
+						disabled={!yearCode || loading === "price"}
 					>
 						{loading === "price" ? (
 							<Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
@@ -188,68 +249,74 @@ export function TabelaFipeClient() {
 				</div>
 			}
 			emptyState={
-				<div className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 p-8 text-center">
+				<div className="flex min-h-50 flex-col items-center justify-center gap-2 text-center">
 					<Car className="h-5 w-5 text-muted-foreground" strokeWidth={1.75} />
 					<p className="text-sm text-foreground">
-						Selecione tipo, marca e modelo para consultar
+						Selecione tipo, marca, modelo e ano para consultar
 					</p>
 					<p className="text-xs text-muted-foreground">
 						Dados da Tabela FIPE · atualização mensal
 					</p>
 				</div>
 			}
-			result={
-				prices && prices.length > 0 ? (
-					<PricesResult prices={prices} />
-				) : prices && prices.length === 0 ? (
-					<div className="rounded-md border border-warning-bd bg-warning/5 p-4">
-						<p className="text-xs text-warning">
-							Nenhum preço encontrado para este modelo.
-						</p>
-					</div>
-				) : null
-			}
+			result={price ? <PriceResult price={price} /> : null}
 		/>
 	);
 }
 
-function PricesResult({ prices }: { prices: FipePrice[] }) {
-	const first = prices[0];
-	const tableCols = "grid grid-cols-[100px_1fr_130px]";
+function PriceResult({ price }: { price: FipePrice }) {
 	return (
 		<div>
-			<div className="border-b border-border bg-muted/55 px-4 py-[7px]">
-				<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-					{first.marca} · {first.modelo}
-				</h3>
+			<div className="border-b border-border px-5 py-5 sm:px-6">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+					{price.marca}
+				</p>
+				<p className="mt-0.5 text-sm font-medium text-foreground leading-snug">
+					{price.modelo}
+				</p>
 			</div>
-			<div
-				className={`${tableCols} border-b border-border bg-muted/55 px-4 py-[7px]`}
-			>
-				<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-					Ano / combustível
-				</span>
-				<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-					Versão
-				</span>
-				<span className="text-right text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+
+			<div className="border-b border-border bg-muted/30 px-5 py-6 sm:px-6">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
 					Preço FIPE
-				</span>
+				</p>
+				<p className="font-mono text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+					{price.valor}
+				</p>
+				<p className="mt-1.5 text-xs text-muted-foreground">
+					Referência: {price.mesReferencia}
+				</p>
 			</div>
-			{prices.map((p) => (
-				<div
-					key={`${p.anoModelo}-${p.siglaCombustivel}`}
-					className={`${tableCols} border-b border-border px-4 py-[9px] last:border-b-0`}
-				>
-					<span className="font-mono text-xs text-foreground">
-						{p.anoModelo} {p.combustivel}
-					</span>
-					<span className="text-xs text-foreground">{first.modelo}</span>
-					<span className="text-right font-mono text-xs text-foreground">
-						{p.valor}
-					</span>
-				</div>
-			))}
+
+			<ResultSheet
+				variant="grid"
+				cols={2}
+				sections={[
+					{
+						title: "Identificação",
+						rows: [
+							{ label: "Ano do modelo", value: price.anoModelo, mono: true },
+							{ label: "Combustível", value: price.combustivel },
+							{ label: "Sigla", value: price.siglaCombustivel, mono: true },
+						],
+					},
+					{
+						title: "Código FIPE",
+						rows: [
+							{ label: "Código", value: price.codigoFipe, mono: true },
+							{
+								label: "Tipo",
+								value:
+									price.tipoVeiculo === 1
+										? "Carro"
+										: price.tipoVeiculo === 2
+											? "Moto"
+											: "Caminhão",
+							},
+						],
+					},
+				]}
+			/>
 		</div>
 	);
 }

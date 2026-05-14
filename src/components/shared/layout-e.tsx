@@ -30,12 +30,14 @@ export function LayoutE({
 				<div className="border-b border-border bg-muted/55 px-4 py-3">
 					{searchBar}
 				</div>
-				<div>
-					{state === "empty" && (emptyState ?? <EmptyState />)}
-					{state === "loading" && (loadingState ?? <LoadingState />)}
-					{state === "error" && (errorState ?? <ErrorState />)}
-					{state === "result" && result}
-				</div>
+				{state !== "result" && (
+					<div className="p-4">
+						{state === "empty" && (emptyState ?? <EmptyState />)}
+						{state === "loading" && (loadingState ?? <LoadingState />)}
+						{state === "error" && (errorState ?? <ErrorState />)}
+					</div>
+				)}
+				{state === "result" && result}
 				{footerActions && (
 					<div className="flex flex-wrap items-center gap-2 border-t border-border bg-muted/40 px-4 py-2.5">
 						{footerActions}

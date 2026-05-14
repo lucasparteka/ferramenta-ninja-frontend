@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { Dices, RefreshCw } from "lucide-react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { generateNumbers } from "@/lib/random/numbers";
 
 type Order = "random" | "asc" | "desc";
@@ -40,6 +42,28 @@ const COLS_CLASS: Record<number, string> = {
 	10: "grid-cols-10",
 };
 
+const GAP_CLASS: Record<number, string> = {
+	1: "gap-2",
+	2: "gap-2",
+	3: "gap-2",
+	4: "gap-2",
+	5: "gap-2",
+	6: "gap-2",
+	8: "gap-1",
+	10: "gap-1",
+};
+
+const CELL_CLASS: Record<number, string> = {
+	1: "rounded-md bg-card px-3 py-2 text-center font-mono text-sm text-foreground border border-border",
+	2: "rounded-md bg-card px-3 py-2 text-center font-mono text-sm text-foreground border border-border",
+	3: "rounded-md bg-card px-3 py-2 text-center font-mono text-sm text-foreground border border-border",
+	4: "rounded-md bg-card px-3 py-2 text-center font-mono text-sm text-foreground border border-border",
+	5: "rounded-md bg-card px-1.5 py-1 text-center font-mono text-xs text-foreground",
+	6: "rounded-md bg-card px-1.5 py-1 text-center font-mono text-xs text-foreground",
+	8: "rounded-md bg-card px-1 py-0.5 text-center font-mono text-[11px] text-foreground",
+	10: "rounded-md bg-card px-1 py-0.5 text-center font-mono text-[11px] text-foreground",
+};
+
 export function NumberGenerator() {
 	const [options, setOptions] =
 		useState<NumberGeneratorOptions>(DEFAULT_OPTIONS);
@@ -66,133 +90,193 @@ export function NumberGenerator() {
 	const uniqueWarning = options.unique && options.count > rangeSize;
 
 	return (
-		<div className="flex flex-col gap-6 sm:flex-row">
-			<div className="space-y-6 sm:w-[30%] sm:shrink-0">
-				<div className="grid grid-cols-1 gap-4">
-					<div className="space-y-1">
-						<Label htmlFor="num-count">Números</Label>
-						<Input
-							id="num-count"
-							type="number"
-							min={1}
-							max={1000}
-							value={options.count}
-							onChange={(e) => handleInt("count", e.target.value)}
-						/>
-					</div>
-
-					<div className="space-y-1">
-						<Label>Entre</Label>
-						<div className="flex items-center gap-2">
-							<Input
-								type="number"
-								value={options.min}
-								onChange={(e) => handleInt("min", e.target.value)}
-								aria-label="Valor mínimo"
-							/>
-							<span className="shrink-0 text-sm text-muted-foreground">e</span>
-							<Input
-								type="number"
-								value={options.max}
-								onChange={(e) => handleInt("max", e.target.value)}
-								aria-label="Valor máximo"
-							/>
-						</div>
-					</div>
-
-					<div className="space-y-1">
-						<Label htmlFor="num-columns">Colunas</Label>
-						<NativeSelect
-							id="num-columns"
-							value={options.columns}
-							onChange={(e) => set("columns", Number(e.target.value))}
-						>
-							{[1, 2, 3, 4, 5, 6, 8, 10].map((n) => (
-								<option key={n} value={n}>
-									{n}
-								</option>
-							))}
-						</NativeSelect>
-					</div>
-
-					<div className="space-y-1">
-						<Label htmlFor="num-order">Ordem</Label>
-						<NativeSelect
-							id="num-order"
-							value={options.order}
-							onChange={(e) => set("order", e.target.value as Order)}
-						>
-							<option value="random">Aleatória</option>
-							<option value="asc">Crescente</option>
-							<option value="desc">Decrescente</option>
-						</NativeSelect>
-					</div>
-
-					<div className="space-y-2">
-						<span className="text-sm font-medium text-foreground">
-							Números únicos
-						</span>
-						<div className="flex h-10 items-center">
-							<div className="flex items-center gap-2">
-								<Checkbox
-									id="unique"
-									checked={options.unique}
-									onCheckedChange={(checked) => set("unique", checked === true)}
-								/>
-								<Label htmlFor="unique" className="cursor-pointer">
-									Ativar
+		<div className="grid grid-cols-1 items-start lg:grid-cols-[1fr_360px] border rounded-md overflow-hidden">
+			<div className="bg-card flex flex-col h-full">
+				<div className="divide-y divide-border">
+					<div className="p-5">
+						<SectionLabel>Configuração</SectionLabel>
+						<div className="space-y-3.5">
+							<div>
+								<Label
+									htmlFor="num-count"
+									className="mb-1.5 block text-xs text-foreground"
+								>
+									Quantidade
 								</Label>
+								<Input
+									id="num-count"
+									type="number"
+									min={1}
+									max={1000}
+									value={options.count}
+									onChange={(e) => handleInt("count", e.target.value)}
+								/>
 							</div>
+
+							<div>
+								<Label className="mb-1.5 block text-xs text-foreground">
+									Intervalo
+								</Label>
+								<div className="flex items-center gap-2">
+									<Input
+										type="number"
+										value={options.min}
+										onChange={(e) => handleInt("min", e.target.value)}
+										aria-label="Valor mínimo"
+									/>
+									<span className="shrink-0 text-sm text-muted-foreground">
+										e
+									</span>
+									<Input
+										type="number"
+										value={options.max}
+										onChange={(e) => handleInt("max", e.target.value)}
+										aria-label="Valor máximo"
+									/>
+								</div>
+							</div>
+
+							<div>
+								<Label
+									htmlFor="num-columns"
+									className="mb-1.5 block text-xs text-foreground"
+								>
+									Colunas
+								</Label>
+								<NativeSelect
+									id="num-columns"
+									value={options.columns}
+									onChange={(e) => set("columns", Number(e.target.value))}
+								>
+									{[1, 2, 3, 4, 5, 6, 8, 10].map((n) => (
+										<option key={n} value={n}>
+											{n}
+										</option>
+									))}
+								</NativeSelect>
+							</div>
+
+							<div>
+								<Label
+									htmlFor="num-order"
+									className="mb-1.5 block text-xs text-foreground"
+								>
+									Ordem
+								</Label>
+								<NativeSelect
+									id="num-order"
+									value={options.order}
+									onChange={(e) => set("order", e.target.value as Order)}
+								>
+									<option value="random">Aleatória</option>
+									<option value="asc">Crescente</option>
+									<option value="desc">Decrescente</option>
+								</NativeSelect>
+							</div>
+
+							<div>
+								<Label className="mb-1.5 block text-xs text-foreground">
+									Números únicos
+								</Label>
+								<div className="flex items-center gap-2">
+									<Checkbox
+										id="unique"
+										checked={options.unique}
+										onCheckedChange={(checked) =>
+											set("unique", checked === true)
+										}
+									/>
+									<Label
+										htmlFor="unique"
+										className="text-xs text-foreground cursor-pointer"
+									>
+										Ativar
+									</Label>
+								</div>
+							</div>
+
+							{uniqueWarning && (
+								<p className="rounded-md bg-warning-surface px-3 py-2 text-[11px] text-warning">
+									O intervalo contém {rangeSize} números únicos disponíveis. A
+									quantidade será ajustada automaticamente.
+								</p>
+							)}
 						</div>
 					</div>
 				</div>
 
-				{uniqueWarning && (
-					<p className="text-sm text-warning">
-						O intervalo contém {rangeSize} números únicos disponíveis. A
-						quantidade será ajustada automaticamente.
-					</p>
-				)}
+				<div className="flex items-center justify-between border-t border-border bg-muted px-5 py-3 mt-auto">
+					<span className="text-[11.5px] text-muted-foreground">
+						Gerado no navegador
+					</span>
+					<Button onClick={handleGenerate}>
+						<Dices className="mr-1.5 h-3.5 w-3.5" />
+						Gerar números
+					</Button>
+				</div>
+			</div>
 
-				<div className="flex gap-3">
-					<Button onClick={handleGenerate}>Gerar números</Button>
-					{numbers.length > 0 && (
-						<Button variant="outline" onClick={handleGenerate}>
-							Gerar novamente
-						</Button>
+			<aside className="flex h-full lg:border-l max-lg:border-t flex-col gap-3">
+				<div className="flex-1">
+					{numbers.length > 0 ? (
+						<>
+							<div className="p-5 bg-card border-b">
+								<div className="mb-2 flex items-center justify-between">
+									<span className="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+										{numbers.length}{" "}
+										{numbers.length === 1 ? "número gerado" : "números gerados"}
+									</span>
+								</div>
+								<div className="flex items-baseline gap-1 font-mono">
+									<span className="text-[32px] font-semibold leading-none tracking-tight text-foreground">
+										{numbers.length}
+									</span>
+									<span className="text-sm font-medium text-muted-foreground">
+										{numbers.length === 1 ? "número" : "números"}
+									</span>
+								</div>
+							</div>
+							<div className="px-5 py-3">
+								<p className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+									Lista
+								</p>
+								<div
+									className={`grid ${GAP_CLASS[options.columns] ?? "gap-2"} ${COLS_CLASS[options.columns] ?? "grid-cols-1"}`}
+								>
+									{numbers.map((num, i) => (
+										<div
+											key={i}
+											className={
+												CELL_CLASS[options.columns] ??
+												"rounded-md bg-card px-3 py-2 text-center font-mono text-sm text-foreground border border-border"
+											}
+										>
+											{num}
+										</div>
+									))}
+								</div>
+							</div>
+							<div className="flex gap-2 border-t border-border p-3">
+								<CopyButton
+									text={numbers.join("\n")}
+									label="Copiar"
+									variant="outline"
+								/>
+								<Button variant="outline" size="sm" onClick={handleGenerate}>
+									<RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+									Gerar novamente
+								</Button>
+							</div>
+						</>
+					) : (
+						<div className="flex flex-col items-center justify-center gap-2 p-6 text-center">
+							<p className="text-sm text-muted-foreground">
+								Configure e clique em Gerar
+							</p>
+						</div>
 					)}
 				</div>
-			</div>
-
-			<div className="flex-1">
-				{numbers.length > 0 && (
-					<div className="space-y-3">
-						<div className="flex items-center justify-between">
-							<p className="text-sm font-medium text-foreground">
-								{numbers.length}{" "}
-								{numbers.length === 1 ? "número gerado" : "números gerados"}
-							</p>
-							<CopyButton
-								text={numbers.join("\n")}
-								label="Copiar"
-								variant="outline"
-							/>
-						</div>
-						<div
-							className={`grid gap-2 rounded-md border border-border bg-secondary p-4 ${COLS_CLASS[options.columns] ?? "grid-cols-1"}`}
-						>
-							{numbers.map((num, i) => (
-								<div
-									key={i}
-									className="rounded-md bg-card px-3 py-2 text-center font-mono text-foreground"
-								>
-									{num}
-								</div>
-							))}
-						</div>
-					</div>
-				)}
-			</div>
+			</aside>
 		</div>
 	);
 }

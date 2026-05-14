@@ -45,7 +45,7 @@ export function CardPreview({ card }: CardPreviewProps) {
 				</div>
 
 				<div
-					className={`font-mono text-xl font-bold tracking-widest ${textColor}`}
+					className={`font-mono text-base sm:text-lg md:text-xl font-bold tracking-wider sm:tracking-widest ${textColor}`}
 				>
 					{formatted}
 				</div>

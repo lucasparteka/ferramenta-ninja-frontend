@@ -44,7 +44,7 @@ export function ImageDropzone({
 	}
 
 	return (
-		<div className={cn("space-y-1", className)}>
+		<div className={cn("space-y-1.5", className)}>
 			<Label htmlFor={inputId}>{label}</Label>
 			<button
 				type="button"
@@ -69,7 +69,7 @@ export function ImageDropzone({
 					/>
 				) : (
 					<>
-						<p className="text-sm font-medium text-foreground">
+						<p className="text-sm font-medium text-foreground max-w-10/12">
 							Arraste uma imagem ou clique para selecionar
 						</p>
 						<p className="text-xs text-muted-foreground">{hint}</p>

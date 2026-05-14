@@ -1,14 +1,20 @@
 "use client";
 
-import { FileDown, Loader2, Lock, LockOpen } from "lucide-react";
+import { FileDown, Loader2, Lock, LockOpen, Trash } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { ImageDropzone } from "@/components/shared/image-dropzone";
+import { LayoutA } from "@/components/shared/layout-a";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { ImageInfo, ResizeMode } from "@/lib/image";
-import { calculateAspectRatio, getImageInfo, resizeImage } from "@/lib/image";
+import {
+	calculateAspectRatio,
+	formatBytes,
+	getImageInfo,
+	resizeImage,
+} from "@/lib/image";
 import { cn } from "@/lib/utils";
 
 type State = "idle" | "loading" | "error";
@@ -42,7 +48,9 @@ const BG_COLORS = [
 	{ value: "transparent", label: "Transparente" },
 ] as const;
 
-const PREVIEW_MAX = 320;
+const PREVIEW_MAX_W = 640;
+const PREVIEW_MAX_H = 600;
+const PREVIEW_PLACEHOLDER = 320;
 
 export function ResizeImage() {
 	const [state, setState] = useState<State>("idle");
@@ -109,12 +117,7 @@ export function ResizeImage() {
 		setTargetWidth(value);
 		setActivePreset(null);
 		if (lockAspectRatio && info) {
-			const result = calculateAspectRatio(
-				info.width,
-				info.height,
-				value,
-				"width",
-			);
+			const result = calculateAspectRatio(info.width, info.height, value, "width");
 			setTargetHeight(result.height);
 		}
 	}
@@ -123,23 +126,14 @@ export function ResizeImage() {
 		setTargetHeight(value);
 		setActivePreset(null);
 		if (lockAspectRatio && info) {
-			const result = calculateAspectRatio(
-				info.width,
-				info.height,
-				value,
-				"height",
-			);
+			const result = calculateAspectRatio(info.width, info.height, value, "height");
 			setTargetWidth(result.width);
 		}
 	}
 
 	function handleModeChange(mode: ResizeMode) {
 		setResizeMode(mode);
-		if (mode === "stretch") {
-			setLockAspectRatio(false);
-		} else {
-			setLockAspectRatio(true);
-		}
+		setLockAspectRatio(mode !== "stretch");
 	}
 
 	function applyPreset(index: number, width: number, height: number) {
@@ -156,9 +150,7 @@ export function ResizeImage() {
 
 	const bgStyle = useMemo(() => {
 		if (resizeMode !== "fit") return {};
-		if (backgroundColor === "transparent") {
-			return {};
-		}
+		if (backgroundColor === "transparent") return {};
 		return { backgroundColor };
 	}, [resizeMode, backgroundColor]);
 
@@ -167,7 +159,7 @@ export function ResizeImage() {
 
 	const previewScale = useMemo(() => {
 		if (!targetWidth || !targetHeight) return 1;
-		return Math.min(PREVIEW_MAX / targetWidth, PREVIEW_MAX / targetHeight, 1);
+		return Math.min(PREVIEW_MAX_W / targetWidth, PREVIEW_MAX_H / targetHeight, 1);
 	}, [targetWidth, targetHeight]);
 
 	const previewW = Math.round((targetWidth || 1) * previewScale);
@@ -193,14 +185,13 @@ export function ResizeImage() {
 				outputFormat !== "original"
 					? outputFormat.split("/")[1].replace("jpeg", "jpg")
 					: file.name.split(".").pop() || "png";
-			const url = result.dataUrl;
 			const a = document.createElement("a");
-			a.href = url;
+			a.href = result.dataUrl;
 			a.download = `redimensionado.${ext}`;
 			a.click();
 
 			setTimeout(() => {
-				URL.revokeObjectURL(url);
+				URL.revokeObjectURL(result.dataUrl);
 			}, 1000);
 		} catch {
 			setErrorMessage("Erro ao redimensionar a imagem. Tente novamente.");
@@ -214,94 +205,94 @@ export function ResizeImage() {
 	const canDownload = file && info && targetWidth > 0 && targetHeight > 0;
 
 	return (
-		<div className="space-y-6">
-			<ImageDropzone
-				preview={info?.dataUrl ?? null}
-				isDragging={isDragging}
-				onFile={handleFile}
-				onClear={handleClear}
-				onDragOver={handleDragOver}
-				onDragLeave={handleDragLeave}
-				onDrop={handleDrop}
-			/>
-
-			{errorMessage && (
-				<p className="text-sm text-destructive">{errorMessage}</p>
-			)}
-
-			{info && (
-				<div className="flex flex-col gap-6 sm:flex-row">
-					<div className="w-full space-y-5 sm:w-72 sm:shrink-0">
-						<div className="space-y-2">
-							<div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-								Presets
-							</div>
-							<div className="grid grid-cols-2 gap-1.5">
-								{SIZE_PRESETS.map((preset, i) => (
-									<button
-										type="button"
-										key={preset.label}
-										onClick={() => applyPreset(i, preset.width, preset.height)}
-										className={cn(
-											"rounded-md border px-2 py-1.5 text-xs font-medium transition-colors",
-											activePreset === i
-												? "border-primary bg-primary text-primary-foreground"
-												: "border-border bg-secondary text-foreground hover:bg-accent",
-										)}
-									>
-										{preset.label}
-									</button>
-								))}
-							</div>
+		<LayoutA
+			header={
+				<>
+					<span className="text-sm font-semibold tracking-tight">
+						Redimensionar Imagem
+					</span>
+					<div className="flex items-center gap-2">
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={handleClear}
+							disabled={!file}
+						>
+							<Trash className="h-3.5 w-3.5" />
+							Limpar
+						</Button>
+						<Button
+							size="sm"
+							onClick={handleDownload}
+							disabled={!canDownload || state === "loading"}
+						>
+							{state === "loading" ? (
+								<Loader2 className="h-3.5 w-3.5 animate-spin" />
+							) : (
+								<FileDown className="h-3.5 w-3.5" />
+							)}
+							{state === "loading" ? "Gerando…" : "Baixar"}
+						</Button>
+					</div>
+				</>
+			}
+			leftPanel={
+				<div className="divide-y divide-border">
+					{file && info && (
+						<div className="p-4 space-y-2">
+							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Arquivo
+							</h3>
+							<p className="truncate font-mono text-xs text-foreground">
+								{file.name}
+							</p>
+							<p className="font-mono text-xs text-muted-foreground">
+								{file.type || "imagem"}
+							</p>
+							<p className="font-mono text-xs text-muted-foreground">
+								{info.width} × {info.height} px
+							</p>
 						</div>
+					)}
 
-						<div className="space-y-2">
-							<Label htmlFor="resize-mode" className="block">
-								Modo de redimensionamento
-							</Label>
-							<NativeSelect
-								id="resize-mode"
-								value={resizeMode}
-								onChange={(e) => handleModeChange(e.target.value as ResizeMode)}
-							>
-								{RESIZE_MODES.map((m) => (
-									<option key={m.value} value={m.value}>
-										{m.label}
-									</option>
-								))}
-							</NativeSelect>
-						</div>
-
-						{resizeMode === "fit" && (
-							<div className="space-y-2">
-								<Label htmlFor="resize-bg" className="block">
-									Cor de fundo
-								</Label>
-								<NativeSelect
-									id="resize-bg"
-									value={backgroundColor}
-									onChange={(e) => setBackgroundColor(e.target.value)}
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Presets
+						</h3>
+						<div className="grid grid-cols-2 gap-1.5">
+							{SIZE_PRESETS.map((preset, i) => (
+								<button
+									type="button"
+									key={preset.label}
+									onClick={() => applyPreset(i, preset.width, preset.height)}
+									className={cn(
+										"rounded-md border px-2 py-1.5 text-xs font-medium transition-colors",
+										activePreset === i
+											? "border-primary bg-primary text-primary-foreground"
+											: "border-border bg-secondary text-foreground hover:bg-accent",
+									)}
 								>
-									{BG_COLORS.map((c) => (
-										<option key={c.value} value={c.value}>
-											{c.label}
-										</option>
-									))}
-								</NativeSelect>
-							</div>
-						)}
+									{preset.label}
+								</button>
+							))}
+						</div>
+					</div>
 
-						<div className="space-y-2">
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Dimensões
+						</h3>
+						<div className="space-y-1.5">
 							<div className="flex items-center justify-between">
-								<Label htmlFor="resize-width">Largura (px)</Label>
+								<Label htmlFor="resize-width" className="text-xs font-medium">
+									Largura (px)
+								</Label>
 								<button
 									type="button"
 									onClick={() => setLockAspectRatio(!lockAspectRatio)}
 									className="text-muted-foreground hover:text-foreground"
 									aria-label={
-										lockAspectRatio
-											? "Desbloquear proporção"
-											: "Bloquear proporção"
+										lockAspectRatio ? "Desbloquear proporção" : "Bloquear proporção"
 									}
 								>
 									{lockAspectRatio ? (
@@ -318,87 +309,160 @@ export function ResizeImage() {
 								onChange={(e) => handleWidthChange(Number(e.target.value) || 0)}
 							/>
 						</div>
-
-						<div className="space-y-2">
-							<Label htmlFor="resize-height" className="block">
+						<div className="space-y-1.5">
+							<Label htmlFor="resize-height" className="text-xs font-medium">
 								Altura (px)
 							</Label>
 							<Input
 								id="resize-height"
 								type="number"
 								value={targetHeight || ""}
-								onChange={(e) =>
-									handleHeightChange(Number(e.target.value) || 0)
-								}
+								onChange={(e) => handleHeightChange(Number(e.target.value) || 0)}
 							/>
 						</div>
+					</div>
 
-						<div className="space-y-2">
-							<Label htmlFor="resize-format" className="block">
-								Formato de saída
-							</Label>
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Modo
+						</h3>
+						<NativeSelect
+							id="resize-mode"
+							value={resizeMode}
+							onChange={(e) => handleModeChange(e.target.value as ResizeMode)}
+						>
+							{RESIZE_MODES.map((m) => (
+								<option key={m.value} value={m.value}>
+									{m.label}
+								</option>
+							))}
+						</NativeSelect>
+					</div>
+
+					{resizeMode === "fit" && (
+						<div className="p-4 space-y-3">
+							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Fundo
+							</h3>
 							<NativeSelect
-								id="resize-format"
-								value={outputFormat}
-								onChange={(e) => setOutputFormat(e.target.value)}
+								id="resize-bg"
+								value={backgroundColor}
+								onChange={(e) => setBackgroundColor(e.target.value)}
 							>
-								{OUTPUT_FORMATS.map((f) => (
-									<option key={f.value} value={f.value}>
-										{f.label}
+								{BG_COLORS.map((c) => (
+									<option key={c.value} value={c.value}>
+										{c.label}
 									</option>
 								))}
 							</NativeSelect>
 						</div>
+					)}
+
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Formato
+						</h3>
+						<NativeSelect
+							id="resize-format"
+							value={outputFormat}
+							onChange={(e) => setOutputFormat(e.target.value)}
+						>
+							{OUTPUT_FORMATS.map((f) => (
+								<option key={f.value} value={f.value}>
+									{f.label}
+								</option>
+							))}
+						</NativeSelect>
 					</div>
-
-					<div className="min-w-0 flex-1 space-y-4">
-						<div className="flex items-center justify-between text-sm text-muted-foreground">
-							<span>
-								Original: {info.width} × {info.height}
-							</span>
-							<span className="font-medium text-success">
-								{targetWidth} × {targetHeight}
-							</span>
-						</div>
-
+				</div>
+			}
+			centerPanel={
+				<div className="flex h-full min-h-110 flex-col items-center justify-center p-4">
+					{!file ? (
+						<ImageDropzone
+							preview={null}
+							isDragging={isDragging}
+							onFile={handleFile}
+							onClear={handleClear}
+							onDragOver={handleDragOver}
+							onDragLeave={handleDragLeave}
+							onDrop={handleDrop}
+						/>
+					) : state === "error" ? (
+						<p className="text-sm text-destructive">{errorMessage}</p>
+					) : (
 						<div
 							className={cn(
-								"relative mx-auto overflow-hidden rounded-md border border-border",
+								"relative overflow-hidden rounded-md border border-border",
 								showCheckerboard && "checkerboard-bg",
 							)}
 							style={{
-								width: previewW || PREVIEW_MAX,
-								height: previewH || PREVIEW_MAX,
+								width: previewW || PREVIEW_PLACEHOLDER,
+								height: previewH || PREVIEW_PLACEHOLDER,
 								...(!showCheckerboard ? bgStyle : {}),
 							}}
 						>
 							{/* biome-ignore lint/performance/noImgElement: preview usa URL de blob */}
 							<img
-								src={info.dataUrl}
+								src={info?.dataUrl}
 								alt="Pré-visualização"
 								className="h-full w-full"
 								style={{ objectFit }}
 							/>
 						</div>
-
-						<Button
-							onClick={handleDownload}
-							disabled={!canDownload || state === "loading"}
-							size="lg"
-							className="w-full"
-						>
-							{state === "loading" ? (
-								<Loader2 className="mr-2 h-5 w-5 animate-spin" />
-							) : (
-								<FileDown className="mr-2 h-5 w-5" />
-							)}
-							{state === "loading"
-								? "Gerando imagem..."
-								: "Baixar imagem redimensionada"}
-						</Button>
-					</div>
+					)}
 				</div>
-			)}
-		</div>
+			}
+			rightPanel={
+				<div className="divide-y divide-border">
+					{!file ? (
+						<div className="p-4">
+							<p className="text-xs text-muted-foreground">
+								Envie uma imagem para ver as informações.
+							</p>
+						</div>
+					) : (
+						<>
+							<div className="p-4 space-y-2">
+								<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+									Original
+								</h3>
+								<div className="flex items-center justify-between">
+									<span className="text-xs text-muted-foreground">Dimensões</span>
+									<span className="font-mono text-xs">
+										{info?.width} × {info?.height}
+									</span>
+								</div>
+								<div className="flex items-center justify-between">
+									<span className="text-xs text-muted-foreground">Tamanho</span>
+									<span className="font-mono text-xs">{formatBytes(file.size)}</span>
+								</div>
+							</div>
+
+							<div className="p-4 space-y-2">
+								<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+									Destino
+								</h3>
+								<div className="flex items-center justify-between">
+									<span className="text-xs text-muted-foreground">Dimensões</span>
+									<span
+										className={cn(
+											"font-mono text-xs",
+											targetWidth > 0 && targetHeight > 0
+												? "text-success"
+												: "text-muted-foreground",
+										)}
+									>
+										{targetWidth > 0 && targetHeight > 0
+											? `${targetWidth} × ${targetHeight}`
+											: "—"}
+									</span>
+								</div>
+							</div>
+						</>
+					)}
+				</div>
+			}
+		/>
 	);
 }

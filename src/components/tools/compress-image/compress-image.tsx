@@ -3,11 +3,9 @@
 import { FileDown, Minimize2, Trash } from "lucide-react";
 import { useCallback, useState } from "react";
 import { ImageDropzone } from "@/components/shared/image-dropzone";
-import { ResultBox, ResultRow } from "@/components/shared/result-box";
+import { LayoutA } from "@/components/shared/layout-a";
 import { Slider } from "@/components/shared/slider";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { ImageInfo } from "@/lib/image";
 import { compressImage, formatBytes, getImageInfo } from "@/lib/image";
@@ -27,8 +25,6 @@ export function CompressImage() {
 	const [info, setInfo] = useState<ImageInfo | null>(null);
 	const [isDragging, setIsDragging] = useState(false);
 	const [quality, setQuality] = useState(80);
-	const [maxWidth, setMaxWidth] = useState<number>(0);
-	const [maxHeight, setMaxHeight] = useState<number>(0);
 	const [outputFormat, setOutputFormat] = useState("original");
 	const [resultDataUrl, setResultDataUrl] = useState<string | null>(null);
 	const [resultBlob, setResultBlob] = useState<Blob | null>(null);
@@ -92,8 +88,8 @@ export function CompressImage() {
 			const result = await compressImage(
 				file,
 				quality,
-				maxWidth || undefined,
-				maxHeight || undefined,
+				undefined,
+				undefined,
 				outputFormat !== "original" ? outputFormat : undefined,
 			);
 			setResultDataUrl(result.dataUrl);
@@ -121,154 +117,190 @@ export function CompressImage() {
 	}
 
 	const reduction =
-		file && resultSize ? Math.round((1 - resultSize / file.size) * 100) : 0;
+		file && resultSize
+			? Math.min(99, Math.round((1 - resultSize / file.size) * 100))
+			: 0;
 
 	return (
-		<div className="space-y-6">
-			<ImageDropzone
-				preview={info?.dataUrl ?? null}
-				isDragging={isDragging}
-				onFile={handleFile}
-				onClear={handleClear}
-				onDragOver={handleDragOver}
-				onDragLeave={handleDragLeave}
-				onDrop={handleDrop}
-			/>
-
-			{errorMessage && (
-				<p className="text-sm text-destructive">{errorMessage}</p>
-			)}
-
-			{info && (
-				<div className="flex flex-col gap-6 sm:flex-row">
-					<div className="w-full space-y-5 sm:w-72 sm:shrink-0">
-						<div className="space-y-2">
-							<div className="flex items-center justify-between">
-								<Label htmlFor="compress-quality">Qualidade</Label>
-								<span className="text-sm text-muted-foreground">
-									{quality}%
-								</span>
-							</div>
-							<Slider
-								id="compress-quality"
-								value={[quality]}
-								onValueChange={([v]) => setQuality(v)}
-								min={10}
-								max={100}
-								step={5}
-							/>
+		<LayoutA
+			header={
+				<>
+					<span className="text-sm font-semibold tracking-tight">
+						Comprimir Imagem
+					</span>
+					<div className="flex items-center gap-2">
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={handleClear}
+							disabled={!file}
+						>
+							<Trash className="h-3.5 w-3.5" />
+							Limpar
+						</Button>
+						<Button
+							size="sm"
+							onClick={handleCompress}
+							disabled={!file || state === "loading"}
+						>
+							<Minimize2 className="h-3.5 w-3.5" />
+							{state === "loading" ? "Comprimindo…" : "Comprimir"}
+						</Button>
+					</div>
+				</>
+			}
+			leftPanel={
+				<div className="divide-y divide-border">
+					{file && info && (
+						<div className="p-4 space-y-2">
+							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Arquivo
+							</h3>
+							<p className="truncate font-mono text-xs text-foreground">
+								{file.name}
+							</p>
+							<p className="font-mono text-xs text-muted-foreground">
+								{file.type || "imagem"}
+							</p>
+							<p className="font-mono text-xs text-muted-foreground">
+								{info.width} × {info.height} px
+							</p>
 						</div>
+					)}
 
-						<div className="space-y-2">
-							<Label htmlFor="compress-width" className="block">
-								Largura máxima (px)
-							</Label>
-							<Input
-								id="compress-width"
-								type="number"
-								value={maxWidth || ""}
-								onChange={(e) => setMaxWidth(Number(e.target.value) || 0)}
-								placeholder="Original"
-							/>
+					<div className="p-4 space-y-3">
+						<div className="flex items-center justify-between">
+							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+								Qualidade
+							</h3>
+							<span className="font-mono text-xs text-muted-foreground">
+								{quality}%
+							</span>
 						</div>
-
-						<div className="space-y-2">
-							<Label htmlFor="compress-height" className="block">
-								Altura máxima (px)
-							</Label>
-							<Input
-								id="compress-height"
-								type="number"
-								value={maxHeight || ""}
-								onChange={(e) => setMaxHeight(Number(e.target.value) || 0)}
-								placeholder="Original"
-							/>
-						</div>
-
-						<div className="space-y-2">
-							<Label htmlFor="compress-format" className="block">
-								Formato de saída
-							</Label>
-							<NativeSelect
-								id="compress-format"
-								value={outputFormat}
-								onChange={(e) => setOutputFormat(e.target.value)}
-							>
-								{OUTPUT_FORMATS.map((f) => (
-									<option key={f.value} value={f.value}>
-										{f.label}
-									</option>
-								))}
-							</NativeSelect>
-						</div>
-
-						<div className="flex gap-2">
-							<Button
-								onClick={handleCompress}
-								disabled={state === "loading"}
-								className="flex-1"
-							>
-								<Minimize2 className="mr-2 h-4 w-4" />
-								{state === "loading" ? "Comprimindo..." : "Comprimir"}
-							</Button>
-							<Button
-								variant="secondary"
-								onClick={handleClear}
-								disabled={state === "idle" && !file}
-							>
-								<Trash />
-								Limpar
-							</Button>
-						</div>
+						<Slider
+							id="compress-quality"
+							value={[quality]}
+							onValueChange={([v]) => setQuality(v)}
+							min={10}
+							max={100}
+							step={5}
+						/>
 					</div>
 
-					<div className="min-w-0 flex-1 space-y-4">
-						<ResultRow
-							label="Tamanho original"
-							value={formatBytes(file?.size ?? 0)}
-						/>
-
-						{state === "done" && resultBlob && (
-							<>
-								<ResultRow
-									label="Tamanho comprimido"
-									value={
-										<span className="text-success">
-											{formatBytes(resultSize)}
-										</span>
-									}
-								/>
-
-								<ResultBox tone="primary">
-									<p className="text-2xl font-semibold font-mono">
-										-{reduction}%
-									</p>
-									<p className="mt-1 text-sm">
-										Redução de {formatBytes(file?.size ?? 0)} para{" "}
-										{formatBytes(resultSize)}
-									</p>
-								</ResultBox>
-
-								{resultDataUrl && (
-									<div className="flex justify-center rounded-md border border-border bg-card p-4">
-										{/* biome-ignore lint/performance/noImgElement: blob URLs requerem img nativo */}
-										<img
-											src={resultDataUrl}
-											alt="Pré-visualização da imagem comprimida"
-											className="max-h-64 max-w-full rounded object-contain"
-										/>
-									</div>
-								)}
-
-								<Button onClick={handleDownload} size="lg" className="w-full">
-									<FileDown className="mr-2 h-5 w-5" />
-									Baixar imagem comprimida
-								</Button>
-							</>
-						)}
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+							Formato
+						</h3>
+						<NativeSelect
+							id="compress-format"
+							value={outputFormat}
+							onChange={(e) => setOutputFormat(e.target.value)}
+						>
+							{OUTPUT_FORMATS.map((f) => (
+								<option key={f.value} value={f.value}>
+									{f.label}
+								</option>
+							))}
+						</NativeSelect>
 					</div>
 				</div>
-			)}
-		</div>
+			}
+			centerPanel={
+				<div className="flex h-full min-h-110 flex-col items-center justify-center p-4">
+					{!file ? (
+						<ImageDropzone
+							preview={null}
+							isDragging={isDragging}
+							onFile={handleFile}
+							onClear={handleClear}
+							onDragOver={handleDragOver}
+							onDragLeave={handleDragLeave}
+							onDrop={handleDrop}
+						/>
+					) : state === "loading" ? (
+						<p className="text-sm text-muted-foreground">Comprimindo…</p>
+					) : state === "error" ? (
+						<p className="text-sm text-destructive">{errorMessage}</p>
+					) : resultDataUrl ? (
+						// biome-ignore lint/performance/noImgElement: blob URLs requerem img nativo
+						<img
+							src={resultDataUrl}
+							alt="Pré-visualização da imagem comprimida"
+							className="max-h-80 max-w-full rounded-md object-contain"
+						/>
+					) : info?.dataUrl ? (
+						// biome-ignore lint/performance/noImgElement: blob URLs requerem img nativo
+						<img
+							src={info.dataUrl}
+							alt="Pré-visualização da imagem original"
+							className="max-h-80 max-w-full rounded-md object-contain"
+						/>
+					) : null}
+				</div>
+			}
+			rightPanel={
+				<div className="divide-y divide-border">
+					{!file ? (
+						<div className="p-4">
+							<p className="text-xs text-muted-foreground">
+								Envie uma imagem para ver os resultados.
+							</p>
+						</div>
+					) : (
+						<>
+							<div className="p-4 space-y-2">
+								<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+									Original
+								</h3>
+								<div className="flex items-center justify-between">
+									<span className="text-xs text-muted-foreground">Tamanho</span>
+									<span className="font-mono text-xs">
+										{formatBytes(file.size)}
+									</span>
+								</div>
+								{info && (
+									<div className="flex items-center justify-between">
+										<span className="text-xs text-muted-foreground">
+											Dimensões
+										</span>
+										<span className="font-mono text-xs">
+											{info.width} × {info.height}
+										</span>
+									</div>
+								)}
+							</div>
+
+							{state === "done" && resultBlob && (
+								<div className="p-4 space-y-3">
+									<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+										Resultado
+									</h3>
+									<div className="flex items-center justify-between">
+										<span className="text-xs text-muted-foreground">
+											Tamanho
+										</span>
+										<span className="font-mono text-xs text-success">
+											{formatBytes(resultSize)}
+										</span>
+									</div>
+									<div className="rounded-md border border-border bg-muted/40 p-3 text-center">
+										<p className="font-mono text-2xl font-semibold">
+											-{reduction}%
+										</p>
+										<p className="mt-1 text-xs text-muted-foreground">
+											de {formatBytes(file.size)} para {formatBytes(resultSize)}
+										</p>
+									</div>
+									<Button onClick={handleDownload} className="w-full">
+										<FileDown className="h-4 w-4" />
+										Baixar imagem
+									</Button>
+								</div>
+							)}
+						</>
+					)}
+				</div>
+			}
+		/>
 	);
 }

@@ -1,28 +1,22 @@
 "use client";
 
-import { Download, Trash } from "lucide-react";
+import { Download, Trash, Upload } from "lucide-react";
 import QRCodeStyling from "qr-code-styling";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LayoutA } from "@/components/shared/layout-a";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 import type { PixKeyType } from "@/lib/pix/generate";
 import { generatePixPayload } from "@/lib/pix/generate";
 import type { WifiSecurity } from "@/lib/wifi/generate";
 import { generateWifiString } from "@/lib/wifi/generate";
+import { cn } from "@/lib/utils";
 
 type QrTab = "url" | "wifi" | "email" | "phone" | "pix";
-
-const TAB_LABELS: Record<QrTab, string> = {
-	url: "URL / Texto",
-	wifi: "Wi-Fi",
-	email: "E-mail",
-	phone: "Telefone",
-	pix: "PIX",
-};
 
 const DOT_TYPES = [
 	{ value: "square", label: "Quadrado" },
@@ -57,6 +51,14 @@ const PRESET_COLORS = [
 	"#0891b2",
 ];
 
+const MODE_LIST = [
+	{ value: "url" as QrTab, label: "URL / Texto" },
+	{ value: "wifi" as QrTab, label: "Wi-Fi" },
+	{ value: "email" as QrTab, label: "E-mail" },
+	{ value: "phone" as QrTab, label: "Telefone" },
+	{ value: "pix" as QrTab, label: "PIX" },
+];
+
 function formatPhoneBR(value: string): string {
 	const digits = value.replace(/\D/g, "").substring(0, 11);
 	if (digits.length <= 2) return digits;
@@ -67,7 +69,6 @@ function formatPhoneBR(value: string): string {
 }
 
 export function CustomQrCode() {
-	// Tabs & content state
 	const [tab, setTab] = useState<QrTab>("url");
 	const [urlText, setUrlText] = useState("https://ferramenta.ninja");
 	const [wifiSsid, setWifiSsid] = useState("");
@@ -85,11 +86,10 @@ export function CustomQrCode() {
 	const [pixAmount, setPixAmount] = useState("");
 	const [pixDescription, setPixDescription] = useState("");
 
-	// Style state
 	const [dotColor, setDotColor] = useState("#000000");
 	const [bgColor, setBgColor] = useState("#ffffff");
-	const [dotType, setDotType] = useState("rounded");
-	const [cornerType, setCornerType] = useState("extra-rounded");
+	const [dotType, setDotType] = useState("square");
+	const [cornerType, setCornerType] = useState("square");
 	const [errorLevel, setErrorLevel] = useState<"L" | "M" | "Q" | "H">("M");
 	const [logoUrl, setLogoUrl] = useState("");
 	const [logoSize, setLogoSize] = useState(0.4);
@@ -97,6 +97,7 @@ export function CustomQrCode() {
 	const [error, setError] = useState<string | null>(null);
 	const qrRef = useRef<HTMLDivElement>(null);
 	const qrInstance = useRef<QRCodeStyling | null>(null);
+	const logoInputRef = useRef<HTMLInputElement>(null);
 
 	const buildQr = useCallback(() => {
 		function getQrData(): string {
@@ -193,7 +194,7 @@ export function CustomQrCode() {
 					color: dotColor,
 				},
 				cornersDotOptions: {
-					type: "dot",
+					type: cornerType as any,
 					color: dotColor,
 				},
 				backgroundOptions: {
@@ -225,7 +226,7 @@ export function CustomQrCode() {
 					color: dotColor,
 				},
 				cornersDotOptions: {
-					type: "dot",
+					type: cornerType as any,
 					color: dotColor,
 				},
 				backgroundOptions: {
@@ -265,7 +266,6 @@ export function CustomQrCode() {
 		logoSize,
 	]);
 
-	// Real-time update whenever relevant state changes
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			buildQr();
@@ -278,7 +278,6 @@ export function CustomQrCode() {
 			qrRef.current.innerHTML = "";
 			qrInstance.current.append(qrRef.current);
 		}
-		// Initial build
 		buildQr();
 	}, [buildQr]);
 
@@ -300,426 +299,361 @@ export function CustomQrCode() {
 		reader.readAsDataURL(file);
 	}
 
-	return (
-		<div className="space-y-6">
-			{/* Tabs */}
-			<div className="flex flex-wrap gap-2">
-				{(Object.keys(TAB_LABELS) as QrTab[]).map((t) => (
-					<button
-						key={t}
-						type="button"
-						onClick={() => {
-							setTab(t);
-							setError(null);
-						}}
-						className={`inline-flex items-center rounded-md border px-3 py-1.5 text-sm font-medium transition-colors ${
-							tab === t
-								? "border-primary bg-primary text-primary-foreground"
-								: "border-border bg-card text-foreground hover:bg-accent"
-						}`}
-					>
-						{TAB_LABELS[t]}
-					</button>
-				))}
-			</div>
+	function handleTabChange(t: QrTab) {
+		setTab(t);
+		setError(null);
+	}
 
-			{/* Main grid: left = inputs + styling, right = preview */}
-			<div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-				{/* Left column */}
-				<div className="space-y-6">
-					{/* Content inputs */}
-					<div className="space-y-4">
-						{tab === "url" && (
-							<div className="space-y-2">
-								<Label htmlFor="qr-url" className="block">
-									Texto ou URL
+	function renderContentInputs() {
+		switch (tab) {
+			case "url":
+				return (
+					<div className="space-y-1.5">
+						<Label
+							htmlFor="qr-url"
+							className="text-xs font-medium text-foreground"
+						>
+							Texto ou URL
+						</Label>
+						<Input
+							id="qr-url"
+							value={urlText}
+							onChange={(e) => setUrlText(e.target.value)}
+							placeholder="https://..."
+						/>
+					</div>
+				);
+			case "wifi":
+				return (
+					<>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-wifi-ssid"
+								className="text-xs font-medium text-foreground"
+							>
+								Nome da rede (SSID)
+							</Label>
+							<Input
+								id="qr-wifi-ssid"
+								value={wifiSsid}
+								onChange={(e) => setWifiSsid(e.target.value)}
+								placeholder="MinhaRedeWiFi"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-wifi-pass"
+								className="text-xs font-medium text-foreground"
+							>
+								Senha
+							</Label>
+							<Input
+								id="qr-wifi-pass"
+								type="password"
+								value={wifiPassword}
+								onChange={(e) => setWifiPassword(e.target.value)}
+								placeholder="Senha da rede"
+							/>
+						</div>
+						<div className="grid gap-3 sm:grid-cols-2">
+							<div className="space-y-1.5">
+								<Label
+									htmlFor="qr-wifi-sec"
+									className="text-xs font-medium text-foreground"
+								>
+									Segurança
 								</Label>
-								<Input
-									id="qr-url"
-									value={urlText}
-									onChange={(e) => setUrlText(e.target.value)}
-									placeholder="https://..."
-								/>
-							</div>
-						)}
-
-						{tab === "wifi" && (
-							<div className="space-y-3">
-								<div className="space-y-2">
-									<Label htmlFor="qr-wifi-ssid" className="block">
-										Nome da rede (SSID)
-									</Label>
-									<Input
-										id="qr-wifi-ssid"
-										value={wifiSsid}
-										onChange={(e) => setWifiSsid(e.target.value)}
-										placeholder="MinhaRedeWiFi"
-									/>
-								</div>
-								<div className="space-y-2">
-									<Label htmlFor="qr-wifi-pass" className="block">
-										Senha
-									</Label>
-									<Input
-										id="qr-wifi-pass"
-										type="password"
-										value={wifiPassword}
-										onChange={(e) => setWifiPassword(e.target.value)}
-										placeholder="Senha da rede"
-									/>
-								</div>
-								<div className="grid gap-4 sm:grid-cols-2">
-									<div className="space-y-2">
-										<Label htmlFor="qr-wifi-sec" className="block">
-											Segurança
-										</Label>
-										<NativeSelect
-											id="qr-wifi-sec"
-											value={wifiSecurity}
-											onChange={(e) =>
-												setWifiSecurity(e.target.value as WifiSecurity)
-											}
-										>
-											<option value="WPA">WPA/WPA2</option>
-											<option value="WEP">WEP</option>
-											<option value="nopass">Aberta</option>
-										</NativeSelect>
-									</div>
-									<div className="flex items-center gap-2 pt-6">
-										<Checkbox
-											id="qr-wifi-hidden"
-											checked={wifiHidden}
-											onCheckedChange={(checked) =>
-												setWifiHidden(checked === true)
-											}
-										/>
-										<Label htmlFor="qr-wifi-hidden" className="cursor-pointer">
-											Rede oculta
-										</Label>
-									</div>
-								</div>
-							</div>
-						)}
-
-						{tab === "email" && (
-							<div className="space-y-3">
-								<div className="space-y-2">
-									<Label htmlFor="qr-email-to" className="block">
-										Para
-									</Label>
-									<Input
-										id="qr-email-to"
-										type="email"
-										value={emailTo}
-										onChange={(e) => setEmailTo(e.target.value)}
-										placeholder="exemplo@email.com"
-									/>
-								</div>
-								<div className="space-y-2">
-									<Label htmlFor="qr-email-subject" className="block">
-										Assunto
-									</Label>
-									<Input
-										id="qr-email-subject"
-										value={emailSubject}
-										onChange={(e) => setEmailSubject(e.target.value)}
-										placeholder="Assunto do e-mail"
-									/>
-								</div>
-								<div className="space-y-2">
-									<Label htmlFor="qr-email-body" className="block">
-										Corpo
-									</Label>
-									<Textarea
-										id="qr-email-body"
-										value={emailBody}
-										onChange={(e) => setEmailBody(e.target.value)}
-										placeholder="Mensagem..."
-										rows={4}
-									/>
-								</div>
-							</div>
-						)}
-
-						{tab === "phone" && (
-							<div className="space-y-2">
-								<Label htmlFor="qr-phone" className="block">
-									Número de telefone
-								</Label>
-								<Input
-									id="qr-phone"
-									type="tel"
-									value={phoneNumber}
+								<NativeSelect
+									id="qr-wifi-sec"
+									value={wifiSecurity}
 									onChange={(e) =>
-										setPhoneNumber(formatPhoneBR(e.target.value))
+										setWifiSecurity(e.target.value as WifiSecurity)
 									}
-									placeholder="(11) 91234-5678"
+								>
+									<option value="WPA">WPA/WPA2</option>
+									<option value="WEP">WEP</option>
+									<option value="nopass">Aberta</option>
+								</NativeSelect>
+							</div>
+							<div className="flex items-center gap-2 pt-5">
+								<Checkbox
+									id="qr-wifi-hidden"
+									checked={wifiHidden}
+									onCheckedChange={(checked) => setWifiHidden(checked === true)}
+								/>
+								<Label
+									htmlFor="qr-wifi-hidden"
+									className="text-xs font-medium text-foreground cursor-pointer"
+								>
+									Rede oculta
+								</Label>
+							</div>
+						</div>
+					</>
+				);
+			case "email":
+				return (
+					<>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-email-to"
+								className="text-xs font-medium text-foreground"
+							>
+								Para
+							</Label>
+							<Input
+								id="qr-email-to"
+								type="email"
+								value={emailTo}
+								onChange={(e) => setEmailTo(e.target.value)}
+								placeholder="exemplo@email.com"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-email-subject"
+								className="text-xs font-medium text-foreground"
+							>
+								Assunto
+							</Label>
+							<Input
+								id="qr-email-subject"
+								value={emailSubject}
+								onChange={(e) => setEmailSubject(e.target.value)}
+								placeholder="Assunto do e-mail"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-email-body"
+								className="text-xs font-medium text-foreground"
+							>
+								Corpo
+							</Label>
+							<Textarea
+								id="qr-email-body"
+								value={emailBody}
+								onChange={(e) => setEmailBody(e.target.value)}
+								placeholder="Mensagem..."
+								rows={4}
+							/>
+						</div>
+					</>
+				);
+			case "phone":
+				return (
+					<div className="space-y-1.5">
+						<Label
+							htmlFor="qr-phone"
+							className="text-xs font-medium text-foreground"
+						>
+							Número de telefone
+						</Label>
+						<Input
+							id="qr-phone"
+							type="tel"
+							value={phoneNumber}
+							onChange={(e) => setPhoneNumber(formatPhoneBR(e.target.value))}
+							placeholder="(11) 91234-5678"
+						/>
+					</div>
+				);
+			case "pix":
+				return (
+					<>
+						<div className="grid gap-3 sm:grid-cols-2">
+							<div className="space-y-1.5">
+								<Label
+									htmlFor="qr-pix-type"
+									className="text-xs font-medium text-foreground"
+								>
+									Tipo de chave
+								</Label>
+								<NativeSelect
+									id="qr-pix-type"
+									value={pixKeyType}
+									onChange={(e) => setPixKeyType(e.target.value as PixKeyType)}
+								>
+									<option value="cpf">CPF</option>
+									<option value="cnpj">CNPJ</option>
+									<option value="phone">Celular</option>
+									<option value="email">E-mail</option>
+									<option value="evp">Chave Aleatória</option>
+								</NativeSelect>
+							</div>
+							<div className="space-y-1.5">
+								<Label
+									htmlFor="qr-pix-key"
+									className="text-xs font-medium text-foreground"
+								>
+									Chave Pix
+								</Label>
+								<Input
+									id="qr-pix-key"
+									value={pixKey}
+									onChange={(e) => setPixKey(e.target.value)}
+									placeholder="Chave Pix"
 								/>
 							</div>
-						)}
-
-						{tab === "pix" && (
-							<div className="space-y-3">
-								<div className="grid gap-4 sm:grid-cols-2">
-									<div className="space-y-2">
-										<Label htmlFor="qr-pix-type" className="block">
-											Tipo de chave
-										</Label>
-										<NativeSelect
-											id="qr-pix-type"
-											value={pixKeyType}
-											onChange={(e) =>
-												setPixKeyType(e.target.value as PixKeyType)
-											}
-										>
-											<option value="cpf">CPF</option>
-											<option value="cnpj">CNPJ</option>
-											<option value="phone">Celular</option>
-											<option value="email">E-mail</option>
-											<option value="evp">Chave Aleatória</option>
-										</NativeSelect>
-									</div>
-									<div className="space-y-2">
-										<Label htmlFor="qr-pix-key" className="block">
-											Chave Pix
-										</Label>
-										<Input
-											id="qr-pix-key"
-											value={pixKey}
-											onChange={(e) => setPixKey(e.target.value)}
-											placeholder="Chave Pix"
-										/>
-									</div>
-								</div>
-								<div className="grid gap-4 sm:grid-cols-2">
-									<div className="space-y-2">
-										<Label htmlFor="qr-pix-name" className="block">
-											Nome do beneficiário
-										</Label>
-										<Input
-											id="qr-pix-name"
-											value={pixName}
-											onChange={(e) => setPixName(e.target.value)}
-											placeholder="Nome completo"
-										/>
-									</div>
-									<div className="space-y-2">
-										<Label htmlFor="qr-pix-city" className="block">
-											Cidade
-										</Label>
-										<Input
-											id="qr-pix-city"
-											value={pixCity}
-											onChange={(e) => setPixCity(e.target.value)}
-											placeholder="Cidade"
-										/>
-									</div>
-								</div>
-								<div className="grid gap-4 sm:grid-cols-2">
-									<div className="space-y-2">
-										<Label htmlFor="qr-pix-amount" className="block">
-											Valor (opcional)
-										</Label>
-										<Input
-											id="qr-pix-amount"
-											value={pixAmount}
-											onChange={(e) => setPixAmount(e.target.value)}
-											placeholder="0,00"
-										/>
-									</div>
-									<div className="space-y-2">
-										<Label htmlFor="qr-pix-desc" className="block">
-											Descrição (opcional)
-										</Label>
-										<Input
-											id="qr-pix-desc"
-											value={pixDescription}
-											onChange={(e) => setPixDescription(e.target.value)}
-											placeholder="Descrição"
-										/>
-									</div>
-								</div>
+						</div>
+						<div className="grid gap-3 sm:grid-cols-2">
+							<div className="space-y-1.5">
+								<Label
+									htmlFor="qr-pix-name"
+									className="text-xs font-medium text-foreground"
+								>
+									Nome do beneficiário
+								</Label>
+								<Input
+									id="qr-pix-name"
+									value={pixName}
+									onChange={(e) => setPixName(e.target.value)}
+									placeholder="Nome completo"
+								/>
 							</div>
-						)}
-
-						{error && (
-							<div className="rounded-lg border border-destructive/40 bg-destructive/10 px-4 py-3">
-								<p className="text-sm font-medium text-destructive">{error}</p>
+							<div className="space-y-1.5">
+								<Label
+									htmlFor="qr-pix-city"
+									className="text-xs font-medium text-foreground"
+								>
+									Cidade
+								</Label>
+								<Input
+									id="qr-pix-city"
+									value={pixCity}
+									onChange={(e) => setPixCity(e.target.value)}
+									placeholder="Cidade"
+								/>
 							</div>
-						)}
+						</div>
+						<div className="grid gap-3 sm:grid-cols-2">
+							<div className="space-y-1.5">
+								<Label
+									htmlFor="qr-pix-amount"
+									className="text-xs font-medium text-foreground"
+								>
+									Valor (opcional)
+								</Label>
+								<Input
+									id="qr-pix-amount"
+									value={pixAmount}
+									onChange={(e) => setPixAmount(e.target.value)}
+									placeholder="0,00"
+								/>
+							</div>
+							<div className="space-y-1.5">
+								<Label
+									htmlFor="qr-pix-desc"
+									className="text-xs font-medium text-foreground"
+								>
+									Descrição (opcional)
+								</Label>
+								<Input
+									id="qr-pix-desc"
+									value={pixDescription}
+									onChange={(e) => setPixDescription(e.target.value)}
+									placeholder="Descrição"
+								/>
+							</div>
+						</div>
+					</>
+				);
+		}
+	}
+
+	return (
+		<LayoutA
+			leftPanel={
+				<div className="divide-y divide-border">
+					<div className="p-4">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							Modo
+						</h3>
+						<div className="space-y-1">
+							{MODE_LIST.map((m) => (
+								<button
+									key={m.value}
+									type="button"
+									onClick={() => handleTabChange(m.value)}
+									className={cn(
+										"flex w-full items-center rounded-md px-2.5 py-2 text-left text-xs font-medium transition-colors",
+										tab === m.value
+											? "bg-accent text-accent-foreground"
+											: "text-muted-foreground hover:bg-muted hover:text-foreground",
+									)}
+								>
+									{m.label}
+								</button>
+							))}
+						</div>
 					</div>
 
-					{/* Styling controls */}
-					<div className="space-y-4 rounded-lg border border-border bg-card p-4">
-						<h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-							Personalização
-						</h4>
-
-						<div className="grid gap-4 sm:grid-cols-2">
-							{/* Dot color */}
-							<div className="space-y-2">
-								<span className="block text-xs text-muted-foreground">
-									Cor dos pontos
-								</span>
-								<div className="flex flex-wrap gap-2">
-									{PRESET_COLORS.map((c) => (
-										<button
-											key={c}
-											type="button"
-											onClick={() => setDotColor(c)}
-											className={`h-6 w-6 rounded-full border-2 ${
-												dotColor === c
-													? "border-foreground"
-													: "border-transparent"
-											}`}
-											style={{ backgroundColor: c }}
-											aria-label={`Cor ${c}`}
-										/>
-									))}
-									<input
-										type="color"
-										value={dotColor}
-										onChange={(e) => setDotColor(e.target.value)}
-										className="h-6 w-6 cursor-pointer rounded-full border-0 p-0"
-									/>
+					<div className="p-4">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							Conteúdo
+						</h3>
+						<div className="space-y-3">
+							{renderContentInputs()}
+							{error && (
+								<div className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2">
+									<p className="text-xs font-medium text-destructive">
+										{error}
+									</p>
 								</div>
-							</div>
+							)}
+						</div>
+					</div>
 
-							{/* Background color */}
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							Logo
+						</h3>
+						<input
+							id="qr-logo"
+							ref={logoInputRef}
+							type="file"
+							accept="image/*"
+							onChange={handleLogoUpload}
+							className="hidden"
+						/>
+						<Button
+							variant="outline"
+							size="sm"
+							className="w-full"
+							type="button"
+							onClick={() => logoInputRef.current?.click()}
+						>
+							<Upload className="mr-1.5 h-3.5 w-3.5" />
+							Escolher arquivo
+						</Button>
+						{logoUrl && (
 							<div className="space-y-2">
-								<span className="block text-xs text-muted-foreground">
-									Cor do fundo
-								</span>
-								<div className="flex flex-wrap gap-2">
-									{["#ffffff", "#f3f4f6", "#1f2937", "#fef3c7", "#ecfccb"].map(
-										(c) => (
-											<button
-												key={c}
-												type="button"
-												onClick={() => setBgColor(c)}
-												className={`h-6 w-6 rounded-full border-2 ${
-													bgColor === c
-														? "border-foreground"
-														: "border-transparent"
-												}`}
-												style={{ backgroundColor: c }}
-												aria-label={`Fundo ${c}`}
-											/>
-										),
-									)}
-									<input
-										type="color"
-										value={bgColor}
-										onChange={(e) => setBgColor(e.target.value)}
-										className="h-6 w-6 cursor-pointer rounded-full border-0 p-0"
+								<div className="flex items-center gap-2">
+									<img
+										src={logoUrl}
+										alt="Preview do logo"
+										className="h-8 w-8 rounded-md object-contain border border-border"
 									/>
+									<Button
+										type="button"
+										variant="ghost"
+										size="sm"
+										onClick={() => setLogoUrl("")}
+										className="h-7 text-xs"
+									>
+										<Trash className="h-3 w-3 mr-1" />
+										Remover
+									</Button>
 								</div>
-							</div>
-						</div>
-
-						<div className="grid gap-4 sm:grid-cols-3">
-							{/* Dot type */}
-							<div className="space-y-2">
-								<Label
-									htmlFor="qr-dot-type"
-									className="block text-xs text-muted-foreground"
-								>
-									Estilo dos pontos
-								</Label>
-								<NativeSelect
-									id="qr-dot-type"
-									value={dotType}
-									onChange={(e) => setDotType(e.target.value)}
-								>
-									{DOT_TYPES.map((d) => (
-										<option key={d.value} value={d.value}>
-											{d.label}
-										</option>
-									))}
-								</NativeSelect>
-							</div>
-
-							{/* Corner type */}
-							<div className="space-y-2">
-								<Label
-									htmlFor="qr-corner-type"
-									className="block text-xs text-muted-foreground"
-								>
-									Estilo dos cantos
-								</Label>
-								<NativeSelect
-									id="qr-corner-type"
-									value={cornerType}
-									onChange={(e) => setCornerType(e.target.value)}
-								>
-									{CORNER_TYPES.map((d) => (
-										<option key={d.value} value={d.value}>
-											{d.label}
-										</option>
-									))}
-								</NativeSelect>
-							</div>
-
-							{/* Error correction */}
-							<div className="space-y-2">
-								<Label
-									htmlFor="qr-error"
-									className="block text-xs text-muted-foreground"
-								>
-									Correção de erro
-								</Label>
-								<NativeSelect
-									id="qr-error"
-									value={errorLevel}
-									onChange={(e) =>
-										setErrorLevel(e.target.value as "L" | "M" | "Q" | "H")
-									}
-								>
-									{ERROR_LEVELS.map((d) => (
-										<option key={d.value} value={d.value}>
-											{d.label}
-										</option>
-									))}
-								</NativeSelect>
-							</div>
-						</div>
-
-						{/* Logo upload */}
-						<div className="space-y-2">
-							<Label
-								htmlFor="qr-logo"
-								className="block text-xs text-muted-foreground"
-							>
-								Logo central (opcional)
-							</Label>
-							<input
-								id="qr-logo"
-								type="file"
-								accept="image/*"
-								onChange={handleLogoUpload}
-								className="block w-full text-sm text-foreground file:mr-4 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-primary-foreground hover:file:bg-primary/90"
-							/>
-							{logoUrl && (
 								<div className="space-y-1">
-									<div className="flex items-center gap-2">
-										<img
-											src={logoUrl}
-											alt="Logo preview"
-											className="h-8 w-8 rounded object-contain"
-										/>
-										<Button
-											type="button"
-											variant="secondary"
-											size="sm"
-											onClick={() => setLogoUrl("")}
-										>
-											<Trash />
-											Remover
-										</Button>
+									<div className="flex items-center justify-between">
+										<span className="text-xs text-muted-foreground">
+											Tamanho
+										</span>
+										<span className="font-mono text-[11px] text-muted-foreground">
+											{Math.round(logoSize * 100)}%
+										</span>
 									</div>
-									<span className="block text-xs text-muted-foreground">
-										Tamanho do logo
-									</span>
 									<input
 										type="range"
 										min={0.1}
@@ -730,35 +664,198 @@ export function CustomQrCode() {
 										className="w-full"
 									/>
 								</div>
-							)}
-						</div>
+							</div>
+						)}
 					</div>
 				</div>
+			}
+			centerPanel={
+				<div className="flex flex-col items-center justify-center gap-4 flex-1 p-4">
+					<div
+						ref={qrRef}
+						className="flex h-[300px] w-[300px] items-center justify-center rounded-md border border-border bg-muted/40"
+					/>
+					<div className="flex flex-wrap justify-center gap-2">
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => handleDownload("png")}
+						>
+							<Download className="mr-1.5 h-3.5 w-3.5" />
+							PNG
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => handleDownload("jpeg")}
+						>
+							<Download className="mr-1.5 h-3.5 w-3.5" />
+							JPG
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => handleDownload("svg")}
+						>
+							<Download className="mr-1.5 h-3.5 w-3.5" />
+							SVG
+						</Button>
+					</div>
+				</div>
+			}
+			rightPanel={
+				<div className="divide-y divide-border">
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							Aparência
+						</h3>
+						<div className="space-y-1.5">
+							<span className="text-xs font-medium text-foreground">
+								Cor dos pontos
+							</span>
+							<div className="flex flex-wrap gap-1.5">
+								{PRESET_COLORS.map((c) => (
+									<button
+										key={c}
+										type="button"
+										onClick={() => setDotColor(c)}
+										className={cn(
+											"h-7 w-7 rounded-md border-2",
+											dotColor === c
+												? "border-foreground"
+												: "border-transparent",
+										)}
+										style={{ backgroundColor: c }}
+										aria-label={`Cor ${c}`}
+									/>
+								))}
+								<input
+									type="color"
+									value={dotColor}
+									onChange={(e) => setDotColor(e.target.value)}
+									className="h-7 w-7 cursor-pointer rounded-md border border-border bg-transparent p-0.5 shrink-0"
+								/>
+							</div>
+						</div>
+						<div className="space-y-1.5">
+							<span className="text-xs font-medium text-foreground">
+								Cor do fundo
+							</span>
+							<div className="flex flex-wrap gap-1.5">
+								{["#ffffff", "#f3f4f6", "#1f2937", "#fef3c7", "#ecfccb"].map(
+									(c) => (
+										<button
+											key={c}
+											type="button"
+											onClick={() => setBgColor(c)}
+											className={cn(
+												"h-7 w-7 rounded-md border-2",
+												bgColor === c
+													? "border-foreground"
+													: "border-transparent",
+											)}
+											style={{ backgroundColor: c }}
+											aria-label={`Fundo ${c}`}
+										/>
+									),
+								)}
+								<input
+									type="color"
+									value={bgColor}
+									onChange={(e) => setBgColor(e.target.value)}
+									className="h-7 w-7 cursor-pointer rounded-md border border-border bg-transparent p-0.5 shrink-0"
+								/>
+							</div>
+						</div>
+					</div>
 
-				{/* Right column: preview */}
-				<div className="space-y-4">
-					<div className="flex flex-col items-center gap-4">
-						<div
-							ref={qrRef}
-							className="flex h-[300px] w-[300px] items-center justify-center rounded-lg border border-border bg-card"
-						/>
-						<div className="flex flex-wrap justify-center gap-2">
-							<Button variant="outline" onClick={() => handleDownload("png")}>
-								<Download className="mr-1.5 h-4 w-4" />
-								Baixar em PNG
-							</Button>
-							<Button variant="outline" onClick={() => handleDownload("jpeg")}>
-								<Download className="mr-1.5 h-4 w-4" />
-								Baixar em JPG
-							</Button>
-							<Button variant="outline" onClick={() => handleDownload("svg")}>
-								<Download className="mr-1.5 h-4 w-4" />
-								Baixar em SVG
-							</Button>
+					<div className="p-4 space-y-3">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							Estilo
+						</h3>
+						<div className="space-y-1.5">
+							<span className="text-xs font-medium text-foreground">
+								Estilo dos pontos
+							</span>
+							<NativeSelect
+								value={dotType}
+								onChange={(e) => setDotType(e.target.value)}
+							>
+								{DOT_TYPES.map((d) => (
+									<option key={d.value} value={d.value}>
+										{d.label}
+									</option>
+								))}
+							</NativeSelect>
+						</div>
+						<div className="space-y-1.5">
+							<span className="text-xs font-medium text-foreground">
+								Estilo dos cantos
+							</span>
+							<NativeSelect
+								value={cornerType}
+								onChange={(e) => setCornerType(e.target.value)}
+							>
+								{CORNER_TYPES.map((d) => (
+									<option key={d.value} value={d.value}>
+										{d.label}
+									</option>
+								))}
+							</NativeSelect>
+						</div>
+						<div className="space-y-1.5">
+							<span className="text-xs font-medium text-foreground">
+								Correção de erro
+							</span>
+							<NativeSelect
+								value={errorLevel}
+								onChange={(e) =>
+									setErrorLevel(e.target.value as "L" | "M" | "Q" | "H")
+								}
+							>
+								{ERROR_LEVELS.map((d) => (
+									<option key={d.value} value={d.value}>
+										{d.label}
+									</option>
+								))}
+							</NativeSelect>
 						</div>
 					</div>
+
+					<div className="p-4 space-y-2">
+						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							Ações
+						</h3>
+						<Button
+							variant="outline"
+							size="sm"
+							className="w-full"
+							onClick={() => handleDownload("png")}
+						>
+							<Download className="mr-1.5 h-3.5 w-3.5" />
+							Baixar PNG
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							className="w-full"
+							onClick={() => handleDownload("jpeg")}
+						>
+							<Download className="mr-1.5 h-3.5 w-3.5" />
+							Baixar JPG
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							className="w-full"
+							onClick={() => handleDownload("svg")}
+						>
+							<Download className="mr-1.5 h-3.5 w-3.5" />
+							Baixar SVG
+						</Button>
+					</div>
 				</div>
-			</div>
-		</div>
+			}
+		/>
 	);
 }

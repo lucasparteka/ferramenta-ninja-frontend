@@ -17,21 +17,23 @@ export function LayoutA({
 }: LayoutAProps) {
 	return (
 		<div>
-			{header && (
-				<div className="sticky top-14 z-10 flex items-center justify-between border-b border-border bg-background/90 backdrop-blur px-4 py-3">
-					{header}
+			<div className="overflow-hidden rounded-lg border border-border">
+				{header && (
+					<div className="flex items-center justify-between border-b border-border px-4 py-3 bg-card">
+						{header}
+					</div>
+				)}
+				<div className="grid grid-cols-1 gap-0 lg:grid-cols-[280px_1fr_300px]">
+					<aside className="bg-card border-b lg:border-b-0 lg:border-r border-border overflow-y-auto">
+						{leftPanel}
+					</aside>
+					<main className="bg-muted/40 flex flex-col min-h-110">
+						{centerPanel}
+					</main>
+					<aside className="bg-card border-t lg:border-t-0 lg:border-l border-border overflow-y-auto">
+						{rightPanel}
+					</aside>
 				</div>
-			)}
-			<div className="grid grid-cols-1 gap-0 lg:grid-cols-[280px_1fr_300px] border border-border rounded-lg overflow-hidden">
-				<aside className="bg-card border-b lg:border-b-0 lg:border-r border-border overflow-y-auto">
-					{leftPanel}
-				</aside>
-				<main className="bg-muted/40 flex flex-col min-h-[440px]">
-					{centerPanel}
-				</main>
-				<aside className="bg-card border-t lg:border-t-0 lg:border-l border-border overflow-y-auto">
-					{rightPanel}
-				</aside>
 			</div>
 			{footer && (
 				<div className="border-t border-border bg-muted/40 px-4 py-2">

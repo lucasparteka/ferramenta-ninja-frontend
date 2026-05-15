@@ -374,7 +374,7 @@ export function InventarioEditor() {
 			</div>
 
 			<div className="rounded-md border border-border bg-muted/30 p-3">
-				<p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+				<p className="mb-2 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 					Pré-visualização
 				</p>
 				<InventarioCanvas ref={canvasRef} state={state} />

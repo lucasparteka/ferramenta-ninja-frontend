@@ -158,7 +158,7 @@ export function GradientGenerator() {
 										className="h-7 w-24 font-mono text-xs uppercase"
 										maxLength={7}
 									/>
-									<span className="ml-auto font-mono text-[11px] tabular-nums text-muted-foreground">
+									<span className="ml-auto font-mono text-caption tabular-nums text-muted-foreground">
 										{stop.position}%
 									</span>
 								</div>
@@ -220,7 +220,7 @@ export function GradientGenerator() {
 						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
 							CSS
 						</h3>
-						<pre className="rounded-md bg-muted border border-border p-3 font-mono text-[11px] overflow-x-auto">
+						<pre className="rounded-md bg-muted border border-border p-3 font-mono text-caption overflow-x-auto">
 							<code>background: {gradientCSS};</code>
 						</pre>
 						<div className="flex justify-end">
@@ -237,7 +237,7 @@ export function GradientGenerator() {
 						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
 							Tailwind
 						</h3>
-						<pre className="rounded-md bg-muted border border-border p-3 font-mono text-[11px] overflow-x-auto break-all whitespace-pre-wrap">
+						<pre className="rounded-md bg-muted border border-border p-3 font-mono text-caption overflow-x-auto break-all whitespace-pre-wrap">
 							<code>{buildTailwindClass(gradientCSS)}</code>
 						</pre>
 						<div className="flex justify-end">
@@ -266,7 +266,7 @@ export function GradientGenerator() {
 						{type === "linear" && (
 							<div className="flex items-center justify-between py-0.5">
 								<span className="text-xs text-muted-foreground">Ângulo</span>
-								<span className="font-mono text-[11px] tabular-nums text-foreground">
+								<span className="font-mono text-caption tabular-nums text-foreground">
 									{angle}°
 								</span>
 							</div>
@@ -275,7 +275,7 @@ export function GradientGenerator() {
 							<span className="text-xs text-muted-foreground">
 								Paradas de cor
 							</span>
-							<span className="font-mono text-[11px] tabular-nums text-foreground">
+							<span className="font-mono text-caption tabular-nums text-foreground">
 								{stops.length}
 							</span>
 						</div>

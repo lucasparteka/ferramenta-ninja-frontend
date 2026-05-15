@@ -81,7 +81,7 @@ export function BinaryConverter() {
 			left={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Entrada
 						</span>
 						<div className="flex items-center gap-2">
@@ -117,7 +117,7 @@ export function BinaryConverter() {
 
 					{mode === "encode" && (
 						<div className="flex items-center justify-between border-t border-border px-3 py-2">
-							<span className="text-[11px] text-muted-foreground">
+							<span className="text-caption text-muted-foreground">
 								Separador
 							</span>
 							<OptionSwitch
@@ -133,7 +133,7 @@ export function BinaryConverter() {
 			right={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Saída
 						</span>
 						<CopyButton

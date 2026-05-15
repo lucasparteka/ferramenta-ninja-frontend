@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
+import { crc16Ccitt, type EmvField, formatFieldValue } from "@/lib/pix/decode";
 import { cn } from "@/lib/utils";
-import { formatFieldValue, type EmvField, crc16Ccitt } from "@/lib/pix/decode";
 
 type ViewMode = "tree" | "json" | "raw";
 
@@ -172,7 +172,7 @@ function RawView({ raw }: { raw: string }) {
 	return (
 		<div className="space-y-4">
 			<div>
-				<h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+				<h4 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground mb-2">
 					Payload Original
 				</h4>
 				<code className="block break-all rounded-md bg-muted/40 p-3 text-xs font-mono">
@@ -180,7 +180,7 @@ function RawView({ raw }: { raw: string }) {
 				</code>
 			</div>
 			<div>
-				<h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+				<h4 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground mb-2">
 					CRC Info
 				</h4>
 				<div className="rounded-md bg-muted/40 p-3 text-xs font-mono space-y-1">

@@ -49,9 +49,9 @@ function SeoContent() {
 				</h2>
 				<p>
 					Informe o endereço de e-mail do destinatário, o assunto e o corpo da
-					mensagem. O QR Code gerado usa o protocolo mailto: — ao ser
-					escaneado, abre o app de e-mail já configurado com todos os campos
-					preenchidos. Ideal para facilitar o contato em materiais impressos.
+					mensagem. O QR Code gerado usa o protocolo mailto: — ao ser escaneado,
+					abre o app de e-mail já configurado com todos os campos preenchidos.
+					Ideal para facilitar o contato em materiais impressos.
 				</p>
 			</section>
 
@@ -95,7 +95,7 @@ export default function GeradorQrCodeEmailPage() {
 			extraContent={<SeoContent />}
 			faq={faq}
 		>
-			<CustomQrCode initialTab="email" />
+			<CustomQrCode initialTab="" />
 		</PageLayout>
 	);
 }

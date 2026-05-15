@@ -125,19 +125,19 @@ export function GooglePreviewTool() {
 					<SidebarSection title="Referências">
 						<div className="flex items-center justify-between">
 							<span className="text-xs text-muted-foreground">Título</span>
-							<span className="font-mono text-[11px] bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
+							<span className="font-mono text-caption bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
 								30–60 caracteres
 							</span>
 						</div>
 						<div className="flex items-center justify-between">
 							<span className="text-xs text-muted-foreground">Descrição</span>
-							<span className="font-mono text-[11px] bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
+							<span className="font-mono text-caption bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
 								120–160 caracteres
 							</span>
 						</div>
 						<div className="flex items-center justify-between">
 							<span className="text-xs text-muted-foreground">URL</span>
-							<span className="font-mono text-[11px] bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
+							<span className="font-mono text-caption bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">
 								limpa e descritiva
 							</span>
 						</div>

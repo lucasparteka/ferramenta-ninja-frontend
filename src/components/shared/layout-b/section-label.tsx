@@ -10,7 +10,7 @@ export function SectionLabel({ children, hint }: SectionLabelProps) {
 				{children}
 			</span>
 			{hint && (
-				<span className="text-[11px] text-muted-foreground/70">{hint}</span>
+				<span className="text-caption text-muted-foreground/70">{hint}</span>
 			)}
 		</div>
 	);

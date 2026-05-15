@@ -16,9 +16,9 @@ import {
 	DEFAULT_CONTAINER,
 	FLEX_DIRECTION_OPTIONS,
 	FLEX_WRAP_OPTIONS,
-	JUSTIFY_CONTENT_OPTIONS,
 	type FlexContainer,
 	type FlexItem,
+	JUSTIFY_CONTENT_OPTIONS,
 } from "@/lib/css/flexbox";
 import { cn } from "@/lib/utils";
 
@@ -81,7 +81,7 @@ export function FlexboxGenerator() {
 			leftPanel={
 				<div className="divide-y divide-border">
 					<div className="p-4 space-y-4">
-						<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Container
 						</h3>
 
@@ -98,7 +98,7 @@ export function FlexboxGenerator() {
 											updateContainer({ flexDirection: opt.value })
 										}
 										className={cn(
-											"rounded-md px-2.5 py-1.5 text-[11px] font-medium transition-colors text-center",
+											"rounded-md px-2.5 py-1.5 text-caption font-medium transition-colors text-center",
 											container.flexDirection === opt.value
 												? "bg-accent text-accent-foreground"
 												: "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -121,7 +121,7 @@ export function FlexboxGenerator() {
 										type="button"
 										onClick={() => updateContainer({ flexWrap: opt.value })}
 										className={cn(
-											"rounded-md px-2 py-1.5 text-[11px] font-medium transition-colors text-center",
+											"rounded-md px-2 py-1.5 text-caption font-medium transition-colors text-center",
 											container.flexWrap === opt.value
 												? "bg-accent text-accent-foreground"
 												: "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -146,7 +146,7 @@ export function FlexboxGenerator() {
 											updateContainer({ justifyContent: opt.value })
 										}
 										className={cn(
-											"rounded-md px-2 py-1.5 text-[11px] font-medium transition-colors text-center",
+											"rounded-md px-2 py-1.5 text-caption font-medium transition-colors text-center",
 											container.justifyContent === opt.value
 												? "bg-accent text-accent-foreground"
 												: "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -169,7 +169,7 @@ export function FlexboxGenerator() {
 										type="button"
 										onClick={() => updateContainer({ alignItems: opt.value })}
 										className={cn(
-											"rounded-md px-2 py-1.5 text-[11px] font-medium transition-colors text-center",
+											"rounded-md px-2 py-1.5 text-caption font-medium transition-colors text-center",
 											container.alignItems === opt.value
 												? "bg-accent text-accent-foreground"
 												: "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -195,7 +195,7 @@ export function FlexboxGenerator() {
 												updateContainer({ alignContent: opt.value })
 											}
 											className={cn(
-												"rounded-md px-2 py-1.5 text-[11px] font-medium transition-colors text-center",
+												"rounded-md px-2 py-1.5 text-caption font-medium transition-colors text-center",
 												container.alignContent === opt.value
 													? "bg-accent text-accent-foreground"
 													: "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -211,7 +211,7 @@ export function FlexboxGenerator() {
 						<div className="space-y-1.5">
 							<div className="flex items-center justify-between">
 								<span className="text-xs font-medium text-foreground">Gap</span>
-								<span className="font-mono text-[11px] text-muted-foreground">
+								<span className="font-mono text-caption text-muted-foreground">
 									{container.gap}px
 								</span>
 							</div>
@@ -229,10 +229,10 @@ export function FlexboxGenerator() {
 			centerPanel={
 				<div className="flex flex-col h-full">
 					<div className="flex items-center justify-between px-4 py-3 border-b border-border">
-						<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Preview
 						</h3>
-						<span className="font-mono text-[11px] text-muted-foreground">
+						<span className="font-mono text-caption text-muted-foreground">
 							{items.length} itens
 						</span>
 					</div>
@@ -294,7 +294,7 @@ export function FlexboxGenerator() {
 			rightPanel={
 				<div className="divide-y divide-border">
 					<div className="p-4 space-y-4">
-						<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Itens
 						</h3>
 						<div className="space-y-1">
@@ -322,7 +322,7 @@ export function FlexboxGenerator() {
 
 					{activeItem && (
 						<div className="p-4 space-y-4">
-							<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 								Propriedades do item {activeItem.label}
 							</h3>
 
@@ -331,7 +331,7 @@ export function FlexboxGenerator() {
 									<span className="text-xs font-medium text-foreground">
 										Flex grow
 									</span>
-									<span className="font-mono text-[11px] text-muted-foreground">
+									<span className="font-mono text-caption text-muted-foreground">
 										{activeItem.flexGrow}
 									</span>
 								</div>
@@ -351,7 +351,7 @@ export function FlexboxGenerator() {
 									<span className="text-xs font-medium text-foreground">
 										Flex shrink
 									</span>
-									<span className="font-mono text-[11px] text-muted-foreground">
+									<span className="font-mono text-caption text-muted-foreground">
 										{activeItem.flexShrink}
 									</span>
 								</div>
@@ -377,7 +377,7 @@ export function FlexboxGenerator() {
 											updateItem(activeItemIndex, { flexBasis: "auto" })
 										}
 										className={cn(
-											"flex-1 rounded-md px-2 py-1.5 text-[11px] font-medium transition-colors",
+											"flex-1 rounded-md px-2 py-1.5 text-caption font-medium transition-colors",
 											activeItem.flexBasis === "auto"
 												? "bg-accent text-accent-foreground"
 												: "text-muted-foreground hover:bg-muted hover:text-foreground border border-border",
@@ -416,7 +416,7 @@ export function FlexboxGenerator() {
 												updateItem(activeItemIndex, { alignSelf: opt.value })
 											}
 											className={cn(
-												"rounded-md px-2 py-1.5 text-[11px] font-medium transition-colors text-center",
+												"rounded-md px-2 py-1.5 text-caption font-medium transition-colors text-center",
 												activeItem.alignSelf === opt.value
 													? "bg-accent text-accent-foreground"
 													: "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -433,7 +433,7 @@ export function FlexboxGenerator() {
 									<span className="text-xs font-medium text-foreground">
 										Order
 									</span>
-									<span className="font-mono text-[11px] text-muted-foreground">
+									<span className="font-mono text-caption text-muted-foreground">
 										{activeItem.order}
 									</span>
 								</div>
@@ -452,12 +452,12 @@ export function FlexboxGenerator() {
 
 					<div className="p-4 space-y-3">
 						<div className="flex items-center justify-between">
-							<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 								CSS
 							</h3>
 							<CopyButton text={cssCode} />
 						</div>
-						<pre className="font-mono text-[11px] leading-relaxed bg-muted p-3 rounded-md border border-border overflow-x-auto">
+						<pre className="font-mono text-caption leading-relaxed bg-muted p-3 rounded-md border border-border overflow-x-auto">
 							{cssCode}
 						</pre>
 					</div>

@@ -126,7 +126,7 @@ export function ChristmasBonusClient() {
 											/>
 										}
 									/>
-									<p className="mt-1 text-[11px] text-muted-foreground">
+									<p className="mt-1 text-caption text-muted-foreground">
 										Insalubridade, HE habitual, comissões...
 									</p>
 								</div>
@@ -277,7 +277,7 @@ export function ChristmasBonusClient() {
 								<ResultRow label="(−) IRRF" value={result.irrf} dim />
 								<div className="my-2 h-px bg-border" />
 								<ResultRow label="13º líquido" value={result.netTotal} strong />
-								<p className="mt-2 text-[11px] text-muted-foreground">
+								<p className="mt-2 text-caption text-muted-foreground">
 									{result.firstInstallmentDueLabel}
 								</p>
 							</div>

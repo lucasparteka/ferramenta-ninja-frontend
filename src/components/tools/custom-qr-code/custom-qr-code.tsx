@@ -18,6 +18,10 @@ import { generateWifiString } from "@/lib/wifi/generate";
 
 type QrTab = "url" | "wifi" | "email" | "phone" | "pix";
 
+type CustomQrCodeProps = {
+	initialTab?: QrTab;
+};
+
 const DOT_TYPES = [
 	{ value: "square", label: "Quadrado" },
 	{ value: "rounded", label: "Redondo" },
@@ -68,8 +72,8 @@ function formatPhoneBR(value: string): string {
 	return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
 }
 
-export function CustomQrCode() {
-	const [tab, setTab] = useState<QrTab>("url");
+export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
+	const [tab, setTab] = useState<QrTab>(initialTab ?? "url");
 	const [urlText, setUrlText] = useState("https://ferramenta.ninja");
 	const [wifiSsid, setWifiSsid] = useState("");
 	const [wifiPassword, setWifiPassword] = useState("");

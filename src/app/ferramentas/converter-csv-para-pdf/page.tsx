@@ -13,7 +13,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-base font-semibold text-foreground">
 					Como funciona a conversão de CSV para PDF
 				</h2>
 				<p>
@@ -30,29 +30,31 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">Como usar</h2>
+				<h2 className="mb-4 text-base font-semibold text-foreground">
+					Como usar
+				</h2>
 				<div className="space-y-3">
 					<p>
 						<strong className="text-foreground">1. Carregue o CSV:</strong>{" "}
-						arraste o arquivo para a área de upload ou clique para selecionar.
-						Você também pode colar o conteúdo diretamente na caixa de texto.
+						arraste o arquivo para a área de upload, clique para selecionar ou
+						cole o conteúdo diretamente na caixa de texto. A ferramenta detecta
+						automaticamente o delimitador e parseia os dados em tempo real.
 					</p>
 					<p>
-						<strong className="text-foreground">2. Visualize os dados:</strong>{" "}
-						clique em "Visualizar CSV" para confirmar que os dados foram
-						interpretados corretamente. A prévia mostra a tabela paginada antes
-						da geração do PDF.
+						<strong className="text-foreground">2. Verifique a prévia:</strong>{" "}
+						o painel direito exibe as primeiras linhas da tabela, métricas e uma
+						estimativa de páginas antes da geração do PDF.
 					</p>
 					<p>
 						<strong className="text-foreground">3. Baixe o PDF:</strong> clique
-						em "Baixar como PDF". O arquivo é gerado no navegador e salvo
+						em "Baixar PDF". O arquivo é gerado no navegador e salvo
 						automaticamente com o mesmo nome do CSV original.
 					</p>
 				</div>
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-base font-semibold text-foreground">
 					Como a ferramenta lida com tabelas largas
 				</h2>
 				<div className="space-y-3">
@@ -85,7 +87,9 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">Casos de uso</h2>
+				<h2 className="mb-4 text-base font-semibold text-foreground">
+					Casos de uso
+				</h2>
 				<div className="space-y-3">
 					<p>
 						<strong className="text-foreground">
@@ -117,7 +121,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-base font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">

@@ -179,7 +179,7 @@ export function TextCipher() {
 						value={input}
 						onChange={(e) => setInput(e.target.value)}
 						placeholder="Digite ou cole o texto aqui..."
-						className="flex-1 min-h-[280px] resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+						className="flex-1 min-h-70 resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
 						spellCheck={false}
 					/>
 				</>
@@ -199,7 +199,7 @@ export function TextCipher() {
 						/>
 					</div>
 
-					<div className="flex-1 min-h-[280px] bg-muted/20 p-3">
+					<div className="flex-1 min-h-70 bg-muted/20 p-3">
 						{error ? (
 							<p className="text-xs text-destructive">{error}</p>
 						) : output ? (

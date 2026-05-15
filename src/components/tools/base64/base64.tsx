@@ -6,7 +6,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutC } from "@/components/shared/layout-c";
 import { OptionSwitch } from "@/components/shared/option-switch";
 import { PaneHeader } from "@/components/shared/pane-header";
-import { StatusBar, StatusDot } from "@/components/shared/status-bar";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { decodeBase64, encodeBase64 } from "@/lib/encoding/base64";
 import { cn } from "@/lib/utils";
@@ -19,6 +19,7 @@ export function Base64Tool() {
 	const [mode, setMode] = useState<Mode>("encode");
 	const [variant, setVariant] = useState<Variant>("standard");
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: .
 	const result = useMemo(() => {
 		if (!input.trim()) return { output: "", error: null, timeMs: 0 };
 		const start = performance.now();
@@ -53,7 +54,6 @@ export function Base64Tool() {
 	const inputLen = input.length;
 	const outputLen = result.output.length;
 	const inputBytes = new TextEncoder().encode(input).length;
-	const outputBytes = result.output.length;
 	const ratio =
 		inputLen > 0 && outputLen > 0
 			? ((outputLen / inputLen) * 100).toFixed(0)
@@ -76,7 +76,7 @@ export function Base64Tool() {
 				<>
 					<div className="flex items-center gap-4">
 						<div className="flex items-center gap-2">
-							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 								Direção
 							</span>
 							<OptionSwitch
@@ -91,7 +91,7 @@ export function Base64Tool() {
 						</div>
 						<div className="h-4 w-px bg-border" />
 						<div className="flex items-center gap-2">
-							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+							<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 								Variante
 							</span>
 							<OptionSwitch
@@ -106,7 +106,7 @@ export function Base64Tool() {
 						</div>
 					</div>
 					<div className="flex items-center gap-2">
-						<span className="font-mono text-[11px] text-muted-foreground">
+						<span className="font-mono text-caption text-muted-foreground">
 							UTF-8
 						</span>
 					</div>
@@ -145,7 +145,7 @@ export function Base64Tool() {
 								? "Digite o texto aqui..."
 								: "Cole o Base64 aqui..."
 						}
-						className="flex-1 min-h-[280px] resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+						className="flex-1 min-h-70 resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
 						spellCheck={false}
 					/>
 				</>
@@ -164,18 +164,16 @@ export function Base64Tool() {
 							</>
 						}
 						actions={
-							<>
-								<CopyButton
-									text={result.output}
-									disabled={!result.output}
-									variant="ghost"
-									size="icon-sm"
-									iconOnly
-								/>
-							</>
+							<CopyButton
+								text={result.output}
+								disabled={!result.output}
+								variant="ghost"
+								size="icon-sm"
+								iconOnly
+							/>
 						}
 					/>
-					<div className="flex-1 min-h-[280px] bg-muted/20 p-3">
+					<div className="flex-1 min-h-70 bg-muted/20 p-3">
 						{result.error ? (
 							<p className="text-xs text-destructive">{result.error}</p>
 						) : result.output ? (
@@ -218,9 +216,7 @@ export function Base64Tool() {
 						},
 						{
 							label: "Entrada",
-							value: inputLen
-								? `${inputLen} chars · ${inputBytes} bytes`
-								: "0",
+							value: inputLen ? `${inputLen} chars · ${inputBytes} bytes` : "0",
 							mono: true,
 						},
 						{
@@ -237,7 +233,7 @@ export function Base64Tool() {
 						},
 					]}
 					right={
-						<span className="font-mono text-[11px] text-muted-foreground">
+						<span className="font-mono text-caption text-muted-foreground">
 							RFC 4648{variant === "urlsafe" ? " · URL-safe" : ""}
 						</span>
 					}

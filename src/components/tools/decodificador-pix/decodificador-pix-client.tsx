@@ -8,7 +8,7 @@ import {
 	Trash2,
 	Wand2,
 } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { LayoutD } from "@/components/shared/layout-d";
 import { SidebarSection } from "@/components/shared/sidebar-section";
 import { StatusBar } from "@/components/shared/status-bar";
@@ -18,10 +18,10 @@ import { Textarea } from "@/components/ui/textarea";
 import {
 	decodePixBrCode,
 	fixCrc,
-	validateCrc,
 	type PixDecoded,
+	validateCrc,
 } from "@/lib/pix/decode";
-import { PixHistory, addToHistory, type HistoryItem } from "./pix-history";
+import { addToHistory, type HistoryItem, PixHistory } from "./pix-history";
 import { PixInfoPanel } from "./pix-info-panel";
 import { PixQrCode } from "./pix-qr-code";
 import { PixStructurePanel } from "./pix-structure-panel";
@@ -161,7 +161,7 @@ export function DecodificadorPixClient() {
 					onPaste={handlePasteEvent}
 					placeholder="Cole aqui o código PIX copiado do QR Code..."
 					rows={4}
-					className="min-h-[100px] font-mono text-xs"
+					className="min-h-25 font-mono text-xs"
 				/>
 				<div className="flex flex-wrap gap-2">
 					<Button
@@ -235,15 +235,15 @@ export function DecodificadorPixClient() {
 			{result && (
 				<div className="space-y-4">
 					<div className="rounded-md border border-border overflow-hidden bg-card">
-						<div className="border-b border-border bg-muted/55 px-4 py-[7px]">
-							<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<div className="border-b border-border bg-muted/55 px-4 py-1.75">
+							<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 								Informações do PIX
 							</h3>
 						</div>
 						<PixInfoPanel pixInfo={result.pixInfo} />
 					</div>
 
-					<div className="rounded-md border border-border overflow-hidden bg-card min-h-[300px]">
+					<div className="rounded-md border border-border overflow-hidden bg-card min-h-75">
 						<PixStructurePanel fields={result.fields} raw={result.raw} />
 					</div>
 				</div>

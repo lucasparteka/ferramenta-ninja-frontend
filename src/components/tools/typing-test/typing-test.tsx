@@ -202,20 +202,20 @@ export function TypingTest() {
 								<p className="font-mono text-2xl font-semibold tabular-nums">
 									{wpm}
 								</p>
-								<p className="text-caption text-muted-foreground">WPM</p>
+								<p className="text-[11px] text-muted-foreground">WPM</p>
 							</div>
 							<div className="flex gap-2">
 								<div className="flex-1 rounded border border-border bg-card p-2 text-center">
 									<p className="font-mono text-sm font-medium tabular-nums">
 										{accuracy}%
 									</p>
-									<p className="text-caption text-muted-foreground">Precisão</p>
+									<p className="text-[11px] text-muted-foreground">Precisão</p>
 								</div>
 								<div className="flex-1 rounded border border-border bg-card p-2 text-center">
 									<p className="font-mono text-sm font-medium tabular-nums">
 										{cpm}
 									</p>
-									<p className="text-caption text-muted-foreground">CPM</p>
+									<p className="text-[11px] text-muted-foreground">CPM</p>
 								</div>
 							</div>
 						</div>
@@ -264,11 +264,11 @@ export function TypingTest() {
 					<span
 						className={`h-1.5 w-1.5 rounded-full ${status === "running" ? "bg-green-600" : "bg-foreground/30"}`}
 					/>
-					<span className="text-caption text-muted-foreground">
+					<span className="text-[11px] text-muted-foreground">
 						{statusLabel}
 					</span>
 				</span>
-				<span className="font-mono text-caption text-muted-foreground">
+				<span className="font-mono text-[11px] text-muted-foreground">
 					{input.length} / {text.length} chars
 				</span>
 			</div>

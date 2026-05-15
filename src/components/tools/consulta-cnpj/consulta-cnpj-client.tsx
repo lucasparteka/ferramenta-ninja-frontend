@@ -223,7 +223,7 @@ function CnpjResult({ data }: { data: CnpjCompany }) {
 			{data.partners.length > 0 && (
 				<div className="border-border border-t bg-card">
 					<div className="border-b border-border px-4 py-2 bg-muted/55">
-						<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Sócios e Administradores
 						</h3>
 					</div>

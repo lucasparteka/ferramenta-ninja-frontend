@@ -134,7 +134,7 @@ export function UnitConverterClient() {
 								))}
 							</NativeSelect>
 						</div>
-						<div className="rounded-md border border-border bg-muted/40 px-3 py-2 font-mono text-caption text-muted-foreground tabular-nums leading-relaxed break-all">
+						<div className="rounded-md border border-border bg-muted/40 px-3 py-2 font-mono text-[11px] text-muted-foreground tabular-nums leading-relaxed break-all">
 							{formulaStr}
 						</div>
 					</div>

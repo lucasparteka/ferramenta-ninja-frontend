@@ -191,15 +191,15 @@ Configuradas em `app/layout.tsx` como CSS variables `--font-sans` e `--font-mono
 | **H1 página** (título da ferramenta) | `text-2xl font-semibold tracking-tight` | 24px | 600 | -0.01em |
 | **H2 seção principal** | `text-base font-semibold` | 16px | 600 | normal |
 | **H3 subseção** | `text-sm font-semibold` | 14px | 600 | normal |
-| **Section header** (ALL CAPS) | `text-caption font-semibold uppercase tracking-wider text-muted-foreground` | 11px | 600 | 0.05em |
+| **Section header** (ALL CAPS) | `text-[11px] font-semibold uppercase tracking-wider text-muted-foreground` | 11px | 600 | 0.05em |
 | **Corpo padrão** | `text-sm` | 14px | 400 | normal |
 | **Corpo descritivo grande** | `text-base text-muted-foreground` | 16px | 400 | normal |
 | **Label de input** | `text-xs font-medium` | 12px | 500 | normal |
 | **Texto auxiliar / hint** | `text-xs text-muted-foreground` | 12px | 400 | normal |
-| **Microcopy / metadata** | `text-caption text-muted-foreground` | 11px | 400 | normal |
-| **Mono — números** | `font-mono text-xs` ou `text-caption` | 11–12px | 400 | normal |
-| **Mono — código inline** | `font-mono text-caption bg-muted px-1 py-0.5 rounded-sm` | 11px | 400 | normal |
-| **Mono — bloco de código** | `font-mono text-caption leading-relaxed` | 11px | 400 | normal |
+| **Microcopy / metadata** | `text-[11px] text-muted-foreground` | 11px | 400 | normal |
+| **Mono — números** | `font-mono text-xs` ou `text-[11px]` | 11–12px | 400 | normal |
+| **Mono — código inline** | `font-mono text-[11px] bg-muted px-1 py-0.5 rounded-sm` | 11px | 400 | normal |
+| **Mono — bloco de código** | `font-mono text-[11px] leading-relaxed` | 11px | 400 | normal |
 
 ### 4.3 Regras
 
@@ -209,7 +209,7 @@ Configuradas em `app/layout.tsx` como CSS variables `--font-sans` e `--font-mono
   O título é `text-2xl` (24px) e ponto. Tipografia gigante é landing page.
 - **Sempre** use `tracking-tight` em títulos `text-2xl+`. System fonts em
   tamanhos grandes ficam excessivamente espaçadas no default.
-- **Sempre** use `tracking-wider` em ALL CAPS metadata (`text-caption`).
+- **Sempre** use `tracking-wider` em ALL CAPS metadata (`text-[11px]`).
 - **Sempre** use mono para dimensões (`512×512`), tamanhos (`24KB`), IDs,
   hashes, contadores, percentuais ao lado de sliders.
 - `text-pretty` em parágrafos longos (descrições, FAQ).
@@ -230,7 +230,7 @@ Configuradas em `app/layout.tsx` como CSS variables `--font-sans` e `--font-mono
 </p>
 
 {/* Seção dentro da ferramenta */}
-<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
   Origem
 </h3>
 
@@ -240,7 +240,7 @@ Configuradas em `app/layout.tsx` como CSS variables `--font-sans` e `--font-mono
 </label>
 
 {/* Metadata em mono */}
-<span className="font-mono text-caption text-muted-foreground">
+<span className="font-mono text-[11px] text-muted-foreground">
   512×512 · 24KB
 </span>
 ```
@@ -281,7 +281,7 @@ Use **somente** estes valores. Não invente `gap-7`, `p-5` em casos esquisitos.
 |---|---|---|
 | `0.5` | 2px | Separadores hairline (raro) |
 | `1` | 4px | Gap entre ícone e texto adjacente |
-| `1.5` | 6px | Gap entre ícone e label em `text-caption` |
+| `1.5` | 6px | Gap entre ícone e label em `text-[11px]` |
 | `2` | 8px | Gap entre elementos de um cluster (botões agrupados) |
 | `3` | 12px | Gap entre rows de um form, entre cards em grid |
 | `4` | 16px | **Padding padrão de seção dentro de painel** |
@@ -406,7 +406,7 @@ A única exceção é o layout B (calculadoras) onde o painel de resultado pode 
 | Contexto | Tamanho | Classe |
 |---|---|---|
 | Inline em label/badge | 12px | `h-3 w-3` |
-| Em metadata `text-caption` | 12px | `h-3 w-3` |
+| Em metadata `text-[11px]` | 12px | `h-3 w-3` |
 | Em botão `xs` | 14px | `h-3.5 w-3.5` |
 | Em botão padrão | 14px | `h-3.5 w-3.5` |
 | Em input/icon button padrão | 16px | `h-4 w-4` |
@@ -544,7 +544,7 @@ Base: `src/components/ui/button.tsx` (cva).
 
 | Tamanho | Altura | Padding-x | Texto |
 |---|---|---|---|
-| `xs` | 24px (`h-6`) | 8px (`px-2`) | `text-caption` |
+| `xs` | 24px (`h-6`) | 8px (`px-2`) | `text-[11px]` |
 | `sm` | 32px (`h-8`) | 12px (`px-3`) | `text-xs` |
 | `default` | 36px (`h-9`) | 16px (`px-4`) | `text-sm` |
 | `lg` | 40px (`h-10`) | 24px (`px-6`) | `text-sm` |
@@ -628,7 +628,7 @@ Padrão único — **toda** seção interna em painel começa com:
 
 ```tsx
 <div className="space-y-2">
-  <h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+  <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
     Origem
   </h3>
   {/* conteúdo da seção */}
@@ -695,7 +695,7 @@ Padrão: label à esquerda, valor à direita em mono, slider full-width abaixo.
     <label htmlFor="size" className="text-xs font-medium text-foreground">
       Tamanho
     </label>
-    <span className="font-mono text-caption text-muted-foreground">
+    <span className="font-mono text-[11px] text-muted-foreground">
       {value}%
     </span>
   </div>
@@ -740,10 +740,10 @@ imagem):
 ```tsx
 <div className="rounded-md border border-border bg-card p-4">
   <div className="flex items-center justify-between mb-3">
-    <h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+    <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
       Preview
     </h3>
-    <span className="font-mono text-caption text-muted-foreground">
+    <span className="font-mono text-[11px] text-muted-foreground">
       512×512
     </span>
   </div>
@@ -1031,7 +1031,7 @@ Faça uma varredura rápida da tela renderizada e confirme:
 - [ ] Página segue layout A/B/C escolhido.
 - [ ] H1 é `text-2xl font-semibold tracking-tight`.
 - [ ] Existe **um único** CTA primary.
-- [ ] Section headers são `text-caption uppercase tracking-wider muted-foreground`.
+- [ ] Section headers são `text-[11px] uppercase tracking-wider muted-foreground`.
 
 ### Tokens
 - [ ] Nenhum hex/rgb/cor de paleta Tailwind (`bg-blue-500` etc) em chrome.

@@ -157,7 +157,7 @@ export function JsonFormatter() {
 			toolbar={
 				<>
 					<div className="flex items-center gap-4">
-						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Modo
 						</span>
 						<OptionSwitch
@@ -172,14 +172,14 @@ export function JsonFormatter() {
 					</div>
 					{mode === "format" && (
 						<div className="flex items-center gap-2">
-							<span className="text-caption text-muted-foreground">
+							<span className="text-[11px] text-muted-foreground">
 								Espaços:
 							</span>
 							<Button
 								variant={indentSize === 2 ? "default" : "ghost"}
 								size="xs"
 								onClick={() => handleIndentChange(2)}
-								className="h-6 min-w-6 px-1.5 text-caption"
+								className="h-6 min-w-6 px-1.5 text-[11px]"
 							>
 								2
 							</Button>
@@ -187,7 +187,7 @@ export function JsonFormatter() {
 								variant={indentSize === 4 ? "default" : "ghost"}
 								size="xs"
 								onClick={() => handleIndentChange(4)}
-								className="h-6 min-w-6 px-1.5 text-caption"
+								className="h-6 min-w-6 px-1.5 text-[11px]"
 							>
 								4
 							</Button>
@@ -303,7 +303,7 @@ export function JsonFormatter() {
 					]}
 					right={
 						status === "invalid" && error ? (
-							<span className="font-mono text-caption text-destructive">
+							<span className="font-mono text-[11px] text-destructive">
 								Linha {error.line}, coluna {error.column}
 							</span>
 						) : undefined

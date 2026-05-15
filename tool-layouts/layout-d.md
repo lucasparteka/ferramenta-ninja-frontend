@@ -95,7 +95,7 @@ import { LayoutD } from "@/components/shared/layout-d";
     <h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">Limites</h3>
     <div className="flex justify-between mb-1.5">
       <span className="text-xs text-muted-foreground">Título</span>
-      <span className="font-mono text-caption text-muted-foreground">58 / 60</span>
+      <span className="font-mono text-[11px] text-muted-foreground">58 / 60</span>
     </div>
     <div className="h-1 rounded-full bg-border overflow-hidden">
       <div className="h-full rounded-full bg-foreground/70 transition-all" style={{ width: "96%" }} />
@@ -116,7 +116,7 @@ import { LayoutD } from "@/components/shared/layout-d";
     <h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">Referências</h3>
     <div className="flex items-center justify-between">
       <span className="text-xs text-muted-foreground">Limite recomendado</span>
-      <span className="font-mono text-caption bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">60 caracteres</span>
+      <span className="font-mono text-[11px] bg-card border border-border rounded px-1.5 py-0.5 text-muted-foreground">60 caracteres</span>
     </div>
   </div>
 
@@ -310,14 +310,14 @@ export function LimitBar({ label, current, min, max, status }: LimitBarProps) {
     <div className="space-y-1.5">
       <div className="flex justify-between">
         <span className="text-xs text-muted-foreground">{label}</span>
-        <span className="font-mono text-caption text-muted-foreground">{current} / {max}</span>
+        <span className="font-mono text-[11px] text-muted-foreground">{current} / {max}</span>
       </div>
       <div className="h-1 rounded-full bg-border overflow-hidden">
         <div className={cn("h-full rounded-full transition-all", config.barClass)} style={{ width: `${pct}%` }} />
       </div>
       <div className="flex justify-between">
-        <span className={cn("text-caption", config.textClass)}>{config.label}</span>
-        <span className="text-caption text-muted-foreground">Recomendado: {min}–{max}</span>
+        <span className={cn("text-[11px]", config.textClass)}>{config.label}</span>
+        <span className="text-[11px] text-muted-foreground">Recomendado: {min}–{max}</span>
       </div>
     </div>
   );

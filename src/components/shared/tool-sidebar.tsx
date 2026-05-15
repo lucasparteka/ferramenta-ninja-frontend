@@ -20,10 +20,10 @@ export function ToolSidebar({ currentHref }: ToolSidebarProps) {
 				open
 			>
 				<summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 transition-colors hover:bg-muted lg:cursor-default lg:hover:bg-card [&::-webkit-details-marker]:hidden">
-					<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						{category.name}
 					</span>
-					<span className="text-caption text-muted-foreground">
+					<span className="text-[11px] text-muted-foreground">
 						<span className="font-mono">{others.length}</span>{" "}
 						{others.length === 1 ? "ferramenta" : "ferramentas"}
 					</span>

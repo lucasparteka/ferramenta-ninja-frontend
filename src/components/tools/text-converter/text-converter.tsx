@@ -70,7 +70,7 @@ export function TextConverter() {
 							type="button"
 							onClick={() => handleTransform(t.key)}
 							disabled={!input.trim()}
-							className="rounded px-2 py-0.5 text-caption bg-foreground/10 text-foreground hover:bg-foreground/20 transition-colors disabled:opacity-40 disabled:pointer-events-none"
+							className="rounded px-2 py-0.5 text-[11px] bg-foreground/10 text-foreground hover:bg-foreground/20 transition-colors disabled:opacity-40 disabled:pointer-events-none"
 						>
 							{t.label}
 						</button>

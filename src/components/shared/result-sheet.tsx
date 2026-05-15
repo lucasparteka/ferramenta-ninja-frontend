@@ -37,7 +37,7 @@ export function ResultSheet({
 							)}
 						>
 							<div className="border-b border-border bg-muted/55 px-4 py-[7px]">
-								<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+								<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 									{section.title}
 								</h3>
 							</div>
@@ -78,7 +78,7 @@ export function ResultSheet({
 					className="rounded-md border border-border bg-card"
 				>
 					<div className="border-b border-border px-4 py-2">
-						<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							{section.title}
 						</h3>
 					</div>

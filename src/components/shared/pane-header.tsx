@@ -23,7 +23,7 @@ export function PaneHeader({
 				className,
 			)}
 		>
-			<span className="inline-flex items-center gap-2 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+			<span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 				{title}
 				{badge}
 			</span>

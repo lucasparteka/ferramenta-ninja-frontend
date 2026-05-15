@@ -236,7 +236,7 @@ export function DecodificadorPixClient() {
 				<div className="space-y-4">
 					<div className="rounded-md border border-border overflow-hidden bg-card">
 						<div className="border-b border-border bg-muted/55 px-4 py-1.75">
-							<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+							<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Informações do PIX
 							</h3>
 						</div>

@@ -130,7 +130,7 @@ export function SalaryClient() {
 										/>
 									}
 								/>
-								<p className="mt-1 text-caption text-muted-foreground">
+								<p className="mt-1 text-[11px] text-muted-foreground">
 									VA, VR, bônus ou outros acréscimos
 								</p>
 							</div>
@@ -183,7 +183,7 @@ export function SalaryClient() {
 											/>
 										}
 									/>
-									<p className="mt-1 text-caption text-muted-foreground">
+									<p className="mt-1 text-[11px] text-muted-foreground">
 										VT, plano de saúde, pensão...
 									</p>
 								</div>

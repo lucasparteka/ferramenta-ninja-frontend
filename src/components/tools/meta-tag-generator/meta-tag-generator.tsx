@@ -51,7 +51,7 @@ export function MetaTagGenerator() {
 										>
 											Título da página
 										</label>
-										<span className="font-mono text-caption tabular-nums text-muted-foreground">
+										<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
 											{title.length}/60
 										</span>
 									</div>
@@ -72,7 +72,7 @@ export function MetaTagGenerator() {
 										>
 											Meta descrição
 										</label>
-										<span className="font-mono text-caption tabular-nums text-muted-foreground">
+										<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
 											{description.length}/160
 										</span>
 									</div>
@@ -253,7 +253,7 @@ export function MetaTagGenerator() {
 							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Código HTML
 							</h3>
-							<pre className="overflow-auto max-h-48 rounded-md border border-border bg-muted/20 p-3 font-mono text-caption leading-relaxed text-foreground select-all whitespace-pre-wrap break-all">
+							<pre className="overflow-auto max-h-48 rounded-md border border-border bg-muted/20 p-3 font-mono text-[11px] leading-relaxed text-foreground select-all whitespace-pre-wrap break-all">
 								{html}
 							</pre>
 							<CopyButton

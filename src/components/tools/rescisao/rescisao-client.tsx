@@ -4,6 +4,10 @@ import { AlertTriangle, Download, Info, RotateCcw } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CurrencyInput } from "react-currency-mask";
 import { CopyButton } from "@/components/shared/copy-button";
+import { Chip } from "@/components/shared/layout-b/chip";
+import { ResultRow } from "@/components/shared/layout-b/result-row";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { OptionSwitch } from "@/components/shared/option-switch";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DateInput } from "@/components/ui/date-input";
@@ -16,10 +20,6 @@ import {
 	type TerminationResult,
 } from "@/lib/labor/termination";
 import type { TerminationType } from "@/lib/payroll";
-import { Chip } from "@/components/shared/layout-b/chip";
-import { ResultRow } from "@/components/shared/layout-b/result-row";
-import { SectionLabel } from "@/components/shared/layout-b/section-label";
-import { OptionSwitch } from "@/components/shared/option-switch";
 
 type TerminationTypeOption = TerminationType | "indirect-resignation";
 
@@ -288,7 +288,7 @@ export function RescisaoClient() {
 											/>
 										}
 									/>
-									<p className="mt-1 text-caption text-muted-foreground">
+									<p className="mt-1 text-[11px] text-muted-foreground">
 										Em branco usa estimativa de 8%
 									</p>
 								</div>

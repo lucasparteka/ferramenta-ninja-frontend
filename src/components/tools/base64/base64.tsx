@@ -76,7 +76,7 @@ export function Base64Tool() {
 				<>
 					<div className="flex items-center gap-4">
 						<div className="flex items-center gap-2">
-							<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Direção
 							</span>
 							<OptionSwitch
@@ -91,7 +91,7 @@ export function Base64Tool() {
 						</div>
 						<div className="h-4 w-px bg-border" />
 						<div className="flex items-center gap-2">
-							<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Variante
 							</span>
 							<OptionSwitch
@@ -106,7 +106,7 @@ export function Base64Tool() {
 						</div>
 					</div>
 					<div className="flex items-center gap-2">
-						<span className="font-mono text-caption text-muted-foreground">
+						<span className="font-mono text-[11px] text-muted-foreground">
 							UTF-8
 						</span>
 					</div>
@@ -233,7 +233,7 @@ export function Base64Tool() {
 						},
 					]}
 					right={
-						<span className="font-mono text-caption text-muted-foreground">
+						<span className="font-mono text-[11px] text-muted-foreground">
 							RFC 4648{variant === "urlsafe" ? " · URL-safe" : ""}
 						</span>
 					}

@@ -134,7 +134,7 @@ export function FixedIncomeClient() {
 										value={state.days}
 										onChange={(e) => set("days")(Number(e.target.value))}
 									/>
-									<p className="mt-1 text-caption text-muted-foreground">
+									<p className="mt-1 text-[11px] text-muted-foreground">
 										dias corridos
 									</p>
 								</div>

@@ -1,14 +1,14 @@
 "use client";
 
-import { Download, Info, RotateCcw } from "lucide-react";
 import JsBarcode from "jsbarcode";
+import { Download, Info, RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
-import { SectionLabel } from "@/components/shared/layout-b/section-label";
 
 type BarcodeFormat = "EAN13" | "UPC" | "EAN8" | "CODE128" | "CODE39" | "ITF14";
 
@@ -258,7 +258,7 @@ export function BatchBarcode() {
 								<span className="text-[10.5px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
 									Códigos gerados
 								</span>
-								<span className="font-mono text-caption text-muted-foreground">
+								<span className="font-mono text-[11px] text-muted-foreground">
 									{entries.length}x
 								</span>
 							</div>

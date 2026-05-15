@@ -724,7 +724,7 @@ export function CsvViewer() {
 						<button
 							type="button"
 							onClick={handleClear}
-							className="text-caption text-muted-foreground underline underline-offset-4 hover:text-foreground"
+							className="text-[11px] text-muted-foreground underline underline-offset-4 hover:text-foreground"
 						>
 							Limpar
 						</button>

@@ -366,7 +366,7 @@ export function LayoutA({ header, leftPanel, centerPanel, rightPanel, footer }: 
 | Preview com `style={{ backgroundColor: containerBgColor }}` | 🟢 Baixa | Cor de fundo do preview via style é aceitável (preview visual) |
 | Botão de teste com `style={{ color: ... }}` | 🟢 Baixa | Lógica de contraste via style é aceitável |
 | Presets em `hover:bg-muted` | 🟢 Baixa | OK |
-| Section header "Presets" e "Código gerado" com `text-caption font-semibold uppercase tracking-wider` | ✅ Bom | Já segue o padrão correto |
+| Section header "Presets" e "Código gerado" com `text-[11px] font-semibold uppercase tracking-wider` | ✅ Bom | Já segue o padrão correto |
 | `pre` com `bg-muted` | 🟡 Média | `bg-muted` em vez de `bg-muted/20` |
 | Código em `font-mono text-sm` | ✅ Bom | Correto |
 

@@ -654,7 +654,7 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 										<span className="text-xs text-muted-foreground">
 											Tamanho
 										</span>
-										<span className="font-mono text-caption text-muted-foreground">
+										<span className="font-mono text-[11px] text-muted-foreground">
 											{Math.round(logoSize * 100)}%
 										</span>
 									</div>

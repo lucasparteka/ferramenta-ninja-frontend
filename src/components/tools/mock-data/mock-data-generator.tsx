@@ -282,7 +282,7 @@ export function MockDataGenerator() {
 				</div>
 
 				<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-3 mt-auto">
-					<span className="text-caption text-muted-foreground">
+					<span className="text-[11px] text-muted-foreground">
 						Dados gerados no navegador
 					</span>
 					<div className="flex items-center gap-2">

@@ -135,7 +135,7 @@ export function EmojiEditor({
 						type="button"
 						onClick={() => setActiveCategory(-1)}
 						className={cn(
-							"inline-flex shrink-0 items-center gap-1 rounded-md px-2.5 py-1 text-caption font-medium transition-colors",
+							"inline-flex shrink-0 items-center gap-1 rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors",
 							activeCategory === -1
 								? "bg-accent text-accent-foreground"
 								: "bg-muted text-muted-foreground hover:bg-muted/80",
@@ -150,7 +150,7 @@ export function EmojiEditor({
 							type="button"
 							onClick={() => setActiveCategory(idx)}
 							className={cn(
-								"inline-flex shrink-0 items-center rounded-md px-2.5 py-1 text-caption font-medium transition-colors",
+								"inline-flex shrink-0 items-center rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors",
 								activeCategory === idx
 									? "bg-accent text-accent-foreground"
 									: "bg-muted text-muted-foreground hover:bg-muted/80",

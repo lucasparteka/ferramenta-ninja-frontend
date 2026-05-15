@@ -227,7 +227,7 @@ export function TemperatureConverter() {
 								</p>
 							</div>
 							<div className="border-t border-border pt-4">
-								<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground p-3">
+								<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground p-3">
 									Todas as escalas
 								</p>
 								{SCALES.map((s) => {

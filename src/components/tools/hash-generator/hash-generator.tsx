@@ -74,7 +74,7 @@ export function HashGenerator() {
 			left={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Entrada
 						</span>
 						<Button
@@ -89,9 +89,7 @@ export function HashGenerator() {
 					</div>
 
 					<div className="flex items-center justify-between border-b border-border px-3 py-2">
-						<span className="text-caption text-muted-foreground">
-							Algoritmo
-						</span>
+						<span className="text-[11px] text-muted-foreground">Algoritmo</span>
 						<select
 							value={algo}
 							onChange={(e) => {
@@ -99,7 +97,7 @@ export function HashGenerator() {
 								setHashResult("");
 								setVerifyResult(null);
 							}}
-							className="bg-transparent text-caption text-foreground focus:outline-none"
+							className="bg-transparent text-[11px] text-foreground focus:outline-none"
 						>
 							{Object.entries(ALGORITHM_LABELS).map(([value, label]) => (
 								<option key={value} value={value}>
@@ -123,7 +121,7 @@ export function HashGenerator() {
 
 					{useHmac && (
 						<div className="flex items-center gap-2 border-b border-border px-3 py-2">
-							<span className="shrink-0 text-caption text-muted-foreground">
+							<span className="shrink-0 text-[11px] text-muted-foreground">
 								Chave
 							</span>
 							<input
@@ -134,7 +132,7 @@ export function HashGenerator() {
 									setHashResult("");
 								}}
 								placeholder="Digite a chave secreta..."
-								className="flex-1 bg-transparent text-caption text-foreground placeholder:text-muted-foreground focus:outline-none"
+								className="flex-1 bg-transparent text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
 							/>
 						</div>
 					)}
@@ -154,7 +152,7 @@ export function HashGenerator() {
 					/>
 
 					<div className="flex items-center gap-3 border-t border-border px-3 py-2">
-						<span className="shrink-0 text-caption text-muted-foreground">
+						<span className="shrink-0 text-[11px] text-muted-foreground">
 							Arquivo
 						</span>
 						<input
@@ -162,7 +160,7 @@ export function HashGenerator() {
 							type="file"
 							onChange={handleFileChange}
 							disabled={!!input}
-							className="flex-1 cursor-pointer text-caption text-foreground disabled:opacity-40"
+							className="flex-1 cursor-pointer text-[11px] text-foreground disabled:opacity-40"
 						/>
 						{file && (
 							<button
@@ -172,7 +170,7 @@ export function HashGenerator() {
 									setHashResult("");
 									setVerifyResult(null);
 								}}
-								className="shrink-0 text-caption text-muted-foreground underline"
+								className="shrink-0 text-[11px] text-muted-foreground underline"
 							>
 								Remover
 							</button>
@@ -183,7 +181,7 @@ export function HashGenerator() {
 			right={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Hash
 						</span>
 						<CopyButton
@@ -205,7 +203,7 @@ export function HashGenerator() {
 
 					{hashResult && (
 						<div className="border-t border-border px-3 py-3 space-y-2">
-							<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Verificar
 							</span>
 							<div className="flex items-center gap-2">
@@ -216,7 +214,7 @@ export function HashGenerator() {
 										setVerifyResult(null);
 									}}
 									placeholder="Cole o hash para comparar..."
-									className="flex-1 rounded border border-border bg-transparent px-2 py-1 font-mono text-caption text-foreground placeholder:text-muted-foreground focus:outline-none"
+									className="flex-1 rounded border border-border bg-transparent px-2 py-1 font-mono text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
 								/>
 								<Button
 									type="button"

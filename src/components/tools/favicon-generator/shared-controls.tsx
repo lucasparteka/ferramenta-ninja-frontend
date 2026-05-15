@@ -168,7 +168,7 @@ export function ModeTabs({
 							>
 								{meta.label}
 							</span>
-							<span className="block truncate text-caption text-muted-foreground">
+							<span className="block truncate text-[11px] text-muted-foreground">
 								{meta.hint}
 							</span>
 						</span>
@@ -223,7 +223,7 @@ function BrowserTabPreview({
 						style={{ width: 17, height: 17 }}
 						className="shrink-0"
 					/>
-					<span className="text-13 truncate max-w-28">{tabLabel}</span>
+					<span className="text-[13px] truncate max-w-28">{tabLabel}</span>
 					<button
 						type="button"
 						tabIndex={-1}
@@ -241,7 +241,7 @@ function BrowserTabPreview({
 						className="size-3 shrink-0 text-muted-foreground"
 						strokeWidth={1.75}
 					/>
-					<span className="text-caption text-muted-foreground truncate">
+					<span className="text-[11px] text-muted-foreground truncate">
 						{url}
 					</span>
 				</div>
@@ -403,7 +403,7 @@ export function LivePreview({
 
 			{/* contextual preview: browser tab */}
 			<div className="space-y-3">
-				<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+				<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					No navegador
 				</h3>
 				<BrowserTabPreview tabRef={tabRef} tabLabel={tabLabel} />
@@ -563,7 +563,7 @@ export function Section({
 }) {
 	return (
 		<div className="p-4 space-y-3">
-			<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+			<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 				{title}
 			</h3>
 			{children}

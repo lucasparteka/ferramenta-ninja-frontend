@@ -289,7 +289,7 @@ export function SvgEditor({
 							}}
 							placeholder='<svg xmlns="..." viewBox="0 0 100 100">...</svg>'
 							rows={9}
-							className="w-full rounded-lg border bg-background p-2.5 pl-7 font-mono text-caption text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
+							className="w-full rounded-lg border bg-background p-2.5 pl-7 font-mono text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
 						/>
 					</div>
 				)}

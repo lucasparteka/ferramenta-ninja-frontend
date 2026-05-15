@@ -171,7 +171,7 @@ function BoletoResultContent({ result }: { result: BoletoResult }) {
 		<div>
 			<div className="flex items-center gap-3 border-b border-border bg-muted/30 px-4 py-2.5">
 				<div>
-					<p className="text-caption text-muted-foreground">Tipo de boleto</p>
+					<p className="text-[11px] text-muted-foreground">Tipo de boleto</p>
 					<p
 						className={`text-sm font-semibold ${tone === "success" ? "text-success" : "text-destructive"}`}
 					>
@@ -212,12 +212,12 @@ function BoletoResultContent({ result }: { result: BoletoResult }) {
 
 			<div className="border-t border-border">
 				<div className="border-b border-border bg-muted/55 px-4 py-[7px]">
-					<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+					<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Código de barras
 					</h3>
 				</div>
 				<div className="px-4 py-2.5">
-					<span className="font-mono text-caption text-muted-foreground break-all">
+					<span className="font-mono text-[11px] text-muted-foreground break-all">
 						{result.barcode}
 					</span>
 				</div>

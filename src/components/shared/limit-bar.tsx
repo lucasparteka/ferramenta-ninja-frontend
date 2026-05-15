@@ -35,7 +35,7 @@ export function LimitBar({ label, current, min, max, status }: LimitBarProps) {
 		<div className="space-y-1.5">
 			<div className="flex justify-between">
 				<span className="text-xs text-muted-foreground">{label}</span>
-				<span className="font-mono text-caption text-muted-foreground">
+				<span className="font-mono text-[11px] text-muted-foreground">
 					{current} / {max}
 				</span>
 			</div>
@@ -46,10 +46,10 @@ export function LimitBar({ label, current, min, max, status }: LimitBarProps) {
 				/>
 			</div>
 			<div className="flex justify-between">
-				<span className={cn("text-caption", config.textClass)}>
+				<span className={cn("text-[11px]", config.textClass)}>
 					{config.label}
 				</span>
-				<span className="text-caption text-muted-foreground">
+				<span className="text-[11px] text-muted-foreground">
 					Recomendado: {min}–{max}
 				</span>
 			</div>

@@ -406,7 +406,7 @@ function ResultChip({ computed }: { computed: ComputedResult | null }) {
 				)}
 			</span>
 			{computed?.meta && (
-				<span className="font-mono text-caption text-muted-foreground tabular-nums">
+				<span className="font-mono text-[11px] text-muted-foreground tabular-nums">
 					({computed.meta})
 				</span>
 			)}
@@ -449,7 +449,7 @@ function StepsAccordion({ computed }: { computed: ComputedResult | null }) {
 					{computed.steps.map((step, i) => (
 						<li
 							key={i}
-							className="font-mono text-caption text-muted-foreground tabular-nums"
+							className="font-mono text-[11px] text-muted-foreground tabular-nums"
 						>
 							{step}
 						</li>
@@ -467,7 +467,7 @@ function CalculatorRow({ def }: { def: CalculatorDef }) {
 	return (
 		<div className="px-4 py-3">
 			<div className="flex items-start justify-between gap-2 mb-2">
-				<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+				<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					{def.label}
 				</h3>
 			</div>

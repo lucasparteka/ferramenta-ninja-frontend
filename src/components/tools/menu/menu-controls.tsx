@@ -48,7 +48,7 @@ export function MenuControls({
 	return (
 		<div className="space-y-6">
 			<div className="space-y-3">
-				<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Template
 				</p>
 				<TemplateSelector
@@ -59,7 +59,7 @@ export function MenuControls({
 			</div>
 
 			<div className="space-y-3">
-				<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Cabeçalho
 				</p>
 				<div className="space-y-2">
@@ -85,7 +85,7 @@ export function MenuControls({
 			</div>
 
 			<div className="space-y-3">
-				<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Seções e Itens
 				</p>
 				{data.sections.map((section, si) => (
@@ -178,7 +178,7 @@ export function MenuControls({
 			</div>
 
 			<div className="space-y-3">
-				<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Estilo
 				</p>
 				<div className="grid grid-cols-2 gap-3">

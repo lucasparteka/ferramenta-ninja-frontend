@@ -55,7 +55,7 @@ O `compound-interest-client.tsx` é a **implementação de referência** oficial
       </div>
     </div>
     <div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-3 mt-auto">
-      <span className="text-caption text-muted-foreground">Info</span>
+      <span className="text-[11px] text-muted-foreground">Info</span>
       <Button variant="ghost" size="sm">Resetar</Button>
     </div>
   </div>
@@ -292,7 +292,7 @@ O `compound-interest-client.tsx` é a **implementação de referência** oficial
 - [ ] **Coluna esquerda:**
   - Seção "INFORMAÇÕES BÁSICAS" com inputs + contadores mono
   - Seção "CONFIGURAÇÃO" com select e inputs extras
-  - Contadores: `font-mono text-caption` (ex: `58 / 60`)
+  - Contadores: `font-mono text-[11px]` (ex: `58 / 60`)
 - [ ] **Coluna direita:**
   - Preview Google (simulação) — pode manter cores do Google mas com comentário explicativo
   - Preview Open Graph — pode manter cores do Facebook com comentário
@@ -385,7 +385,7 @@ export function FormFooter({ info, onReset, resetDisabled, children }: FormFoote
   return (
     <div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-3 mt-auto">
       {info ? (
-        <span className="text-caption text-muted-foreground">{info}</span>
+        <span className="text-[11px] text-muted-foreground">{info}</span>
       ) : (
         <span />
       )}

@@ -38,7 +38,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Categorias
 						</h2>
 						<ul className="space-y-2 text-xs">
@@ -56,7 +56,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Ferramentas populares
 						</h2>
 						<ul className="space-y-2 text-xs">
@@ -74,7 +74,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Recursos
 						</h2>
 						<ul className="space-y-2 text-xs">
@@ -106,7 +106,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Sobre
 						</h2>
 						<ul className="space-y-2 text-xs">

@@ -89,7 +89,7 @@ export function AgeCalculatorClient() {
 										value={reference}
 										onChange={setReference}
 									/>
-									<p className="mt-1 text-caption text-muted-foreground">
+									<p className="mt-1 text-[11px] text-muted-foreground">
 										Em branco usa a data de hoje
 									</p>
 								</div>

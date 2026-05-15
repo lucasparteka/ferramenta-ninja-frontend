@@ -172,7 +172,7 @@ function RawView({ raw }: { raw: string }) {
 	return (
 		<div className="space-y-4">
 			<div>
-				<h4 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+				<h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
 					Payload Original
 				</h4>
 				<code className="block break-all rounded-md bg-muted/40 p-3 text-xs font-mono">
@@ -180,7 +180,7 @@ function RawView({ raw }: { raw: string }) {
 				</code>
 			</div>
 			<div>
-				<h4 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+				<h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
 					CRC Info
 				</h4>
 				<div className="rounded-md bg-muted/40 p-3 text-xs font-mono space-y-1">

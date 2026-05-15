@@ -290,7 +290,7 @@ export function BusinessDaysCalculator() {
 											key={h.date}
 											className="flex items-center justify-between py-2"
 										>
-											<span className="font-mono text-caption text-muted-foreground">
+											<span className="font-mono text-[11px] text-muted-foreground">
 												{formatFullDate(new Date(h.date + "T12:00:00"))}
 											</span>
 											<span className="text-xs font-medium text-foreground text-right ml-2">

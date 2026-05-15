@@ -443,7 +443,7 @@ export function BoxShadowGenerator() {
 						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
 							CSS
 						</h3>
-						<pre className="rounded-md bg-muted border border-border p-3 font-mono text-caption overflow-x-auto whitespace-pre">
+						<pre className="rounded-md bg-muted border border-border p-3 font-mono text-[11px] overflow-x-auto whitespace-pre">
 							<code>{fullCSS}</code>
 						</pre>
 						<div className="flex justify-end">
@@ -460,7 +460,7 @@ export function BoxShadowGenerator() {
 						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
 							Tailwind
 						</h3>
-						<pre className="rounded-md bg-muted border border-border p-3 font-mono text-caption overflow-x-auto break-all whitespace-pre-wrap">
+						<pre className="rounded-md bg-muted border border-border p-3 font-mono text-[11px] overflow-x-auto break-all whitespace-pre-wrap">
 							<code>{tailwindCSS}</code>
 						</pre>
 						<div className="flex justify-end">
@@ -509,7 +509,7 @@ export function BoxShadowGenerator() {
 						</h3>
 						<div className="flex items-center justify-between py-0.5">
 							<span className="text-xs text-muted-foreground">Camadas</span>
-							<span className="font-mono text-caption tabular-nums text-foreground">
+							<span className="font-mono text-[11px] tabular-nums text-foreground">
 								{layers.length}
 							</span>
 						</div>
@@ -523,7 +523,7 @@ export function BoxShadowGenerator() {
 								</div>
 								<div className="flex items-center justify-between py-0.5">
 									<span className="text-xs text-muted-foreground">Blur</span>
-									<span className="font-mono text-caption tabular-nums text-foreground">
+									<span className="font-mono text-[11px] tabular-nums text-foreground">
 										{activeLayer.blur}px
 									</span>
 								</div>

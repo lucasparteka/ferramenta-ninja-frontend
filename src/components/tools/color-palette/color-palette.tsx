@@ -115,7 +115,7 @@ export function ColorPalette() {
 							{rgb && (
 								<div className="flex items-center justify-between py-0.5">
 									<span className="text-xs text-muted-foreground">RGB</span>
-									<span className="font-mono text-caption tabular-nums text-foreground">
+									<span className="font-mono text-[11px] tabular-nums text-foreground">
 										{rgbString(rgb)}
 									</span>
 								</div>
@@ -123,7 +123,7 @@ export function ColorPalette() {
 							{hsl && (
 								<div className="flex items-center justify-between py-0.5">
 									<span className="text-xs text-muted-foreground">HSL</span>
-									<span className="font-mono text-caption tabular-nums text-foreground">
+									<span className="font-mono text-[11px] tabular-nums text-foreground">
 										{hsl.h}°, {hsl.s}%, {hsl.l}%
 									</span>
 								</div>
@@ -131,7 +131,7 @@ export function ColorPalette() {
 							{hexToOklch(baseColor) && (
 								<div className="flex items-center justify-between py-0.5">
 									<span className="text-xs text-muted-foreground">oklch</span>
-									<span className="font-mono text-caption tabular-nums text-foreground">
+									<span className="font-mono text-[11px] tabular-nums text-foreground">
 										{(() => {
 											const o = hexToOklch(baseColor)!;
 											return `${o.l} ${o.c} ${o.h}`;
@@ -151,16 +151,16 @@ export function ColorPalette() {
 							style={{ backgroundColor: baseColor }}
 						/>
 						<div className="flex flex-wrap gap-x-4 gap-y-1">
-							<span className="font-mono text-caption tabular-nums text-muted-foreground">
+							<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
 								{baseColor.toUpperCase()}
 							</span>
 							{hsl && (
-								<span className="font-mono text-caption tabular-nums text-muted-foreground">
+								<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
 									HSL {hsl.h}° {hsl.s}% {hsl.l}%
 								</span>
 							)}
 							{rgb && (
-								<span className="font-mono text-caption tabular-nums text-muted-foreground">
+								<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
 									RGB {rgbString(rgb)}
 								</span>
 							)}
@@ -172,7 +172,7 @@ export function ColorPalette() {
 							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Paleta gerada
 							</h3>
-							<span className="font-mono text-caption tabular-nums text-muted-foreground">
+							<span className="font-mono text-[11px] tabular-nums text-muted-foreground">
 								{palette.length} tons
 							</span>
 						</div>
@@ -190,7 +190,7 @@ export function ColorPalette() {
 											style={{ backgroundColor: hex }}
 										/>
 										<div className="flex-1 min-w-0 p-2 space-y-1.5">
-											<p className="font-mono text-caption tabular-nums font-medium text-foreground">
+											<p className="font-mono text-[11px] tabular-nums font-medium text-foreground">
 												{hexUpper}
 											</p>
 											<div className="flex flex-wrap gap-1 sm:flex-col">
@@ -254,7 +254,7 @@ export function ColorPalette() {
 							<span className="text-xs text-muted-foreground">
 								Tons gerados
 							</span>
-							<span className="font-mono text-caption tabular-nums text-foreground">
+							<span className="font-mono text-[11px] tabular-nums text-foreground">
 								{palette.length}
 							</span>
 						</div>

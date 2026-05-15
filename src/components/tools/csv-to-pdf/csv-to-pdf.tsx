@@ -433,7 +433,7 @@ export function CsvToPdf() {
 									</table>
 								</div>
 								{parsed.rows.length > PREVIEW_ROWS && (
-									<div className="px-4.5 py-2 text-center text-caption text-muted-foreground border-t border-border">
+									<div className="px-4.5 py-2 text-center text-[11px] text-muted-foreground border-t border-border">
 										{parsed.rows.length - PREVIEW_ROWS} linhas ocultas ·{" "}
 										{parsed.rows.length} total
 									</div>

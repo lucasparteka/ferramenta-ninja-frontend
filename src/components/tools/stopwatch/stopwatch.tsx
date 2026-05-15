@@ -102,7 +102,7 @@ export function Stopwatch() {
 
 			{laps.length > 0 && (
 				<div className="space-y-4">
-					<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Voltas
 					</p>
 					<div className="max-h-64 overflow-auto rounded-md border border-border">

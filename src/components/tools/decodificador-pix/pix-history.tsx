@@ -59,7 +59,7 @@ export function PixHistory({
 	return (
 		<div>
 			<div className="flex items-center justify-between border-b border-border bg-muted/40 px-4 py-2">
-				<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+				<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					Histórico
 				</h3>
 				<AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>

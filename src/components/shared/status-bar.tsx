@@ -18,7 +18,7 @@ export function StatusBar({ items, right, className }: StatusBarProps) {
 	return (
 		<div
 			className={cn(
-				"flex items-center flex-wrap justify-between border-t border-border bg-muted/40 px-4 py-2 text-caption mt-auto",
+				"flex items-center flex-wrap justify-between border-t border-border bg-muted/40 px-4 py-2 text-[11px] mt-auto",
 				className,
 			)}
 		>

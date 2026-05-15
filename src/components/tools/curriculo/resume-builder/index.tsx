@@ -56,7 +56,7 @@ function SectionCard({
 		<div className="space-y-5">
 			<div className="flex items-center gap-2">
 				{Icon && <Icon size={18} className="text-primary shrink-0" />}
-				<h2 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+				<h2 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 					{title}
 				</h2>
 			</div>

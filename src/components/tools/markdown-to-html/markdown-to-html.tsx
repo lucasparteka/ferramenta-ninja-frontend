@@ -104,7 +104,7 @@ export function MarkdownToHtml() {
 				left={
 					<>
 						<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-							<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Markdown
 							</span>
 							<Button
@@ -130,7 +130,7 @@ export function MarkdownToHtml() {
 				right={
 					<>
 						<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-							<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+							<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 								Preview HTML
 							</span>
 							<CopyButton
@@ -175,7 +175,7 @@ export function MarkdownToHtml() {
 									size="sm"
 									onClick={handleDownload}
 									disabled={!html}
-									className="h-6 gap-1 px-2 text-caption"
+									className="h-6 gap-1 px-2 text-[11px]"
 								>
 									<Download className="h-3 w-3" />
 									Baixar HTML

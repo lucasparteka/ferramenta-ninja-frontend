@@ -263,7 +263,7 @@ export function KeepAwake() {
 
 			<div className="mx-auto max-w-md space-y-6 mt-6">
 				<div className="space-y-2 flex items-center flex-col">
-					<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 						Modo
 					</p>
 					<div className="flex gap-2">
@@ -286,7 +286,7 @@ export function KeepAwake() {
 
 				{mode === "timed" && (
 					<div className="space-y-3 flex flex-col items-center">
-						<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
 							Tempo
 						</p>
 						<div className="flex flex-wrap gap-2">

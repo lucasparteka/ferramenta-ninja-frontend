@@ -60,8 +60,8 @@ const CELL_CLASS: Record<number, string> = {
 	4: "rounded-md bg-card px-3 py-2 text-center font-mono text-sm text-foreground border border-border",
 	5: "rounded-md bg-card px-1.5 py-1 text-center font-mono text-xs text-foreground",
 	6: "rounded-md bg-card px-1.5 py-1 text-center font-mono text-xs text-foreground",
-	8: "rounded-md bg-card px-1 py-0.5 text-center font-mono text-[11px] text-foreground",
-	10: "rounded-md bg-card px-1 py-0.5 text-center font-mono text-[11px] text-foreground",
+	8: "rounded-md bg-card px-1 py-0.5 text-center font-mono text-caption text-foreground",
+	10: "rounded-md bg-card px-1 py-0.5 text-center font-mono text-caption text-foreground",
 };
 
 export function NumberGenerator() {
@@ -196,7 +196,7 @@ export function NumberGenerator() {
 							</div>
 
 							{uniqueWarning && (
-								<p className="rounded-md bg-warning-surface px-3 py-2 text-[11px] text-warning">
+								<p className="rounded-md bg-warning-surface px-3 py-2 text-caption text-warning">
 									O intervalo contém {rangeSize} números únicos disponíveis. A
 									quantidade será ajustada automaticamente.
 								</p>

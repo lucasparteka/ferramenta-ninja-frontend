@@ -63,12 +63,11 @@ export function QRReader() {
 		if (file) processFile(file);
 	}
 
-
 	return (
 		<div className="flex flex-col gap-6 sm:flex-row">
 			<div className="sm:flex-1">
 				<div className="space-y-1">
-					<span className="flex w-full text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+					<span className="flex w-full text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 						Imagem com QR Code
 					</span>
 					{/** biome-ignore lint/a11y/noStaticElementInteractions: ... */}
@@ -132,7 +131,7 @@ export function QRReader() {
 
 			<div className="space-y-1 sm:flex-1">
 				<div className="flex items-center justify-between">
-					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+					<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 						Conteúdo decodificado
 					</span>
 					{result && (

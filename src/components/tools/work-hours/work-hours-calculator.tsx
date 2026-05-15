@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
+import type { DayEntry } from "@/lib/work-hours";
 import {
 	calculateDay,
 	calculateWeek,
-	formatMinutes,
 	formatDecimal,
+	formatMinutes,
 } from "@/lib/work-hours";
-import type { DayEntry } from "@/lib/work-hours";
 
 const DAY_LABELS = [
 	"Segunda-feira",
@@ -173,7 +173,7 @@ function DayRow({
 				<div className="space-y-1">
 					<Label
 						htmlFor={`${uid}-break`}
-						className="block text-[11px] uppercase tracking-wider text-muted-foreground"
+						className="block text-caption uppercase tracking-wider text-muted-foreground"
 					>
 						Intervalo
 					</Label>
@@ -199,7 +199,7 @@ function DayRow({
 								<p className="text-sm font-semibold text-foreground">
 									{result.formatted}
 								</p>
-								<p className="text-[11px] text-muted-foreground">
+								<p className="text-caption text-muted-foreground">
 									{formatDecimal(result.totalMinutes)}h
 								</p>
 							</>
@@ -228,7 +228,7 @@ function TimeInput({
 		<div className="space-y-1">
 			<Label
 				htmlFor={id}
-				className="block text-[11px] uppercase tracking-wider text-muted-foreground"
+				className="block text-caption uppercase tracking-wider text-muted-foreground"
 			>
 				{label}
 			</Label>

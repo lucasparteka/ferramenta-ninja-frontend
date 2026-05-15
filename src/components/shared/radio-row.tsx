@@ -24,7 +24,7 @@ export function RadioRow({ label, badge, active, onClick }: RadioRowProps) {
 			{badge && (
 				<span
 					className={cn(
-						"font-mono text-[11px] tabular-nums",
+						"font-mono text-caption tabular-nums",
 						active ? "text-primary/70" : "text-muted-foreground",
 					)}
 				>

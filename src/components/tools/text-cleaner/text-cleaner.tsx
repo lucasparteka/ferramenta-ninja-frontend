@@ -243,7 +243,7 @@ export function TextCleaner({ defaultOptions }: Props) {
 						<Button
 							variant="ghost"
 							size="sm"
-							className="h-6 px-2 text-[11px]"
+							className="h-6 px-2 text-caption"
 							onClick={() => setShowDiff(!showDiff)}
 						>
 							<ChevronDown

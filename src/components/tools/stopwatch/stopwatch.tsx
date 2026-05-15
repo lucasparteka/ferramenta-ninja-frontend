@@ -68,41 +68,43 @@ export function Stopwatch() {
 	return (
 		<div className="mx-auto max-w-2xl space-y-6">
 			<ResultBox tone="primary" className="text-center">
-					<p className="text-4xl font-semibold font-mono tabular-nums text-foreground sm:text-5xl">
-						{formatStopwatch(elapsedMs)}
-					</p>
-				</ResultBox>
+				<p className="text-4xl font-semibold font-mono tabular-nums text-foreground sm:text-5xl">
+					{formatStopwatch(elapsedMs)}
+				</p>
+			</ResultBox>
 
-				<div className="flex flex-wrap justify-center gap-3">
-					{!isRunning ? (
-						<Button onClick={handleStart} size="lg">
-							<Play className="mr-2 h-5 w-5" />
-							Iniciar
-						</Button>
-					) : (
-						<Button onClick={handlePause} size="lg" variant="secondary">
-							<Pause className="mr-2 h-5 w-5" />
-							Pausar
-						</Button>
-					)}
-					<Button
-						onClick={handleLap}
-						disabled={!isRunning}
-						size="lg"
-						variant="outline"
-					>
-						<Flag className="mr-2 h-5 w-5" />
-						Volta
+			<div className="flex flex-wrap justify-center gap-3">
+				{!isRunning ? (
+					<Button onClick={handleStart} size="lg">
+						<Play className="mr-2 h-5 w-5" />
+						Iniciar
 					</Button>
-					<Button onClick={handleReset} size="lg" variant="ghost">
-						<RotateCcw className="mr-2 h-5 w-5" />
-						Reiniciar
+				) : (
+					<Button onClick={handlePause} size="lg" variant="secondary">
+						<Pause className="mr-2 h-5 w-5" />
+						Pausar
 					</Button>
-				</div>
+				)}
+				<Button
+					onClick={handleLap}
+					disabled={!isRunning}
+					size="lg"
+					variant="outline"
+				>
+					<Flag className="mr-2 h-5 w-5" />
+					Volta
+				</Button>
+				<Button onClick={handleReset} size="lg" variant="ghost">
+					<RotateCcw className="mr-2 h-5 w-5" />
+					Reiniciar
+				</Button>
+			</div>
 
 			{laps.length > 0 && (
 				<div className="space-y-4">
-					<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Voltas</p>
+					<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
+						Voltas
+					</p>
 					<div className="max-h-64 overflow-auto rounded-md border border-border">
 						<table className="w-full text-sm">
 							<thead className="bg-muted">

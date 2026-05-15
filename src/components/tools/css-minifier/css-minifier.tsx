@@ -43,7 +43,7 @@ export function CssMinifier() {
 			left={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Entrada
 						</span>
 						<div className="flex items-center gap-1">
@@ -52,7 +52,7 @@ export function CssMinifier() {
 									key={t.value}
 									type="button"
 									onClick={() => handleTypeChange(t.value)}
-									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+									className={`rounded px-2 py-0.5 text-caption transition-colors ${
 										type === t.value
 											? "bg-foreground/10 font-medium text-foreground"
 											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
@@ -85,7 +85,7 @@ export function CssMinifier() {
 			right={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Minificado
 						</span>
 						<CopyButton

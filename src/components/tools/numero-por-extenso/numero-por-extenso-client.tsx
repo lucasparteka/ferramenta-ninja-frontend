@@ -45,7 +45,7 @@ export function NumeroPorExtensoClient() {
 		<LayoutC
 			toolbar={
 				<div className="flex items-center gap-4">
-					<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+					<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 						Modo
 					</span>
 					<OptionSwitch
@@ -102,7 +102,7 @@ export function NumeroPorExtensoClient() {
 							/>
 						</div>
 						<div className="flex flex-wrap gap-1.5">
-							<span className="text-[11px] text-muted-foreground self-center mr-1">
+							<span className="text-caption text-muted-foreground self-center mr-1">
 								Exemplos:
 							</span>
 							{EXAMPLES.map((ex) => (
@@ -110,7 +110,7 @@ export function NumeroPorExtensoClient() {
 									key={ex.label}
 									type="button"
 									onClick={() => setValue(ex.value)}
-									className="rounded border border-border bg-card px-2 py-0.5 text-[11px] text-foreground hover:bg-muted transition-colors"
+									className="rounded border border-border bg-card px-2 py-0.5 text-caption text-foreground hover:bg-muted transition-colors"
 								>
 									{ex.label}
 								</button>

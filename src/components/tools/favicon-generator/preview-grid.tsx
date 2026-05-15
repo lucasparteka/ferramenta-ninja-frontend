@@ -132,11 +132,11 @@ export function PreviewGrid({
 	return (
 		<div className="space-y-3">
 			<div className="flex items-center justify-between">
-				<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+				<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 					Tamanhos exportados
 				</h3>
 				{status === "loading" && (
-					<span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">
+					<span className="inline-flex items-center gap-1.5 text-caption text-muted-foreground">
 						<Loader2 className="h-3 w-3 animate-spin" />
 						Gerando...
 					</span>

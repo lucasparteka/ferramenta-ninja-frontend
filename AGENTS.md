@@ -51,7 +51,7 @@ All component visual decisions (tokens, spacing, radii, shadows) follow
 - No shadows on cards, panels, inputs, buttons. Only popover/dialog/toast.
 - Border radius max `rounded-lg` (8px). Default for inputs/buttons:
   `rounded-md` (6px).
-- Section headers: `text-[11px] font-semibold uppercase tracking-wider
+- Section headers: `text-caption font-semibold uppercase tracking-wider
   text-muted-foreground`.
 - Numbers/dimensions/IDs: `font-mono`.
 - One `<Button variant="default">` per screen.

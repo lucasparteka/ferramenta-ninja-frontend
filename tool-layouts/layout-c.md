@@ -44,7 +44,7 @@ import { LayoutC } from "@/components/shared/layout-c";
   toolbar={
     <>
       <div className="flex items-center gap-4">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+        <span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
           Direção
         </span>
         <OptionSwitch
@@ -54,7 +54,7 @@ import { LayoutC } from "@/components/shared/layout-c";
           size="sm"
         />
       </div>
-      <span className="font-mono text-[11px] text-muted-foreground">UTF-8</span>
+      <span className="font-mono text-caption text-muted-foreground">UTF-8</span>
     </>
   }
   left={
@@ -105,7 +105,7 @@ import { LayoutC } from "@/components/shared/layout-c";
         { label: "Saída", value: `${outputLen} chars${ratio ? ` · +${ratio}%` : ""}`, mono: true },
         { label: "cs", value: checksum || "—", mono: true },
       ]}
-      right={<span className="font-mono text-[11px] text-muted-foreground">RFC 4648</span>}
+      right={<span className="font-mono text-caption text-muted-foreground">RFC 4648</span>}
     />
   }
 />
@@ -158,7 +158,7 @@ import { LayoutC } from "@/components/shared/layout-c";
 | Botão "Minificar" com submit explícito | 🟡 Média | Deveria ser síncrono (colar → formatar automaticamente) |
 | Toggle 2/4 espaços em botões `variant="default"` | 🟡 Média | Pode haver conflito com "um default por tela" |
 | Resultado com `border border-input bg-card` | 🟢 Baixa | Deveria usar `bg-muted/20` |
-| Label "Cole seu JSON aqui" em `text-sm font-medium` | 🟢 Baixa | Deveria ser ALL CAPS `text-[11px]` no header do painel |
+| Label "Cole seu JSON aqui" em `text-sm font-medium` | 🟢 Baixa | Deveria ser ALL CAPS `text-caption` no header do painel |
 | `dangerouslySetInnerHTML` para syntax highlight | 🟢 Baixa | Aceitável para esse caso, mas sem escaping manual de `"` — verificar se `highlightJSON` escapa corretamente |
 
 #### Estrutura proposta
@@ -235,7 +235,7 @@ import { LayoutC } from "@/components/shared/layout-c";
 
 - [ ] Refatorar para `<LayoutC>`
 - [ ] **Toolbar superior:** botões de transformação em `<OptionSwitch>` ou grupo de botões pequenos
-  - Cada botão: `text-[11px]`, `rounded px-2 py-0.5`, estado ativo com `bg-foreground/10`
+  - Cada botão: `text-caption`, `rounded px-2 py-0.5`, estado ativo com `bg-foreground/10`
   - Transformação acontece ao clicar (não precisa de "submit")
 - [ ] **Painel esquerdo:** textarea com `font-mono`, placeholder, header "ENTRADA" + limpar
 - [ ] **Painel direito:** `<pre>` ou `div` com `bg-muted/20`, `select-all`, header "RESULTADO" + copiar
@@ -488,9 +488,9 @@ footer={
   <div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-2">
     <span className="inline-flex items-center gap-1.5">
       <span className={`h-1.5 w-1.5 rounded-full ${result.output ? "bg-green-600" : "bg-foreground/30"}`} />
-      <span className="text-[11px] text-muted-foreground">{result.output ? "Convertido" : "Aguardando"}</span>
+      <span className="text-caption text-muted-foreground">{result.output ? "Convertido" : "Aguardando"}</span>
     </span>
-    <span className="font-mono text-[11px] text-muted-foreground">{inputLen} chars → {outputLen} chars</span>
+    <span className="font-mono text-caption text-muted-foreground">{inputLen} chars → {outputLen} chars</span>
   </div>
 }
 
@@ -580,11 +580,11 @@ export function ConversionFooter({ status, statusLabel, metrics }: ConversionFoo
 
 ### Estrutura
 - [ ] Container unificado: `rounded-lg border border-border overflow-hidden grid md:grid-cols-2` (sem `gap-*`)
-- [ ] Header por coluna: label ALL CAPS `text-[11px] font-semibold uppercase tracking-wider` + ações (limpar/copiar/seletor)
+- [ ] Header por coluna: label ALL CAPS `text-caption font-semibold uppercase tracking-wider` + ações (limpar/copiar/seletor)
 - [ ] Toolbar superior (quando aplicável): opções de direção, modo, formato
 - [ ] Swap button central para conversores bidirecionais
 - [ ] Entrada: `bg-transparent`, saída: `bg-muted/20 cursor-default select-all`
-- [ ] Rodapé com `<StatusBar>` — metadados em `font-mono text-[11px]`
+- [ ] Rodapé com `<StatusBar>` — metadados em `font-mono text-caption`
 - [ ] Fonte mono em todo conteúdo técnico (código, base64, SQL, números)
 
 ### Tokens

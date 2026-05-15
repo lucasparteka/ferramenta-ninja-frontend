@@ -126,7 +126,7 @@ export function TextCipher() {
 			left={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Entrada
 						</span>
 						<div className="flex items-center gap-2">
@@ -149,7 +149,9 @@ export function TextCipher() {
 					</div>
 
 					<div className="flex items-center justify-between border-b border-border px-3 py-2">
-						<span className="text-[11px] text-muted-foreground">Algoritmo</span>
+						<span className="text-caption text-muted-foreground">
+							Algoritmo
+						</span>
 						<OptionSwitch
 							options={ALGO_OPTIONS}
 							value={algorithm}
@@ -160,7 +162,7 @@ export function TextCipher() {
 
 					{algorithm === "aes-gcm" && (
 						<div className="flex items-center gap-2 border-b border-border px-3 py-2">
-							<span className="shrink-0 text-[11px] text-muted-foreground">
+							<span className="shrink-0 text-caption text-muted-foreground">
 								Senha
 							</span>
 							<input
@@ -168,7 +170,7 @@ export function TextCipher() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								placeholder="Digite a senha..."
-								className="flex-1 bg-transparent text-[11px] text-foreground placeholder:text-muted-foreground focus:outline-none"
+								className="flex-1 bg-transparent text-caption text-foreground placeholder:text-muted-foreground focus:outline-none"
 							/>
 						</div>
 					)}
@@ -185,7 +187,7 @@ export function TextCipher() {
 			right={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Saída
 						</span>
 						<CopyButton

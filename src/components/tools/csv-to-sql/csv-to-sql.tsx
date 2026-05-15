@@ -1,21 +1,19 @@
 "use client";
 
-import { Download, Trash, Upload, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { Download, FileUp, Trash2 } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutC } from "@/components/shared/layout-c";
+import { PaneHeader } from "@/components/shared/pane-header";
+import { StatusBar } from "@/components/shared/status-bar";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { NativeSelect } from "@/components/ui/select-native";
+import { cn } from "@/lib/utils";
 
 type Dialect = "mysql" | "postgresql" | "sqlite" | "oracle" | "sqlserver";
-type ToolState = "idle" | "converting" | "done" | "error";
-
-type ParsedCsv = {
-	headers: string[];
-	rows: string[][];
-};
 
 const DIALECTS: { id: Dialect; label: string }[] = [
 	{ id: "mysql", label: "MySQL" },
@@ -61,7 +59,7 @@ function parseRow(line: string, delimiter: string): string[] {
 	return fields;
 }
 
-function parseCsv(text: string): ParsedCsv {
+function parseCsv(text: string) {
 	const normalized = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
 	if (!normalized) throw new Error("O conteúdo está vazio.");
 
@@ -170,92 +168,24 @@ function formatFileSize(bytes: number): string {
 	return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-function OptionCheckbox({
-	id,
-	label,
-	checked,
-	onChange,
-}: {
-	id: string;
-	label: string;
-	checked: boolean;
-	onChange: (v: boolean) => void;
-}) {
-	return (
-		<div className="flex items-center gap-2">
-			<Checkbox
-				id={id}
-				checked={checked}
-				onCheckedChange={(v) => onChange(v === true)}
-			/>
-			<Label htmlFor={id} className="cursor-pointer">
-				{label}
-			</Label>
-		</div>
-	);
-}
-
 export function CsvToSql() {
-	const [file, setFile] = useState<File | null>(null);
 	const [pasteText, setPasteText] = useState("");
 	const [isDragging, setIsDragging] = useState(false);
-	const [state, setState] = useState<ToolState>("idle");
-	const [errorMsg, setErrorMsg] = useState("");
-	const [sql, setSql] = useState("");
-	const [rowCount, setRowCount] = useState(0);
-
 	const [tableName, setTableName] = useState("my_table");
 	const [dialect, setDialect] = useState<Dialect>("mysql");
 	const [includeCreateTable, setIncludeCreateTable] = useState(true);
 	const [treatEmptyAsNull, setTreatEmptyAsNull] = useState(false);
-	const [parsedData, setParsedData] = useState<ParsedCsv | null>(null);
 
-	const inputRef = useRef<HTMLInputElement>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
-	function regenerateSql(
-		data: ParsedCsv,
-		newDialect: Dialect,
-		newTableName: string,
-		newIncludeCreateTable: boolean,
-		newTreatEmptyAsNull: boolean,
-	) {
-		const result = generateSql(
-			newTableName,
-			data.headers,
-			data.rows,
-			newDialect,
-			newIncludeCreateTable,
-			newTreatEmptyAsNull,
-		);
-		setSql(result);
-	}
+	const hasContent = pasteText.trim() !== "";
 
-	function processFile(selected: File) {
-		const hasValidExtension = selected.name.toLowerCase().endsWith(".csv");
-		const validTypes = ["text/csv", "application/vnd.ms-excel", "text/plain"];
-		if (!validTypes.includes(selected.type) && !hasValidExtension) {
-			setState("error");
-			setErrorMsg("O arquivo selecionado não é um CSV válido.");
-			return;
-		}
-		setFile(selected);
-		setState("idle");
-		setErrorMsg("");
-		setSql("");
-		setPasteText("");
-	}
-
-	function handleDrop(e: React.DragEvent<HTMLDivElement>) {
-		e.preventDefault();
-		setIsDragging(false);
-		const dropped = e.dataTransfer.files?.[0];
-		if (dropped) processFile(dropped);
-	}
-
-	function runConvert(text: string) {
+	const result = useMemo(() => {
+		if (!hasContent) return { sql: "", error: null, rows: 0, timeMs: 0 };
+		const start = performance.now();
 		try {
-			const parsed = parseCsv(text);
-			const result = generateSql(
+			const parsed = parseCsv(pasteText);
+			const generated = generateSql(
 				tableName,
 				parsed.headers,
 				parsed.rows,
@@ -263,55 +193,59 @@ export function CsvToSql() {
 				includeCreateTable,
 				treatEmptyAsNull,
 			);
-			setSql(result);
-			setRowCount(parsed.rows.length);
-			setParsedData(parsed);
-			setState("done");
+			return {
+				sql: generated,
+				error: null,
+				rows: parsed.rows.length,
+				timeMs: performance.now() - start,
+			};
 		} catch (err) {
-			setState("error");
-			setErrorMsg(
-				err instanceof Error ? err.message : "Erro ao processar o CSV.",
-			);
+			return {
+				sql: "",
+				error: err instanceof Error ? err.message : "Erro ao processar o CSV.",
+				rows: 0,
+				timeMs: 0,
+			};
 		}
+	}, [
+		pasteText,
+		dialect,
+		tableName,
+		includeCreateTable,
+		treatEmptyAsNull,
+		hasContent,
+	]);
+
+	function handleFile(selected: File) {
+		const hasValidExtension = selected.name.toLowerCase().endsWith(".csv");
+		const validTypes = ["text/csv", "application/vnd.ms-excel", "text/plain"];
+		if (!validTypes.includes(selected.type) && !hasValidExtension) {
+			setPasteText("");
+			return;
+		}
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			const text = e.target?.result as string;
+			setPasteText(text);
+		};
+		reader.readAsText(selected, "UTF-8");
 	}
 
-	function handleConvert() {
-		setState("converting");
-		setErrorMsg("");
-		setSql("");
+	function handleDrop(e: React.DragEvent) {
+		e.preventDefault();
+		setIsDragging(false);
+		const dropped = e.dataTransfer.files?.[0];
+		if (dropped) handleFile(dropped);
+	}
 
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				try {
-					runConvert(e.target?.result as string);
-				} catch {
-					setState("error");
-					setErrorMsg("Não foi possível ler o arquivo.");
-				}
-			};
-			reader.onerror = () => {
-				setState("error");
-				setErrorMsg("Erro ao ler o arquivo.");
-			};
-			reader.readAsText(file, "UTF-8");
-			return;
-		}
-
-		if (pasteText.trim()) {
-			runConvert(pasteText);
-			return;
-		}
-
-		setState("error");
-		setErrorMsg(
-			"Selecione um arquivo ou cole o conteúdo CSV antes de continuar.",
-		);
+	function handleClear() {
+		setPasteText("");
+		if (fileInputRef.current) fileInputRef.current.value = "";
 	}
 
 	function handleDownload() {
 		const safeTableName = tableName.trim() || "my_table";
-		const blob = new Blob([sql], { type: "text/plain" });
+		const blob = new Blob([result.sql], { type: "text/plain" });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement("a");
 		a.href = url;
@@ -320,254 +254,242 @@ export function CsvToSql() {
 		URL.revokeObjectURL(url);
 	}
 
-	function handleClear() {
-		setFile(null);
-		setPasteText("");
-		setState("idle");
-		setErrorMsg("");
-		setSql("");
-		setRowCount(0);
-		setParsedData(null);
-		if (inputRef.current) inputRef.current.value = "";
-	}
-
-	const hasContent = file !== null || pasteText.trim() !== "";
-	const isBusy = state === "converting";
+	const sqlBytes = result.sql ? new TextEncoder().encode(result.sql).length : 0;
+	const dialectLabel = DIALECTS.find((d) => d.id === dialect)?.label ?? "";
 
 	return (
-		<div className="space-y-4">
-			<div className="grid gap-4 sm:grid-cols-2">
-				<div className="space-y-1.5">
-					<Label htmlFor="table-name">Nome da tabela</Label>
-					<Input
-						id="table-name"
-						type="text"
-						value={tableName}
-						onChange={(e) => setTableName(e.target.value)}
-						placeholder="my_table"
-						onBlur={() => {
-							if (state === "done" && parsedData) {
-								regenerateSql(
-									parsedData,
-									dialect,
-									tableName,
-									includeCreateTable,
-									treatEmptyAsNull,
-								);
-							}
-						}}
-					/>
-				</div>
-
-				<div className="space-y-1.5">
-					<p className="text-sm font-medium text-foreground">Dialeto SQL</p>
-					<div className="flex flex-wrap gap-1.5">
-						{DIALECTS.map((d) => (
-							<button
-								key={d.id}
-								type="button"
-								onClick={() => {
-									setDialect(d.id);
-									if (state === "done" && parsedData) {
-										regenerateSql(
-											parsedData,
-											d.id,
-											tableName,
-											includeCreateTable,
-											treatEmptyAsNull,
-										);
-									}
-								}}
-								className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-									dialect === d.id
-										? "bg-primary text-primary-foreground"
-										: "border border-border bg-card text-foreground hover:border-primary hover:text-primary"
-								}`}
+		<LayoutC
+			toolbar={
+				<div className="flex flex-col gap-3 w-full">
+					<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="dialect-select"
+								className="text-xs font-medium text-foreground"
 							>
-								{d.label}
-							</button>
-						))}
+								Dialeto SQL
+							</Label>
+							<NativeSelect
+								id="dialect-select"
+								value={dialect}
+								onChange={(e) => setDialect(e.target.value as Dialect)}
+							>
+								{DIALECTS.map((d) => (
+									<option key={d.id} value={d.id}>
+										{d.label}
+									</option>
+								))}
+							</NativeSelect>
+						</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="table-name"
+								className="text-xs font-medium text-foreground"
+							>
+								Nome da tabela
+							</Label>
+							<Input
+								id="table-name"
+								type="text"
+								value={tableName}
+								onChange={(e) => setTableName(e.target.value)}
+								placeholder="my_table"
+								className="font-mono text-sm"
+							/>
+						</div>
+					</div>
+					<div className="flex flex-wrap gap-4">
+						<div className="flex items-center gap-2">
+							<Checkbox
+								id="include-create"
+								checked={includeCreateTable}
+								onCheckedChange={(v) => setIncludeCreateTable(v === true)}
+							/>
+							<Label
+								htmlFor="include-create"
+								className="text-xs cursor-pointer"
+							>
+								Incluir CREATE TABLE
+							</Label>
+						</div>
+						<div className="flex items-center gap-2">
+							<Checkbox
+								id="empty-as-null"
+								checked={treatEmptyAsNull}
+								onCheckedChange={(v) => setTreatEmptyAsNull(v === true)}
+							/>
+							<Label htmlFor="empty-as-null" className="text-xs cursor-pointer">
+								Tratar campos vazios como NULL
+							</Label>
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<div className="flex flex-wrap gap-4">
-				<OptionCheckbox
-					id="include-create"
-					label="Incluir CREATE TABLE"
-					checked={includeCreateTable}
-					onChange={(v) => {
-						setIncludeCreateTable(v);
-						if (state === "done" && parsedData) {
-							regenerateSql(
-								parsedData,
-								dialect,
-								tableName,
-								v,
-								treatEmptyAsNull,
-							);
+			}
+			left={
+				<>
+					<PaneHeader
+						title="Entrada · CSV"
+						actions={
+							<>
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									onClick={() => fileInputRef.current?.click()}
+									aria-label="Carregar arquivo"
+								>
+									<FileUp className="h-3.5 w-3.5" />
+								</Button>
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									onClick={handleClear}
+									disabled={!hasContent}
+									aria-label="Limpar"
+								>
+									<Trash2 className="h-3.5 w-3.5" />
+								</Button>
+							</>
 						}
-					}}
-				/>
-				<OptionCheckbox
-					id="empty-as-null"
-					label="Tratar campos vazios como NULL"
-					checked={treatEmptyAsNull}
-					onChange={(v) => {
-						setTreatEmptyAsNull(v);
-						if (state === "done" && parsedData) {
-							regenerateSql(
-								parsedData,
-								dialect,
-								tableName,
-								includeCreateTable,
-								v,
-							);
-						}
-					}}
-				/>
-			</div>
-
-			<div
-				role="button"
-				tabIndex={0}
-				aria-label="Área de upload de CSV. Clique ou arraste um arquivo."
-				onClick={() => inputRef.current?.click()}
-				onKeyDown={(e) => {
-					if (e.key === "Enter" || e.key === " ") inputRef.current?.click();
-				}}
-				onDragOver={(e) => {
-					e.preventDefault();
-					setIsDragging(true);
-				}}
-				onDragLeave={() => setIsDragging(false)}
-				onDrop={handleDrop}
-				className={`flex min-h-36 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-					isDragging
-						? "border-primary bg-primary/5"
-						: "border-border bg-secondary hover:border-primary hover:bg-primary/5"
-				}`}
-			>
-				{file ? (
-					<div className="flex items-center gap-3 px-4">
-						<div className="text-left">
-							<p className="text-sm font-medium text-foreground">{file.name}</p>
-							<p className="text-xs text-muted-foreground">
-								{formatFileSize(file.size)}
-							</p>
-						</div>
+					/>
+					{!hasContent ? (
 						<button
 							type="button"
-							aria-label="Remover arquivo"
-							onClick={(e) => {
-								e.stopPropagation();
-								handleClear();
+							aria-label="Área de upload de CSV"
+							onClick={() => fileInputRef.current?.click()}
+							onDragOver={(e) => {
+								e.preventDefault();
+								setIsDragging(true);
 							}}
-							className="rounded p-1 text-muted-foreground hover:bg-destructive/10 hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+							onDragLeave={() => setIsDragging(false)}
+							onDrop={handleDrop}
+							className={cn(
+								"flex-1 min-h-70 flex flex-col items-center justify-center gap-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 cursor-pointer",
+								isDragging
+									? "border-primary bg-primary/5"
+									: "border-border bg-muted/40",
+							)}
 						>
-							<X className="h-4 w-4" />
+							<FileUp
+								className="h-5 w-5 text-muted-foreground"
+								strokeWidth={1.75}
+							/>
+							<p className="text-sm text-foreground">
+								Cole o CSV ou arraste um arquivo
+							</p>
+							<p className="text-xs text-muted-foreground">
+								.csv · detecção automática de delimitador
+							</p>
 						</button>
-					</div>
-				) : (
-					<>
-						<Upload className="h-8 w-8 text-muted-foreground" />
-						<p className="text-sm font-medium text-foreground">
-							Arraste um arquivo CSV ou clique para selecionar
-						</p>
-						<p className="text-xs text-muted-foreground">
-							Suporta arquivos .csv
-						</p>
-					</>
-				)}
-			</div>
-
-			<Input
-				ref={inputRef}
-				type="file"
-				accept=".csv,text/csv"
-				onChange={(e) => {
-					const f = e.target.files?.[0];
-					if (f) processFile(f);
-				}}
-				className="hidden"
-				aria-hidden="true"
-			/>
-
-			<Textarea
-				value={pasteText}
-				onChange={(e) => {
-					setPasteText(e.target.value);
-					if (file) {
-						setFile(null);
-						if (inputRef.current) inputRef.current.value = "";
-					}
-					setState("idle");
-					setErrorMsg("");
-					setSql("");
-				}}
-				placeholder="Ou cole o CSV aqui..."
-				rows={5}
-				aria-label="Cole o conteúdo CSV aqui"
-				className="resize-y font-mono"
-			/>
-
-			{state === "error" && (
-				<p aria-live="polite" className="text-sm text-destructive">
-					{errorMsg}
-				</p>
-			)}
-
-			{state !== "done" && (
-				<Button
-					onClick={handleConvert}
-					disabled={!hasContent || isBusy}
-					className="w-full"
-				>
-					{isBusy ? "Convertendo..." : "Converter para SQL"}
-				</Button>
-			)}
-
-			{state === "done" && sql && (
-				<div className="space-y-3">
-					<div className="flex flex-wrap items-center justify-between gap-3">
-						<p className="text-sm text-muted-foreground">
-							<span className="font-medium text-foreground">{rowCount}</span>{" "}
-							{rowCount === 1 ? "linha convertida" : "linhas convertidas"} →{" "}
-							<span className="font-medium text-foreground">
-								{DIALECTS.find((d) => d.id === dialect)?.label}
-							</span>
-						</p>
-						<div className="flex gap-2">
-							<CopyButton text={sql} label="Copiar SQL" />
-							<Button
-								variant="outline"
-								onClick={handleDownload}
-								className="gap-2"
-							>
-								<Download className="h-4 w-4" />
-								Baixar .sql
-							</Button>
-						</div>
-					</div>
-
-					<Textarea
-						readOnly
-						value={sql}
-						aria-label="SQL gerado"
-						rows={16}
-						className="resize-y font-mono text-xs"
+					) : (
+						<textarea
+							value={pasteText}
+							onChange={(e) => setPasteText(e.target.value)}
+							placeholder="Cole o CSV aqui..."
+							className="flex-1 min-h-70 resize-none bg-transparent p-3 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+							spellCheck={false}
+						/>
+					)}
+					<Input
+						ref={fileInputRef}
+						type="file"
+						accept=".csv,text/csv"
+						onChange={(e) => {
+							const f = e.target.files?.[0];
+							if (f) handleFile(f);
+						}}
+						className="hidden"
+						aria-hidden="true"
 					/>
-
-					<Button
-						variant="secondary"
-						onClick={handleClear}
-						className="w-full sm:w-auto"
-					>
-						<Trash />
-						Limpar e começar novamente
-					</Button>
-				</div>
-			)}
-		</div>
+				</>
+			}
+			right={
+				<>
+					<PaneHeader
+						title={
+							<>
+								Saída · SQL
+								{result.sql && (
+									<span className="rounded border border-success/40 bg-success/10 px-1.5 py-px font-mono text-[10px] text-success">
+										Pronto
+									</span>
+								)}
+							</>
+						}
+						actions={
+							<>
+								<CopyButton
+									text={result.sql}
+									disabled={!result.sql}
+									variant="ghost"
+									size="icon-sm"
+									iconOnly
+								/>
+								<Button
+									variant="ghost"
+									size="icon-sm"
+									onClick={handleDownload}
+									disabled={!result.sql}
+									aria-label="Baixar .sql"
+								>
+									<Download className="h-3.5 w-3.5" />
+								</Button>
+							</>
+						}
+					/>
+					<div className="flex-1 min-h-70 bg-muted/20 p-3">
+						{result.error ? (
+							<p className="text-xs text-destructive">{result.error}</p>
+						) : result.sql ? (
+							<pre className="font-mono text-sm text-foreground whitespace-pre-wrap break-all select-all">
+								{result.sql}
+							</pre>
+						) : (
+							<p className="text-sm text-muted-foreground">
+								{hasContent ? "Processando..." : "O SQL gerado aparecerá aqui"}
+							</p>
+						)}
+					</div>
+				</>
+			}
+			footer={
+				<StatusBar
+					items={[
+						{
+							label: "",
+							value: result.error
+								? "Erro"
+								: result.sql
+									? `Pronto em ${result.timeMs.toFixed(1)}ms`
+									: hasContent
+										? "Processando..."
+										: "Aguardando",
+							mono: false,
+							variant: result.error
+								? "danger"
+								: result.sql
+									? "success"
+									: "default",
+						},
+						{
+							label: "Entrada",
+							value: hasContent ? `${pasteText.length} chars` : "0",
+							mono: true,
+						},
+						{
+							label: "Saída",
+							value: result.rows
+								? `${result.rows} linhas · ${formatFileSize(sqlBytes)}`
+								: "0",
+							mono: true,
+						},
+					]}
+					right={
+						<span className="font-mono text-caption text-muted-foreground">
+							{dialectLabel}
+						</span>
+					}
+				/>
+			}
+		/>
 	);
 }

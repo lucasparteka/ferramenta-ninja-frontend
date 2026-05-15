@@ -172,7 +172,7 @@ export function LoanCalculatorClient() {
 														/>
 													</FormControl>
 													<FormMessage />
-													<FormDescription className="text-[11px]">
+													<FormDescription className="text-caption">
 														ao ano, efetiva
 													</FormDescription>
 												</FormItem>
@@ -196,7 +196,7 @@ export function LoanCalculatorClient() {
 														/>
 													</FormControl>
 													<FormMessage />
-													<FormDescription className="text-[11px]">
+													<FormDescription className="text-caption">
 														máx. 600 meses
 													</FormDescription>
 												</FormItem>
@@ -204,10 +204,10 @@ export function LoanCalculatorClient() {
 										/>
 									</div>
 									<div className="mt-3 flex items-center justify-between border-t border-border pt-2.5">
-										<span className="text-[11px] text-muted-foreground">
+										<span className="text-caption text-muted-foreground">
 											Taxa mensal equivalente
 										</span>
-										<span className="font-mono text-[11px] tabular-nums text-foreground">
+										<span className="font-mono text-caption tabular-nums text-foreground">
 											{monthlyRate != null
 												? `${monthlyRate.toLocaleString("pt-BR", {
 														minimumFractionDigits: 3,
@@ -235,14 +235,14 @@ export function LoanCalculatorClient() {
 									<SectionLabel>Sobre os sistemas</SectionLabel>
 									<div className="mt-3 flex flex-col gap-2">
 										<div className="flex items-start gap-2.5 rounded-md border border-border bg-muted p-3">
-											<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-border bg-card font-mono text-[11px] font-bold text-muted-foreground">
+											<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-border bg-card font-mono text-caption font-bold text-muted-foreground">
 												P
 											</div>
 											<div>
 												<p className="text-[12px] font-medium">
 													Price — parcela fixa
 												</p>
-												<p className="mt-0.5 text-[11px] leading-relaxed text-muted-foreground">
+												<p className="mt-0.5 text-caption leading-relaxed text-muted-foreground">
 													PMT constante calculada pela fórmula PMT = P × i / (1
 													− (1 + i)⁻ⁿ). Amortização cresce e juros decrescem.
 													Mais previsível, custo total maior.
@@ -250,14 +250,14 @@ export function LoanCalculatorClient() {
 											</div>
 										</div>
 										<div className="flex items-start gap-2.5 rounded-md border border-border bg-muted p-3">
-											<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-border bg-card font-mono text-[11px] font-bold text-muted-foreground">
+											<div className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-border bg-card font-mono text-caption font-bold text-muted-foreground">
 												S
 											</div>
 											<div>
 												<p className="text-[12px] font-medium">
 													SAC — amortização constante
 												</p>
-												<p className="mt-0.5 text-[11px] leading-relaxed text-muted-foreground">
+												<p className="mt-0.5 text-caption leading-relaxed text-muted-foreground">
 													Amortização fixa, juros decrescentes — parcela diminui
 													a cada mês. Parcela inicial maior, mas paga menos
 													juros no total do contrato.
@@ -340,7 +340,7 @@ export function LoanCalculatorClient() {
 							)}
 						</div>
 						{active && (
-							<p className="mt-1 text-[11px] text-muted-foreground">
+							<p className="mt-1 text-caption text-muted-foreground">
 								{view === "sac"
 									? "primeira parcela — decresce mensalmente"
 									: "por mês (parcela constante)"}
@@ -348,10 +348,10 @@ export function LoanCalculatorClient() {
 						)}
 						{view === "sac" && lastPaymentVal != null && (
 							<div className="mt-2 flex items-center gap-2 rounded bg-muted px-2.5 py-1.5">
-								<span className="text-[11px] text-muted-foreground">
+								<span className="text-caption text-muted-foreground">
 									Última parcela
 								</span>
-								<span className="ml-auto font-mono text-[11px] tabular-nums">
+								<span className="ml-auto font-mono text-caption tabular-nums">
 									{brl(lastPaymentVal)}
 								</span>
 							</div>

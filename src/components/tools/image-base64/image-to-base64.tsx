@@ -220,7 +220,7 @@ export function ImageToBase64() {
 									<button
 										type="button"
 										onClick={() => setShowPure(!showPure)}
-										className="flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px] text-muted-foreground hover:text-foreground transition-colors"
+										className="flex items-center gap-1 rounded px-1.5 py-0.5 text-caption text-muted-foreground hover:text-foreground transition-colors"
 									>
 										<ArrowRightLeft className="h-3 w-3" />
 										{showPure ? "Data URI" : "Puro"}
@@ -248,7 +248,7 @@ export function ImageToBase64() {
 									/>
 								</div>
 								<div className="space-y-1">
-									<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+									<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 										Informações
 									</p>
 									<div className="space-y-1">
@@ -279,7 +279,7 @@ export function ImageToBase64() {
 									</div>
 								</div>
 								<div className="space-y-1">
-									<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+									<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 										Base64
 									</p>
 									<pre className="max-h-36 overflow-y-auto rounded border border-border bg-card p-2 font-mono text-[10px] text-foreground break-all select-all whitespace-pre-wrap">

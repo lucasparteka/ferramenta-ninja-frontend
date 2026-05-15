@@ -10,7 +10,12 @@ type PaneHeaderProps = {
 	className?: string;
 };
 
-export function PaneHeader({ title, actions, badge, className }: PaneHeaderProps) {
+export function PaneHeader({
+	title,
+	actions,
+	badge,
+	className,
+}: PaneHeaderProps) {
 	return (
 		<div
 			className={cn(
@@ -18,13 +23,11 @@ export function PaneHeader({ title, actions, badge, className }: PaneHeaderProps
 				className,
 			)}
 		>
-			<span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+			<span className="inline-flex items-center gap-2 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 				{title}
 				{badge}
 			</span>
-			{actions && (
-				<div className="flex items-center gap-1.5">{actions}</div>
-			)}
+			{actions && <div className="flex items-center gap-1.5">{actions}</div>}
 		</div>
 	);
 }

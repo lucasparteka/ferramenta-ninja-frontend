@@ -49,7 +49,7 @@ export function URLEncoder() {
 			left={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Entrada
 						</span>
 						<div className="flex items-center gap-1">
@@ -58,7 +58,7 @@ export function URLEncoder() {
 									key={d}
 									type="button"
 									onClick={() => setDirection(d)}
-									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+									className={`rounded px-2 py-0.5 text-caption transition-colors ${
 										direction === d
 											? "bg-foreground/10 font-medium text-foreground"
 											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
@@ -90,7 +90,7 @@ export function URLEncoder() {
 
 					{direction === "encode" && (
 						<div className="flex items-center justify-between border-b border-border px-3 py-2">
-							<span className="text-[11px] text-muted-foreground">Modo</span>
+							<span className="text-caption text-muted-foreground">Modo</span>
 							<div className="flex items-center gap-1">
 								{(
 									[
@@ -102,7 +102,7 @@ export function URLEncoder() {
 										key={opt.value}
 										type="button"
 										onClick={() => setEncMode(opt.value)}
-										className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+										className={`rounded px-2 py-0.5 text-caption transition-colors ${
 											encMode === opt.value
 												? "bg-foreground/10 font-medium text-foreground"
 												: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
@@ -131,7 +131,7 @@ export function URLEncoder() {
 			right={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Saída
 						</span>
 						<CopyButton

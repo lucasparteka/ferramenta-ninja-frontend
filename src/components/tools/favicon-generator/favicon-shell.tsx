@@ -51,7 +51,7 @@ export function FaviconShell({
 					<div className="divide-y divide-border">
 						{right}
 						<div className="p-4">
-							<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+							<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground mb-3">
 								Ações
 							</h3>
 							<Button

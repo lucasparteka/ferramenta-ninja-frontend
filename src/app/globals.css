@@ -265,8 +265,8 @@
 	--text-caption: 11px;
 	--text-caption--line-height: 14px;
 
-	--text-body-sm: 13px;
-	--text-body-sm--line-height: 18px;
+	--text-13: 13px;
+	--text-13--line-height: 18px;
 }
 
 @layer base {

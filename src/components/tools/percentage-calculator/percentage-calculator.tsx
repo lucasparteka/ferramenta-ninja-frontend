@@ -406,7 +406,7 @@ function ResultChip({ computed }: { computed: ComputedResult | null }) {
 				)}
 			</span>
 			{computed?.meta && (
-				<span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+				<span className="font-mono text-caption text-muted-foreground tabular-nums">
 					({computed.meta})
 				</span>
 			)}
@@ -449,7 +449,7 @@ function StepsAccordion({ computed }: { computed: ComputedResult | null }) {
 					{computed.steps.map((step, i) => (
 						<li
 							key={i}
-							className="font-mono text-[11px] text-muted-foreground tabular-nums"
+							className="font-mono text-caption text-muted-foreground tabular-nums"
 						>
 							{step}
 						</li>

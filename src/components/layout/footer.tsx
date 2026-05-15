@@ -25,8 +25,12 @@ export function Footer() {
 				<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
 					<div>
 						<Link href="/" className="flex items-center">
-							<span className="text-lg font-semibold text-primary">ferramenta</span>
-							<span className="text-lg font-semibold text-foreground">.ninja</span>
+							<span className="text-lg font-semibold text-primary">
+								ferramenta
+							</span>
+							<span className="text-lg font-semibold text-foreground">
+								.ninja
+							</span>
 						</Link>
 						<p className="mt-3 text-sm text-muted-foreground">
 							Ferramentas online gratuitas para todos.
@@ -34,7 +38,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<h2 className="mb-3 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Categorias
 						</h2>
 						<ul className="space-y-2 text-xs">
@@ -52,7 +56,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<h2 className="mb-3 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Ferramentas populares
 						</h2>
 						<ul className="space-y-2 text-xs">
@@ -70,7 +74,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<h2 className="mb-3 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Recursos
 						</h2>
 						<ul className="space-y-2 text-xs">
@@ -102,7 +106,7 @@ export function Footer() {
 					</div>
 
 					<div>
-						<h2 className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<h2 className="mb-3 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Sobre
 						</h2>
 						<ul className="space-y-2 text-xs">

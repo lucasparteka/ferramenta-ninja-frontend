@@ -288,7 +288,7 @@ export function RescisaoClient() {
 											/>
 										}
 									/>
-									<p className="mt-1 text-[11px] text-muted-foreground">
+									<p className="mt-1 text-caption text-muted-foreground">
 										Em branco usa estimativa de 8%
 									</p>
 								</div>

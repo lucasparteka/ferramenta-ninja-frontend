@@ -75,7 +75,7 @@ export function MorseConverter() {
 			left={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Entrada
 						</span>
 						<div className="flex items-center gap-2">
@@ -110,7 +110,7 @@ export function MorseConverter() {
 					/>
 
 					<div className="border-t border-border px-3 py-2">
-						<p className="text-[11px] text-muted-foreground">
+						<p className="text-caption text-muted-foreground">
 							<span className="font-medium text-foreground">Formato:</span>{" "}
 							letras separadas por espaço · palavras separadas por{" "}
 							<code className="font-mono text-foreground">/</code>
@@ -121,7 +121,7 @@ export function MorseConverter() {
 			right={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Saída
 						</span>
 						<CopyButton

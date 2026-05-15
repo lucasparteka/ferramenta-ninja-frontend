@@ -162,7 +162,7 @@ export function CompoundInterestClient() {
 										value={state.months}
 										onChange={(e) => set("months")(Number(e.target.value))}
 									/>
-									<p className="mt-1 text-[11px] text-muted-foreground">
+									<p className="mt-1 text-caption text-muted-foreground">
 										meses (máx. 50 anos)
 									</p>
 								</div>

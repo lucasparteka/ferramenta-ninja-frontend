@@ -185,7 +185,7 @@ O usuário precisa...
 - [ ] Empty state: `border-dashed bg-muted/30`
 
 ### Tipografia
-- [ ] Section headers: `text-[11px] font-semibold uppercase tracking-wider text-muted-foreground`
+- [ ] Section headers: `text-caption font-semibold uppercase tracking-wider text-muted-foreground`
 - [ ] Labels de campo: `text-xs font-medium text-muted-foreground`
 - [ ] Valores técnicos (números, IDs, códigos, HEX): `font-mono text-xs`
 - [ ] Título h1: `text-2xl font-semibold tracking-tight`

@@ -145,7 +145,7 @@ export function VacationClient() {
 										value={state.daysToTake}
 										onChange={(e) => set("daysToTake")(Number(e.target.value))}
 									/>
-									<p className="mt-1 text-[11px] text-muted-foreground">
+									<p className="mt-1 text-caption text-muted-foreground">
 										Mínimo 5 dias (CLT art. 134 §1º)
 									</p>
 								</div>
@@ -229,7 +229,7 @@ export function VacationClient() {
 								<span className="text-[12.5px] leading-snug text-foreground">
 									Vender abono pecuniário (art. 143 CLT)
 								</span>
-								<p className="mt-0.5 text-[11px] text-muted-foreground">
+								<p className="mt-0.5 text-caption text-muted-foreground">
 									Converte 1/3 dos dias em dinheiro (isento de tributos)
 								</p>
 							</div>

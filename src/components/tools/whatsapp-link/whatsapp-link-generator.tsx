@@ -111,7 +111,7 @@ export function WhatsAppLinkGenerator() {
 			}
 			sidebar={
 				<div className="flex flex-col gap-3 p-4">
-					<h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+					<h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 						QR Code
 					</h3>
 					<Button

@@ -87,9 +87,17 @@ export function TypingTest() {
 	const currentChar = text[input.length] ?? "";
 
 	const badgeLabel =
-		status === "idle" ? "PRONTO" : status === "running" ? "DIGITANDO" : "CONCLUÍDO";
+		status === "idle"
+			? "PRONTO"
+			: status === "running"
+				? "DIGITANDO"
+				: "CONCLUÍDO";
 	const statusLabel =
-		status === "idle" ? "Aguardando" : status === "running" ? "Digitando" : "Concluído";
+		status === "idle"
+			? "Aguardando"
+			: status === "running"
+				? "Digitando"
+				: "Concluído";
 
 	const stats = [
 		{ label: "WPM", value: String(wpm) },
@@ -110,7 +118,9 @@ export function TypingTest() {
 			header={
 				<>
 					<div className="flex items-center gap-3">
-						<h1 className="text-sm font-semibold tracking-tight">Teste de Digitação</h1>
+						<h1 className="text-sm font-semibold tracking-tight">
+							Teste de Digitação
+						</h1>
 						<span className="rounded border border-border px-1.5 py-px font-mono text-[10px] text-muted-foreground">
 							{badgeLabel}
 						</span>
@@ -143,9 +153,16 @@ export function TypingTest() {
 							Estatísticas
 						</h3>
 						{stats.map((stat) => (
-							<div key={stat.label} className="flex items-center justify-between py-0.5">
-								<span className="text-xs text-muted-foreground">{stat.label}</span>
-								<span className="font-mono text-xs font-medium tabular-nums">{stat.value}</span>
+							<div
+								key={stat.label}
+								className="flex items-center justify-between py-0.5"
+							>
+								<span className="text-xs text-muted-foreground">
+									{stat.label}
+								</span>
+								<span className="font-mono text-xs font-medium tabular-nums">
+									{stat.value}
+								</span>
 							</div>
 						))}
 					</div>
@@ -182,17 +199,23 @@ export function TypingTest() {
 								Resultado
 							</h3>
 							<div className="rounded border border-border bg-card p-3 text-center">
-								<p className="font-mono text-2xl font-semibold tabular-nums">{wpm}</p>
-								<p className="text-[11px] text-muted-foreground">WPM</p>
+								<p className="font-mono text-2xl font-semibold tabular-nums">
+									{wpm}
+								</p>
+								<p className="text-caption text-muted-foreground">WPM</p>
 							</div>
 							<div className="flex gap-2">
 								<div className="flex-1 rounded border border-border bg-card p-2 text-center">
-									<p className="font-mono text-sm font-medium tabular-nums">{accuracy}%</p>
-									<p className="text-[11px] text-muted-foreground">Precisão</p>
+									<p className="font-mono text-sm font-medium tabular-nums">
+										{accuracy}%
+									</p>
+									<p className="text-caption text-muted-foreground">Precisão</p>
 								</div>
 								<div className="flex-1 rounded border border-border bg-card p-2 text-center">
-									<p className="font-mono text-sm font-medium tabular-nums">{cpm}</p>
-									<p className="text-[11px] text-muted-foreground">CPM</p>
+									<p className="font-mono text-sm font-medium tabular-nums">
+										{cpm}
+									</p>
+									<p className="text-caption text-muted-foreground">CPM</p>
 								</div>
 							</div>
 						</div>
@@ -210,7 +233,8 @@ export function TypingTest() {
 				{currentChar && (
 					<span
 						className={
-							input.length > 0 && input[input.length - 1] !== text[input.length - 1]
+							input.length > 0 &&
+							input[input.length - 1] !== text[input.length - 1]
 								? "bg-destructive/20 text-destructive underline"
 								: "bg-primary/10 text-primary underline"
 						}
@@ -240,9 +264,11 @@ export function TypingTest() {
 					<span
 						className={`h-1.5 w-1.5 rounded-full ${status === "running" ? "bg-green-600" : "bg-foreground/30"}`}
 					/>
-					<span className="text-[11px] text-muted-foreground">{statusLabel}</span>
+					<span className="text-caption text-muted-foreground">
+						{statusLabel}
+					</span>
 				</span>
-				<span className="font-mono text-[11px] text-muted-foreground">
+				<span className="font-mono text-caption text-muted-foreground">
 					{input.length} / {text.length} chars
 				</span>
 			</div>

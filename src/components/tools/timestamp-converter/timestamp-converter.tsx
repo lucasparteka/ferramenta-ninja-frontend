@@ -84,7 +84,7 @@ export function TimestampConverter() {
 			left={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							Entrada
 						</span>
 						<div className="flex items-center gap-1">
@@ -93,7 +93,7 @@ export function TimestampConverter() {
 									key={d}
 									type="button"
 									onClick={() => setDirection(d)}
-									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+									className={`rounded px-2 py-0.5 text-caption transition-colors ${
 										direction === d
 											? "bg-foreground/10 font-medium text-foreground"
 											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
@@ -124,14 +124,14 @@ export function TimestampConverter() {
 					</div>
 
 					<div className="flex items-center justify-between border-b border-border px-3 py-2">
-						<span className="text-[11px] text-muted-foreground">Unidade</span>
+						<span className="text-caption text-muted-foreground">Unidade</span>
 						<div className="flex items-center gap-1">
 							{(["seconds", "milliseconds"] as const).map((u) => (
 								<button
 									key={u}
 									type="button"
 									onClick={() => setUnit(u)}
-									className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+									className={`rounded px-2 py-0.5 text-caption transition-colors ${
 										unit === u
 											? "bg-foreground/10 font-medium text-foreground"
 											: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground"
@@ -146,7 +146,7 @@ export function TimestampConverter() {
 					{direction === "ts-to-date" ? (
 						<div className="flex flex-col gap-4 p-4">
 							<div className="flex flex-col gap-1.5">
-								<span className="text-[11px] text-muted-foreground">
+								<span className="text-caption text-muted-foreground">
 									Timestamp Unix ({unit === "seconds" ? "s" : "ms"})
 								</span>
 								<input
@@ -162,7 +162,7 @@ export function TimestampConverter() {
 								variant="outline"
 								size="sm"
 								onClick={handleNow}
-								className="w-fit text-[11px]"
+								className="w-fit text-caption"
 							>
 								Agora
 							</Button>
@@ -170,7 +170,7 @@ export function TimestampConverter() {
 					) : (
 						<div className="flex flex-col gap-4 p-4">
 							<div className="flex flex-col gap-1.5">
-								<span className="text-[11px] text-muted-foreground">Data</span>
+								<span className="text-caption text-muted-foreground">Data</span>
 								<input
 									type="date"
 									value={dateInput}
@@ -179,7 +179,7 @@ export function TimestampConverter() {
 								/>
 							</div>
 							<div className="flex flex-col gap-1.5">
-								<span className="text-[11px] text-muted-foreground">Hora</span>
+								<span className="text-caption text-muted-foreground">Hora</span>
 								<input
 									type="time"
 									value={timeInput}
@@ -191,7 +191,7 @@ export function TimestampConverter() {
 								variant="outline"
 								size="sm"
 								onClick={handleNow}
-								className="w-fit text-[11px]"
+								className="w-fit text-caption"
 							>
 								Agora
 							</Button>
@@ -202,7 +202,7 @@ export function TimestampConverter() {
 			right={
 				<>
 					<div className="flex items-center justify-between border-b border-border bg-muted/40 px-3 py-2">
-						<span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+						<span className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 							{direction === "ts-to-date" ? "Data e Hora" : "Timestamp Unix"}
 						</span>
 						<CopyButton

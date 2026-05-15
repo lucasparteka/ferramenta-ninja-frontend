@@ -131,7 +131,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 
 			{/* Individual */}
 			<div>
-				<h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+				<h3 className="mb-2 text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 					Downloads individuais
 				</h3>
 				<div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -205,7 +205,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 						/>
 					</div>
 					<div className="min-w-0">
-						<pre className="overflow-x-auto rounded-lg bg-muted p-3 text-[11px] text-muted-foreground">
+						<pre className="overflow-x-auto rounded-lg bg-muted p-3 text-caption text-muted-foreground">
 							<code>{htmlTags}</code>
 						</pre>
 					</div>
@@ -249,7 +249,7 @@ export function ExportPanel({ files, icoBlob }: ExportPanelProps) {
 							className="mt-3 overflow-hidden"
 						>
 							<div className="min-w-0">
-								<pre className="overflow-x-auto rounded-lg bg-muted p-3 text-[11px] text-muted-foreground">
+								<pre className="overflow-x-auto rounded-lg bg-muted p-3 text-caption text-muted-foreground">
 									<code>{manifestJson}</code>
 								</pre>
 							</div>

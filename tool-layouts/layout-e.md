@@ -109,7 +109,7 @@ export function ResultSheet({ sections }: ResultSheetProps) {
       {sections.map((section) => (
         <div key={section.title} className="rounded-md border border-border bg-card">
           <div className="border-b border-border px-4 py-2">
-            <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <h3 className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
               {section.title}
             </h3>
           </div>
@@ -182,7 +182,7 @@ export function ResultSheet({ sections }: ResultSheetProps) {
 - Input: `font-mono` — identificadores são dados técnicos
 - Grid de resultado: `grid grid-cols-1 gap-4 md:grid-cols-2`
 - Cada seção: card com `border border-border bg-card`
-- Header de seção: `border-b border-border px-4 py-2` + `text-[11px] font-semibold uppercase tracking-wider text-muted-foreground`
+- Header de seção: `border-b border-border px-4 py-2` + `text-caption font-semibold uppercase tracking-wider text-muted-foreground`
 - Rows: `divide-y divide-border` com `flex items-start justify-between px-4 py-2.5`
 - Label: `text-xs text-muted-foreground min-w-[100px]`
 - Valor: `text-xs text-right` + `font-mono` quando aplicável
@@ -411,7 +411,7 @@ As ferramentas restantes (Consulta CEP, Tabela FIPE, Validador de Boleto, Valida
 - ❌ Input de identificador sem `font-mono`
 - ❌ Label em `text-sm font-medium text-foreground` — usar `text-xs font-medium text-muted-foreground`
 - ❌ Resultado empilhado em coluna única no desktop — usar `md:grid-cols-2`
-- ❌ Section headers sem ALL CAPS — sempre `text-[11px] font-semibold uppercase tracking-wider`
+- ❌ Section headers sem ALL CAPS — sempre `text-caption font-semibold uppercase tracking-wider`
 - ❌ Label e valor sem separação clara — usar `min-w-[100px]` no label
 - ❌ Badge com `rounded-full` — max `rounded-md`
 - ❌ Botão de ação sem ícone
@@ -445,7 +445,7 @@ As ferramentas restantes (Consulta CEP, Tabela FIPE, Validador de Boleto, Valida
 - [ ] Badge alerta: `bg-warning/10 text-warning rounded-md`
 
 ### Tipografia
-- [ ] Section headers: `text-[11px] font-semibold uppercase tracking-wider text-muted-foreground`
+- [ ] Section headers: `text-caption font-semibold uppercase tracking-wider text-muted-foreground`
 - [ ] Labels de campo: `text-xs text-muted-foreground min-w-[100px]`
 - [ ] Valores técnicos (CNPJ, CEP, código PIX, CRC): `font-mono text-xs`
 - [ ] Valores gerais: `text-xs text-right`

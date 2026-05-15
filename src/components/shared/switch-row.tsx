@@ -47,7 +47,7 @@ export function SwitchRow({
 				{(hint || feedback) && (
 					<div
 						className={cn(
-							"text-[11px] mt-0.5",
+							"text-caption mt-0.5",
 							feedback && feedbackVariant === "success"
 								? "text-success font-mono tabular-nums"
 								: "text-muted-foreground",

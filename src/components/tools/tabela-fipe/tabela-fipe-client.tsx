@@ -268,7 +268,7 @@ function PriceResult({ price }: { price: FipePrice }) {
 	return (
 		<div>
 			<div className="border-b border-border px-5 py-5 sm:px-6">
-				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+				<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground">
 					{price.marca}
 				</p>
 				<p className="mt-0.5 text-sm font-medium text-foreground leading-snug">
@@ -277,7 +277,7 @@ function PriceResult({ price }: { price: FipePrice }) {
 			</div>
 
 			<div className="border-b border-border bg-muted/30 px-5 py-6 sm:px-6">
-				<p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+				<p className="text-caption font-semibold uppercase tracking-wider text-muted-foreground mb-1">
 					Preço FIPE
 				</p>
 				<p className="font-mono text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">

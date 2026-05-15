@@ -1,7 +1,10 @@
 "use client";
 
+import { Download, Info, RotateCcw } from "lucide-react";
 import JsBarcode from "jsbarcode";
 import { useEffect, useRef, useState } from "react";
+import { LayoutB } from "@/components/shared/layout-b";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -22,6 +25,7 @@ const FORMATS: { value: BarcodeFormat; label: string }[] = [
 const MAX_ITEMS = 100;
 
 type BarcodeEntry = {
+	id: string;
 	value: string;
 	format: BarcodeFormat;
 	displayValue: boolean;
@@ -73,13 +77,19 @@ function BarcodeItem({ value, format, displayValue }: BarcodeEntry) {
 				<svg ref={svgRef} className="max-w-full" />
 			)}
 			<p
-				className="max-w-full truncate text-center text-xs text-muted-foreground"
+				className="max-w-full truncate text-center text-xs text-muted-foreground font-mono"
 				title={value}
 			>
 				{value}
 			</p>
 			{!error && (
-				<Button variant="outline" onClick={handleDownload}>
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={handleDownload}
+					aria-label={`Baixar código de barras ${value}`}
+				>
+					<Download className="mr-1.5 h-3 w-3" />
 					Baixar SVG
 				</Button>
 			)}
@@ -100,80 +110,139 @@ export function BatchBarcode() {
 			.filter((l) => l.length > 0)
 			.slice(0, MAX_ITEMS);
 
-		setEntries(lines.map((value) => ({ value, format, displayValue })));
+		setEntries(
+			lines.map((value) => ({
+				id: crypto.randomUUID(),
+				value,
+				format,
+				displayValue,
+			})),
+		);
+	}
+
+	function handleReset() {
+		setRawInput("");
+		setEntries([]);
 	}
 
 	const lineCount = rawInput.split("\n").filter((l) => l.trim()).length;
 	const truncated = lineCount > MAX_ITEMS;
 
-	return (
-		<div className="flex flex-col gap-6 sm:flex-row">
-			<div className="space-y-4 sm:w-[30%] sm:shrink-0">
-				<div className="space-y-1">
-					<Label htmlFor="batch-format">Formato</Label>
-					<NativeSelect
-						id="batch-format"
-						value={format}
-						onChange={(e) => setFormat(e.target.value as BarcodeFormat)}
-					>
-						{FORMATS.map((f) => (
-							<option key={f.value} value={f.value}>
-								{f.label}
-							</option>
-						))}
-					</NativeSelect>
-				</div>
+	const form = (
+		<div className="bg-card flex flex-col h-full">
+			<div className="divide-y divide-border">
+				<div className="p-4">
+					<SectionLabel>Configuração</SectionLabel>
+					<div className="space-y-3">
+						<div className="space-y-1.5">
+							<Label htmlFor="batch-format" className="text-xs font-medium">
+								Formato
+							</Label>
+							<NativeSelect
+								id="batch-format"
+								value={format}
+								onChange={(e) => setFormat(e.target.value as BarcodeFormat)}
+							>
+								{FORMATS.map((f) => (
+									<option key={f.value} value={f.value}>
+										{f.label}
+									</option>
+								))}
+							</NativeSelect>
+						</div>
 
-				<div className="space-y-2">
-					<span className="text-sm font-medium text-foreground">
-						Exibir texto
-					</span>
-					<div className="flex items-center gap-2">
-						<Checkbox
-							id="display-value"
-							checked={displayValue}
-							onCheckedChange={(checked) => setDisplayValue(checked === true)}
-						/>
-						<Label htmlFor="display-value" className="cursor-pointer">
-							Ativar
-						</Label>
+						<div className="flex items-center gap-2">
+							<Checkbox
+								id="display-value"
+								checked={displayValue}
+								onCheckedChange={(checked) => setDisplayValue(checked === true)}
+							/>
+							<Label htmlFor="display-value" className="cursor-pointer text-sm">
+								Exibir valor abaixo do código
+							</Label>
+						</div>
 					</div>
 				</div>
 
-				<div className="space-y-1">
-					<Label htmlFor="batch-values">Valores (um por linha)</Label>
-					<Textarea
-						id="batch-values"
-						rows={12}
-						placeholder={"7891234560012\n7891234560029\n7891234560036"}
-						value={rawInput}
-						onChange={(e) => setRawInput(e.target.value)}
-						className="resize-none"
-					/>
-					<p className="text-xs text-muted-foreground">
-						{lineCount} {lineCount === 1 ? "item" : "itens"}
-						{truncated && ` — apenas os primeiros ${MAX_ITEMS} serão gerados`}
-					</p>
+				<div className="p-4">
+					<SectionLabel>Valores</SectionLabel>
+					<div className="space-y-3">
+						<div className="space-y-1.5">
+							<Label htmlFor="batch-values" className="text-xs font-medium">
+								Valores (um por linha)
+							</Label>
+							<Textarea
+								id="batch-values"
+								rows={10}
+								placeholder="7891234560012\n7891234560029\n7891234560036"
+								value={rawInput}
+								onChange={(e) => setRawInput(e.target.value)}
+								className="resize-none font-mono text-sm"
+							/>
+						</div>
+						<p className="text-xs text-muted-foreground">
+							{lineCount} {lineCount === 1 ? "item" : "itens"}
+							{truncated && ` — apenas os primeiros ${MAX_ITEMS} serão gerados`}
+						</p>
+					</div>
 				</div>
-
-				<Button onClick={handleGenerate} disabled={!rawInput.trim()}>
-					Gerar todos
-				</Button>
 			</div>
 
-			<div className="flex-1">
-				{entries.length > 0 ? (
-					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-						{entries.map((entry, i) => (
-							<BarcodeItem key={`${entry.value}`} {...entry} />
-						))}
-					</div>
-				) : (
-					<div className="flex h-48 w-full items-center justify-center rounded-lg border border-dashed border-border bg-secondary text-sm text-muted-foreground">
-						Os códigos de barras aparecerão aqui
-					</div>
-				)}
+			<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-3 mt-auto">
+				<div className="flex items-center gap-1.5 text-caption text-muted-foreground">
+					<Info size={12} />
+					Gerado no navegador — nenhum dado é enviado
+				</div>
+				<div className="flex items-center gap-2">
+					<Button
+						type="button"
+						variant="ghost"
+						size="sm"
+						onClick={handleReset}
+						disabled={!rawInput && entries.length === 0}
+					>
+						<RotateCcw className="mr-1.5 h-3 w-3" />
+						Limpar
+					</Button>
+					<Button onClick={handleGenerate} disabled={!rawInput.trim()}>
+						Gerar todos
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
+
+	const resultPanel = (
+		<>
+			{entries.length === 0 ? (
+				<div className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/40 p-6 text-center">
+					<p className="text-sm text-muted-foreground">
+						Cole os valores e clique em Gerar todos
+					</p>
+					<p className="text-xs text-muted-foreground">
+						Até {MAX_ITEMS} códigos por geração
+					</p>
+				</div>
+			) : (
+				<>
+					<div className="flex items-center justify-between mb-3">
+						<span className="text-xs text-muted-foreground">
+							{entries.length}{" "}
+							{entries.length === 1 ? "código gerado" : "códigos gerados"}
+						</span>
+						<span className="font-mono text-caption text-muted-foreground">
+							{format}
+						</span>
+					</div>
+					<div className="space-y-3 max-h-[600px] overflow-y-auto pr-1">
+						{entries.map((entry) => (
+							<BarcodeItem key={entry.id} {...entry} />
+						))}
+					</div>
+				</>
+			)}
+		</>
+	);
+
+	return <LayoutB form={form} result={resultPanel} />;
 }

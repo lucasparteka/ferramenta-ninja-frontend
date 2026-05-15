@@ -13,7 +13,9 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">Como usar</h2>
+				<h2 className="mb-3 text-base font-semibold text-foreground">
+					Como usar
+				</h2>
 				<ol className="list-decimal space-y-2 pl-6">
 					<li>Selecione o formato desejado (EAN-13, CODE 128, etc.).</li>
 					<li>Cole ou digite os valores no campo de texto — um por linha.</li>
@@ -32,7 +34,9 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">Casos de uso</h2>
+				<h2 className="mb-3 text-base font-semibold text-foreground">
+					Casos de uso
+				</h2>
 				<div className="space-y-3">
 					<p>
 						<strong className="text-foreground">
@@ -57,7 +61,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-3 text-base font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">

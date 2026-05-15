@@ -1,0 +1,287 @@
+COMO CALCULAR RESCISÃO TRABALHISTA PASSO A PASSO (2026)
+Slug: como-calcular-rescisao-trabalhista
+Categoria: Trabalhista
+Ferramenta relacionada: calculadora-de-rescisao
+Keywords: calcular rescisão, rescisão CLT, quanto recebo na demissão, verbas rescisórias
+Tempo de leitura estimado: 9 minutos
+Publicado: 2026-05-XX
+
+---
+
+INTRODUCAO
+
+Você acabou de ser chamado na sala do RH e saiu com a notícia que ninguém quer ouvir. Ou então foi você mesmo que pediu as contas. De qualquer forma, agora vem aquela dúvida que bate em todo mundo: quanto exatamente tenho direito a receber?
+
+Rescisão trabalhista não é um assunto simples. Tem parcela de salário, tem 13º, tem férias, tem FGTS, tem multa, e cada tipo de demissão muda o que entra ou sai dessa conta. A maioria das pessoas chega na assinatura da rescisão sem saber se o valor está certo, e aí assina sem questionar. Isso é prejuízo direto no seu bolso.
+
+Esse guia vai te mostrar, do jeito mais claro possível, como funciona o cálculo da rescisão trabalhista. Com exemplos concretos, com os valores atualizados para 2026, e sem enrolação.
+
+---
+
+PRIMEIRO: QUAL FOI O TIPO DE DEMISSÃO?
+
+Antes de calcular qualquer coisa, você precisa entender que o tipo de demissão muda tudo. As verbas a que você tem direito dependem de como o contrato foi encerrado.
+
+Existem quatro situações principais:
+
+DEMISSÃO SEM JUSTA CAUSA
+É quando a empresa te dispensa sem que você tenha feito nada de errado. É o tipo mais comum. Aqui você tem direito a tudo: saldo de salário, aviso prévio, 13º proporcional, férias proporcionais e vencidas, saque integral do FGTS mais a multa de 40%, e pode pedir seguro-desemprego.
+
+PEDIDO DE DEMISSÃO
+Quando você mesmo decide sair. Aqui o roteiro muda: você ainda recebe saldo de salário, 13º proporcional e férias, mas perde a multa do FGTS, não pode sacar o FGTS (só pode usar para comprar imóvel ou em outros casos específicos), e não tem direito ao seguro-desemprego. Além disso, você que deve cumprir o aviso prévio — ou pagar por ele se quiser sair antes.
+
+DEMISSÃO POR JUSTA CAUSA
+Acontece quando você comete falta grave prevista no artigo 482 da CLT: abandono de emprego, desídia, improbidade, ato de indisciplina, entre outros. Nesse caso você recebe apenas o saldo de salário e as férias vencidas. Não há aviso prévio, não há 13º proporcional, não há multa do FGTS e não há seguro-desemprego. É a pior situação para o trabalhador.
+
+ACORDO MÚTUO (Artigo 484-A da CLT)
+Criado pela Reforma Trabalhista de 2017. Quando empregado e empresa combinam juntos o encerramento do contrato, os valores são divididos: a multa do FGTS cai para 20% (metade do normal), o aviso prévio indenizado é pago apenas pela metade, e você pode sacar 80% do saldo do FGTS. O seguro-desemprego não é permitido nessa modalidade. Serve para situações em que a saída é boa para os dois lados.
+
+---
+
+O QUE ENTRA NO CALCULO: VERBA POR VERBA
+
+Agora vamos destrinchar cada uma das verbas rescisórias, explicar como funciona e mostrar o cálculo.
+
+Vou usar um exemplo ao longo de todo o texto para ficar mais fácil de acompanhar:
+
+EXEMPLO BASE
+Trabalhadora: Ana
+Salário: R$ 3.500,00
+Tempo na empresa: 2 anos e 4 meses (28 meses)
+Data da demissão: 15 de maio de 2026
+Dias trabalhados no mês da demissão: 15 dias
+Motivo: demissão sem justa causa
+Férias: não tirou férias no segundo período aquisitivo (12 meses completos em aberto)
+
+
+1. SALDO DE SALARIO
+
+O saldo de salário é o valor referente aos dias que você trabalhou no mês da demissão mas ainda não recebeu. Se você foi demitido no dia 15, você trabalhou metade do mês — então recebe metade do salário.
+
+O cálculo é simples:
+
+Saldo = (Salário ÷ 30) × Dias trabalhados
+
+No caso da Ana:
+R$ 3.500 ÷ 30 = R$ 116,67 por dia
+R$ 116,67 × 15 dias = R$ 1.750,00
+
+O saldo de salário entra em qualquer tipo de rescisão. Não existe demissão em que você não receba pelos dias trabalhados.
+
+
+2. AVISO PREVIO
+
+O aviso prévio é o período de antecedência que a empresa precisa te comunicar antes de te demitir — ou que você precisa comunicar se for pedir demissão. Ele pode ser trabalhado (você continua na empresa por mais 30 dias) ou indenizado (você não precisa ir, mas recebe o valor correspondente).
+
+Desde a Reforma Trabalhista de 2011 (Lei 12.506), o aviso prévio é proporcional ao tempo de empresa:
+
+30 dias base + 3 dias por ano trabalhado completo, com limite de 90 dias no total.
+
+Para a Ana (2 anos completos):
+30 dias + (2 × 3 dias) = 36 dias de aviso prévio
+
+Valor do aviso prévio indenizado:
+R$ 3.500 ÷ 30 × 36 = R$ 4.200,00
+
+Atenção: quando a demissão é sem justa causa, é a empresa que paga o aviso, não você. Se for pedido de demissão, é você que deve trabalhar ou indenizar a empresa pelo aviso, caso queira sair imediatamente.
+
+Existe um detalhe importante: os dias de aviso prévio são somados ao tempo de empresa para calcular o 13º e as férias proporcionais. Ou seja, o aviso "conta" como trabalho para as outras verbas.
+
+
+3. DECIMO TERCEIRO SALARIO PROPORCIONAL
+
+O 13º salário proporcional equivale a 1/12 do salário para cada mês trabalhado no ano da demissão (ou fração superior a 14 dias).
+
+Fórmula:
+13º proporcional = (Salário ÷ 12) × Meses trabalhados no ano
+
+Para a Ana, demitida em maio com aviso de 36 dias:
+Com o aviso, o contrato se encerra em junho (mais ou menos — vamos usar 5 meses completos no ano + o aviso que empurra para o mês 6, então 6/12).
+
+Simplificando: Ana trabalhou de janeiro a maio = 5 meses + o aviso de 36 dias que vai até junho = 6 meses.
+R$ 3.500 ÷ 12 × 6 = R$ 1.750,00
+
+Se você foi demitido em dezembro, recebe o 13º inteiro. Se foi em janeiro, recebe apenas 1/12.
+
+
+4. FERIAS VENCIDAS (SE HOUVER)
+
+Férias vencidas são aquelas que você já tinha direito a tirar mas não tirou. Cada 12 meses de trabalho geram um período de 30 dias de férias. Se o período aquisitivo passou e você não tirou, a empresa deve pagar o valor das férias mais o adicional constitucional de 1/3.
+
+No caso da Ana, ela completou o segundo período aquisitivo (2 anos de empresa) e ainda não tirou as férias desse período.
+
+Férias vencidas = Salário + 1/3
+R$ 3.500 + R$ 1.166,67 = R$ 4.666,67
+
+Férias vencidas entram em qualquer tipo de rescisão — inclusive na demissão por justa causa. É o único direito que sobrevive até na situação mais grave para o trabalhador.
+
+
+5. FERIAS PROPORCIONAIS
+
+Férias proporcionais são calculadas pelo tempo trabalhado no período aquisitivo que ainda não fechou 12 meses. Assim como o 13º, a conta é por meses: 1/12 de 30 dias para cada mês trabalhado.
+
+Para a Ana, que está no início do terceiro período aquisitivo com 4 meses (já que o segundo período foi totalmente trabalhado e não tirado — este foi contado como férias vencidas):
+
+Considerando que o aviso prévio foi de 36 dias e que Ana foi demitida em 15/05, o contrato termina por volta de 20/06. Assim, do início do terceiro período aquisitivo (que começou em março de 2026, depois dos 2 anos completos) até 20/06 são aproximadamente 4 meses.
+
+Férias proporcionais = (Salário ÷ 12) × Meses do período incompleto + 1/3
+= (R$ 3.500 ÷ 12) × 4 × (1 + 1/3)
+= R$ 291,67 × 4 × 1,333
+= R$ 1.555,56
+
+Atenção: no pedido de demissão, a Ana ainda teria direito às férias proporcionais, mas não à multa do FGTS nem ao aviso prévio pago pela empresa.
+
+
+6. FGTS + MULTA DE 40%
+
+O FGTS (Fundo de Garantia do Tempo de Serviço) é um depósito mensal que a empresa faz em sua conta vinculada, equivalente a 8% do seu salário bruto. Esse dinheiro fica guardado e você só pode sacar em situações específicas: demissão sem justa causa, aposentadoria, compra de imóvel e algumas doenças graves.
+
+No caso de demissão sem justa causa, além de poder sacar todo o saldo da conta, você tem direito à multa de 40% sobre o total depositado desde o início do contrato de trabalho naquela empresa.
+
+Como calcular o FGTS acumulado:
+Salário × 8% = depósito mensal
+R$ 3.500 × 8% = R$ 280,00 por mês
+
+Em 28 meses de trabalho (e considerando reajustes, mas vamos simplificar com o salário atual):
+R$ 280 × 28 = R$ 7.840,00 (estimativa — o valor real fica na conta com rendimentos)
+
+Multa de 40%:
+R$ 7.840 × 40% = R$ 3.136,00
+
+Importante: a multa de 40% é paga pela empresa, não sai do seu saldo. O seu FGTS continua intacto para saque, e a multa é um valor adicional que a empresa deposita separadamente.
+
+
+---
+
+RESUMO DO CALCULO DA ANA
+
+Juntando tudo para a Ana (demissão sem justa causa):
+
+Saldo de salário (15 dias): R$ 1.750,00
+Aviso prévio indenizado (36 dias): R$ 4.200,00
+13º salário proporcional (6/12): R$ 1.750,00
+Férias vencidas + 1/3 (2º período): R$ 4.666,67
+Férias proporcionais + 1/3 (4/12 do 3º período): R$ 1.555,56
+FGTS (saque do saldo acumulado): R$ 7.840,00
+Multa do FGTS (40%): R$ 3.136,00
+
+Total bruto recebido: R$ 24.898,23
+
+Sobre esse valor ainda incidem os descontos de INSS e IRRF, mas as verbas indenizatórias (aviso prévio indenizado, multa do FGTS, férias) são isentas de imposto de renda. Apenas o saldo de salário e o 13º sofrem desconto.
+
+---
+
+DESCONTOS: INSS E IMPOSTO DE RENDA NA RESCISAO
+
+Nem tudo que a empresa paga vai para o seu bolso — há descontos legais que se aplicam a algumas verbas.
+
+A regra geral é:
+- Saldo de salário e 13º proporcional: sofrem desconto de INSS e, dependendo do valor, de IRRF
+- Aviso prévio indenizado, multa do FGTS, férias + 1/3: são verbas indenizatórias e não sofrem desconto de INSS nem de IRRF
+
+Tabela INSS 2026 (progressiva, por faixas):
+- Até R$ 1.621,00: 7,5%
+- De R$ 1.621,01 a R$ 2.902,84: 9%
+- De R$ 2.902,85 a R$ 4.354,27: 12%
+- De R$ 4.354,28 a R$ 8.475,55: 14%
+
+O cálculo é progressivo, igual ao imposto de renda: você não paga 12% sobre tudo, paga 7,5% sobre a primeira faixa, 9% sobre a segunda, e assim por diante.
+
+Imposto de renda 2026:
+A partir de 2026, quem recebe até R$ 5.000,00 por mês está isento de imposto de renda (Lei 15.270/2025). Para valores acima disso, a tabela progressiva tradicional continua valendo com os redutores aplicados.
+
+Para a Ana, o saldo de salário de R$ 1.750 e o 13º de R$ 1.750 ficam abaixo do limite de isenção, então provavelmente não haverá desconto de IR na rescisão.
+
+---
+
+O SEGURO-DESEMPREGO
+
+Além das verbas rescisórias, quem foi demitido sem justa causa tem direito ao seguro-desemprego — um benefício pago pelo governo, não pela empresa.
+
+Para ter direito, você precisa ter carteira assinada por pelo menos 12 meses nos últimos 18 meses (se for a primeira vez pedindo). Nas solicitações seguintes, os requisitos aumentam.
+
+Número de parcelas:
+- 1ª solicitação: 4 parcelas (se trabalhou 12 a 23 meses) ou 5 parcelas (24 meses ou mais)
+- 2ª solicitação: 3 ou 4 parcelas
+- 3ª solicitação em diante: 5 parcelas
+
+O valor é calculado com base na média dos últimos 3 salários antes da demissão:
+
+Tabela seguro-desemprego 2026:
+- Salário médio até R$ 2.222,17: você recebe 80% desse valor
+- Salário médio de R$ 2.222,18 a R$ 3.703,99: o que passar de R$ 2.222,17 é multiplicado por 0,5, e soma-se R$ 1.777,74
+- Salário médio acima de R$ 3.703,99: valor fixo de R$ 2.518,65 (teto)
+- Valor mínimo: R$ 1.621,00 (salário mínimo)
+
+Para a Ana (salário de R$ 3.500):
+A média dos últimos 3 meses é R$ 3.500.
+Parcela variável: (R$ 3.500 - R$ 2.222,17) × 0,5 = R$ 638,92
+Parcela fixa: R$ 1.777,74
+Seguro-desemprego de Ana: R$ 638,92 + R$ 1.777,74 = R$ 2.416,66 por parcela
+
+Como ela tem 28 meses de empresa (2ª solicitação provavelmente não, vamos supor que é a primeira), ela recebe 4 parcelas (porque tem menos de 24 meses... espera, ela tem 28 meses de contrato). Com 28 meses de registro, o direito é de 5 parcelas na primeira solicitação.
+
+Total estimado de seguro-desemprego: R$ 2.416,66 × 5 = R$ 12.083,30
+
+---
+
+PRAZOS QUE VOCE PRECISA CONHECER
+
+A empresa tem 10 dias corridos depois do término do contrato de trabalho para pagar todas as verbas rescisórias. Esse prazo vale tanto quando o aviso prévio é trabalhado (os 10 dias contam do último dia de trabalho) quanto quando é indenizado (os 10 dias contam da data da comunicação da demissão).
+
+Se a empresa não pagar dentro desse prazo, você tem direito a uma multa equivalente a um salário, paga pela empresa a você. Esse direito está no artigo 477 da CLT e é automático — você não precisa provar que teve prejuízo.
+
+Para o seguro-desemprego, você tem até 120 dias depois da demissão para dar entrada. Não deixe para a última hora porque o processo pode demorar alguns dias.
+
+---
+
+COMO VERIFICAR SE A CONTA ESTA CERTA
+
+Quando chegar na hora de assinar a rescisão, você vai receber um documento chamado TRCT (Termo de Rescisão do Contrato de Trabalho). Nele estão discriminadas todas as verbas e os descontos aplicados.
+
+Algumas coisas que vale checar antes de assinar:
+
+1. O tempo de empresa está correto? Confira a data de admissão e a data de desligamento.
+
+2. As férias estão todas contabilizadas? Olhe se constam tanto as vencidas (se houver) quanto as proporcionais.
+
+3. O aviso prévio foi calculado com a proporcionalidade? Lembre-se: são 30 dias base mais 3 dias por ano trabalhado.
+
+4. A multa do FGTS está presente? Na demissão sem justa causa, os 40% são obrigatórios.
+
+5. Os descontos fazem sentido? Verifique se só estão descontando INSS e IR das verbas que realmente devem sofrer desconto.
+
+Se algum número não fechar, você tem direito de questionar antes de assinar. A assinatura do TRCT não impede que você entre com ação trabalhista depois, mas facilita as coisas resolver na hora.
+
+---
+
+O QUE FAZER SE A EMPRESA NAO PAGAR DIREITO
+
+Se você assinou e depois percebeu que algo está errado, ou se a empresa simplesmente não pagou, você pode:
+
+- Tentar resolver diretamente com o RH ou departamento pessoal
+- Buscar a Superintendência Regional do Trabalho (antiga DRT) da sua cidade, que oferece serviço de conciliação gratuito
+- Entrar com ação trabalhista. O prazo é de 2 anos a partir da demissão para reclamar na Justiça do Trabalho
+
+A maioria dos advogados trabalhistas trabalha com honorários condicionados ao resultado — ou seja, você não paga nada na entrada.
+
+---
+
+CALCULE VOCE MESMO
+
+Se quiser simular exatamente quanto você vai receber — ou quanto já deveria ter recebido — a calculadora de rescisão do Ferramenta Ninja faz esse cálculo automaticamente. Você informa o salário, o tempo de empresa, o tipo de demissão, os dias trabalhados e as férias em aberto. O resultado sai na hora, com cada verba discriminada.
+
+Link interno: /ferramentas/calculadora-de-rescisao
+
+---
+
+NOTAS DE RODAPE / FONTES
+- Salário mínimo 2026: R$ 1.621,00 (Decreto publicado em 31/12/2025, gov.br/planalto)
+- Tabela INSS 2026: teto R$ 8.475,55 (gov.br/inss, Portaria MPS 2026)
+- IRRF 2026: isenção até R$ 5.000,00 (Lei 15.270/2025)
+- Seguro-desemprego 2026: teto R$ 2.518,65 (MTE, janeiro 2026)
+- Aviso prévio proporcional: Lei 12.506/2011
+- Acordo mútuo de rescisão: Art. 484-A da CLT (inserido pela Lei 13.467/2017)
+- Prazo de pagamento rescisório: Art. 477 da CLT
+- Multa por atraso no pagamento: Art. 477, § 8º da CLT
+- Justa causa: Art. 482 da CLT

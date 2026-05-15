@@ -47,7 +47,7 @@ export function SwitchRow({
 				{(hint || feedback) && (
 					<div
 						className={cn(
-							"text-caption mt-0.5",
+							"text-[11px] mt-0.5",
 							feedback && feedbackVariant === "success"
 								? "text-success font-mono tabular-nums"
 								: "text-muted-foreground",
@@ -73,7 +73,7 @@ export function SwitchRow({
 				<span
 					className={cn(
 						"absolute top-0.5 h-4 w-4 rounded-full bg-white transition-all shadow-sm",
-						checked ? "left-[18px]" : "left-0.5",
+						checked ? "left-4.5" : "left-0.5",
 					)}
 				/>
 			</button>

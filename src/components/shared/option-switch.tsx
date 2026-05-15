@@ -40,7 +40,7 @@ export function OptionSwitch({
 						className={cn(
 							"rounded transition-all font-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30",
 							size === "default"
-								? "px-3 text-13 h-7.5"
+								? "px-3 text-13 h-7.5 text-[13px]"
 								: "px-2 py-0.5 text-caption",
 							fullWidth && "flex-1 flex items-center justify-center",
 							active

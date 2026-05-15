@@ -175,9 +175,10 @@ export default function CardapioOnlinePage() {
 							intent: "generate",
 						},
 						{
-							name: "Gerador de QR Code",
-							href: "/ferramentas/gerador-de-qr-code",
-							description: "QR codes personalizados",
+							name: "QR Code Personalizado",
+							href: "/ferramentas/gerador-de-qr-code-personalizado",
+							description:
+								"QR codes com cores, estilos e múltiplos tipos de conteúdo",
 							tags: ["qr", "compartilhamento"],
 							intent: "generate",
 						},

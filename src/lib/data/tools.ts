@@ -700,14 +700,6 @@ export const categories: ToolCategory[] = [
 		description: "QR codes, códigos de barras e leitores",
 		tools: [
 			{
-				name: "Gerador de QR Code",
-				href: "/ferramentas/gerador-de-qr-code",
-				description: "QR codes personalizados",
-				icon: QrCode,
-				tags: ["qr", "compartilhamento"],
-				intent: "generate",
-			},
-			{
 				name: "QR Code Personalizado",
 				href: "/ferramentas/gerador-de-qr-code-personalizado",
 				description:
@@ -718,19 +710,43 @@ export const categories: ToolCategory[] = [
 				weight: 2,
 			},
 			{
+				name: "QR Code para URL e Texto",
+				href: "/ferramentas/gerador-de-qr-code",
+				description: "QR codes para links e textos com estilos personalizados",
+				icon: QrCode,
+				tags: ["qr", "url", "link", "texto"],
+				intent: "generate",
+			},
+			{
 				name: "QR Code Wi-Fi",
 				href: "/ferramentas/gerador-de-qr-code-wifi",
-				description: "Gere QR codes para conexão Wi-Fi",
+				description: "Compartilhe sua rede Wi-Fi com um QR Code sem revelar a senha",
 				icon: QrCode,
-				tags: ["qr", "wifi"],
+				tags: ["qr", "wifi", "rede"],
 				intent: "generate",
 			},
 			{
 				name: "QR Code PIX",
 				href: "/ferramentas/gerador-de-qr-code-pix",
-				description: "Gere QR codes para pagamento PIX",
+				description: "QR codes PIX válidos para pagamento com padrão EMV do Banco Central",
 				icon: QrCode,
-				tags: ["qr", "pix", "financeiro"],
+				tags: ["qr", "pix", "pagamento"],
+				intent: "generate",
+			},
+			{
+				name: "QR Code para E-mail",
+				href: "/ferramentas/gerador-de-qr-code-email",
+				description: "QR codes que abrem o app de e-mail com campos pré-preenchidos",
+				icon: QrCode,
+				tags: ["qr", "email", "contato"],
+				intent: "generate",
+			},
+			{
+				name: "QR Code para Telefone",
+				href: "/ferramentas/gerador-de-qr-code-telefone",
+				description: "QR codes que iniciam uma ligação com um escaneamento",
+				icon: QrCode,
+				tags: ["qr", "telefone", "ligacao"],
 				intent: "generate",
 			},
 			{

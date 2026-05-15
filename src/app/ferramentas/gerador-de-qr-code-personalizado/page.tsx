@@ -3,6 +3,13 @@ import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
 import { CustomQrCode } from "@/components/tools/custom-qr-code/custom-qr-code";
 
+type QrTab = "url" | "wifi" | "email" | "phone" | "pix";
+const VALID_TABS: QrTab[] = ["url", "wifi", "email", "phone", "pix"];
+
+type Props = {
+	searchParams: Promise<{ tab?: string }>;
+};
+
 export const metadata: Metadata = {
 	title: "Gerador de QR Code Personalizado | Ferramenta Ninja",
 	description:
@@ -87,7 +94,10 @@ function SeoContent() {
 	);
 }
 
-export default function GeradorQrCodePersonalizadoPage() {
+export default async function GeradorQrCodePersonalizadoPage({ searchParams }: Props) {
+	const { tab } = await searchParams;
+	const initialTab = VALID_TABS.includes(tab as QrTab) ? (tab as QrTab) : "url";
+
 	return (
 		<PageLayout
 			toolHref="/ferramentas/gerador-de-qr-code-personalizado"
@@ -99,7 +109,7 @@ export default function GeradorQrCodePersonalizadoPage() {
 			extraContent={<SeoContent />}
 			faq={faq}
 		>
-			<CustomQrCode />
+			<CustomQrCode initialTab={initialTab} />
 		</PageLayout>
 	);
 }

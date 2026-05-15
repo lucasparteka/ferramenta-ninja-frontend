@@ -1,147 +1,100 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
-import { WifiQR } from "@/components/tools/wifi-qr/wifi-qr";
+import { CustomQrCode } from "@/components/tools/custom-qr-code/custom-qr-code";
 
 export const metadata: Metadata = {
-	title: "Gerador de QR Code Wi-Fi Online Grátis | Ferramenta Ninja",
+	title: "Gerador de QR Code Wi-Fi | Ferramenta Ninja",
 	description:
-		"Gere QR Codes para compartilhar sua rede Wi-Fi sem digitar senha. Suporte a WPA, WPA2, WPA3, WEP e redes abertas. Gratuito, sem cadastro.",
+		"Crie QR codes para compartilhar sua rede Wi-Fi sem revelar a senha. Suporte a WPA, WEP e redes abertas. Exporte em PNG, JPG ou SVG.",
+	keywords: [
+		"qr code wifi",
+		"qr code wi-fi",
+		"qr code conectar wifi",
+		"compartilhar wifi qr code",
+		"gerador qr wifi grátis",
+		"qr code senha wifi",
+	],
 };
+
+const faq = [
+	{
+		question: "Quais padrões de segurança Wi-Fi são suportados?",
+		answer:
+			"Suportamos WPA/WPA2 (o mais comum), WEP (redes mais antigas) e redes abertas sem senha. Selecione o tipo correto na opção 'Segurança'.",
+	},
+	{
+		question: "O visitante verá minha senha ao escanear?",
+		answer:
+			"Não. O QR Code conecta o dispositivo diretamente à rede sem exibir a senha na tela. A senha fica codificada dentro do QR Code.",
+	},
+	{
+		question: "Funciona em iPhone e Android?",
+		answer:
+			"Sim. A maioria dos smartphones modernos (iOS 11+ e Android 10+) consegue ler QR codes Wi-Fi e conectar automaticamente à rede sem nenhum app adicional.",
+	},
+	{
+		question: "E se minha rede for oculta (SSID oculto)?",
+		answer:
+			"Marque a opção 'Rede oculta' antes de gerar. O QR Code incluirá o flag correto para que dispositivos encontrem a rede mesmo sem ela ser visível na lista.",
+	},
+];
 
 function SeoContent() {
 	return (
 		<>
 			<section>
 				<h2 className="mb-4 text-xl font-bold text-foreground">
-					O que é um QR Code de Wi-Fi?
+					Como criar um QR Code Wi-Fi
 				</h2>
 				<p>
-					Um QR Code de Wi-Fi armazena as credenciais de uma rede sem fio — nome
-					(SSID), senha e tipo de segurança — em um formato padronizado que
-					smartphones reconhecem automaticamente. Ao escanear o código com a
-					câmera do celular, o dispositivo se conecta à rede sem que o usuário
-					precise digitar nada.
+					Informe o nome da rede (SSID), a senha e o tipo de segurança. O QR
+					Code é gerado instantaneamente — imprima e cole na porta da sua
+					empresa, recepção ou quarto de hóspede para que qualquer pessoa se
+					conecte com um escaneamento, sem precisar digitar a senha.
 				</p>
-				<p className="mt-3">
-					O formato é amplamente suportado no Android (desde a versão 10) e no
-					iOS (desde o iOS 11 com a câmera nativa). Em versões mais antigas,
-					aplicativos de leitura de QR Code também reconhecem e configuram a
-					conexão automaticamente.
-				</p>
-			</section>
-
-			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">Como usar</h2>
-				<ol className="list-decimal space-y-2 pl-6">
-					<li>
-						Informe o nome exato da rede Wi-Fi (SSID), incluindo maiúsculas e
-						minúsculas.
-					</li>
-					<li>
-						Selecione o tipo de segurança da rede (WPA/WPA2 é o mais comum).
-					</li>
-					<li>Digite a senha da rede, se houver.</li>
-					<li>Marque a opção de rede oculta, se aplicável.</li>
-					<li>
-						Clique em <strong className="text-foreground">Gerar QR Code</strong>{" "}
-						e baixe a imagem.
-					</li>
-					<li>Imprima ou exiba o QR Code para seus convidados escanearem.</li>
-				</ol>
-			</section>
-
-			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">Casos de uso</h2>
-				<div className="space-y-3">
-					<p>
-						<strong className="text-foreground">
-							Estabelecimentos e eventos:
-						</strong>{" "}
-						restaurantes, cafés, hotéis e espaços de coworking podem imprimir o
-						QR Code e afixá-lo em locais visíveis, facilitando o acesso de
-						clientes e visitantes à rede Wi-Fi.
-					</p>
-					<p>
-						<strong className="text-foreground">Residências:</strong> crie um QR
-						Code para sua rede doméstica e cole na geladeira, na entrada ou em
-						um porta-retrato — seus convidados se conectam instantaneamente, sem
-						precisar perguntar a senha.
-					</p>
-					<p>
-						<strong className="text-foreground">Escritórios:</strong>{" "}
-						simplifique o onboarding de novos colaboradores e visitantes com um
-						QR Code da rede de convidados impresso na recepção.
-					</p>
-				</div>
 			</section>
 
 			<section>
 				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Perguntas Frequentes
+					Casos de uso comuns
 				</h2>
-				<div className="space-y-6">
-					<div>
-						<h3 className="mb-1 font-semibold text-foreground">
-							A senha fica armazenada em algum servidor?
-						</h3>
-						<p>
-							Não. Todo o processamento ocorre diretamente no seu navegador. A
-							senha da rede nunca é enviada a nenhum servidor — ela é
-							incorporada ao QR Code localmente e não sai do seu dispositivo.
-						</p>
-					</div>
-					<div>
-						<h3 className="mb-1 font-semibold text-foreground">
-							Qual tipo de segurança devo selecionar?
-						</h3>
-						<p>
-							A maioria das redes domésticas e corporativas usa{" "}
-							<strong className="text-foreground">WPA / WPA2 / WPA3</strong>.
-							Verifique nas configurações do seu roteador. Redes antigas podem
-							usar WEP, e redes abertas (sem senha) devem usar a opção "Sem
-							senha".
-						</p>
-					</div>
-					<div>
-						<h3 className="mb-1 font-semibold text-foreground">
-							O que é uma rede oculta?
-						</h3>
-						<p>
-							Redes ocultas não transmitem o nome (SSID) publicamente. Para que
-							o QR Code funcione corretamente com redes ocultas, marque a opção
-							correspondente — o código incluirá essa informação para que o
-							dispositivo encontre a rede.
-						</p>
-					</div>
-					<div>
-						<h3 className="mb-1 font-semibold text-foreground">
-							O QR Code funciona em qualquer celular?
-						</h3>
-						<p>
-							Android 10+ e iOS 11+ reconhecem o formato nativamente pela
-							câmera. Em versões anteriores, utilize qualquer aplicativo de
-							leitura de QR Code disponível nas lojas.
-						</p>
-					</div>
-				</div>
+				<ul className="list-disc space-y-2 pl-6">
+					<li>
+						<strong>Estabelecimentos comerciais:</strong> restaurantes, cafés e
+						hotéis que oferecem Wi-Fi para clientes.
+					</li>
+					<li>
+						<strong>Eventos e conferências:</strong> distribua o QR Code no
+						crachá ou telão para todos se conectarem rapidamente.
+					</li>
+					<li>
+						<strong>Escritórios:</strong> facilite o acesso de visitantes e
+						novos funcionários sem revelar a senha corporativa verbalmente.
+					</li>
+					<li>
+						<strong>Residências:</strong> crie um QR Code para a rede de
+						hóspedes e cole na geladeira ou sala.
+					</li>
+				</ul>
 			</section>
 		</>
 	);
 }
 
-export default function GeradorDeQrCodeWifiPage() {
+export default function GeradorQrCodeWifiPage() {
 	return (
 		<PageLayout
 			toolHref="/ferramentas/gerador-de-qr-code-wifi"
 			title="Gerador de QR Code Wi-Fi"
-			description="Compartilhe sua rede Wi-Fi sem digitar senha. Gere um QR Code que conecta qualquer celular automaticamente ao escanear."
+			description="Crie QR codes para compartilhar sua rede Wi-Fi com um escaneamento. Personalize cores e estilos. Exporte em PNG, JPG ou SVG."
 			relatedTools={
 				<RelatedTools currentHref="/ferramentas/gerador-de-qr-code-wifi" />
 			}
 			extraContent={<SeoContent />}
+			faq={faq}
 		>
-			<WifiQR />
+			<CustomQrCode initialTab="wifi" />
 		</PageLayout>
 	);
 }

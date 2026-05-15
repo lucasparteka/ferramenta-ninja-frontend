@@ -13,7 +13,7 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-3 text-base font-semibold text-foreground">
 					Como funciona
 				</h2>
 				<p>
@@ -31,7 +31,9 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">Casos de uso</h2>
+				<h2 className="mb-3 text-base font-semibold text-foreground">
+					Casos de uso
+				</h2>
 				<div className="space-y-3">
 					<p>
 						<strong className="text-foreground">
@@ -58,7 +60,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-3 text-base font-semibold text-foreground">
 					Perguntas Frequentes
 				</h2>
 				<div className="space-y-6">

@@ -1,152 +1,101 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
-import { PixQR } from "@/components/tools/pix-qr/pix-qr";
+import { CustomQrCode } from "@/components/tools/custom-qr-code/custom-qr-code";
 
 export const metadata: Metadata = {
-	title: "Gerador de QR Code Pix Online Grátis | Ferramenta Ninja",
+	title: "Gerador de QR Code PIX | Ferramenta Ninja",
 	description:
-		"Gere QR Codes Pix estáticos para receber pagamentos. Suporte a CPF, CNPJ, telefone, e-mail e chave aleatória. Gratuito, sem cadastro.",
+		"Crie QR codes PIX gratuitos e válidos para pagamento. Suporte a CPF, CNPJ, celular, e-mail e chave aleatória. Padrão EMV do Banco Central.",
+	keywords: [
+		"qr code pix",
+		"gerador qr code pix",
+		"qr code pix grátis",
+		"criar qr code pix",
+		"qr pix pagamento",
+		"qr code pix cnpj cpf",
+	],
 };
+
+const faq = [
+	{
+		question: "O QR Code PIX gerado aqui é válido para pagamento?",
+		answer:
+			"Sim. O payload segue o padrão EMV QR Code definido pelo Banco Central do Brasil e é aceito por todos os bancos e carteiras digitais que operam o PIX.",
+	},
+	{
+		question: "Quais tipos de chave PIX são suportados?",
+		answer:
+			"Suportamos CPF, CNPJ, número de celular, e-mail e chave aleatória (EVP). Selecione o tipo correto e informe a chave no campo indicado.",
+	},
+	{
+		question: "Posso definir um valor fixo no QR Code?",
+		answer:
+			"Sim. Preencha o campo 'Valor' com o valor desejado (ex: 10,50). Deixe em branco para criar um QR Code de valor aberto, onde o pagador define o valor.",
+	},
+	{
+		question: "O QR Code PIX expira?",
+		answer:
+			"Não. QR codes estáticos gerados aqui não expiram. Eles são diferentes dos QR codes dinâmicos gerados pelos bancos para cobranças com vencimento.",
+	},
+];
 
 function SeoContent() {
 	return (
 		<>
 			<section>
 				<h2 className="mb-4 text-xl font-bold text-foreground">
-					O que é o QR Code Pix?
+					Como criar um QR Code PIX
 				</h2>
 				<p>
-					O QR Code Pix é um código gerado no padrão EMV (Europay, Mastercard e
-					Visa), adotado pelo Banco Central do Brasil para o sistema de
-					pagamentos instantâneos Pix. Ao escanear o código com o aplicativo do
-					banco, o pagador vê automaticamente os dados do beneficiário e o valor
-					(quando definido), bastando confirmar a transação.
-				</p>
-				<p className="mt-3">
-					Esta ferramenta gera QR Codes{" "}
-					<strong className="text-foreground">estáticos</strong>, que podem ser
-					reutilizados indefinidamente. São ideais para receber cobranças sem
-					valor fixo (como doações) ou cobranças de valor fixo recorrente. Para
-					cobranças únicas com rastreamento individual, é necessário um QR Code
-					dinâmico gerado por uma instituição financeira.
+					Selecione o tipo de chave PIX (CPF, CNPJ, celular, e-mail ou chave
+					aleatória), informe a chave, o nome do beneficiário e a cidade.
+					Opcionalmente, defina um valor e uma descrição. O QR Code é gerado
+					instantaneamente e pode ser impresso ou compartilhado digitalmente.
 				</p>
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">Como usar</h2>
-				<ol className="list-decimal space-y-2 pl-6">
-					<li>Selecione o tipo de chave Pix cadastrado na sua conta.</li>
-					<li>Digite a chave no campo correspondente.</li>
-					<li>
-						Informe o nome do beneficiário e a cidade (necessários pelo padrão
-						EMV).
-					</li>
-					<li>Opcionalmente, defina um valor fixo e uma descrição.</li>
-					<li>
-						Clique em{" "}
-						<strong className="text-foreground">Gerar QR Code Pix</strong> e
-						baixe a imagem.
-					</li>
-				</ol>
-			</section>
-
-			<section>
 				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Tipos de chave Pix
+					Casos de uso comuns
 				</h2>
-				<div className="space-y-3">
-					<p>
-						<strong className="text-foreground">CPF:</strong> 11 dígitos, com ou
-						sem formatação.
-					</p>
-					<p>
-						<strong className="text-foreground">CNPJ:</strong> 14 dígitos, com
-						ou sem formatação.
-					</p>
-					<p>
-						<strong className="text-foreground">Telefone:</strong> número com
-						DDD, sem o prefixo +55 (ele é adicionado automaticamente).
-					</p>
-					<p>
-						<strong className="text-foreground">E-mail:</strong> endereço de
-						e-mail cadastrado no banco.
-					</p>
-					<p>
-						<strong className="text-foreground">Chave aleatória (EVP):</strong>{" "}
-						sequência UUID gerada pelo banco, no formato
-						xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.
-					</p>
-				</div>
-			</section>
-
-			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Perguntas Frequentes
-				</h2>
-				<div className="space-y-6">
-					<div>
-						<h3 className="mb-1 font-semibold text-foreground">
-							O QR Code gerado é compatível com todos os bancos?
-						</h3>
-						<p>
-							Sim. O padrão EMV/Pix é obrigatório para todas as instituições
-							financeiras participantes do Pix no Brasil. O QR Code gerado por
-							esta ferramenta segue exatamente o padrão definido pelo Banco
-							Central.
-						</p>
-					</div>
-					<div>
-						<h3 className="mb-1 font-semibold text-foreground">
-							Qual a diferença entre QR Code estático e dinâmico?
-						</h3>
-						<p>
-							O QR Code estático pode ser reutilizado e é gerado localmente. O
-							dinâmico é gerado pela instituição financeira para cada cobrança
-							individual e permite rastreamento, expiração e conciliação
-							automática. Para cobranças pontuais e de negócios, o dinâmico é
-							mais adequado.
-						</p>
-					</div>
-					<div>
-						<h3 className="mb-1 font-semibold text-foreground">
-							Os dados são enviados para algum servidor?
-						</h3>
-						<p>
-							Não. Todo o processamento — incluindo a geração do payload EMV e o
-							cálculo do CRC16 — ocorre diretamente no seu navegador. Nenhuma
-							chave Pix ou dado pessoal é transmitido.
-						</p>
-					</div>
-					<div>
-						<h3 className="mb-1 font-semibold text-foreground">
-							Por que o nome e a cidade aparecem sem acentos no payload?
-						</h3>
-						<p>
-							O padrão EMV do Pix exige que o nome do beneficiário e a cidade
-							sejam em ASCII puro, sem caracteres acentuados. A ferramenta
-							converte automaticamente os acentos para garantir compatibilidade
-							com todas as instituições.
-						</p>
-					</div>
-				</div>
+				<ul className="list-disc space-y-2 pl-6">
+					<li>
+						<strong>Cobranças recorrentes com valor fixo:</strong> crie um QR
+						Code com o valor já definido para mensalidades, assinaturas ou
+						serviços.
+					</li>
+					<li>
+						<strong>Balcão e ponto de venda:</strong> imprima e afixe o QR Code
+						para que clientes paguem rapidamente sem precisar digitar a chave.
+					</li>
+					<li>
+						<strong>Vaquinhas e doações:</strong> gere um QR de valor aberto e
+						compartilhe o link ou imagem.
+					</li>
+					<li>
+						<strong>Orçamentos e recibos:</strong> inclua o QR Code em PDFs para
+						facilitar o pagamento imediato.
+					</li>
+				</ul>
 			</section>
 		</>
 	);
 }
 
-export default function GeradorDeQrCodePixPage() {
+export default function GeradorQrCodePixPage() {
 	return (
 		<PageLayout
 			toolHref="/ferramentas/gerador-de-qr-code-pix"
-			title="Gerador de QR Code Pix"
-			description="Gere QR Codes Pix estáticos para receber pagamentos instantâneos. Suporte a CPF, CNPJ, telefone, e-mail e chave aleatória."
+			title="Gerador de QR Code PIX"
+			description="Crie QR codes PIX válidos para pagamento com CPF, CNPJ, celular, e-mail ou chave aleatória. Exporte em PNG, JPG ou SVG."
 			relatedTools={
 				<RelatedTools currentHref="/ferramentas/gerador-de-qr-code-pix" />
 			}
 			extraContent={<SeoContent />}
+			faq={faq}
 		>
-			<PixQR />
+			<CustomQrCode initialTab="pix" />
 		</PageLayout>
 	);
 }

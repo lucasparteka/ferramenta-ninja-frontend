@@ -58,7 +58,7 @@ export function CreditCardValidator() {
 				</form>
 			}
 			emptyState={
-				<div className="flex min-h-[200px] flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 p-8 text-center">
+				<div className="flex min-h-50 flex-col items-center justify-center gap-2 bg-card p-8 text-center">
 					<CreditCard
 						className="h-5 w-5 text-muted-foreground"
 						strokeWidth={1.75}

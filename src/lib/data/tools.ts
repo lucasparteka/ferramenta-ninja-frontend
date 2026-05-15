@@ -685,6 +685,14 @@ export const categories: ToolCategory[] = [
 				intent: "generate",
 			},
 			{
+				name: "Validador de UUID",
+				href: "/ferramentas/validador-de-uuid",
+				description: "Valide UUIDs e descubra a versão",
+				icon: Hash,
+				tags: ["dev", "id", "validacao"],
+				intent: "validate",
+			},
+			{
 				name: "Gerador de Hash",
 				href: "/ferramentas/gerador-de-hash",
 				description: "MD5, SHA-1, SHA-256, SHA-512",

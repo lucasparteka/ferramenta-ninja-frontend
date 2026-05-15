@@ -4,6 +4,8 @@ import { RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutD } from "@/components/shared/layout-d";
+import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,9 +36,9 @@ const VERSION_DESCRIPTIONS: Record<UuidVersion, string> = {
 	v5: "Baseado em namespace e nome usando hash SHA-1. O mesmo par namespace + nome sempre gera o mesmo UUID.",
 };
 
-export function UuidGenerator() {
+export function UuidGeneratorClient() {
 	const [selectedVersion, setSelectedVersion] = useState<UuidVersion>("v4");
-	const [quantity, setQuantity] = useState(1);
+	const [quantity, setQuantity] = useState("1");
 	const [name, setName] = useState("");
 	const [namespaceType, setNamespaceType] = useState<UuidNamespace>("dns");
 	const [customNamespace, setCustomNamespace] = useState("");
@@ -59,40 +61,112 @@ export function UuidGenerator() {
 			return;
 		}
 		const namespace = resolveNamespace();
-		const generated = generateMultipleUuids(quantity, selectedVersion, {
-			name,
-			namespace,
-		});
+		const generated = generateMultipleUuids(
+			Math.min(100, Math.max(1, Number(quantity) || 1)),
+			selectedVersion,
+			{
+				name,
+				namespace,
+			},
+		);
 		setUuids(generated);
 	}
 
+	function handleReset() {
+		setUuids([]);
+		setName("");
+		setCustomNamespace("");
+	}
+
 	function handleQuantity(raw: string) {
-		const value = Number(raw);
-		if (!Number.isNaN(value)) setQuantity(Math.min(100, Math.max(1, value)));
+		if (raw === "" || /^\d+$/.test(raw)) setQuantity(raw);
 	}
 
 	return (
-		<div className="space-y-6">
-			<div className="space-y-4">
+		<LayoutD
+			header={
+				<ToolHeader
+					title="Gerar UUID"
+					badge="UUID"
+					actions={
+						<>
+							<Button
+								variant="secondary"
+								size="sm"
+								onClick={handleReset}
+								disabled={uuids.length === 0}
+							>
+								Limpar
+							</Button>
+							<Button size="sm" onClick={handleGenerate} className="gap-1.5">
+								<RefreshCw className="h-3 w-3" />
+								Gerar
+							</Button>
+						</>
+					}
+				/>
+			}
+			sidebar={
+				uuids.length === 0 ? (
+					<div className="flex flex-col items-center justify-center gap-2 p-6 text-center min-h-48 max-md:border-t max-md:border-border">
+						<p className="text-sm text-muted-foreground">
+							Selecione a versão do UUID e clique em Gerar
+						</p>
+					</div>
+				) : (
+					<div className="p-4 space-y-3 max-md:border-t max-md:border-border min-h-48">
+						{uuids.length > 1 && (
+							<div className="flex items-center justify-between">
+								<span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+									{uuids.length} UUIDs
+								</span>
+								<CopyButton
+									text={uuids.join("\n")}
+									label="Copiar todos"
+									size="sm"
+								/>
+							</div>
+						)}
+						<ul className="space-y-2">
+							{uuids.map((uuid) => (
+								<li
+									key={uuid}
+									className="flex items-center justify-between gap-2 rounded border border-border bg-background px-3 py-2"
+								>
+									<span className="truncate font-mono text-xs text-foreground">
+										{uuid}
+									</span>
+									<CopyButton
+										text={uuid}
+										iconOnly
+										size="icon-sm"
+										variant="secondary"
+									/>
+								</li>
+							))}
+						</ul>
+					</div>
+				)
+			}
+			sidebarWidth={360}
+		>
+			<div className="p-4 space-y-4">
 				<div className="space-y-2">
-					<Label>Versão</Label>
+					<Label className="text-xs">Versão</Label>
 					<div className="flex flex-wrap gap-2">
 						{VERSIONS.map(({ value, label }) => (
-							<button
+							<Button
 								key={value}
 								type="button"
 								onClick={() => {
 									setSelectedVersion(value);
 									setUuids([]);
 								}}
-								className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-									selectedVersion === value
-										? "bg-primary text-primary-foreground"
-										: "border border-border bg-background text-foreground hover:bg-secondary"
-								}`}
+								size="sm"
+								variant={selectedVersion === value ? "default" : "secondary"}
 							>
 								{label}
-							</button>
+							</Button>
 						))}
 					</div>
 					<p className="text-sm text-muted-foreground">
@@ -101,9 +175,9 @@ export function UuidGenerator() {
 				</div>
 
 				{needsNameInput && (
-					<div className="space-y-4 rounded-md border border-border p-4">
+					<div className="space-y-4 rounded-sm border border-border p-4">
 						<div className="space-y-2">
-							<Label>Namespace</Label>
+							<Label className="text-xs">Namespace</Label>
 							<div className="flex flex-wrap gap-2">
 								{NAMESPACES.map(({ value, label }) => (
 									<button
@@ -128,8 +202,10 @@ export function UuidGenerator() {
 						</div>
 
 						{namespaceType === "custom" && (
-							<div className="space-y-1">
-								<Label htmlFor="uuid-namespace">UUID do namespace</Label>
+							<div className="space-y-1.5">
+								<Label htmlFor="uuid-namespace" className="text-xs">
+									UUID do namespace
+								</Label>
 								<Input
 									id="uuid-namespace"
 									type="text"
@@ -141,8 +217,10 @@ export function UuidGenerator() {
 							</div>
 						)}
 
-						<div className="space-y-1">
-							<Label htmlFor="uuid-name">Nome</Label>
+						<div className="space-y-1.5">
+							<Label htmlFor="uuid-name" className="text-xs">
+								Nome
+							</Label>
 							<Input
 								id="uuid-name"
 								type="text"
@@ -155,15 +233,20 @@ export function UuidGenerator() {
 				)}
 
 				{!needsNameInput && (
-					<div className="space-y-1">
-						<Label htmlFor="uuid-quantity">Quantidade</Label>
+					<div className="space-y-1.5">
+						<Label htmlFor="uuid-quantity" className="text-xs">
+							Quantidade
+						</Label>
 						<Input
 							id="uuid-quantity"
-							type="number"
-							min={1}
-							max={100}
+							type="text"
+							inputMode="numeric"
 							value={quantity}
 							onChange={(e) => handleQuantity(e.target.value)}
+							onBlur={() => {
+								const n = Math.min(100, Math.max(1, Number(quantity) || 1));
+								setQuantity(String(n));
+							}}
 							className="w-24"
 						/>
 						<p className="text-xs text-muted-foreground">
@@ -172,40 +255,6 @@ export function UuidGenerator() {
 					</div>
 				)}
 			</div>
-
-			<Button onClick={handleGenerate} className="gap-1.5">
-				<RefreshCw className="size-4" />
-				Gerar UUID
-			</Button>
-
-			{uuids.length > 0 && (
-				<div className="space-y-3">
-					{uuids.length > 1 && (
-						<div className="flex items-center justify-between">
-							<span className="text-sm text-muted-foreground">
-								{uuids.length} UUIDs gerados
-							</span>
-							<CopyButton
-								text={uuids.join("\n")}
-								label="Copiar todos"
-							/>
-						</div>
-					)}
-					<ul className="space-y-2">
-						{uuids.map((uuid) => (
-							<li
-								key={uuid}
-								className="flex items-center justify-between gap-3 rounded-md border border-border bg-secondary/40 px-4 py-2.5"
-							>
-								<span className="font-mono text-sm text-foreground">
-									{uuid}
-								</span>
-								<CopyButton text={uuid} iconOnly size="icon-sm" />
-							</li>
-						))}
-					</ul>
-				</div>
-			)}
-		</div>
+		</LayoutD>
 	);
 }

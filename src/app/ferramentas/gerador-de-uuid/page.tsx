@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { PageLayout } from "@/components/shared/page-layout";
 import { RelatedTools } from "@/components/shared/related-tools";
-import { UuidGenerator } from "@/components/tools/uuid-generator/uuid-generator";
-import { UuidValidator } from "@/components/tools/uuid-generator/uuid-validator";
+import { UuidGeneratorClient } from "@/components/tools/uuid-generator/uuid-generator";
 
 export const metadata: Metadata = {
 	title: "Gerador de UUID Online Grátis | Ferramenta Ninja",
 	description:
-		"Gere UUIDs únicos nas versões v1, v3, v4 e v5 e valide UUIDs existentes. Ferramenta gratuita, sem cadastro, funciona diretamente no navegador.",
+		"Gere UUIDs únicos nas versões v1, v3, v4 e v5. Ferramenta gratuita, sem cadastro, funciona diretamente no navegador.",
 	keywords: [
 		"gerador de uuid",
 		"uuid online",
@@ -16,7 +15,6 @@ export const metadata: Metadata = {
 		"uuid v1",
 		"uuid v3",
 		"uuid v5",
-		"validar uuid",
 		"unique identifier",
 		"guid generator",
 	],
@@ -232,24 +230,11 @@ export default function GeradorDeUuidPage() {
 			compact
 			toolHref="/ferramentas/gerador-de-uuid"
 			title="Gerador de UUID Online"
-			description="Gere UUIDs únicos nas versões v1, v3, v4 e v5 ou valide um UUID existente. Tudo funciona diretamente no navegador, sem enviar dados a nenhum servidor."
+			description="Gere UUIDs únicos nas versões v1, v3, v4 e v5. Tudo funciona diretamente no navegador, sem enviar dados a nenhum servidor."
 			relatedTools={<RelatedTools currentHref="/ferramentas/gerador-de-uuid" />}
 			extraContent={<SeoContent />}
 		>
-			<div className="space-y-8">
-				<div>
-					<h2 className="mb-5 text-lg font-semibold text-foreground">
-						Gerar UUID
-					</h2>
-					<UuidGenerator />
-				</div>
-				<div className="border-t border-border pt-8">
-					<h2 className="mb-5 text-lg font-semibold text-foreground">
-						Validar UUID
-					</h2>
-					<UuidValidator />
-				</div>
-			</div>
+			<UuidGeneratorClient />
 		</PageLayout>
 	);
 }

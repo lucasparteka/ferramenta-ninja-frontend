@@ -3,18 +3,18 @@
 import { Download, Trash, Upload } from "lucide-react";
 import QRCodeStyling from "qr-code-styling";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { LayoutA } from "@/components/shared/layout-a";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { LayoutA } from "@/components/shared/layout-a";
 import { NativeSelect } from "@/components/ui/select-native";
 import { Textarea } from "@/components/ui/textarea";
 import type { PixKeyType } from "@/lib/pix/generate";
 import { generatePixPayload } from "@/lib/pix/generate";
+import { cn } from "@/lib/utils";
 import type { WifiSecurity } from "@/lib/wifi/generate";
 import { generateWifiString } from "@/lib/wifi/generate";
-import { cn } from "@/lib/utils";
 
 type QrTab = "url" | "wifi" | "email" | "phone" | "pix";
 
@@ -68,12 +68,8 @@ function formatPhoneBR(value: string): string {
 	return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
 }
 
-interface CustomQrCodeProps {
-	initialTab?: QrTab;
-}
-
-export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
-	const [tab, setTab] = useState<QrTab>(initialTab ?? "url");
+export function CustomQrCode() {
+	const [tab, setTab] = useState<QrTab>("url");
 	const [urlText, setUrlText] = useState("https://ferramenta.ninja");
 	const [wifiSsid, setWifiSsid] = useState("");
 	const [wifiPassword, setWifiPassword] = useState("");
@@ -654,7 +650,7 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 										<span className="text-xs text-muted-foreground">
 											Tamanho
 										</span>
-										<span className="font-mono text-[11px] text-muted-foreground">
+										<span className="font-mono text-caption text-muted-foreground">
 											{Math.round(logoSize * 100)}%
 										</span>
 									</div>

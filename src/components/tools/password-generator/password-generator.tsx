@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Info, RefreshCw, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/shared/copy-button";
+import { LayoutB } from "@/components/shared/layout-b";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { PasswordOptions } from "./password-options";
-import { PasswordOutput } from "./password-output";
+import { PasswordStrength } from "./password-strength";
 
 type PasswordConfig = {
 	length: number;
@@ -84,21 +88,82 @@ export function PasswordGenerator() {
 		setPassword(buildPassword(config));
 	}
 
-	return (
-		<div className="space-y-6">
-			<PasswordOptions config={config} onChange={setConfig} />
+	function reset() {
+		setConfig(DEFAULT_CONFIG);
+		setPassword(buildPassword(DEFAULT_CONFIG));
+	}
 
-			{!isValid && (
-				<p className="text-sm text-destructive">
-					Selecione pelo menos uma opção
-				</p>
-			)}
+	const form = (
+		<div className="bg-card flex flex-col h-full border border-border rounded-md overflow-hidden">
+			<div className="divide-y divide-border">
+				<div className="p-4">
+					<SectionLabel>Configuração</SectionLabel>
+					<div className="space-y-3">
+						<PasswordOptions config={config} onChange={setConfig} />
+					</div>
+				</div>
+			</div>
 
-			<PasswordOutput password={password} />
-
-			<Button onClick={generate} disabled={!isValid}>
-				Gerar senha
-			</Button>
+			<div className="flex items-center justify-between border-t border-border bg-muted/40 px-4 py-3 mt-auto">
+				<div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+					<Info size={12} />
+					Gerada no navegador · crypto API
+				</div>
+				<Button type="button" variant="ghost" size="sm" onClick={reset}>
+					<RotateCcw className="mr-1.5 h-3 w-3" />
+					Resetar
+				</Button>
+			</div>
 		</div>
 	);
+
+	const result = (
+		<>
+			{!isValid && (
+				<div className="flex flex-col items-center justify-center gap-2 py-6 text-center">
+					<p className="text-sm text-muted-foreground">
+						Selecione pelo menos um tipo de caractere
+					</p>
+				</div>
+			)}
+
+			{isValid && password && (
+				<>
+					<SectionLabel>Senha gerada</SectionLabel>
+					<div className="rounded-md border border-border bg-muted/40 p-3 mb-4">
+						<p
+							aria-live="polite"
+							className="font-mono text-lg break-all select-all text-foreground leading-relaxed"
+						>
+							{password}
+						</p>
+					</div>
+
+					<div className="flex gap-2 mb-4">
+						<CopyButton
+							text={password}
+							label="Copiar"
+							variant="outline"
+							size="sm"
+							className="flex-1"
+						/>
+						<Button
+							type="button"
+							variant="outline"
+							size="sm"
+							onClick={generate}
+							className="flex-1"
+						>
+							<RefreshCw className="mr-1.5 h-3 w-3" />
+							Regenerar
+						</Button>
+					</div>
+
+					<PasswordStrength password={password} />
+				</>
+			)}
+		</>
+	);
+
+	return <LayoutB form={form} result={result} />;
 }

@@ -13,10 +13,10 @@ function SeoContent() {
 	return (
 		<>
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-base font-semibold text-foreground">
 					O que é uma senha forte?
 				</h2>
-				<p>
+				<p className="text-pretty">
 					Uma senha forte combina diferentes tipos de caracteres para dificultar
 					tentativas de invasão. Os principais fatores que determinam a força de
 					uma senha são:
@@ -41,22 +41,22 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-base font-semibold text-foreground">
 					Por que a segurança de senhas é importante?
 				</h2>
 				<div className="space-y-3">
-					<p>
+					<p className="text-pretty">
 						Senhas fracas são a principal causa de invasões de contas. Com
 						ferramentas modernas, um atacante pode testar bilhões de combinações
 						por segundo. Uma senha de 8 caracteres apenas com letras minúsculas
 						pode ser quebrada em minutos.
 					</p>
-					<p>
+					<p className="text-pretty">
 						Já uma senha gerada aleatoriamente com 16 caracteres misturando
 						letras, números e símbolos levaria centenas de anos para ser
 						descoberta por força bruta, mesmo com hardware avançado.
 					</p>
-					<p>
+					<p className="text-pretty">
 						Além disso, vazamentos de dados são frequentes. Se você reutiliza a
 						mesma senha em vários sites, um único vazamento compromete todas as
 						suas contas.
@@ -65,7 +65,7 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
+				<h2 className="mb-4 text-base font-semibold text-foreground">
 					Dicas para criar e gerenciar senhas seguras
 				</h2>
 				<ul className="list-disc space-y-2 pl-6">
@@ -87,8 +87,8 @@ function SeoContent() {
 			</section>
 
 			<section>
-				<h2 className="mb-4 text-xl font-bold text-foreground">
-					Perguntas Frequentes
+				<h2 className="mb-4 text-base font-semibold text-foreground">
+					Perguntas frequentes
 				</h2>
 				<div className="space-y-6">
 					<div>
@@ -149,7 +149,6 @@ function SeoContent() {
 export default function GeradorDeSenhaPage() {
 	return (
 		<PageLayout
-			compact
 			toolHref="/ferramentas/gerador-de-senha"
 			title="Gerador de Senha"
 			description="Crie senhas seguras e aleatórias em segundos. Configure o tamanho e os tipos de caracteres conforme sua necessidade."

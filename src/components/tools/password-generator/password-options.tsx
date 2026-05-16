@@ -1,6 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/shared/slider";
 
 type PasswordConfig = {
 	length: number;
@@ -21,8 +22,8 @@ type PasswordOptionsProps = {
 };
 
 const checkboxOptions: CheckboxOption[] = [
-	{ key: "uppercase", label: "Letras maiúsculas" },
-	{ key: "lowercase", label: "Letras minúsculas" },
+	{ key: "uppercase", label: "Maiúsculas" },
+	{ key: "lowercase", label: "Minúsculas" },
 	{ key: "numbers", label: "Números" },
 	{ key: "symbols", label: "Símbolos" },
 ];
@@ -37,37 +38,56 @@ export function PasswordOptions({ config, onChange }: PasswordOptionsProps) {
 		onChange({ ...config, [key]: !config[key] });
 	}
 
+	const isValid =
+		config.uppercase || config.lowercase || config.numbers || config.symbols;
+
 	return (
-		<div className="space-y-6">
-			<div className="space-y-3">
+		<div className="space-y-4">
+			<div className="space-y-1.5">
 				<div className="flex items-center justify-between">
-					<Label htmlFor="password-length">Tamanho da senha</Label>
-					<Input
-						type="number"
-						value={config.length}
-						min={4}
-						max={64}
-						onChange={(e) => handleLength(Number(e.target.value))}
-						className="w-16 text-center text-foreground"
-						aria-label="Tamanho da senha em caracteres"
-					/>
+					<Label
+						htmlFor="password-length"
+						className="text-xs font-medium text-foreground"
+					>
+						Tamanho
+					</Label>
+					<span className="font-mono text-[11px] text-muted-foreground">
+						{config.length}
+					</span>
 				</div>
-				<input
+				<Slider
 					id="password-length"
-					type="range"
 					min={4}
 					max={64}
-					value={config.length}
-					onChange={(e) => handleLength(Number(e.target.value))}
-					className="w-full accent-primary"
+					value={[config.length]}
+					onValueChange={(v) => handleLength(v[0])}
 				/>
 			</div>
 
-			<div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+			<div className="flex items-center gap-2">
+				<Label
+					htmlFor="password-length-num"
+					className="text-xs text-muted-foreground"
+				>
+					Ou digite:
+				</Label>
+				<Input
+					id="password-length-num"
+					type="number"
+					value={config.length}
+					min={4}
+					max={64}
+					onChange={(e) => handleLength(Number(e.target.value))}
+					className="h-8 w-16 text-center"
+					aria-label="Tamanho da senha em caracteres"
+				/>
+			</div>
+
+			<div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
 				{checkboxOptions.map((option) => (
 					<div
 						key={option.key}
-						className="flex items-center gap-2 rounded-md border border-border bg-secondary p-3 transition-colors hover:border-primary"
+						className="flex items-center gap-2 rounded-md border border-border bg-card p-2.5 transition-colors hover:border-foreground/20"
 					>
 						<Checkbox
 							id={`password-opt-${option.key}`}
@@ -76,13 +96,24 @@ export function PasswordOptions({ config, onChange }: PasswordOptionsProps) {
 						/>
 						<Label
 							htmlFor={`password-opt-${option.key}`}
-							className="cursor-pointer"
+							className="cursor-pointer text-xs"
 						>
 							{option.label}
 						</Label>
 					</div>
 				))}
 			</div>
+
+			{!isValid && (
+				<div
+					className="rounded-md border border-destructive/30 bg-destructive/5 p-3"
+					role="alert"
+				>
+					<p className="text-xs text-destructive">
+						Selecione pelo menos um tipo de caractere
+					</p>
+				</div>
+			)}
 		</div>
 	);
 }

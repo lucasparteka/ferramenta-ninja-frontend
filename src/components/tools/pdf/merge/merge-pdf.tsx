@@ -1,8 +1,17 @@
 "use client";
 
+import {
+	AlertTriangle,
+	CheckCircle2,
+	Combine,
+	Download,
+	Trash2,
+	Upload,
+	X,
+} from "lucide-react";
 import { useRef, useState } from "react";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { downloadPDF, mergePDFs } from "@/lib/pdf/merge";
 import { renderPageThumbnail } from "@/lib/pdf/thumbnail";
 
@@ -139,9 +148,10 @@ export function MergePDF() {
 	const loadingCount = thumbnails.filter((t) => t === null).length;
 
 	return (
-		<div className="flex flex-col gap-6">
-			<div className="space-y-1">
-				<Label>Adicionar PDFs</Label>
+		<div className="flex flex-col overflow-hidden rounded-md border border-border divide-y divide-border bg-card">
+			<div className="p-4">
+				<SectionLabel>Arquivos</SectionLabel>
+				{/** biome-ignore lint/a11y/useSemanticElements: . */}
 				<div
 					role="button"
 					tabIndex={0}
@@ -159,15 +169,22 @@ export function MergePDF() {
 					className={`flex min-h-24 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
 						isDragging
 							? "border-primary bg-primary/5"
-							: "border-border bg-secondary hover:border-primary hover:bg-primary/5"
+							: "border-border bg-muted/40 hover:border-primary/50 hover:bg-primary/5"
 					}`}
 				>
-					<p className="text-sm font-medium text-foreground">
-						Arraste PDFs ou clique para adicionar
-					</p>
-					<p className="text-xs text-muted-foreground">
-						Vários arquivos permitidos
-					</p>
+					<Upload
+						size={20}
+						strokeWidth={1.75}
+						className="text-muted-foreground"
+					/>
+					<div className="space-y-0.5 text-center">
+						<p className="text-sm font-medium text-foreground">
+							Arraste PDFs ou clique para adicionar
+						</p>
+						<p className="text-xs text-muted-foreground">
+							Vários arquivos permitidos
+						</p>
+					</div>
 				</div>
 				<input
 					ref={inputRef}
@@ -179,23 +196,27 @@ export function MergePDF() {
 							processFiles(e.target.files);
 					}}
 					className="hidden"
-					aria-hidden="true"
 				/>
 			</div>
 
 			{files.length > 0 && (
-				<div className="space-y-3">
-					<p className="text-xs text-muted-foreground">
-						{files.length} arquivo(s)
-						{loadingCount > 0
-							? ` — carregando ${loadingCount} miniatura(s)…`
-							: files.length > 1
-								? " — arraste os cards para reordenar"
-								: ""}
-					</p>
+				<div className="p-4">
+					<SectionLabel
+						hint={
+							loadingCount > 0
+								? `carregando ${loadingCount} miniatura(s)…`
+								: files.length > 1
+									? "arraste para reordenar"
+									: undefined
+						}
+					>
+						Ordem ({files.length} arquivo{files.length !== 1 ? "s" : ""})
+					</SectionLabel>
 					<div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
 						{files.map((file, i) => (
+							// biome-ignore lint/a11y/noStaticElementInteractions: .
 							<div
+								// biome-ignore lint/suspicious/noArrayIndexKey: static item
 								key={`${file.name}-${i}`}
 								draggable
 								onDragStart={() => handleCardDragStart(i)}
@@ -211,8 +232,9 @@ export function MergePDF() {
 											: "border-border bg-card"
 								} cursor-grab active:cursor-grabbing`}
 							>
-								<div className="flex aspect-3/4 items-center justify-center bg-secondary">
+								<div className="flex aspect-3/4 items-center justify-center bg-muted/40">
 									{thumbnails[i] ? (
+										// biome-ignore lint/performance/noImgElement: .
 										<img
 											src={thumbnails[i]!}
 											alt={`Página 1 de ${file.name}`}
@@ -235,10 +257,10 @@ export function MergePDF() {
 											e.stopPropagation();
 											handleRemove(i);
 										}}
-										className="shrink-0 rounded px-1 text-xs text-muted-foreground hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+										className="shrink-0 rounded p-0.5 text-muted-foreground hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 										aria-label={`Remover ${file.name}`}
 									>
-										✕
+										<X size={12} />
 									</button>
 								</div>
 							</div>
@@ -247,41 +269,52 @@ export function MergePDF() {
 				</div>
 			)}
 
-			<div className="flex flex-col gap-3 sm:flex-row">
+			<div className="flex flex-wrap items-center gap-2 bg-muted/40 px-4 py-3">
 				<Button
-					className="sm:flex-1"
+					size="sm"
 					disabled={files.length < 2 || state === "processing"}
 					onClick={handleMerge}
 				>
+					<Combine size={14} />
 					{state === "processing"
 						? "Processando..."
 						: `Juntar ${files.length > 1 ? `${files.length} PDFs` : "PDFs"}`}
 				</Button>
 				{state === "done" && result && (
-					<Button
-						variant="outline"
-						className="sm:flex-1"
-						onClick={handleDownload}
-					>
+					<Button size="sm" onClick={handleDownload}>
+						<Download size={14} />
 						Baixar PDF unido
 					</Button>
 				)}
 				{files.length > 0 && (
-					<Button variant="outline" onClick={handleClear}>
+					<Button variant="outline" size="sm" onClick={handleClear}>
+						<Trash2 size={14} />
 						Limpar tudo
 					</Button>
 				)}
 			</div>
 
-			{state === "error" && (
-				<p aria-live="polite" className="text-sm text-destructive">
-					{errorMsg}
-				</p>
-			)}
 			{state === "done" && result && (
-				<p aria-live="polite" className="text-sm text-foreground">
-					PDFs unidos com sucesso.
-				</p>
+				<div
+					aria-live="polite"
+					className="flex items-center gap-2 bg-muted/40 px-4 py-3"
+				>
+					<CheckCircle2 size={14} className="shrink-0 text-success" />
+					<p className="text-sm text-foreground">PDFs unidos com sucesso.</p>
+				</div>
+			)}
+
+			{state === "error" && (
+				<div
+					aria-live="polite"
+					className="flex items-start gap-2 border-t border-destructive/30 bg-destructive/5 px-4 py-3"
+				>
+					<AlertTriangle
+						size={14}
+						className="mt-px shrink-0 text-destructive"
+					/>
+					<p className="text-sm text-destructive">{errorMsg}</p>
+				</div>
 			)}
 		</div>
 	);

@@ -1,9 +1,10 @@
 "use client";
 
-import { Trash } from "lucide-react";
+import { AlertTriangle, Download, FileDown, Trash2 } from "lucide-react";
 import { useRef, useState } from "react";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { PdfDropZone } from "@/components/tools/pdf/shared/pdf-drop-zone";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import {
 	type CompressionLevel,
@@ -22,7 +23,7 @@ const COMPRESSION_LEVELS: { value: CompressionLevel; label: string }[] = [
 	},
 	{
 		value: "alto",
-		label: "Alto — recompressão de imagens no servidor (maior redução)",
+		label: "Alto — remove metadados e otimiza estrutura",
 	},
 ];
 
@@ -109,47 +110,21 @@ export function CompressPDF() {
 			: 0;
 
 	return (
-		<div className="flex flex-col gap-6">
-			<div className="space-y-1">
-				<Label>Selecione um PDF</Label>
-				<div
-					role="button"
-					tabIndex={0}
-					aria-label="Área de upload de PDF. Clique ou arraste um arquivo."
-					onClick={() => inputRef.current?.click()}
-					onKeyDown={(e) => {
-						if (e.key === "Enter" || e.key === " ") inputRef.current?.click();
-					}}
+		<div className="flex flex-col overflow-hidden rounded-md border border-border divide-y divide-border bg-card">
+			<div className="p-4">
+				<SectionLabel>Arquivo</SectionLabel>
+				<PdfDropZone
+					file={file}
+					isDragging={isDragging}
 					onDragOver={(e) => {
 						e.preventDefault();
 						setIsDragging(true);
 					}}
 					onDragLeave={() => setIsDragging(false)}
 					onDrop={handleDrop}
-					className={`flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-						isDragging
-							? "border-primary bg-primary/5"
-							: "border-border bg-secondary hover:border-primary hover:bg-primary/5"
-					}`}
-				>
-					{file ? (
-						<div className="space-y-1 px-4 text-center">
-							<p className="text-sm font-medium text-foreground">{file.name}</p>
-							<p className="text-xs text-muted-foreground">
-								{formatBytes(originalSize)}
-							</p>
-						</div>
-					) : (
-						<>
-							<p className="text-sm font-medium text-foreground">
-								Arraste um PDF ou clique para selecionar
-							</p>
-							<p className="text-xs text-muted-foreground">
-								Apenas arquivo PDF
-							</p>
-						</>
-					)}
-				</div>
+					onClick={() => inputRef.current?.click()}
+					fileInfo={file ? formatBytes(originalSize) : undefined}
+				/>
 				<input
 					ref={inputRef}
 					type="file"
@@ -159,57 +134,54 @@ export function CompressPDF() {
 						if (f) processFile(f);
 					}}
 					className="hidden"
-					aria-hidden="true"
 				/>
-				{file && (
-					<Button
-						variant="secondary"
-						className="mt-3 w-full"
-						onClick={handleClear}
+			</div>
+
+			<div className="p-4">
+				<SectionLabel>Nível de compressão</SectionLabel>
+				<div className="space-y-1.5">
+					<NativeSelect
+						id="compression-level"
+						value={level}
+						onChange={(e) => setLevel(e.target.value as CompressionLevel)}
+						disabled={state === "processing"}
+						className="disabled:cursor-not-allowed disabled:opacity-50"
 					>
-						<Trash />
-						Limpar
+						{COMPRESSION_LEVELS.map((option) => (
+							<option key={option.value} value={option.value}>
+								{option.label}
+							</option>
+						))}
+					</NativeSelect>
+					<p className="text-xs text-muted-foreground">
+						A compressão no navegador remove objetos não utilizados e otimiza a
+						estrutura do arquivo. Para PDFs com muitas imagens, a redução pode
+						ser limitada.
+					</p>
+				</div>
+			</div>
+
+			<div className="flex flex-wrap items-center gap-2 bg-muted/40 px-4 py-3">
+				{state !== "done" && (
+					<Button
+						size="sm"
+						disabled={!file || state === "processing"}
+						onClick={handleCompress}
+					>
+						<FileDown size={14} />
+						{state === "processing" ? "Processando..." : "Comprimir PDF"}
 					</Button>
 				)}
-			</div>
-
-			<div className="space-y-1">
-				<Label htmlFor="compression-level">Nível de compressão</Label>
-				<NativeSelect
-					id="compression-level"
-					value={level}
-					onChange={(e) => setLevel(e.target.value as CompressionLevel)}
-					disabled={state === "processing"}
-					className="disabled:cursor-not-allowed disabled:opacity-50"
-				>
-					{COMPRESSION_LEVELS.map((option) => (
-						<option key={option.value} value={option.value}>
-							{option.label}
-						</option>
-					))}
-				</NativeSelect>
-				<p className="text-xs text-muted-foreground">
-					A compressão no navegador remove objetos não utilizados e otimiza a
-					estrutura do arquivo. Para PDFs com muitas imagens, a redução pode ser
-					limitada.
-				</p>
-			</div>
-
-			<div className="flex flex-col gap-3 sm:flex-row">
-				<Button
-					className="sm:flex-1"
-					disabled={!file || state === "processing"}
-					onClick={handleCompress}
-				>
-					{state === "processing" ? "Processando..." : "Comprimir PDF"}
-				</Button>
 				{state === "done" && result && (
-					<Button
-						variant="outline"
-						className="sm:flex-1"
-						onClick={handleDownload}
-					>
+					<Button size="sm" onClick={handleDownload}>
+						<Download size={14} />
 						Baixar PDF comprimido
+					</Button>
+				)}
+				{file && (
+					<Button variant="outline" size="sm" onClick={handleClear}>
+						<Trash2 size={14} />
+						Limpar
 					</Button>
 				)}
 			</div>
@@ -217,24 +189,24 @@ export function CompressPDF() {
 			{state === "done" && result && (
 				<div
 					aria-live="polite"
-					className="grid grid-cols-3 gap-4 rounded-md border border-border bg-secondary p-4 text-center"
+					className="grid grid-cols-3 gap-4 bg-muted/40 p-4 text-center"
 				>
 					<div>
 						<p className="text-xs text-muted-foreground">Tamanho original</p>
-						<p className="mt-1 font-semibold text-foreground">
+						<p className="mt-1 font-mono font-semibold tabular-nums text-foreground">
 							{formatBytes(originalSize)}
 						</p>
 					</div>
 					<div>
 						<p className="text-xs text-muted-foreground">Tamanho final</p>
-						<p className="mt-1 font-semibold text-foreground">
+						<p className="mt-1 font-mono font-semibold tabular-nums text-foreground">
 							{formatBytes(compressedSize)}
 						</p>
 					</div>
 					<div>
 						<p className="text-xs text-muted-foreground">Redução</p>
 						<p
-							className={`mt-1 font-semibold ${reduction > 0 ? "text-success" : "text-muted-foreground"}`}
+							className={`mt-1 font-mono font-semibold tabular-nums ${reduction > 0 ? "text-success" : "text-muted-foreground"}`}
 						>
 							{reduction > 0 ? `-${reduction}%` : "Sem redução"}
 						</p>
@@ -243,9 +215,16 @@ export function CompressPDF() {
 			)}
 
 			{state === "error" && (
-				<p aria-live="polite" className="text-sm text-destructive">
-					{errorMsg}
-				</p>
+				<div
+					aria-live="polite"
+					className="flex items-start gap-2 rounded-b-md border-t border-destructive/30 bg-destructive/5 px-4 py-3"
+				>
+					<AlertTriangle
+						size={14}
+						className="mt-px shrink-0 text-destructive"
+					/>
+					<p className="text-sm text-destructive">{errorMsg}</p>
+				</div>
 			)}
 		</div>
 	);

@@ -1,8 +1,19 @@
 "use client";
 
+import JSZip from "jszip";
+import {
+	AlertTriangle,
+	Check,
+	CheckCircle2,
+	Download,
+	Scissors,
+	Trash2,
+} from "lucide-react";
 import { useRef, useState } from "react";
+import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { OptionSwitch } from "@/components/shared/option-switch";
+import { PdfDropZone } from "@/components/tools/pdf/shared/pdf-drop-zone";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import {
 	downloadPDF,
 	extractPagesByIndex,
@@ -12,6 +23,11 @@ import { renderAllPageThumbnails } from "@/lib/pdf/thumbnail";
 
 type SplitState = "idle" | "processing" | "done" | "error";
 type SplitMode = "extract" | "all";
+
+const SPLIT_MODE_OPTIONS = [
+	{ label: "Extrair páginas", value: "extract" },
+	{ label: "Dividir tudo", value: "all" },
+];
 
 export function SplitPDF() {
 	const [file, setFile] = useState<File | null>(null);
@@ -104,6 +120,14 @@ export function SplitPDF() {
 		setSelectedPages(new Set());
 	}
 
+	function handleModeChange(newMode: string) {
+		setMode(newMode as SplitMode);
+		setSelectedPages(new Set());
+		setSingleResult(null);
+		setMultiResults([]);
+		if (state === "done") setState("idle");
+	}
+
 	async function handleSplit() {
 		if (!file) return;
 		setState("processing");
@@ -134,56 +158,40 @@ export function SplitPDF() {
 		}
 	}
 
-	async function handleDownloadAll() {
-		const baseName = file ? file.name.replace(/\.pdf$/i, "") : "pagina";
-		for (let i = 0; i < multiResults.length; i++) {
-			downloadPDF(multiResults[i], `${baseName}-pagina-${i + 1}.pdf`);
-			await new Promise<void>((resolve) => setTimeout(resolve, 150));
-		}
+	async function handleDownloadZip() {
+		if (!file || multiResults.length === 0) return;
+		const baseName = file.name.replace(/\.pdf$/i, "");
+		const zip = new JSZip();
+		multiResults.forEach((bytes, i) => {
+			zip.file(`${baseName}-pagina-${i + 1}.pdf`, bytes);
+		});
+		const blob = await zip.generateAsync({ type: "blob" });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = `${baseName}-dividido.zip`;
+		a.click();
+		URL.revokeObjectURL(url);
 	}
 
 	const thumbCount = thumbnails.filter(Boolean).length;
 	const displayPages = totalPages || thumbnails.length;
 
 	return (
-		<div className="flex flex-col gap-6">
-			<div className="space-y-1">
-				<Label>Selecione um PDF</Label>
-				<div
-					role="button"
-					tabIndex={0}
-					aria-label="Área de upload de PDF. Clique ou arraste um arquivo."
-					onClick={() => inputRef.current?.click()}
-					onKeyDown={(e) => {
-						if (e.key === "Enter" || e.key === " ") inputRef.current?.click();
-					}}
+		<div className="flex flex-col overflow-hidden rounded-md border border-border divide-y divide-border bg-card">
+			<div className="p-4">
+				<SectionLabel>Arquivo</SectionLabel>
+				<PdfDropZone
+					file={file}
+					isDragging={isDragging}
 					onDragOver={(e) => {
 						e.preventDefault();
 						setIsDragging(true);
 					}}
 					onDragLeave={() => setIsDragging(false)}
 					onDrop={handleDrop}
-					className={`flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-						isDragging
-							? "border-primary bg-primary/5"
-							: "border-border bg-secondary hover:border-primary hover:bg-primary/5"
-					}`}
-				>
-					{file ? (
-						<p className="px-4 text-center text-sm font-medium text-foreground">
-							{file.name}
-						</p>
-					) : (
-						<>
-							<p className="text-sm font-medium text-foreground">
-								Arraste um PDF ou clique para selecionar
-							</p>
-							<p className="text-xs text-muted-foreground">
-								Apenas arquivo PDF
-							</p>
-						</>
-					)}
-				</div>
+					onClick={() => inputRef.current?.click()}
+				/>
 				<input
 					ref={inputRef}
 					type="file"
@@ -193,94 +201,54 @@ export function SplitPDF() {
 						if (f) processFile(f);
 					}}
 					className="hidden"
-					aria-hidden="true"
 				/>
-				{file && (
-					<Button
-						variant="outline"
-						className="mt-3 w-full"
-						onClick={handleClear}
-					>
-						Limpar
-					</Button>
-				)}
 			</div>
 
-			<div className="space-y-3">
-				<p className="text-sm font-medium text-foreground">Modo de divisão</p>
-				<div className="space-y-2">
-					<Label className="cursor-pointer gap-3">
-						<input
-							type="radio"
-							name="split-mode"
-							value="extract"
-							checked={mode === "extract"}
-							onChange={() => {
-								setMode("extract");
-								setSingleResult(null);
-								setMultiResults([]);
-								if (state === "done") setState("idle");
-							}}
-							className="accent-primary"
-						/>
-						<span className="text-sm text-foreground">
-							Extrair páginas específicas
-						</span>
-					</Label>
-					<Label className="cursor-pointer gap-3">
-						<input
-							type="radio"
-							name="split-mode"
-							value="all"
-							checked={mode === "all"}
-							onChange={() => {
-								setMode("all");
-								setSelectedPages(new Set());
-								setSingleResult(null);
-								setMultiResults([]);
-								if (state === "done") setState("idle");
-							}}
-							className="accent-primary"
-						/>
-						<span className="text-sm text-foreground">
-							Dividir todas as páginas
-						</span>
-					</Label>
-				</div>
+			<div className="p-4">
+				<SectionLabel>Modo de divisão</SectionLabel>
+				<OptionSwitch
+					options={SPLIT_MODE_OPTIONS}
+					value={mode}
+					onChange={handleModeChange}
+				/>
 			</div>
 
 			{file && (displayPages > 0 || generatingThumbs) && (
-				<div className="space-y-3">
-					<div className="flex items-center justify-between">
-						<p className="text-xs text-muted-foreground">
-							{generatingThumbs
-								? `Gerando miniaturas… (${thumbCount}/${totalPages || "?"})`
-								: `${totalPages} página(s)`}
-							{mode === "extract" &&
-								selectedPages.size > 0 &&
-								` — ${selectedPages.size} selecionada(s)`}
-						</p>
-						{mode === "extract" && totalPages > 0 && (
-							<div className="flex gap-3">
-								<button
+				<div className="p-4">
+					<SectionLabel
+						hint={
+							generatingThumbs
+								? `gerando ${thumbCount}/${totalPages || "?"}`
+								: mode === "extract" && selectedPages.size > 0
+									? `${selectedPages.size} selecionada(s)`
+									: undefined
+						}
+					>
+						Páginas ({totalPages > 0 ? totalPages : "…"})
+					</SectionLabel>
+
+					{mode === "extract" && totalPages > 0 && (
+						<div className="mb-3 flex gap-2">
+							<Button
+								type="button"
+								variant="ghost"
+								size="sm"
+								onClick={selectAll}
+							>
+								Selecionar tudo
+							</Button>
+							{selectedPages.size > 0 && (
+								<Button
 									type="button"
-									onClick={selectAll}
-									className="text-xs text-primary hover:underline"
+									variant="ghost"
+									size="sm"
+									onClick={clearSelection}
 								>
-									Selecionar tudo
-								</button>
-								{selectedPages.size > 0 && (
-									<button
-										type="button"
-										onClick={clearSelection}
-										className="text-xs text-muted-foreground hover:underline"
-									>
-										Limpar seleção
-									</button>
-								)}
-							</div>
-						)}
-					</div>
+									Limpar seleção
+								</Button>
+							)}
+						</div>
+					)}
 
 					<div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
 						{Array.from({ length: displayPages }, (_, i) => {
@@ -289,7 +257,7 @@ export function SplitPDF() {
 
 							return (
 								<button
-									key={i}
+									key={thumb}
 									type="button"
 									disabled={mode === "all"}
 									onClick={() => mode === "extract" && togglePage(i)}
@@ -303,8 +271,15 @@ export function SplitPDF() {
 									aria-label={`Página ${i + 1}${selected ? " — selecionada" : ""}`}
 									aria-pressed={mode === "extract" ? selected : undefined}
 								>
-									<div className="flex aspect-3/4 items-center justify-center bg-secondary">
+									<div
+										className={`flex aspect-3/4 items-center justify-center transition-colors ${
+											mode === "extract" && selected
+												? "bg-primary/10"
+												: "bg-muted/40"
+										}`}
+									>
 										{thumb ? (
+											// biome-ignore lint/performance/noImgElement: .
 											<img
 												src={thumb}
 												alt={`Página ${i + 1}`}
@@ -314,12 +289,12 @@ export function SplitPDF() {
 											<div className="h-5 w-5 animate-spin rounded-full border-2 border-border border-t-primary" />
 										)}
 									</div>
-									<span className="block py-1 text-center text-xs text-muted-foreground">
+									<span className="block py-1 text-center font-mono text-xs text-muted-foreground">
 										{i + 1}
 									</span>
 									{mode === "extract" && selected && (
-										<div className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
-											✓
+										<div className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">
+											<Check size={11} />
 										</div>
 									)}
 								</button>
@@ -329,18 +304,18 @@ export function SplitPDF() {
 				</div>
 			)}
 
-			<div className="flex flex-col gap-3 sm:flex-row">
+			<div className="flex flex-wrap items-center gap-2 bg-muted/40 px-4 py-3">
 				<Button
-					className="sm:flex-1"
+					size="sm"
 					disabled={!file || state === "processing"}
 					onClick={handleSplit}
 				>
+					<Scissors size={14} />
 					{state === "processing" ? "Processando..." : "Dividir PDF"}
 				</Button>
 				{state === "done" && mode === "extract" && singleResult && (
 					<Button
-						variant="outline"
-						className="sm:flex-1"
+						size="sm"
 						onClick={() => {
 							const baseName = file
 								? file.name.replace(/\.pdf$/i, "")
@@ -348,35 +323,58 @@ export function SplitPDF() {
 							downloadPDF(singleResult, `${baseName}-extraido.pdf`);
 						}}
 					>
+						<Download size={14} />
 						Baixar PDF
 					</Button>
 				)}
 				{state === "done" && mode === "all" && multiResults.length > 0 && (
-					<Button
-						variant="outline"
-						className="sm:flex-1"
-						onClick={handleDownloadAll}
-					>
-						Baixar todos ({multiResults.length} arquivos)
+					<Button size="sm" onClick={handleDownloadZip}>
+						<Download size={14} />
+						Baixar ZIP ({multiResults.length} arquivos)
+					</Button>
+				)}
+				{file && (
+					<Button variant="outline" size="sm" onClick={handleClear}>
+						<Trash2 size={14} />
+						Limpar
 					</Button>
 				)}
 			</div>
 
-			{state === "error" && (
-				<p aria-live="polite" className="text-sm text-destructive">
-					{errorMsg}
-				</p>
-			)}
 			{state === "done" && mode === "extract" && (
-				<p aria-live="polite" className="text-sm text-foreground">
-					Páginas extraídas com sucesso. Clique em "Baixar PDF" para salvar.
-				</p>
+				<div
+					aria-live="polite"
+					className="flex items-center gap-2 bg-muted/40 px-4 py-3"
+				>
+					<CheckCircle2 size={14} className="shrink-0 text-success" />
+					<p className="text-sm text-foreground">
+						Páginas extraídas. Clique em "Baixar PDF" para salvar.
+					</p>
+				</div>
 			)}
 			{state === "done" && mode === "all" && (
-				<p aria-live="polite" className="text-sm text-foreground">
-					PDF dividido em {multiResults.length} arquivo(s). Clique em "Baixar
-					todos" para iniciar os downloads.
-				</p>
+				<div
+					aria-live="polite"
+					className="flex items-center gap-2 bg-muted/40 px-4 py-3"
+				>
+					<CheckCircle2 size={14} className="shrink-0 text-success" />
+					<p className="text-sm text-foreground">
+						PDF dividido em {multiResults.length} arquivo(s).
+					</p>
+				</div>
+			)}
+
+			{state === "error" && (
+				<div
+					aria-live="polite"
+					className="flex items-start gap-2 border-t border-destructive/30 bg-destructive/5 px-4 py-3"
+				>
+					<AlertTriangle
+						size={14}
+						className="mt-px shrink-0 text-destructive"
+					/>
+					<p className="text-sm text-destructive">{errorMsg}</p>
+				</div>
 			)}
 		</div>
 	);

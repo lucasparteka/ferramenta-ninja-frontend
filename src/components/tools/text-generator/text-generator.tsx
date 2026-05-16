@@ -4,12 +4,12 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutD } from "@/components/shared/layout-d";
+import { NumberInput } from "@/components/shared/number-input";
 import { SidebarSection } from "@/components/shared/sidebar-section";
 import { StatusBar } from "@/components/shared/status-bar";
 import { SwitchRow } from "@/components/shared/switch-row";
 import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
 	generateLoremParagraphs,
 	generateLoremSentences,
@@ -168,18 +168,12 @@ export function TextGenerator() {
 					<SidebarSection title="Quantidade">
 						<div className="flex items-center justify-between">
 							<span className="text-xs text-muted-foreground">{unitLabel}</span>
-							<Input
-								type="number"
+							<NumberInput
+								value={options.quantity}
+								onChange={(v) => set("quantity", v)}
 								min={1}
 								max={100}
-								value={options.quantity}
-								onChange={(e) => {
-									const value = Number(e.target.value);
-									if (!Number.isNaN(value)) {
-										set("quantity", Math.min(100, Math.max(1, value)));
-									}
-								}}
-								className="h-7 w-16 text-right font-mono text-xs"
+								className="h-7 w-16 text-xs"
 							/>
 						</div>
 					</SidebarSection>
@@ -200,7 +194,7 @@ export function TextGenerator() {
 				readOnly
 				value={output}
 				placeholder='Clique em "Gerar texto" para começar...'
-				className="flex-1 min-h-[280px] resize-none bg-transparent p-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+				className="flex-1 min-h-70 resize-none bg-transparent p-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
 			/>
 
 			<StatusBar

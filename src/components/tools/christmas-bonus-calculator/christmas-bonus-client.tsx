@@ -7,6 +7,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -145,27 +146,23 @@ export function ChristmasBonusClient() {
 									>
 										Meses trabalhados
 									</Label>
-									<Input
+									<NumberInput
 										id="monthsWorked"
-										type="number"
+										value={state.monthsWorked}
+										onChange={(v) => set("monthsWorked")(v)}
 										min={1}
 										max={12}
-										value={state.monthsWorked}
-										onChange={(e) =>
-											set("monthsWorked")(Number(e.target.value))
-										}
 									/>
 								</div>
 								<div>
 									<Label htmlFor="dependents" className="mb-1.5 block text-xs">
 										Dependentes
 									</Label>
-									<Input
+									<NumberInput
 										id="dependents"
-										type="number"
-										min={0}
 										value={state.dependents}
-										onChange={(e) => set("dependents")(Number(e.target.value))}
+										onChange={(v) => set("dependents")(v)}
+										min={0}
 									/>
 								</div>
 							</div>
@@ -287,6 +284,8 @@ export function ChristmasBonusClient() {
 									label="Copiar resumo"
 									feedbackText="Copiado"
 									variant="outline"
+									size="sm"
+									className="ml-auto"
 								/>
 							</div>
 						</>

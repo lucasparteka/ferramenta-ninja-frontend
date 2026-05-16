@@ -4,6 +4,7 @@ import { Shuffle, Trash } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutA } from "@/components/shared/layout-a";
+import { NumberInput } from "@/components/shared/number-input";
 import { Slider } from "@/components/shared/slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -108,15 +109,10 @@ export function GradientGenerator() {
 									Ângulo
 								</h3>
 								<div className="flex items-center gap-1">
-									<Input
-										type="number"
+									<NumberInput
 										value={angle}
-										onChange={(e) => {
-											const v = Number(e.target.value);
-											if (!Number.isNaN(v))
-												setAngle(Math.min(360, Math.max(0, v)));
-										}}
-										className="h-7 w-16 text-right font-mono text-xs"
+										onChange={(v) => setAngle(v)}
+										className="h-7 w-16 text-right text-xs"
 										min={0}
 										max={360}
 									/>

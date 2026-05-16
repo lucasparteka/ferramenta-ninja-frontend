@@ -227,7 +227,6 @@ export function LoanCalculatorClient() {
 										]}
 										value={view}
 										onChange={(v) => setView(v as AmortizationSystem)}
-										size="sm"
 									/>
 								</div>
 

@@ -4,8 +4,8 @@ import { FileDown, Loader2, Lock, LockOpen, Trash } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { ImageDropzone } from "@/components/shared/image-dropzone";
 import { LayoutA } from "@/components/shared/layout-a";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 import type { ImageInfo, ResizeMode } from "@/lib/image";
@@ -117,7 +117,12 @@ export function ResizeImage() {
 		setTargetWidth(value);
 		setActivePreset(null);
 		if (lockAspectRatio && info) {
-			const result = calculateAspectRatio(info.width, info.height, value, "width");
+			const result = calculateAspectRatio(
+				info.width,
+				info.height,
+				value,
+				"width",
+			);
 			setTargetHeight(result.height);
 		}
 	}
@@ -126,7 +131,12 @@ export function ResizeImage() {
 		setTargetHeight(value);
 		setActivePreset(null);
 		if (lockAspectRatio && info) {
-			const result = calculateAspectRatio(info.width, info.height, value, "height");
+			const result = calculateAspectRatio(
+				info.width,
+				info.height,
+				value,
+				"height",
+			);
 			setTargetWidth(result.width);
 		}
 	}
@@ -159,7 +169,11 @@ export function ResizeImage() {
 
 	const previewScale = useMemo(() => {
 		if (!targetWidth || !targetHeight) return 1;
-		return Math.min(PREVIEW_MAX_W / targetWidth, PREVIEW_MAX_H / targetHeight, 1);
+		return Math.min(
+			PREVIEW_MAX_W / targetWidth,
+			PREVIEW_MAX_H / targetHeight,
+			1,
+		);
 	}, [targetWidth, targetHeight]);
 
 	const previewW = Math.round((targetWidth || 1) * previewScale);
@@ -292,7 +306,9 @@ export function ResizeImage() {
 									onClick={() => setLockAspectRatio(!lockAspectRatio)}
 									className="text-muted-foreground hover:text-foreground"
 									aria-label={
-										lockAspectRatio ? "Desbloquear proporção" : "Bloquear proporção"
+										lockAspectRatio
+											? "Desbloquear proporção"
+											: "Bloquear proporção"
 									}
 								>
 									{lockAspectRatio ? (
@@ -302,22 +318,20 @@ export function ResizeImage() {
 									)}
 								</button>
 							</div>
-							<Input
+							<NumberInput
 								id="resize-width"
-								type="number"
-								value={targetWidth || ""}
-								onChange={(e) => handleWidthChange(Number(e.target.value) || 0)}
+								value={targetWidth || 0}
+								onChange={(v) => handleWidthChange(v)}
 							/>
 						</div>
 						<div className="space-y-1.5">
 							<Label htmlFor="resize-height" className="text-xs font-medium">
 								Altura (px)
 							</Label>
-							<Input
+							<NumberInput
 								id="resize-height"
-								type="number"
-								value={targetHeight || ""}
-								onChange={(e) => handleHeightChange(Number(e.target.value) || 0)}
+								value={targetHeight || 0}
+								onChange={(v) => handleHeightChange(v)}
 							/>
 						</div>
 					</div>
@@ -428,14 +442,18 @@ export function ResizeImage() {
 									Original
 								</h3>
 								<div className="flex items-center justify-between">
-									<span className="text-xs text-muted-foreground">Dimensões</span>
+									<span className="text-xs text-muted-foreground">
+										Dimensões
+									</span>
 									<span className="font-mono text-xs">
 										{info?.width} × {info?.height}
 									</span>
 								</div>
 								<div className="flex items-center justify-between">
 									<span className="text-xs text-muted-foreground">Tamanho</span>
-									<span className="font-mono text-xs">{formatBytes(file.size)}</span>
+									<span className="font-mono text-xs">
+										{formatBytes(file.size)}
+									</span>
 								</div>
 							</div>
 
@@ -444,7 +462,9 @@ export function ResizeImage() {
 									Destino
 								</h3>
 								<div className="flex items-center justify-between">
-									<span className="text-xs text-muted-foreground">Dimensões</span>
+									<span className="text-xs text-muted-foreground">
+										Dimensões
+									</span>
 									<span
 										className={cn(
 											"font-mono text-xs",

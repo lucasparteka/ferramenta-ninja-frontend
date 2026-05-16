@@ -7,6 +7,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -126,13 +127,12 @@ export function FixedIncomeClient() {
 									>
 										Prazo
 									</Label>
-									<Input
+									<NumberInput
 										id="days"
-										type="number"
+										value={state.days}
+										onChange={(v) => set("days")(v)}
 										min={1}
 										max={7300}
-										value={state.days}
-										onChange={(e) => set("days")(Number(e.target.value))}
 									/>
 									<p className="mt-1 text-[11px] text-muted-foreground">
 										dias corridos
@@ -197,15 +197,12 @@ export function FixedIncomeClient() {
 											Taxa anual do{" "}
 											{state.indexType === "cdi" ? "CDI" : "Selic"} (%)
 										</Label>
-										<Input
+										<NumberInput
 											id="annualIndexRate"
-											type="number"
-											step={0.01}
-											min={0}
 											value={state.annualIndexRate}
-											onChange={(e) =>
-												set("annualIndexRate")(Number(e.target.value))
-											}
+											onChange={(v) => set("annualIndexRate")(v)}
+											min={0}
+											step={0.01}
 										/>
 									</div>
 									<div>
@@ -215,16 +212,13 @@ export function FixedIncomeClient() {
 										>
 											% do indexador
 										</Label>
-										<Input
+										<NumberInput
 											id="indexPercentage"
-											type="number"
-											step={0.01}
+											value={state.indexPercentage}
+											onChange={(v) => set("indexPercentage")(v)}
 											min={0}
 											max={300}
-											value={state.indexPercentage}
-											onChange={(e) =>
-												set("indexPercentage")(Number(e.target.value))
-											}
+											step={0.01}
 										/>
 									</div>
 								</div>
@@ -236,15 +230,12 @@ export function FixedIncomeClient() {
 									>
 										Taxa prefixada anual (%)
 									</Label>
-									<Input
+									<NumberInput
 										id="prefixedAnnualRate"
-										type="number"
-										step={0.01}
-										min={0}
 										value={state.prefixedAnnualRate}
-										onChange={(e) =>
-											set("prefixedAnnualRate")(Number(e.target.value))
-										}
+										onChange={(v) => set("prefixedAnnualRate")(v)}
+										min={0}
+										step={0.01}
 									/>
 								</div>
 							)}

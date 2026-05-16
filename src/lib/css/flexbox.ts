@@ -38,16 +38,20 @@ export type FlexItem = {
 	flexBasis: string;
 	alignSelf: AlignSelf;
 	order: number;
+	width: string;
+	height: string;
 };
 
 export type FlexContainer = {
-	display: "flex";
+	display: "flex" | "inline-flex";
 	flexDirection: FlexDirection;
 	flexWrap: FlexWrap;
 	justifyContent: JustifyContent;
 	alignItems: AlignItems;
 	alignContent: AlignContent;
-	gap: number;
+	rowGap: number;
+	columnGap: number;
+	minHeight: number;
 };
 
 export const DEFAULT_CONTAINER: FlexContainer = {
@@ -57,7 +61,9 @@ export const DEFAULT_CONTAINER: FlexContainer = {
 	justifyContent: "flex-start",
 	alignItems: "stretch",
 	alignContent: "stretch",
-	gap: 8,
+	rowGap: 8,
+	columnGap: 8,
+	minHeight: 320,
 };
 
 export const ITEM_COLORS = [
@@ -81,6 +87,8 @@ export function createDefaultItem(index: number): FlexItem {
 		flexBasis: "auto",
 		alignSelf: "auto",
 		order: 0,
+		width: "auto",
+		height: "auto",
 	};
 }
 
@@ -90,7 +98,7 @@ export function createDefaultItems(count = 4): FlexItem[] {
 
 export function buildContainerCSS(container: FlexContainer): string {
 	const lines: string[] = [
-		"display: flex;",
+		`display: ${container.display};`,
 		`flex-direction: ${container.flexDirection};`,
 		`flex-wrap: ${container.flexWrap};`,
 		`justify-content: ${container.justifyContent};`,
@@ -101,8 +109,18 @@ export function buildContainerCSS(container: FlexContainer): string {
 		lines.push(`align-content: ${container.alignContent};`);
 	}
 
-	if (container.gap > 0) {
-		lines.push(`gap: ${container.gap}px;`);
+	if (container.rowGap === container.columnGap) {
+		if (container.rowGap > 0) {
+			lines.push(`gap: ${container.rowGap}px;`);
+		}
+	} else {
+		if (container.rowGap > 0) lines.push(`row-gap: ${container.rowGap}px;`);
+		if (container.columnGap > 0)
+			lines.push(`column-gap: ${container.columnGap}px;`);
+	}
+
+	if (container.minHeight !== 320) {
+		lines.push(`min-height: ${container.minHeight}px;`);
 	}
 
 	return lines.join("\n");
@@ -114,6 +132,9 @@ export function buildItemCSS(item: FlexItem): string {
 		`flex-shrink: ${item.flexShrink};`,
 		`flex-basis: ${item.flexBasis};`,
 	];
+
+	if (item.width !== "auto") lines.push(`width: ${item.width};`);
+	if (item.height !== "auto") lines.push(`height: ${item.height};`);
 
 	if (item.alignSelf !== "auto") {
 		lines.push(`align-self: ${item.alignSelf};`);
@@ -137,16 +158,25 @@ export function buildFullCSS(
 		`${selector} {\n  ${containerCSS.replace(/\n/g, "\n  ")}\n}`,
 	];
 
-	if (items.length > 0) {
-		parts.push(`${itemSelector} {`);
-		for (const item of items) {
-			const itemCSS = buildItemCSS(item)
+	if (items.length === 0) return parts.join("\n\n");
+
+	const itemCSSList = items.map((item) => buildItemCSS(item));
+	const allSame = itemCSSList.every((css) => css === itemCSSList[0]);
+
+	if (allSame) {
+		const indented = (itemCSSList[0] ?? "")
+			.split("\n")
+			.map((line) => `  ${line}`)
+			.join("\n");
+		parts.push(`${itemSelector} {\n${indented}\n}`);
+	} else {
+		for (let i = 0; i < items.length; i++) {
+			const indented = (itemCSSList[i] ?? "")
 				.split("\n")
 				.map((line) => `  ${line}`)
 				.join("\n");
-			parts.push(`  /* ${item.label} */\n${itemCSS}`);
+			parts.push(`${itemSelector}-${i + 1} {\n${indented}\n}`);
 		}
-		parts.push("}");
 	}
 
 	return parts.join("\n\n");

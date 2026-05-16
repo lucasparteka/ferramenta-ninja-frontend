@@ -7,6 +7,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -137,13 +138,12 @@ export function VacationClient() {
 									>
 										Dias de férias
 									</Label>
-									<Input
+									<NumberInput
 										id="daysToTake"
-										type="number"
+										value={state.daysToTake}
+										onChange={(v) => set("daysToTake")(v)}
 										min={5}
 										max={30}
-										value={state.daysToTake}
-										onChange={(e) => set("daysToTake")(Number(e.target.value))}
 									/>
 									<p className="mt-1 text-[11px] text-muted-foreground">
 										Mínimo 5 dias (CLT art. 134 §1º)
@@ -164,15 +164,12 @@ export function VacationClient() {
 									>
 										Meses trabalhados
 									</Label>
-									<Input
+									<NumberInput
 										id="monthsAtCompany"
-										type="number"
+										value={state.monthsAtCompany}
+										onChange={(v) => set("monthsAtCompany")(v)}
 										min={1}
 										max={12}
-										value={state.monthsAtCompany}
-										onChange={(e) =>
-											set("monthsAtCompany")(Number(e.target.value))
-										}
 									/>
 								</div>
 								<div>
@@ -182,12 +179,11 @@ export function VacationClient() {
 									>
 										Faltas injustificadas
 									</Label>
-									<Input
+									<NumberInput
 										id="absences"
-										type="number"
-										min={0}
 										value={state.absences}
-										onChange={(e) => set("absences")(Number(e.target.value))}
+										onChange={(v) => set("absences")(v)}
+										min={0}
 									/>
 								</div>
 							</div>
@@ -198,12 +194,11 @@ export function VacationClient() {
 								>
 									Dependentes para IRRF
 								</Label>
-								<Input
+								<NumberInput
 									id="dependents"
-									type="number"
-									min={0}
 									value={state.dependents}
-									onChange={(e) => set("dependents")(Number(e.target.value))}
+									onChange={(v) => set("dependents")(v)}
+									min={0}
 								/>
 							</div>
 						</div>

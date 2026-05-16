@@ -1,5 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { NumberInput } from "@/components/shared/number-input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/shared/slider";
 
@@ -71,13 +71,12 @@ export function PasswordOptions({ config, onChange }: PasswordOptionsProps) {
 				>
 					Ou digite:
 				</Label>
-				<Input
+				<NumberInput
 					id="password-length-num"
-					type="number"
 					value={config.length}
+					onChange={(v) => handleLength(v)}
 					min={4}
 					max={64}
-					onChange={(e) => handleLength(Number(e.target.value))}
 					className="h-8 w-16 text-center"
 					aria-label="Tamanho da senha em caracteres"
 				/>

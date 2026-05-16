@@ -5,8 +5,8 @@ import { useMemo, useState } from "react";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { type BmiClassification, calculateBmi } from "@/lib/health/bmi";
 
@@ -56,28 +56,25 @@ export function BmiClient() {
 									<Label htmlFor="weight" className="mb-1.5 block text-xs">
 										Peso (kg)
 									</Label>
-									<Input
+									<NumberInput
 										id="weight"
-										type="number"
-										step={0.1}
+										value={state.weight}
+										onChange={(v) => set("weight")(v)}
 										min={0}
+										step={0.1}
 										placeholder="70"
-										value={state.weight > 0 ? state.weight : ""}
-										onChange={(e) => set("weight")(Number(e.target.value))}
 									/>
 								</div>
 								<div>
 									<Label htmlFor="height" className="mb-1.5 block text-xs">
 										Altura (cm)
 									</Label>
-									<Input
+									<NumberInput
 										id="height"
-										type="number"
-										step={1}
+										value={state.height}
+										onChange={(v) => set("height")(v)}
 										min={0}
 										placeholder="170"
-										value={state.height > 0 ? state.height : ""}
-										onChange={(e) => set("height")(Number(e.target.value))}
 									/>
 								</div>
 							</div>

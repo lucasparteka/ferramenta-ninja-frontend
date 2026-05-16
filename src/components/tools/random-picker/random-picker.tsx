@@ -6,9 +6,9 @@ import { LayoutD } from "@/components/shared/layout-d";
 import { SidebarSection } from "@/components/shared/sidebar-section";
 import { StatusBar } from "@/components/shared/status-bar";
 import { SwitchRow } from "@/components/shared/switch-row";
+import { NumberInput } from "@/components/shared/number-input";
 import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { drawRandomItems } from "@/lib/random/draw";
 
@@ -75,13 +75,6 @@ export function RandomPicker() {
 		setError("");
 	}
 
-	function handleWinnersCount(raw: string) {
-		const value = Number(raw);
-		if (!Number.isNaN(value) && value >= 1) {
-			set("winnersCount", Math.min(maxWinners, value));
-		}
-	}
-
 	return (
 		<LayoutD
 			header={
@@ -132,13 +125,12 @@ export function RandomPicker() {
 					<SidebarSection title="Opções">
 						<div className="flex items-center justify-between">
 							<span className="text-xs text-muted-foreground">Vencedores</span>
-							<Input
-								type="number"
+							<NumberInput
+								value={options.winnersCount}
+								onChange={(v) => set("winnersCount", v)}
 								min={1}
 								max={maxWinners}
-								value={options.winnersCount}
-								onChange={(e) => handleWinnersCount(e.target.value)}
-								className="h-7 w-16 text-right font-mono text-xs"
+								className="h-7 w-16 text-right text-xs"
 							/>
 						</div>
 
@@ -172,9 +164,15 @@ export function RandomPicker() {
 				items={[
 					{
 						label: "",
-						value: error || (items.length > 0 ? "Pronto para sortear" : "Aguardando itens"),
+						value:
+							error ||
+							(items.length > 0 ? "Pronto para sortear" : "Aguardando itens"),
 						mono: false,
-						variant: error ? "danger" : items.length > 0 ? "success" : "default",
+						variant: error
+							? "danger"
+							: items.length > 0
+								? "success"
+								: "default",
 					},
 					{
 						label: "",

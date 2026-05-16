@@ -7,6 +7,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -141,26 +142,24 @@ export function CompoundInterestClient() {
 									<Label htmlFor="annualRate" className="mb-1.5 block text-xs">
 										Taxa de juros anual (%)
 									</Label>
-									<Input
+									<NumberInput
 										id="annualRate"
-										type="number"
-										step={0.01}
-										min={0}
 										value={state.annualRate}
-										onChange={(e) => set("annualRate")(Number(e.target.value))}
+										onChange={(v) => set("annualRate")(v)}
+										min={0}
+										step={0.01}
 									/>
 								</div>
 								<div>
 									<Label htmlFor="months" className="mb-1.5 block text-xs">
 										Período
 									</Label>
-									<Input
+									<NumberInput
 										id="months"
-										type="number"
+										value={state.months}
+										onChange={(v) => set("months")(v)}
 										min={1}
 										max={600}
-										value={state.months}
-										onChange={(e) => set("months")(Number(e.target.value))}
 									/>
 									<p className="mt-1 text-[11px] text-muted-foreground">
 										meses (máx. 50 anos)

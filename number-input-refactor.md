@@ -481,17 +481,26 @@
 - [x] `compound-interest-client.tsx`
   - [x] `annualRate` (≥0, decimal)
   - [x] `months` (1–600)
-- [ ] `fixed-income-client.tsx`
-  - [ ] `days` (1–7300)
-  - [ ] `annualIndexRate` (≥0, decimal)
-  - [ ] `indexPercentage` (0–300, decimal)
-  - [ ] `prefixedAnnualRate` (≥0, decimal)
-- [ ] `vacation-client.tsx`
-  - [ ] `daysToTake` (5–30)
-  - [ ] `monthsAtCompany` (1–12)
-  - [ ] `absences` (≥0)
-  - [ ] `dependents` (≥0)
-- [ ] `rescisao-client.tsx`
-  - [ ] `dependents` (0–10)
-- [ ] `salary-client.tsx`
-  - [ ] `dependents` (0–10)
+- [x] `fixed-income-client.tsx`
+  - [x] `days` (1–7300)
+  - [x] `annualIndexRate` (≥0, decimal)
+  - [x] `indexPercentage` (0–300, decimal)
+  - [x] `prefixedAnnualRate` (≥0, decimal)
+- [x] `vacation-client.tsx`
+  - [x] `daysToTake` (5–30)
+  - [x] `monthsAtCompany` (1–12)
+  - [x] `absences` (≥0)
+  - [x] `dependents` (≥0)
+- [x] `rescisao-client.tsx`
+  - [x] `dependents` (0–10)
+- [x] `salary-client.tsx`
+  - [x] `dependents` (0–10)
+
+## Extras (guard `!Number.isNaN`, convertidos ao padrão)
+
+- [x] `cpf-generator.tsx`
+  - [x] `quantity` (1–100)
+- [x] `cnpj-generator.tsx`
+  - [x] `quantity` (1–100)
+- [x] `text-generator.tsx`
+  - [x] `quantity` (1–100)

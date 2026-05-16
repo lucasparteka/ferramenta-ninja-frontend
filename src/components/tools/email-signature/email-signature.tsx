@@ -264,7 +264,7 @@ export function EmailSignature() {
 								<Label htmlFor="phone">Telefone</Label>
 								<Input
 									id="phone"
-									type="number"
+									type="tel"
 									{...register("phone")}
 									placeholder="(99) 9999-9999"
 								/>
@@ -273,7 +273,7 @@ export function EmailSignature() {
 								<Label htmlFor="mobile">Celular / WhatsApp</Label>
 								<Input
 									id="mobile"
-									type="number"
+									type="tel"
 									{...register("mobile")}
 									placeholder="(99) 99999-9999"
 								/>

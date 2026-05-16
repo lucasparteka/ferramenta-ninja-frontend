@@ -7,6 +7,7 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -148,13 +149,12 @@ export function SalaryClient() {
 									>
 										Dependentes para IRRF
 									</Label>
-									<Input
+									<NumberInput
 										id="dependents"
-										type="number"
+										value={state.dependents}
+										onChange={(v) => set("dependents")(v)}
 										min={0}
 										max={10}
-										value={state.dependents}
-										onChange={(e) => set("dependents")(Number(e.target.value))}
 									/>
 								</div>
 								<div>

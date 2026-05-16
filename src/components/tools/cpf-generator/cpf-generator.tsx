@@ -6,10 +6,10 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { LayoutD } from "@/components/shared/layout-d";
+import { NumberInput } from "@/components/shared/number-input";
 import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { generateMultipleCPF } from "@/lib/cpf/generate";
 
@@ -17,13 +17,6 @@ export function CpfGenerator() {
 	const [quantity, setQuantity] = useState(1);
 	const [formatted, setFormatted] = useState(true);
 	const [cpfs, setCpfs] = useState<string[]>([]);
-
-	function handleQuantity(raw: string) {
-		const value = Number(raw);
-		if (!Number.isNaN(value)) {
-			setQuantity(Math.min(100, Math.max(1, value)));
-		}
-	}
 
 	function handleGenerate() {
 		setCpfs(generateMultipleCPF(quantity, formatted));
@@ -113,14 +106,13 @@ export function CpfGenerator() {
 							<Label htmlFor="cpf-quantity" className="mb-1.5 block text-xs">
 								Quantidade de CPFs
 							</Label>
-							<Input
+							<NumberInput
 								id="cpf-quantity"
-								type="number"
+								value={quantity}
+								onChange={(v) => setQuantity(v)}
 								min={1}
 								max={100}
-								value={quantity}
-								onChange={(e) => handleQuantity(e.target.value)}
-								className="w-24 font-mono"
+								className="w-24"
 							/>
 						</div>
 

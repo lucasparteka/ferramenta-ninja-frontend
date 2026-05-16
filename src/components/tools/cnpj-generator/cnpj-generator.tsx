@@ -6,10 +6,10 @@ import { CopyButton } from "@/components/shared/copy-button";
 import { Chip } from "@/components/shared/layout-b/chip";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { LayoutD } from "@/components/shared/layout-d";
+import { NumberInput } from "@/components/shared/number-input";
 import { ToolHeader } from "@/components/shared/tool-header";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { generateMultipleCNPJ } from "@/lib/cnpj/generate";
 
@@ -17,13 +17,6 @@ export function CnpjGenerator() {
 	const [quantity, setQuantity] = useState(1);
 	const [formatted, setFormatted] = useState(true);
 	const [cnpjs, setCnpjs] = useState<string[]>([]);
-
-	function handleQuantity(raw: string) {
-		const value = Number(raw);
-		if (!Number.isNaN(value)) {
-			setQuantity(Math.min(100, Math.max(1, value)));
-		}
-	}
 
 	function handleGenerate() {
 		setCnpjs(generateMultipleCNPJ(quantity, formatted));
@@ -113,14 +106,13 @@ export function CnpjGenerator() {
 							<Label htmlFor="cnpj-quantity" className="mb-1.5 block text-xs">
 								Quantidade de CNPJs
 							</Label>
-							<Input
+							<NumberInput
 								id="cnpj-quantity"
-								type="number"
+								value={quantity}
+								onChange={(v) => setQuantity(v)}
 								min={1}
 								max={100}
-								value={quantity}
-								onChange={(e) => handleQuantity(e.target.value)}
-								className="w-24 font-mono"
+								className="w-24"
 							/>
 						</div>
 

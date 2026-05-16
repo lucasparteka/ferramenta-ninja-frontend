@@ -1,5 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { NumberInput } from "@/components/shared/number-input";
 import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
 
@@ -29,13 +29,6 @@ export function GeneratorControls({
 		onChange({ ...options, [key]: value });
 	}
 
-	function handleQuantity(raw: string) {
-		const value = Number(raw);
-		if (!Number.isNaN(value)) {
-			set("quantity", Math.min(100, Math.max(1, value)));
-		}
-	}
-
 	return (
 		<div className="grid gap-4 sm:grid-cols-3">
 			<div className="space-y-2">
@@ -52,13 +45,12 @@ export function GeneratorControls({
 
 			<div className="space-y-2">
 				<Label htmlFor="generator-quantity">Quantidade</Label>
-				<Input
+				<NumberInput
 					id="generator-quantity"
-					type="number"
+					value={options.quantity}
+					onChange={(v) => set("quantity", v)}
 					min={1}
 					max={100}
-					value={options.quantity}
-					onChange={(e) => handleQuantity(e.target.value)}
 				/>
 			</div>
 

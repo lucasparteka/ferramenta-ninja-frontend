@@ -8,6 +8,7 @@ import { Chip } from "@/components/shared/layout-b/chip";
 import { ResultRow } from "@/components/shared/layout-b/result-row";
 import { SectionLabel } from "@/components/shared/layout-b/section-label";
 import { OptionSwitch } from "@/components/shared/option-switch";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DateInput } from "@/components/ui/date-input";
@@ -299,14 +300,12 @@ export function RescisaoClient() {
 									>
 										Dependentes para IRRF
 									</Label>
-									<Input
+									<NumberInput
 										id="deps"
-										type="number"
+										value={state.dependents}
+										onChange={(v) => set("dependents")(v)}
 										min={0}
 										max={10}
-										value={state.dependents}
-										onChange={(e) => set("dependents")(Number(e.target.value))}
-										className="font-mono tabular-nums"
 									/>
 								</div>
 							</div>

@@ -11,6 +11,7 @@ import {
 	X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { NumberInput } from "@/components/shared/number-input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -500,28 +501,18 @@ export function OrdemServicoEditor() {
 										placeholder="Descrição do item"
 										maxLength={80}
 									/>
-									<Input
-										type="number"
+									<NumberInput
 										value={item.qtd}
-										onChange={(e) =>
-											updateItem(item.id, {
-												qtd: Math.max(1, Number(e.target.value)),
-											})
-										}
+										onChange={(v) => updateItem(item.id, { qtd: v })}
 										min={1}
 										className="text-center"
 									/>
-									<Input
-										type="number"
-										value={item.valorUnit === 0 ? "" : item.valorUnit}
-										onChange={(e) =>
-											updateItem(item.id, {
-												valorUnit: Math.max(0, Number(e.target.value)),
-											})
-										}
-										placeholder="0,00"
+									<NumberInput
+										value={item.valorUnit}
+										onChange={(v) => updateItem(item.id, { valorUnit: v })}
 										min={0}
 										step={0.01}
+										placeholder="0,00"
 										className="text-right"
 									/>
 									<Button
@@ -532,8 +523,7 @@ export function OrdemServicoEditor() {
 										aria-label="Remover item"
 										className="shrink-0"
 									>
-										<Trash className="size-4" />
-										Remover
+										<Trash />
 									</Button>
 								</div>
 							))}

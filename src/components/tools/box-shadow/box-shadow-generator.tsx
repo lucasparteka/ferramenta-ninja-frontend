@@ -4,6 +4,7 @@ import { Plus, Trash } from "lucide-react";
 import { useState } from "react";
 import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutA } from "@/components/shared/layout-a";
+import { NumberInput } from "@/components/shared/number-input";
 import { Slider } from "@/components/shared/slider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -180,17 +181,12 @@ export function BoxShadowGenerator() {
 										Opacidade
 									</h3>
 									<div className="flex items-center gap-1">
-										<Input
-											type="number"
+										<NumberInput
 											value={activeLayer.opacity}
-											onChange={(e) => {
-												const v = Number(e.target.value);
-												if (!Number.isNaN(v))
-													handleUpdate(activeLayerIndex, {
-														opacity: Math.min(100, Math.max(0, v)),
-													});
-											}}
-											className="h-7 w-16 text-right font-mono text-xs"
+											onChange={(v) =>
+												handleUpdate(activeLayerIndex, { opacity: v })
+											}
+											className="h-7 w-16 text-right text-xs"
 											min={0}
 											max={100}
 										/>
@@ -215,17 +211,12 @@ export function BoxShadowGenerator() {
 											Deslocamento X
 										</h3>
 										<div className="flex items-center gap-1">
-											<Input
-												type="number"
+											<NumberInput
 												value={activeLayer.offsetX}
-												onChange={(e) => {
-													const v = Number(e.target.value);
-													if (!Number.isNaN(v))
-														handleUpdate(activeLayerIndex, {
-															offsetX: Math.min(50, Math.max(-50, v)),
-														});
-												}}
-												className="h-7 w-16 text-right font-mono text-xs"
+												onChange={(v) =>
+													handleUpdate(activeLayerIndex, { offsetX: v })
+												}
+												className="h-7 w-16 text-right text-xs"
 												min={-50}
 												max={50}
 											/>
@@ -249,17 +240,12 @@ export function BoxShadowGenerator() {
 											Deslocamento Y
 										</h3>
 										<div className="flex items-center gap-1">
-											<Input
-												type="number"
+											<NumberInput
 												value={activeLayer.offsetY}
-												onChange={(e) => {
-													const v = Number(e.target.value);
-													if (!Number.isNaN(v))
-														handleUpdate(activeLayerIndex, {
-															offsetY: Math.min(50, Math.max(-50, v)),
-														});
-												}}
-												className="h-7 w-16 text-right font-mono text-xs"
+												onChange={(v) =>
+													handleUpdate(activeLayerIndex, { offsetY: v })
+												}
+												className="h-7 w-16 text-right text-xs"
 												min={-50}
 												max={50}
 											/>
@@ -285,17 +271,12 @@ export function BoxShadowGenerator() {
 											Desfoque
 										</h3>
 										<div className="flex items-center gap-1">
-											<Input
-												type="number"
+											<NumberInput
 												value={activeLayer.blur}
-												onChange={(e) => {
-													const v = Number(e.target.value);
-													if (!Number.isNaN(v))
-														handleUpdate(activeLayerIndex, {
-															blur: Math.min(100, Math.max(0, v)),
-														});
-												}}
-												className="h-7 w-16 text-right font-mono text-xs"
+												onChange={(v) =>
+													handleUpdate(activeLayerIndex, { blur: v })
+												}
+												className="h-7 w-16 text-right text-xs"
 												min={0}
 												max={100}
 											/>
@@ -319,17 +300,12 @@ export function BoxShadowGenerator() {
 											Espalhamento
 										</h3>
 										<div className="flex items-center gap-1">
-											<Input
-												type="number"
+											<NumberInput
 												value={activeLayer.spread}
-												onChange={(e) => {
-													const v = Number(e.target.value);
-													if (!Number.isNaN(v))
-														handleUpdate(activeLayerIndex, {
-															spread: Math.min(50, Math.max(-50, v)),
-														});
-												}}
-												className="h-7 w-16 text-right font-mono text-xs"
+												onChange={(v) =>
+													handleUpdate(activeLayerIndex, { spread: v })
+												}
+												className="h-7 w-16 text-right text-xs"
 												min={-50}
 												max={50}
 											/>

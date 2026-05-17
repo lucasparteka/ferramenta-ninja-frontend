@@ -19,7 +19,7 @@ export function LayoutA({
 		<div>
 			<div className="overflow-hidden rounded-lg border border-border">
 				{header && (
-					<div className="flex items-center justify-between border-b border-border px-4 py-3 bg-card">
+					<div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3 bg-card">
 						{header}
 					</div>
 				)}
@@ -27,7 +27,7 @@ export function LayoutA({
 					<aside className="bg-card border-b lg:border-b-0 lg:border-r border-border overflow-y-auto">
 						{leftPanel}
 					</aside>
-					<main className="bg-muted/40 flex flex-col min-h-110">
+					<main className="bg-muted/40 flex flex-col lg:min-h-110">
 						{centerPanel}
 					</main>
 					<aside className="bg-card border-t lg:border-t-0 lg:border-l border-border overflow-y-auto">

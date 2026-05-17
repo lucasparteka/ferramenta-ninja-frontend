@@ -848,6 +848,14 @@ export const categories: ToolCategory[] = [
 				tags: ["imagem", "recortar", "crop", "foto"],
 				intent: "format",
 			},
+			{
+				name: "Extrair Cores de Imagem",
+				href: "/ferramentas/extrair-cor-de-imagem",
+				description: "Extraia a paleta dominante de qualquer imagem em HEX, RGB e HSL",
+				icon: Palette,
+				tags: ["imagem", "cores", "paleta", "design", "hex", "rgb", "color picker"],
+				intent: "analyze",
+			},
 		],
 	},
 	{

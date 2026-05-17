@@ -1,6 +1,7 @@
 import {
 	ArrowLeftRight,
 	Barcode,
+	Clapperboard,
 	Binary,
 	Blend,
 	Box,
@@ -652,6 +653,14 @@ export const categories: ToolCategory[] = [
 				icon: Shuffle,
 				tags: ["aleatorio"],
 				intent: "generate",
+			},
+			{
+				name: "Baixar Thumbnail do YouTube",
+				href: "/ferramentas/baixar-thumbnail-youtube",
+				description: "Extraia thumbnails em até 4 resoluções de qualquer vídeo",
+				icon: Clapperboard,
+				tags: ["youtube", "thumbnail", "imagem", "download", "capa"],
+				intent: "convert",
 			},
 		],
 	},

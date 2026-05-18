@@ -16,8 +16,9 @@ import { OptionSwitch } from "@/components/shared/option-switch";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { NativeSelect } from "@/components/ui/select-native";
-import { formatBytes } from "@/lib/image";
+import { Textarea } from "@/components/ui/textarea";
 import {
+	formatBytes,
 	loadSvgFromFile,
 	parseSvgDimensions,
 	svgStringToPng,
@@ -27,6 +28,7 @@ type InputMode = "file" | "code";
 type State = "idle" | "loaded" | "loading" | "error";
 
 const BG_COLORS = [
+	{ value: "original", label: "Fundo original" },
 	{ value: "transparent", label: "Transparente" },
 	{ value: "#ffffff", label: "Branco" },
 	{ value: "#000000", label: "Preto" },
@@ -45,7 +47,7 @@ export function SvgToPngConverter() {
 	const [targetWidth, setTargetWidth] = useState(0);
 	const [targetHeight, setTargetHeight] = useState(0);
 	const [lockAspectRatio, setLockAspectRatio] = useState(true);
-	const [backgroundColor, setBackgroundColor] = useState("transparent");
+	const [backgroundColor, setBackgroundColor] = useState("original");
 	const [isDragging, setIsDragging] = useState(false);
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 	const [resultSize, setResultSize] = useState<number | null>(null);
@@ -59,10 +61,10 @@ export function SvgToPngConverter() {
 				setSvgContent(svgText);
 				const dims = parseSvgDimensions(svgText);
 				if (dims) {
-					setOrigWidth(dims.width);
-					setOrigHeight(dims.height);
-					setTargetWidth(dims.width);
-					setTargetHeight(dims.height);
+					setOrigWidth(Math.round(dims.width));
+					setOrigHeight(Math.round(dims.height));
+					setTargetWidth(Math.round(dims.width));
+					setTargetHeight(Math.round(dims.height));
 				} else {
 					setOrigWidth(800);
 					setOrigHeight(600);
@@ -93,10 +95,10 @@ export function SvgToPngConverter() {
 
 		const dims = parseSvgDimensions(code);
 		if (dims) {
-			setOrigWidth(dims.width);
-			setOrigHeight(dims.height);
-			setTargetWidth(dims.width);
-			setTargetHeight(dims.height);
+			setOrigWidth(Math.round(dims.width));
+			setOrigHeight(Math.round(dims.height));
+			setTargetWidth(Math.round(dims.width));
+			setTargetHeight(Math.round(dims.height));
 		} else {
 			setOrigWidth(800);
 			setOrigHeight(600);
@@ -174,7 +176,8 @@ export function SvgToPngConverter() {
 			const result = await svgStringToPng(svgContent, {
 				width: targetWidth,
 				height: targetHeight,
-				backgroundColor,
+				backgroundColor:
+					backgroundColor === "original" ? "transparent" : backgroundColor,
 			});
 
 			const a = document.createElement("a");
@@ -197,6 +200,9 @@ export function SvgToPngConverter() {
 
 		setState("loaded");
 	}
+
+	const isTransparentBg =
+		backgroundColor === "transparent" || backgroundColor === "original";
 
 	const previewScale = useMemo(() => {
 		if (!targetWidth || !targetHeight) return 1;
@@ -366,11 +372,12 @@ export function SvgToPngConverter() {
 						/>
 					) : state === "idle" && inputMode === "code" ? (
 						<div className="flex h-full w-full flex-col">
-							<p className="mb-2 text-xs text-muted-foreground">
+							<Label htmlFor="svg-text-area" className="mb-2">
 								Cole o código SVG abaixo:
-							</p>
-							<textarea
-								className="min-h-[300px] w-full resize-none rounded-md border border-border bg-transparent p-3 font-mono text-xs text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-2 focus:ring-ring/30"
+							</Label>
+							<Textarea
+								id="svg-text-area"
+								className="min-h-75 w-full resize-none p-3 font-mono"
 								placeholder={`<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">\n  <circle cx="50" cy="50" r="40" fill="red" />\n</svg>`}
 								value={svgContent}
 								onChange={(e) => handleCodeChange(e.target.value)}
@@ -384,10 +391,19 @@ export function SvgToPngConverter() {
 							style={{
 								width: previewW || 300,
 								height: previewH || 300,
-								backgroundColor:
-									backgroundColor !== "transparent"
-										? backgroundColor
-										: undefined,
+								...(isTransparentBg
+									? {
+											backgroundImage: [
+												"linear-gradient(45deg, #d0d0d0 25%, transparent 25%)",
+												"linear-gradient(-45deg, #d0d0d0 25%, transparent 25%)",
+												"linear-gradient(45deg, transparent 75%, #d0d0d0 75%)",
+												"linear-gradient(-45deg, transparent 75%, #d0d0d0 75%)",
+											].join(", "),
+											backgroundSize: "16px 16px",
+											backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0px",
+											backgroundColor: "#f8f8f8",
+										}
+									: { backgroundColor }),
 							}}
 						>
 							{previewUrl && (
@@ -403,7 +419,7 @@ export function SvgToPngConverter() {
 				</div>
 			}
 			rightPanel={
-				<div className="divide-y divide-border">
+				<div className="divide-y divide-border h-full">
 					{state === "idle" ? (
 						<div className="flex h-full min-h-30 flex-col items-center justify-center gap-3 px-4 text-muted-foreground">
 							<ImageIcon className="h-8 w-8 opacity-20" />

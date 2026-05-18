@@ -9,6 +9,7 @@ import {
 	Brush,
 	Building2,
 	Calculator,
+	Frame,
 	CalendarCheck2,
 	CalendarDays,
 	Car,
@@ -972,6 +973,23 @@ export const categories: ToolCategory[] = [
 				description: "Gere meta tags HTML otimizadas para SEO e redes sociais",
 				icon: Tags,
 				tags: ["desenvolvedor", "seo", "meta", "html"],
+				intent: "generate",
+			},
+			{
+				name: "Gerador de Imagem Placeholder",
+				href: "/ferramentas/gerador-de-imagem-placeholder",
+				description:
+					"Crie imagens de placeholder com tamanho, cor e texto personalizados para protótipos",
+				icon: Frame,
+				tags: [
+					"placeholder",
+					"imagem",
+					"mock",
+					"layout",
+					"prototipo",
+					"desenvolvedor",
+					"png",
+				],
 				intent: "generate",
 			},
 			{

@@ -19,6 +19,12 @@ export type {
 	FaviconSize,
 	GeneratedFaviconFile,
 } from "./favicon";
+export type {
+	PlaceholderOptions,
+	PlaceholderPattern,
+	PlaceholderResult,
+} from "./placeholder";
+export { generatePlaceholder } from "./placeholder";
 export {
 	createWebManifest,
 	createZipPackage,

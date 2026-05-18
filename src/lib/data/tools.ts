@@ -5,6 +5,7 @@ import {
 	Binary,
 	Blend,
 	Box,
+	Contrast,
 	Braces,
 	Brush,
 	Building2,
@@ -1042,6 +1043,15 @@ export const categories: ToolCategory[] = [
 				icon: Layout,
 				tags: ["design", "css", "flexbox", "frontend", "layout"],
 				intent: "generate",
+			},
+			{
+				name: "Verificador de Contraste de Cores",
+				href: "/ferramentas/verificador-de-contraste-de-cores",
+				description:
+					"Verifique se a combinação de texto e fundo passa nos critérios WCAG AA e AAA de acessibilidade",
+				icon: Contrast,
+				tags: ["contraste", "wcag", "acessibilidade", "cores", "design", "a11y"],
+				intent: "analyze",
 			},
 			{
 				name: "Prévia Resultado Google",

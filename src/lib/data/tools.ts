@@ -4,6 +4,7 @@ import {
 	Clapperboard,
 	Binary,
 	Blend,
+	ScanFace,
 	Box,
 	Contrast,
 	Braces,
@@ -878,6 +879,15 @@ export const categories: ToolCategory[] = [
 				icon: Image,
 				tags: ["svg", "png", "converter", "imagem", "vetor"],
 				intent: "convert",
+			},
+			{
+				name: "Borrador de Rosto",
+				href: "/ferramentas/desfocar-rosto",
+				description:
+					"Detecte e borre rostos em fotos automaticamente no navegador",
+				icon: ScanFace,
+				tags: ["imagem", "privacidade", "rosto", "blur", "anonimizar", "foto"],
+				intent: "format",
 			},
 		],
 	},

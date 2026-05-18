@@ -35,3 +35,5 @@ export {
 	ICO_SIZES,
 	renderToSize,
 } from "./favicon";
+export type { BlurStyle, FaceRegion } from "./blur";
+export { applyFaceBlur, buildCanvasFromImage } from "./blur";

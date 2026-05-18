@@ -6,6 +6,13 @@ export type { ImageInfo } from "./info";
 export { formatBytes, getFileFormat, getImageInfo } from "./info";
 export type { AspectRatioResult, ResizeMode, ResizeResult } from "./resize";
 export { calculateAspectRatio, resizeImage } from "./resize";
+export type { SvgDimensions, SvgToPngOptions, SvgToPngResult } from "./svg";
+export {
+	loadSvgFromFile,
+	parseSvgDimensions,
+	svgStringToPng,
+	validateSvg,
+} from "./svg";
 export type {
 	FaviconMode,
 	FaviconPackage,

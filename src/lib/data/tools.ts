@@ -737,7 +737,8 @@ export const categories: ToolCategory[] = [
 			{
 				name: "QR Code Wi-Fi",
 				href: "/ferramentas/gerador-de-qr-code-wifi",
-				description: "Compartilhe sua rede Wi-Fi com um QR Code sem revelar a senha",
+				description:
+					"Compartilhe sua rede Wi-Fi com um QR Code sem revelar a senha",
 				icon: QrCode,
 				tags: ["qr", "wifi", "rede"],
 				intent: "generate",
@@ -745,7 +746,8 @@ export const categories: ToolCategory[] = [
 			{
 				name: "QR Code PIX",
 				href: "/ferramentas/gerador-de-qr-code-pix",
-				description: "QR codes PIX válidos para pagamento com padrão EMV do Banco Central",
+				description:
+					"QR codes PIX válidos para pagamento com padrão EMV do Banco Central",
 				icon: QrCode,
 				tags: ["qr", "pix", "pagamento"],
 				intent: "generate",
@@ -753,7 +755,8 @@ export const categories: ToolCategory[] = [
 			{
 				name: "QR Code para E-mail",
 				href: "/ferramentas/gerador-de-qr-code-email",
-				description: "QR codes que abrem o app de e-mail com campos pré-preenchidos",
+				description:
+					"QR codes que abrem o app de e-mail com campos pré-preenchidos",
 				icon: QrCode,
 				tags: ["qr", "email", "contato"],
 				intent: "generate",
@@ -851,10 +854,28 @@ export const categories: ToolCategory[] = [
 			{
 				name: "Extrair Cores de Imagem",
 				href: "/ferramentas/extrair-cor-de-imagem",
-				description: "Extraia a paleta dominante de qualquer imagem em HEX, RGB e HSL",
+				description:
+					"Extraia a paleta dominante de qualquer imagem em HEX, RGB e HSL",
 				icon: Palette,
-				tags: ["imagem", "cores", "paleta", "design", "hex", "rgb", "color picker"],
+				tags: [
+					"imagem",
+					"cores",
+					"paleta",
+					"design",
+					"hex",
+					"rgb",
+					"color picker",
+				],
 				intent: "analyze",
+			},
+			{
+				name: "Converter SVG para PNG",
+				href: "/ferramentas/converter-svg-para-png",
+				description:
+					"Converta arquivos SVG em PNG com dimensões ajustáveis e cor de fundo",
+				icon: Image,
+				tags: ["svg", "png", "converter", "imagem", "vetor"],
+				intent: "convert",
 			},
 		],
 	},

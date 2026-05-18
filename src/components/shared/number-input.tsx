@@ -14,6 +14,7 @@ type NumberInputProps = {
 	className?: string;
 	id?: string;
 	disabled?: boolean;
+	live?: boolean;
 	"aria-label"?: string;
 };
 
@@ -27,6 +28,7 @@ export function NumberInput({
 	className,
 	id,
 	disabled,
+	live,
 	"aria-label": ariaLabel,
 }: NumberInputProps) {
 	const [raw, setRaw] = useState(String(value));
@@ -41,6 +43,10 @@ export function NumberInput({
 		const pattern = allowDecimal ? /^[\d.,]*$/ : /^\d*$/;
 		if (pattern.test(input)) {
 			setRaw(input);
+			if (live && input !== "") {
+				const n = Number(allowDecimal ? input.replace(",", ".") : input);
+				if (!Number.isNaN(n)) onChange(n);
+			}
 		}
 	}
 

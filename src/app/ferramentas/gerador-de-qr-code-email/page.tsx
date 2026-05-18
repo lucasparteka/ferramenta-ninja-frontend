@@ -95,7 +95,7 @@ export default function GeradorQrCodeEmailPage() {
 			extraContent={<SeoContent />}
 			faq={faq}
 		>
-			<CustomQrCode initialTab="email" />
+			<CustomQrCode initialTab="email" hideMode />
 		</PageLayout>
 	);
 }

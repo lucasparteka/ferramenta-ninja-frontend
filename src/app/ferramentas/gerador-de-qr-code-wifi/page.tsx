@@ -94,7 +94,7 @@ export default function GeradorQrCodeWifiPage() {
 			extraContent={<SeoContent />}
 			faq={faq}
 		>
-			<CustomQrCode initialTab="wifi" />
+			<CustomQrCode initialTab="wifi" hideMode />
 		</PageLayout>
 	);
 }

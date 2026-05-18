@@ -1,8 +1,9 @@
 "use client";
 
-import { Download, Trash, Upload } from "lucide-react";
+import { Download, QrCode, Trash, Upload } from "lucide-react";
 import QRCodeStyling from "qr-code-styling";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { CopyButton } from "@/components/shared/copy-button";
 import { LayoutA } from "@/components/shared/layout-a";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,6 +21,7 @@ type QrTab = "url" | "wifi" | "email" | "phone" | "pix";
 
 type CustomQrCodeProps = {
 	initialTab?: QrTab;
+	hideMode?: boolean;
 };
 
 const DOT_TYPES = [
@@ -72,7 +74,7 @@ function formatPhoneBR(value: string): string {
 	return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
 }
 
-export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
+export function CustomQrCode({ initialTab, hideMode }: CustomQrCodeProps) {
 	const [tab, setTab] = useState<QrTab>(initialTab ?? "url");
 	const [urlText, setUrlText] = useState("https://ferramenta.ninja");
 	const [wifiSsid, setWifiSsid] = useState("");
@@ -97,8 +99,23 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 	const [errorLevel, setErrorLevel] = useState<"L" | "M" | "Q" | "H">("M");
 	const [logoUrl, setLogoUrl] = useState("");
 	const [logoSize, setLogoSize] = useState(0.4);
+	const [hasQr, setHasQr] = useState(false);
 
-	const [error, setError] = useState<string | null>(null);
+	const pixPayload = useMemo(() => {
+		if (tab !== "pix") return null;
+		if (!pixKey.trim() || !pixName.trim() || !pixCity.trim()) return null;
+		const amount = pixAmount ? Number(pixAmount.replace(",", ".")) : undefined;
+		if (pixAmount && (Number.isNaN(amount) || (amount ?? 0) <= 0)) return null;
+		return generatePixPayload({
+			keyType: pixKeyType,
+			key: pixKey,
+			name: pixName,
+			city: pixCity,
+			amount: amount && amount > 0 ? amount : undefined,
+			description: pixDescription || undefined,
+		});
+	}, [tab, pixKeyType, pixKey, pixName, pixCity, pixAmount, pixDescription]);
+
 	const qrRef = useRef<HTMLDivElement>(null);
 	const qrInstance = useRef<QRCodeStyling | null>(null);
 	const logoInputRef = useRef<HTMLInputElement>(null);
@@ -171,12 +188,9 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 		}
 
 		const err = validate();
-		if (err) {
-			setError(err);
-			return;
-		}
-		setError(null);
+		if (err) return;
 
+		setHasQr(true);
 		const data = getQrData();
 		if (!qrInstance.current) {
 			qrInstance.current = new QRCodeStyling({
@@ -303,11 +317,6 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 		reader.readAsDataURL(file);
 	}
 
-	function handleTabChange(t: QrTab) {
-		setTab(t);
-		setError(null);
-	}
-
 	function renderContentInputs() {
 		switch (tab) {
 			case "url":
@@ -359,39 +368,37 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 								placeholder="Senha da rede"
 							/>
 						</div>
-						<div className="grid gap-3 sm:grid-cols-2">
-							<div className="space-y-1.5">
-								<Label
-									htmlFor="qr-wifi-sec"
-									className="text-xs font-medium text-foreground"
-								>
-									Segurança
-								</Label>
-								<NativeSelect
-									id="qr-wifi-sec"
-									value={wifiSecurity}
-									onChange={(e) =>
-										setWifiSecurity(e.target.value as WifiSecurity)
-									}
-								>
-									<option value="WPA">WPA/WPA2</option>
-									<option value="WEP">WEP</option>
-									<option value="nopass">Aberta</option>
-								</NativeSelect>
-							</div>
-							<div className="flex items-center gap-2 pt-5">
-								<Checkbox
-									id="qr-wifi-hidden"
-									checked={wifiHidden}
-									onCheckedChange={(checked) => setWifiHidden(checked === true)}
-								/>
-								<Label
-									htmlFor="qr-wifi-hidden"
-									className="text-xs font-medium text-foreground cursor-pointer"
-								>
-									Rede oculta
-								</Label>
-							</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-wifi-sec"
+								className="text-xs font-medium text-foreground"
+							>
+								Segurança
+							</Label>
+							<NativeSelect
+								id="qr-wifi-sec"
+								value={wifiSecurity}
+								onChange={(e) =>
+									setWifiSecurity(e.target.value as WifiSecurity)
+								}
+							>
+								<option value="WPA">WPA/WPA2</option>
+								<option value="WEP">WEP</option>
+								<option value="nopass">Aberta</option>
+							</NativeSelect>
+						</div>
+						<div className="flex items-center gap-2">
+							<Checkbox
+								id="qr-wifi-hidden"
+								checked={wifiHidden}
+								onCheckedChange={(checked) => setWifiHidden(checked === true)}
+							/>
+							<Label
+								htmlFor="qr-wifi-hidden"
+								className="text-xs font-medium text-foreground cursor-pointer"
+							>
+								Rede oculta
+							</Label>
 						</div>
 					</>
 				);
@@ -465,100 +472,94 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 			case "pix":
 				return (
 					<>
-						<div className="grid gap-3 sm:grid-cols-2">
-							<div className="space-y-1.5">
-								<Label
-									htmlFor="qr-pix-type"
-									className="text-xs font-medium text-foreground"
-								>
-									Tipo de chave
-								</Label>
-								<NativeSelect
-									id="qr-pix-type"
-									value={pixKeyType}
-									onChange={(e) => setPixKeyType(e.target.value as PixKeyType)}
-								>
-									<option value="cpf">CPF</option>
-									<option value="cnpj">CNPJ</option>
-									<option value="phone">Celular</option>
-									<option value="email">E-mail</option>
-									<option value="evp">Chave Aleatória</option>
-								</NativeSelect>
-							</div>
-							<div className="space-y-1.5">
-								<Label
-									htmlFor="qr-pix-key"
-									className="text-xs font-medium text-foreground"
-								>
-									Chave Pix
-								</Label>
-								<Input
-									id="qr-pix-key"
-									value={pixKey}
-									onChange={(e) => setPixKey(e.target.value)}
-									placeholder="Chave Pix"
-								/>
-							</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-pix-type"
+								className="text-xs font-medium text-foreground"
+							>
+								Tipo de chave
+							</Label>
+							<NativeSelect
+								id="qr-pix-type"
+								value={pixKeyType}
+								onChange={(e) => setPixKeyType(e.target.value as PixKeyType)}
+							>
+								<option value="cpf">CPF</option>
+								<option value="cnpj">CNPJ</option>
+								<option value="phone">Celular</option>
+								<option value="email">E-mail</option>
+								<option value="evp">Chave Aleatória</option>
+							</NativeSelect>
 						</div>
-						<div className="grid gap-3 sm:grid-cols-2">
-							<div className="space-y-1.5">
-								<Label
-									htmlFor="qr-pix-name"
-									className="text-xs font-medium text-foreground"
-								>
-									Nome do beneficiário
-								</Label>
-								<Input
-									id="qr-pix-name"
-									value={pixName}
-									onChange={(e) => setPixName(e.target.value)}
-									placeholder="Nome completo"
-								/>
-							</div>
-							<div className="space-y-1.5">
-								<Label
-									htmlFor="qr-pix-city"
-									className="text-xs font-medium text-foreground"
-								>
-									Cidade
-								</Label>
-								<Input
-									id="qr-pix-city"
-									value={pixCity}
-									onChange={(e) => setPixCity(e.target.value)}
-									placeholder="Cidade"
-								/>
-							</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-pix-key"
+								className="text-xs font-medium text-foreground"
+							>
+								Chave Pix
+							</Label>
+							<Input
+								id="qr-pix-key"
+								value={pixKey}
+								onChange={(e) => setPixKey(e.target.value)}
+								placeholder="Chave Pix"
+							/>
 						</div>
-						<div className="grid gap-3 sm:grid-cols-2">
-							<div className="space-y-1.5">
-								<Label
-									htmlFor="qr-pix-amount"
-									className="text-xs font-medium text-foreground"
-								>
-									Valor (opcional)
-								</Label>
-								<Input
-									id="qr-pix-amount"
-									value={pixAmount}
-									onChange={(e) => setPixAmount(e.target.value)}
-									placeholder="0,00"
-								/>
-							</div>
-							<div className="space-y-1.5">
-								<Label
-									htmlFor="qr-pix-desc"
-									className="text-xs font-medium text-foreground"
-								>
-									Descrição (opcional)
-								</Label>
-								<Input
-									id="qr-pix-desc"
-									value={pixDescription}
-									onChange={(e) => setPixDescription(e.target.value)}
-									placeholder="Descrição"
-								/>
-							</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-pix-name"
+								className="text-xs font-medium text-foreground"
+							>
+								Nome do beneficiário
+							</Label>
+							<Input
+								id="qr-pix-name"
+								value={pixName}
+								onChange={(e) => setPixName(e.target.value)}
+								placeholder="Nome completo"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-pix-city"
+								className="text-xs font-medium text-foreground"
+							>
+								Cidade
+							</Label>
+							<Input
+								id="qr-pix-city"
+								value={pixCity}
+								onChange={(e) => setPixCity(e.target.value)}
+								placeholder="Cidade"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-pix-amount"
+								className="text-xs font-medium text-foreground"
+							>
+								Valor (opcional)
+							</Label>
+							<Input
+								id="qr-pix-amount"
+								value={pixAmount}
+								onChange={(e) => setPixAmount(e.target.value)}
+								placeholder="0,00"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<Label
+								htmlFor="qr-pix-desc"
+								className="text-xs font-medium text-foreground"
+							>
+								Descrição (opcional)
+							</Label>
+							<Input
+								id="qr-pix-desc"
+								value={pixDescription}
+								onChange={(e) => setPixDescription(e.target.value)}
+								placeholder="Descrição"
+							/>
 						</div>
 					</>
 				);
@@ -569,43 +570,36 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 		<LayoutA
 			leftPanel={
 				<div className="divide-y divide-border">
-					<div className="p-4">
-						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-							Modo
-						</h3>
-						<div className="space-y-1">
-							{MODE_LIST.map((m) => (
-								<button
-									key={m.value}
-									type="button"
-									onClick={() => handleTabChange(m.value)}
-									className={cn(
-										"flex w-full items-center rounded-md px-2.5 py-2 text-left text-xs font-medium transition-colors",
-										tab === m.value
-											? "bg-accent text-accent-foreground"
-											: "text-muted-foreground hover:bg-muted hover:text-foreground",
-									)}
-								>
-									{m.label}
-								</button>
-							))}
+					{!hideMode && (
+						<div className="p-4">
+							<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+								Modo
+							</h3>
+							<div className="space-y-1">
+								{MODE_LIST.map((m) => (
+									<button
+										key={m.value}
+										type="button"
+										onClick={() => { setTab(m.value); setHasQr(false); }}
+										className={cn(
+											"flex w-full items-center rounded-md px-2.5 py-2 text-left text-xs font-medium transition-colors",
+											tab === m.value
+												? "bg-accent text-accent-foreground"
+												: "text-muted-foreground hover:bg-muted hover:text-foreground",
+										)}
+									>
+										{m.label}
+									</button>
+								))}
+							</div>
 						</div>
-					</div>
+					)}
 
 					<div className="p-4">
 						<h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
 							Conteúdo
 						</h3>
-						<div className="space-y-3">
-							{renderContentInputs()}
-							{error && (
-								<div className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2">
-									<p className="text-xs font-medium text-destructive">
-										{error}
-									</p>
-								</div>
-							)}
-						</div>
+						<div className="space-y-3">{renderContentInputs()}</div>
 					</div>
 
 					<div className="p-4 space-y-3">
@@ -633,6 +627,7 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 						{logoUrl && (
 							<div className="space-y-2">
 								<div className="flex items-center gap-2">
+									{/** biome-ignore lint/performance/noImgElement: . */}
 									<img
 										src={logoUrl}
 										alt="Preview do logo"
@@ -675,10 +670,17 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 			}
 			centerPanel={
 				<div className="flex flex-col items-center justify-center gap-4 flex-1 p-4">
-					<div
-						ref={qrRef}
-						className="flex h-[300px] w-[300px] items-center justify-center rounded-md border border-border bg-muted/40"
-					/>
+					<div className="relative flex size-75 items-center justify-center rounded-md border border-border bg-muted/40">
+						<div ref={qrRef} />
+						{!hasQr && (
+							<div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center p-4">
+								<QrCode className="h-10 w-10 text-muted-foreground/40" />
+								<p className="text-xs text-muted-foreground">
+									Preencha os dados para gerar o QR Code
+								</p>
+							</div>
+						)}
+					</div>
 					<div className="flex flex-wrap justify-center gap-2">
 						<Button
 							variant="outline"
@@ -705,6 +707,29 @@ export function CustomQrCode({ initialTab }: CustomQrCodeProps) {
 							SVG
 						</Button>
 					</div>
+					{tab === "pix" && pixPayload && (
+						<div className="w-full max-w-sm space-y-2">
+							<p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground text-center">
+								Código PIX (copia e cola)
+							</p>
+							<div className="relative">
+								<Textarea
+									readOnly
+									value={pixPayload}
+									rows={3}
+									className="w-full resize-none p-3 pr-9 font-mono text-[11px] leading-relaxed text-foreground outline-none"
+								/>
+								<div className="absolute right-2 top-2">
+									<CopyButton
+										text={pixPayload}
+										size="icon-xs"
+										variant="ghost"
+										iconOnly
+									/>
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
 			}
 			rightPanel={

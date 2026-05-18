@@ -95,7 +95,7 @@ export default function GeradorQrCodePixPage() {
 			extraContent={<SeoContent />}
 			faq={faq}
 		>
-			<CustomQrCode initialTab="pix" />
+			<CustomQrCode initialTab="pix" hideMode />
 		</PageLayout>
 	);
 }

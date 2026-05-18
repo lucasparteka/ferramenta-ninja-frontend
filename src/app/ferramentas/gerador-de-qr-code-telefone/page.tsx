@@ -95,7 +95,7 @@ export default function GeradorQrCodeTelefonePage() {
 			extraContent={<SeoContent />}
 			faq={faq}
 		>
-			<CustomQrCode initialTab="phone" />
+			<CustomQrCode initialTab="phone" hideMode />
 		</PageLayout>
 	);
 }

@@ -34,6 +34,7 @@ import {
 	Image,
 	Keyboard,
 	Layout,
+	LayoutGrid,
 	LayoutList,
 	LineDotRightHorizontal,
 	Link,
@@ -53,6 +54,7 @@ import {
 	PiggyBank,
 	QrCode,
 	Receipt,
+	Regex,
 	Ruler,
 	Scale,
 	ScanLine,
@@ -1053,6 +1055,26 @@ export const categories: ToolCategory[] = [
 				icon: Layout,
 				tags: ["design", "css", "flexbox", "frontend", "layout"],
 				intent: "generate",
+			},
+			{
+				name: "Gerador de CSS Grid",
+				href: "/ferramentas/gerador-de-css-grid",
+				description:
+					"Crie layouts CSS Grid visualmente com preview em tempo real e código pronto",
+				icon: LayoutGrid,
+				tags: ["design", "css", "grid", "layout", "frontend", "desenvolvedor"],
+				intent: "generate",
+				weight: 1,
+			},
+			{
+				name: "Testador de Regex",
+				href: "/ferramentas/testador-de-regex",
+				description:
+					"Teste expressões regulares com highlighting de matches em tempo real",
+				icon: Regex,
+				tags: ["regex", "regexp", "expressão regular", "desenvolvedor", "programação"],
+				intent: "analyze",
+				weight: 1,
 			},
 			{
 				name: "Verificador de Contraste de Cores",

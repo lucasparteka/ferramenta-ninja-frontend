@@ -1,0 +1,194 @@
+ARTIGO #3 — RASCUNHO PARA HUMANIZAÇÃO
+Slug: como-criar-qr-code-pix
+Título: Como criar QR Code PIX para receber pagamentos (2026)
+Descrição: Aprenda a gerar seu QR Code PIX de forma gratuita, entenda a diferença entre QR estático e dinâmico e veja como usar essa funcionalidade para receber pagamentos como MEI, autônomo ou pequeno negócio.
+Categoria: QR Code
+Ferramenta: /ferramentas/gerador-de-qr-code-pix
+Keywords-alvo: QR code PIX, criar QR code PIX, QR code para pagamento, como fazer QR code PIX, gerar QR code PIX grátis
+Data: 2026-05-18
+---
+
+[INTRO]
+
+Você está atendendo um cliente, ele pergunta como vai pagar e você precisa passar sua chave PIX verbalmente — e ele ainda digita errado na primeira tentativa. É uma cena comum. O QR Code PIX resolve esse problema de forma simples: você gera uma imagem, o cliente aponta o celular, confirma o valor e pronto. Sem chave digitada na mão, sem erro de número de telefone, sem constrangimento.
+
+Mas muita gente ainda não sabe exatamente como gerar esse código, qual a diferença entre os tipos de QR, nem quando usar cada um. Neste artigo, você vai entender tudo isso — do básico até os casos de uso mais comuns para quem trabalha por conta própria ou tem um pequeno negócio.
+
+---
+
+[O QUE É O QR CODE PIX]
+
+O QR Code PIX é uma imagem gerada a partir das informações de uma chave PIX cadastrada no Banco Central. Quando alguém escaneia esse código com o aplicativo do banco, os dados de pagamento são preenchidos automaticamente: beneficiário, chave, valor (quando configurado) e descrição.
+
+O PIX foi lançado pelo Banco Central em novembro de 2020 e, desde então, virou o meio de pagamento mais usado no Brasil. Em 2025, o sistema processou mais de 60 bilhões de transações. O QR Code é uma das formas de acesso ao PIX — ao lado da chave digitada, do PIX copia e cola e do NFC.
+
+A tecnologia por trás do código segue o padrão EMVCo, o mesmo usado nos QR Codes de cartões de débito e crédito no mundo todo. No caso do PIX, o Banco Central definiu as regras de como o payload (o conteúdo codificado na imagem) deve ser estruturado. Por isso, qualquer banco ou carteira digital consegue ler o QR de qualquer outro banco.
+
+---
+
+[CHAVE PIX: O QUE VOCÊ PRECISA TER ANTES DE GERAR O QR]
+
+Para criar um QR Code PIX, você precisa ter uma chave PIX cadastrada em alguma instituição financeira. A chave é o identificador que associa o QR ao seu CPF ou CNPJ no sistema do Banco Central.
+
+Tipos de chave disponíveis:
+
+- CPF ou CNPJ: a opção mais usada por pessoas físicas e empresas. Não muda, é fácil de lembrar.
+- Número de telefone celular: precisa estar associado ao seu CPF ou CNPJ. Muda se você trocar de número.
+- E-mail: útil para quem prefere não compartilhar CPF ou telefone.
+- Chave aleatória (EVP): uma sequência de letras e números gerada automaticamente. Boa opção para quem quer privacidade, já que não expõe CPF ou telefone.
+
+Você pode cadastrar até 5 chaves por CPF em contas de pessoas físicas, e até 20 por CNPJ em contas de pessoas jurídicas. O cadastro é feito diretamente no app do banco, no menu PIX.
+
+Para gerar um QR Code, você vai precisar de pelo menos uma chave cadastrada e ativa.
+
+---
+
+[QR CODE ESTÁTICO X QR CODE DINÂMICO]
+
+Essa é a diferença mais importante de entender antes de gerar o código.
+
+QR Code Estático
+
+O QR estático é uma imagem fixa gerada a partir da sua chave PIX. Você pode:
+- Deixar o valor em aberto (o pagador digita o valor na hora)
+- Pré-definir um valor fixo (útil para produtos com preço fixo)
+
+Quando usar: atendimento presencial, cobrança informal, pessoas físicas e MEIs que não precisam de conciliação automática. É o tipo mais simples e funciona bem para a maioria dos casos do dia a dia.
+
+Limitação: como o QR é sempre o mesmo, você não consegue saber qual pagamento corresponde a qual venda — a menos que controle isso manualmente. Se você tem 10 clientes comprando ao mesmo tempo, todos vão pagar para o mesmo QR.
+
+QR Code Dinâmico
+
+O QR dinâmico é gerado por transação — um código diferente para cada cobrança. Ele pode conter:
+- Valor exato da cobrança
+- Data de vencimento
+- Nome do pagador
+- Informações para conciliação automática
+
+Quando usar: e-commerce, sistemas de gestão, cobranças com vencimento, negócios que precisam rastrear cada pagamento automaticamente.
+
+Limitação: para gerar QR dinâmico, você precisa de acesso à API PIX de alguma instituição financeira ou de um sistema de cobrança integrado (como as plataformas de pagamento). Não dá para gerar manualmente.
+
+Para a maioria dos autônomos e pequenos negócios, o QR estático resolve bem.
+
+---
+
+[COMO GERAR SEU QR CODE PIX PASSO A PASSO]
+
+Passo 1 — Reúna as informações
+
+Antes de gerar, tenha em mãos:
+- Sua chave PIX (CPF, telefone, e-mail ou chave aleatória)
+- O nome do beneficiário (como vai aparecer para o pagador — pode ser seu nome ou o nome do seu negócio)
+- A cidade onde a conta está cadastrada
+- O valor (opcional para QR estático — se deixar em branco, o pagador digita)
+- Uma descrição ou identificador da cobrança (opcional, mas útil)
+
+Passo 2 — Acesse a ferramenta de geração
+
+Abra o gerador de QR Code PIX da Ferramenta Ninja. A ferramenta não pede cadastro, não armazena seus dados e funciona diretamente no navegador.
+
+Passo 3 — Preencha os campos
+
+Informe sua chave PIX e os dados do beneficiário. Se quiser, adicione um valor fixo e uma descrição. Todos os campos opcionais podem ser deixados em branco se você quiser um QR genérico sem valor pré-definido.
+
+Passo 4 — Gere e salve
+
+Clique em gerar. O código aparece na tela em formato PNG. Baixe e use como quiser: imprima, coloque no celular, envie por mensagem, adicione no seu site.
+
+Passo 5 — Teste antes de usar
+
+Antes de compartilhar com clientes, escaneie o QR com o aplicativo do seu próprio banco. Confirme que o nome do beneficiário e as informações aparecem corretamente. Não finalize o pagamento — só confira os dados.
+
+---
+
+[COMO USAR O QR CODE PIX NO DIA A DIA]
+
+Impressão no balcão ou na mesa
+
+Para estabelecimentos físicos, imprima o QR em tamanho suficiente para ser lido a cerca de 30 cm de distância. Um papel A5 já resolve. Coloque próximo ao caixa ou na mesa de atendimento.
+
+Envio por WhatsApp ou e-mail
+
+Salve a imagem no celular e envie diretamente para o cliente quando precisar cobrar. É mais rápido do que passar a chave e esperar ele copiar.
+
+Inserção em orçamentos e notas
+
+Inclua o QR Code no PDF do orçamento ou da nota de serviço. O cliente recebe o documento e já pode pagar sem precisar de mais informações.
+
+Site ou página de contato
+
+Se você tem um site, adicione o QR na página de contato ou em uma seção de pagamento. Quem acessa pelo celular pode escanear diretamente; quem acessa pelo computador pode usar o PIX copia e cola gerado junto com o QR.
+
+---
+
+[QUEM DEVE USAR O QR CODE PIX]
+
+MEI e microempreendedor individual
+
+Para quem emite nota, tem CNPJ e atende clientes pessoalmente ou online, o QR Code com o CNPJ como chave é a forma mais profissional. O cliente vê o nome do negócio na hora de confirmar o pagamento — passa mais confiança do que ver só um CPF.
+
+Autônomo e freelancer
+
+Para prestadores de serviço sem CNPJ, o QR com CPF ou chave aleatória funciona perfeitamente. A chave aleatória tem a vantagem de não expor dados pessoais.
+
+Pequenos comércios
+
+Bares, restaurantes, feiras e lojas físicas de pequeno porte usam o QR estático fixado no balcão como forma de receber pagamentos sem maquininha. Não tem taxa, o dinheiro cai instantaneamente e funciona 24 horas por dia.
+
+Professores e prestadores de serviço
+
+Aulas, consultas, sessões e outros serviços que são pagos antes ou depois da prestação se beneficiam do envio do QR por mensagem. O cliente paga sem precisar estar presencialmente.
+
+---
+
+[ERROS COMUNS AO GERAR O QR CODE PIX]
+
+Errado: usar uma chave que não está mais ativa ou foi portada para outra conta.
+O pagamento pode ir para a conta errada ou simplesmente não funcionar. Sempre verifique no app do banco se a chave está ativa antes de gerar o QR.
+
+Errado: colocar um nome de beneficiário diferente do cadastrado na chave.
+O aplicativo do pagador mostra o nome que está no sistema do Banco Central, não o que você colocou no gerador. Se o nome não bater, pode gerar desconfiança no cliente.
+
+Errado: imprimir um QR muito pequeno.
+Códigos impressos abaixo de 2,5 cm x 2,5 cm costumam ter problemas de leitura, especialmente com celulares mais antigos. Prefira tamanhos maiores quando for imprimir.
+
+Errado: não testar antes de usar.
+Parece óbvio, mas muita gente distribui o QR sem escanear antes. Sempre faça um teste rápido no app do banco.
+
+Errado: compartilhar o QR em qualidade baixa ou comprimido demais.
+Ao enviar por WhatsApp ou e-mail, prefira o arquivo PNG original. Compressão excessiva da imagem pode deixar o código ilegível.
+
+---
+
+[PERGUNTAS FREQUENTES SOBRE QR CODE PIX]
+
+O QR Code PIX tem prazo de validade?
+
+O QR estático não tem prazo de validade. Ele funciona enquanto a chave PIX associada estiver ativa. O QR dinâmico pode ter data de vencimento configurada pelo gerador — após essa data, o código não aceita pagamentos.
+
+O pagador consegue ver meus dados pessoais no QR?
+
+O nome do titular da chave e a instituição financeira ficam visíveis para o pagador no momento da confirmação. CPF ou CNPJ completo não é exibido na tela de confirmação — apenas os últimos dígitos. Por isso, muita gente prefere usar a chave aleatória (EVP) para não vincular o pagamento ao CPF.
+
+Posso ter mais de um QR Code PIX?
+
+Sim. Você pode gerar QR Codes diferentes para chaves diferentes, valores diferentes ou descrições diferentes. Todos os QRs gerados para a mesma chave apontam para a mesma conta.
+
+Existe taxa para receber via QR Code PIX?
+
+Para pessoas físicas, o recebimento via PIX é gratuito. Para pessoas jurídicas, algumas instituições cobram por transação recebida — geralmente valores baixos, entre R$ 0,01 e R$ 0,20 por transação. Vale verificar as condições do banco onde sua conta PJ está aberta.
+
+O QR Code PIX funciona para pagamentos internacionais?
+
+O PIX ainda não está disponível para transações internacionais de forma direta. O Banco Central está trabalhando em parcerias para habilitar isso no futuro, mas por enquanto o sistema funciona apenas entre contas em instituições financeiras brasileiras.
+
+Qual a diferença entre QR Code PIX e PIX copia e cola?
+
+São representações diferentes do mesmo payload. O QR Code é a versão visual, para escanear com a câmera. O PIX copia e cola é a versão em texto — aquela sequência longa de caracteres que você cola no app do banco. Ambos contêm as mesmas informações e podem ser gerados juntos.
+
+---
+
+[CTA — FERRAMENTA]
+
+Se você quer gerar seu QR Code PIX agora, sem precisar instalar nada ou fazer cadastro, o gerador de QR Code PIX da Ferramenta Ninja faz isso em segundos. Informe sua chave, o nome do beneficiário e, se quiser, um valor fixo. O código é gerado na hora em formato PNG, pronto para imprimir ou compartilhar.
